@@ -1,0 +1,140 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Gt2crm3</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Our style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/avel.css">
+</head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+  <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse menu">
+			<ul class="nav navbar-nav navbar-right">
+                 
+                    <li>
+                       <a href="/index.html#about">Обо мне</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#education">Образование</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#work">Работа</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#skills">Навыки</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#portfolio">Портфолио</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#hobby">Увлечения</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#contact">Контакты</a>
+                    </li>
+                 
+        	</ul>
+        </div>
+      </div>
+  </div>
+</nav>
+
+    <section class="pfblock"><div class="container">  		<!-- Translations -->
+	<div class="col-xs-6" align=left>
+		<a href="/index.html">home</a> \ <a href="/index.html#portfolio">Портфолио</a>
+	</div>
+
+	<div class="col-xs-6" align=right>
+		Написано: 07.10.2018
+	</div>
+
+   	<div class="col-sm-12 my">
+		<h1 id="программа-выгрузки-звонков-gt2crm3exe">Программа выгрузки звонков Gt2crm3.exe</h1>
+
+<p>Программа Gt2crm3 используется для выгрузки звонков, протарифицированных в системе ICS (Intec Interconnect), в систему CRM3 (звонковое хранилище) 
+и в систему PartnerReports (система отображения отчетности).</p>
+
+<p>Также программа Gt2crm3 используется для формирования клиентской детализации (по звонкам и направлениям) 
+и данных внутри-производственного трафика (ВПТ), которые передаются в систему Атлант.</p>
+
+<p>Программа Gt2crm3 используется во время билинг-цикла (запускается в режиме FastClose, в режиме коррекции и для массовой выгрузки).</p>
+
+<p>В этот период осуществляется выгрузка данных всего трафика.</p>
+
+<p>В рамках предоставления данных в систему CRM3 происходит формирование текстового файла установленного образца (в формате csv, comma separeted values).</p>
+
+<p>Размер файла (содержащего месячный объем звонковых данных) составляет примерно 140 Гб.</p>
+
+<p>По регламенту файл должен быть сформирован в течении 6-8 часов.</p>
+
+<p>Для решения обозначенной задачи (в требуемые сроки) программа gt2crm3 максимально использует средства распараллеливания процессов.</p>
+
+<p>Для этого общий ход процесса разбивается на подэтапы (шаги), многие из которых могут выполнятся одновременно.</p>
+
+<p>Процесс распараллеливается по дням.</p>
+
+<p>Используются следующие шаги обработки (приведены основные):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. PR - разбор агрегатов (с одновременной подготовкой данных в систему PartnerReports).
+2. LOAD - загрузка звонковых данных из БД ICS в хранилище INTEXP.
+3. RCV - формирование текстового файла-сегмента.
+4. MRG - склейка сегмента к файлу-результату.
+5. SGN - проверка размера сформированного файла (и формирование квитка в случае успеха).
+6. TEST - тестирование сегмента (формирование итоговых показателей).
+7. DEL - удаление данных из таблицы звонкового хранилища.
+8. SEG - удаление текстовых файлов-сегментов.
+</code></pre></div></div>
+
+<p>Кроме того, во время билинг-цикла происходит запуск программы gt2crm3 в режиме “коррекции формирования данных агрегатов FastClose”.</p>
+
+<p>Вне билинг-цикла программа gt2crm3 используется для ежедневной выгрузки данных для отдельных операторов, 
+для которых нужно выполнить обновление информации. Для этого в течении дня (с помощью функционала программы ictRep7) 
+операторами формируются задания на выгрузку, после чего во время ежевечернего запуска анализируются периоды, за которые необходимо произвести выгрузку, 
+и отрабатываются операторы, для которых есть задания в данном периоде.</p>
+
+<p>Ниже приведен проект программы gt2crm3, открытый в среде Borland C++ Builder</p>
+
+<p><img src="http:/assets/images/gt2crm3.png" alt="Gt2crm3" /></p>
+
+   	</div>
+</div></section>
+
+    <footer class="footer hexlet-footer py-5 mt-5 text-muted">
+  <div class="container">
+    <div class="row mt-1">
+      <div class="col-12 text-center">
+        <a href="https://aveligzhanin.github.io/">Велигжанин Андрей</a> — Программист-разработчик C++ и Oracle.
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>

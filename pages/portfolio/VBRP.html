@@ -1,0 +1,291 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Доработка системы INTEXP</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Our style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/avel.css">
+</head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+  <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse menu">
+			<ul class="nav navbar-nav navbar-right">
+                 
+                    <li>
+                       <a href="/index.html#about">Обо мне</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#education">Образование</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#work">Работа</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#skills">Навыки</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#portfolio">Портфолио</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#hobby">Увлечения</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#contact">Контакты</a>
+                    </li>
+                 
+        	</ul>
+        </div>
+      </div>
+  </div>
+</nav>
+
+    <section class="pfblock"><div class="container">  		<!-- Translations -->
+	<div class="col-xs-6" align=left>
+		<a href="/index.html">home</a> \ <a href="/index.html#portfolio">Портфолио</a>
+	</div>
+
+	<div class="col-xs-6" align=right>
+		Написано: 07.10.2018
+	</div>
+
+   	<div class="col-sm-12 my">
+		<h1 id="доработка-системы-intexp-для-взаимодействия-с-модулем-vbr">Доработка системы INTEXP для взаимодействия с модулем VBR+</h1>
+
+<p>Недавно мною была выполнена крупная доработка системы INTEXP для взаимодествия с модулем VBR+.</p>
+
+<p>Задача ставилась следующим образом:</p>
+
+<p>В билинговой системе ICS могут быть реализованы не все сценарии расчета, необходимые бизнесу.
+С одной стороны, существуют более сложные схемы вольюмных расчетов чем те, которые можно реализовать средствами ICS.
+С другой стороны, условия расчета могут быть сформулированы таким образом, что производить расчет нужно на основании данных,
+расчтываемых в разных инстансах ICS (что принципиально нереализуемо в данных из одного инстанса).</p>
+
+<p>Поэтому было принято решение разработать отдельный модуль (VBR+), который бы занимался необходимыми расчетами.</p>
+
+<p>Одновременно в системе INTEXP небходимо было выполнить доработки для обеспечения взаимодействия с этим модулем.</p>
+
+<p>Ниже приведена схема, иллюстрирующая взаимодействие между системами.</p>
+
+<p><img src="http:/assets/images/intexp_vbrp.png" alt="Архитектура взаимодействия" /></p>
+
+<p>Главным образом, система INTEXP должна:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) Предоставить данные модулю VBR+.   
+2) Получить результаты расчета от модуля VBR+ и консолидировать их с исходными данными.  
+</code></pre></div></div>
+
+<p>В остальном система INTEXP должна функционировать прежним образом (то есть предоставлять данные в системы Софтел, PartnerReports и Crm3)</p>
+
+<p>Ниже приведены ссылки на документы, с описанием доработок.</p>
+
+<p><a href="/assets/files/ts_vbrp.mht">Техническое задание на доработку системы INTEXP для взаимодествия с модулем VBR+</a></p>
+
+<p><a href="/assets/files/fd_vbrp.mht">Функциональный дизайн системы INTEXP для реализации взаимодействия с модулем VBR+</a></p>
+
+<p>В соответствии с приведенными документами был реализован механизм междусистемного взаимодействия с модулем VBR+.</p>
+
+<p>Ниже приведен один из пакетов, реализующий данную функциональность.</p>
+
+<h2 id="описание-пакета-vbr">Описание пакета VBR</h2>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">CREATE</span> <span class="k">OR</span> <span class="k">REPLACE</span> 
+<span class="n">PACKAGE</span> <span class="n">vbr</span>
+  <span class="k">IS</span>
+  <span class="c1">---------------------------------------------------------------</span>
+  <span class="c1">--    Функциональность для VBR+</span>
+  <span class="c1">---------------------------------------------------------------</span>
+    <span class="n">gPM</span> <span class="n">varchar2</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="p">:</span><span class="o">=</span> <span class="s1">'VBRP'</span><span class="p">;</span>       <span class="c1">-- Метка пакета (в логах и журналах)</span>
+
+    <span class="c1">-- Сформировать задание на предоставление данных из ICS offline для VBR+</span>
+    <span class="c1">-- </span>
+    <span class="k">PROCEDURE</span> <span class="n">GetGt7</span> <span class="p">(</span>                       
+        <span class="n">p_From</span> <span class="k">IN</span> <span class="n">date</span>                           <span class="c1">-- Дата начала периода предоставления данных</span>
+        <span class="p">,</span> <span class="n">p_To</span> <span class="k">IN</span> <span class="n">date</span> <span class="k">DEFAULT</span> <span class="k">null</span>             <span class="c1">-- Дата окончания периода предоставления данных. Если NULL, то используется последний день месяца для параметра p_From</span>
+        <span class="p">,</span> <span class="n">p_Scala</span> <span class="k">IN</span> <span class="n">varchar2</span> <span class="k">DEFAULT</span> <span class="k">null</span>        <span class="c1">-- скала, по которой сформировать данные</span>
+        <span class="p">,</span> <span class="n">p_InvDir</span> <span class="k">IN</span> <span class="n">varchar2</span> <span class="k">DEFAULT</span> <span class="k">null</span>        <span class="c1">-- направление счета</span>
+        <span class="p">,</span> <span class="n">p_SnapID</span> <span class="k">OUT</span> <span class="n">number</span>                    <span class="c1">-- временная метка формирования данных</span>
+    <span class="p">);</span>
+
+    <span class="c1">-- Сформировать задание на предоставление данных из ICS online для VBR+</span>
+    <span class="c1">-- Результат -- в v_dailysum_vk</span>
+    <span class="c1">-- </span>
+    <span class="k">PROCEDURE</span> <span class="n">GetVk</span> <span class="p">(</span>                       
+        <span class="n">p_From</span> <span class="k">IN</span> <span class="n">date</span>                          <span class="c1">-- Дата начала периода предоставления данных</span>
+        <span class="p">,</span> <span class="n">p_To</span> <span class="k">IN</span> <span class="n">date</span> <span class="k">DEFAULT</span> <span class="k">null</span>             <span class="c1">-- Дата окончания периода предоставления данных. Если NULL, то используется последний день месяца для параметра p_From</span>
+        <span class="p">,</span> <span class="n">p_Scala</span> <span class="k">IN</span> <span class="n">varchar2</span> <span class="k">DEFAULT</span> <span class="k">null</span>        <span class="c1">-- скала, по которой сформировать данные</span>
+        <span class="p">,</span> <span class="n">p_InvDir</span> <span class="k">IN</span> <span class="n">varchar2</span> <span class="k">DEFAULT</span> <span class="k">null</span>        <span class="c1">-- направление счета</span>
+        <span class="p">,</span> <span class="n">p_SnapID</span> <span class="k">OUT</span> <span class="n">number</span>                    <span class="c1">-- возвращается номер среза</span>
+    <span class="p">);</span>
+
+    <span class="c1">-- Сформировать задание на удаление данных из представления.</span>
+    <span class="c1">-- </span>
+    <span class="k">PROCEDURE</span> <span class="n">ClearData</span> <span class="p">(</span>       
+        <span class="n">p_ViewName</span> <span class="k">IN</span> <span class="n">varchar2</span>                   <span class="c1">-- Имя представления, данные которого обработаны и могут быть удалены</span>
+        <span class="p">,</span> <span class="n">p_SnapID</span> <span class="k">IN</span> <span class="n">number</span>                    <span class="c1">-- Номер среза данных.</span>
+    <span class="p">);</span>
+                
+    <span class="c1">-- Сформировать задание на получение данных от VBR+.</span>
+    <span class="c1">-- </span>
+    <span class="k">PROCEDURE</span> <span class="n">DoneVbrProcess</span> <span class="p">(</span>       
+        <span class="n">p_BatchID</span> <span class="k">IN</span> <span class="n">number</span>                        <span class="c1">-- Номер пачки результата расчета модуля VBR+</span>
+    <span class="p">);</span>
+                
+    <span class="c1">-- Выполнить задание из очереди</span>
+    <span class="c1">-- </span>
+    <span class="k">PROCEDURE</span> <span class="n">Run</span><span class="p">;</span>
+
+    <span class="c1">-- Сформировать задание на отправку данных в VBR+.</span>
+    <span class="c1">-- </span>
+    <span class="k">PROCEDURE</span> <span class="n">SendVbrData</span> <span class="p">(</span>       
+        <span class="n">p_Src</span> <span class="k">IN</span> <span class="n">char</span>                            <span class="c1">-- Инстанс</span>
+        <span class="p">,</span> <span class="n">p_Year</span> <span class="k">IN</span> <span class="n">number</span>                        <span class="c1">-- год</span>
+        <span class="p">,</span> <span class="n">p_Month</span> <span class="k">IN</span> <span class="n">number</span>                        <span class="c1">-- месяц</span>
+    <span class="p">);</span>
+                
+    <span class="c1">-- Сформировать задание на отправку справочников в VBR+.</span>
+    <span class="c1">-- </span>
+    <span class="k">PROCEDURE</span> <span class="n">SendRef</span> <span class="p">(</span>       
+        <span class="n">p_Src</span> <span class="k">IN</span> <span class="n">char</span> <span class="k">DEFAULT</span> <span class="s1">'0'</span>                  <span class="c1">-- Инстанс</span>
+        <span class="p">,</span> <span class="n">p_Mask</span> <span class="k">IN</span> <span class="n">varchar2</span> <span class="k">DEFAULT</span> <span class="s1">'A'</span>        <span class="c1">-- маска</span>
+        <span class="p">,</span> <span class="n">p_From</span> <span class="k">IN</span> <span class="n">date</span> <span class="k">DEFAULT</span> <span class="k">null</span>             <span class="c1">-- дата начала периода</span>
+        <span class="p">,</span> <span class="n">p_To</span> <span class="k">IN</span> <span class="n">date</span> <span class="k">DEFAULT</span> <span class="k">null</span>                <span class="c1">-- дата завершения периода</span>
+    <span class="p">);</span>
+                
+<span class="k">END</span><span class="p">;</span>
+<span class="o">/</span>
+</code></pre></div></div>
+
+<h2 id="фрагмент-процедуры-vbrrun">Фрагмент процедуры VBR.Run()</h2>
+
+<p>Ниже приведен фрагмент процедуры VBR.Run(), которая осуществляет выполенение задания из очереди.</p>
+
+<p>Задания представляют собой записи в таблице task_list.</p>
+
+<p>Таблица партиционирована по полю status, которое семантически представляет собой статус задания.</p>
+
+<p>Если в очереди есть задание со статусом p_ready (готовое к выполнению), данное задание переводится в состояние p_processed (выполняется),
+после чего в зависимости от типа задания (поля task_type) осуществляется выполнение задания.</p>
+
+<p>После того, как задание будет обработано, оно переводится в состояние p_done (если обработка произведена успешно), либо в состояние p_error (ошибка).</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">CREATE</span> <span class="k">OR</span> <span class="k">REPLACE</span> 
+<span class="n">PACKAGE</span> <span class="n">BODY</span> <span class="n">vbr</span>
+<span class="k">IS</span>
+    <span class="c1">--------------------------------------------------------------</span>
+    <span class="c1">--    Функциональность для VBR+</span>
+    <span class="c1">--------------------------------------------------------------</span>
+
+    <span class="p">...</span>
+    
+<span class="c1">---------------------------------------------------------------------------</span>
+<span class="c1">-- Выполнить задание из очереди</span>
+<span class="c1">---------------------------------------------------------------------------</span>
+<span class="k">PROCEDURE</span> <span class="n">Run</span>
+<span class="k">IS</span>
+    <span class="n">x_TaskID</span> <span class="n">number</span><span class="p">;</span>
+    <span class="n">x_TaskType</span> <span class="n">varchar2</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
+    <span class="n">x_TaskStatus</span> <span class="n">number</span><span class="p">;</span>
+    <span class="n">x_Err</span> <span class="n">number</span><span class="p">;</span>
+    <span class="n">x_Ok</span> <span class="n">boolean</span><span class="p">;</span>
+    <span class="n">x_Rows</span> <span class="n">number</span><span class="p">;</span>
+    <span class="n">pragma</span> <span class="n">autonomous_transaction</span><span class="p">;</span>
+<span class="k">BEGIN</span>
+    <span class="c1">-- Начинаем выполнять задание</span>
+    <span class="k">update</span> <span class="n">task_list</span> <span class="n">partition</span> <span class="p">(</span><span class="n">p_ready</span><span class="p">)</span> <span class="n">r</span> 
+    <span class="k">set</span> <span class="n">r</span><span class="p">.</span><span class="n">task_status</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">start_date</span> <span class="o">=</span> <span class="n">sysdate</span><span class="p">,</span> <span class="n">end_date</span> <span class="o">=</span> <span class="k">null</span>
+    <span class="k">where</span> <span class="n">r</span><span class="p">.</span><span class="n">task_id</span> <span class="o">=</span> <span class="p">(</span><span class="k">select</span> <span class="k">min</span><span class="p">(</span><span class="n">task_id</span><span class="p">)</span> <span class="k">from</span> <span class="n">task_list</span> <span class="n">partition</span> <span class="p">(</span><span class="n">p_ready</span><span class="p">))</span>
+    <span class="k">and</span> <span class="n">r</span><span class="p">.</span><span class="n">task_type</span> <span class="k">in</span> <span class="p">(</span><span class="s1">'DoneVbrProcess'</span><span class="p">,</span> <span class="s1">'GetGt7'</span><span class="p">,</span> <span class="s1">'GetVk'</span>
+        <span class="p">,</span> <span class="s1">'ClearData'</span><span class="p">,</span> <span class="s1">'SendVbrData'</span><span class="p">,</span> <span class="s1">'SendRef'</span><span class="p">)</span>
+    <span class="n">returning</span> <span class="n">r</span><span class="p">.</span><span class="n">task_id</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span><span class="n">task_type</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span><span class="n">errors</span>
+    <span class="k">into</span> <span class="n">x_TaskID</span><span class="p">,</span> <span class="n">x_TaskType</span><span class="p">,</span> <span class="n">x_Err</span><span class="p">;</span>
+    <span class="n">x_Rows</span> <span class="p">:</span><span class="o">=</span> <span class="k">SQL</span><span class="o">%</span><span class="n">ROWCOUNT</span><span class="p">;</span>
+
+    <span class="k">commit</span><span class="p">;</span>
+
+    <span class="c1">-- Выходим, если в очереди нет заданий.</span>
+    <span class="n">if</span> <span class="p">(</span> <span class="n">x_Rows</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">)</span> <span class="k">then</span>
+        <span class="k">return</span> <span class="p">;</span>
+    <span class="k">end</span> <span class="n">if</span><span class="p">;</span>
+
+    <span class="c1">-- Выполняем задачу</span>
+    <span class="n">if</span><span class="p">(</span><span class="n">x_TaskType</span> <span class="o">=</span> <span class="s1">'DoneVbrProcess'</span><span class="p">)</span> <span class="k">then</span>
+        <span class="n">x_Ok</span> <span class="p">:</span><span class="o">=</span> <span class="n">DoDoneVbrProcess</span><span class="p">(</span><span class="n">x_TaskID</span><span class="p">);</span>
+    <span class="n">elsif</span><span class="p">(</span><span class="n">x_TaskType</span> <span class="o">=</span> <span class="s1">'GetGt7'</span><span class="p">)</span> <span class="k">then</span>
+        <span class="n">x_Ok</span> <span class="p">:</span><span class="o">=</span> <span class="n">DoGetGt7</span><span class="p">(</span><span class="n">x_TaskID</span><span class="p">);</span>
+    <span class="n">elsif</span><span class="p">(</span><span class="n">x_TaskType</span> <span class="o">=</span> <span class="s1">'GetVk'</span><span class="p">)</span> <span class="k">then</span>
+        <span class="n">x_Ok</span> <span class="p">:</span><span class="o">=</span> <span class="n">DoGetVk</span><span class="p">(</span><span class="n">x_TaskID</span><span class="p">);</span>
+    <span class="n">elsif</span><span class="p">(</span><span class="n">x_TaskType</span> <span class="o">=</span> <span class="s1">'ClearData'</span><span class="p">)</span> <span class="k">then</span>
+        <span class="n">x_Ok</span> <span class="p">:</span><span class="o">=</span> <span class="n">DoClearData</span><span class="p">(</span><span class="n">x_TaskID</span><span class="p">);</span>
+    <span class="n">elsif</span><span class="p">(</span><span class="n">x_TaskType</span> <span class="o">=</span> <span class="s1">'SendVbrData'</span><span class="p">)</span> <span class="k">then</span>
+        <span class="n">x_Ok</span> <span class="p">:</span><span class="o">=</span> <span class="n">DoSendVbrData</span><span class="p">(</span><span class="n">x_TaskID</span><span class="p">);</span>
+    <span class="n">elsif</span><span class="p">(</span><span class="n">x_TaskType</span> <span class="o">=</span> <span class="s1">'SendRef'</span><span class="p">)</span> <span class="k">then</span>
+        <span class="n">x_Ok</span> <span class="p">:</span><span class="o">=</span> <span class="n">DoSendRef</span><span class="p">(</span><span class="n">x_TaskID</span><span class="p">);</span>
+    <span class="k">end</span> <span class="n">if</span><span class="p">;</span>
+
+    <span class="n">if</span><span class="p">(</span><span class="n">x_Ok</span> <span class="o">=</span> <span class="k">true</span><span class="p">)</span> <span class="k">then</span>
+        <span class="n">x_TaskStatus</span> <span class="p">:</span><span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="k">else</span> 
+        <span class="n">x_TaskStatus</span> <span class="p">:</span><span class="o">=</span> <span class="mi">9</span><span class="p">;</span>
+        <span class="n">x_Err</span> <span class="p">:</span><span class="o">=</span> <span class="n">x_Err</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">end</span> <span class="n">if</span><span class="p">;</span>
+
+    <span class="c1">-- завершаем выполнение</span>
+    <span class="k">update</span> <span class="n">task_list</span> <span class="n">r</span>
+    <span class="k">set</span> <span class="n">r</span><span class="p">.</span><span class="n">task_status</span> <span class="o">=</span> <span class="n">x_TaskStatus</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span><span class="n">end_date</span> <span class="o">=</span> <span class="n">sysdate</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span><span class="n">errors</span> <span class="o">=</span> <span class="n">x_Err</span>
+    <span class="k">where</span> <span class="n">r</span><span class="p">.</span><span class="n">task_id</span> <span class="o">=</span> <span class="n">x_TaskID</span><span class="p">;</span>
+    <span class="k">commit</span><span class="p">;</span>
+
+<span class="n">EXCEPTION</span> <span class="k">WHEN</span> <span class="n">OTHERS</span> <span class="k">THEN</span>
+    <span class="k">rollback</span><span class="p">;</span>
+    <span class="n">P_LOG_MSG</span><span class="p">(</span><span class="n">gPM</span><span class="p">,</span> <span class="s1">'Ошибка в процедуре VBR.Run()'</span><span class="p">);</span>
+<span class="k">END</span><span class="p">;</span>
+
+
+<span class="c1">-- Конец пакета</span>
+<span class="k">END</span><span class="p">;</span>
+<span class="o">/</span>
+</code></pre></div></div>
+
+
+   	</div>
+</div></section>
+
+    <footer class="footer hexlet-footer py-5 mt-5 text-muted">
+  <div class="container">
+    <div class="row mt-1">
+      <div class="col-12 text-center">
+        <a href="https://aveligzhanin.github.io/">Велигжанин Андрей</a> — Программист-разработчик C++ и Oracle.
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>

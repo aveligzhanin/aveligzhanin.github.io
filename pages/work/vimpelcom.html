@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Work in Vimpelcom</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Our style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/avel.css">
+</head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+  <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse menu">
+			<ul class="nav navbar-nav navbar-right">
+                 
+                    <li>
+                       <a href="/index.html#about">Обо мне</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#education">Образование</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#work">Работа</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#skills">Навыки</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#portfolio">Портфолио</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#hobby">Увлечения</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#contact">Контакты</a>
+                    </li>
+                 
+        	</ul>
+        </div>
+      </div>
+  </div>
+</nav>
+
+    <section class="pfblock"><div class="container">  		<!-- Translations -->
+	<div class="col-xs-6" align=left>
+		<a href="/index.html">home</a> \ <a href="/index.html#work">Работа</a>
+	</div>
+
+	<div class="col-xs-6" align=right>
+		Написано: 07.10.2018
+	</div>
+
+   	<div class="col-sm-12 my">
+		<h1 id="работа-в-компаниях-совинтел-вымпелком-бэлл-интегратор">Работа в компаниях Совинтел, Вымпелком, Бэлл Интегратор.</h1>
+
+<p>С 2007 года работал в компании Совинтел (Golden Telecom), в отделе развития систем поддержки операторского биллинга.</p>
+
+<p>В 2010-ом году компания Совинтел вошла в состав компании Вымпелком. 
+В 2016-ом году произошел обратный процесс: подразделение поддержки систем операторского билинга было выведено из штата Вымпелкома, 
+и перешло в компанию Bell Integrator, при этом коллектив продолжал заниматься теми же задачами, что и раньше.</p>
+
+<p>Занимался разработкой систем уровня business critical (то есть таких, которые оказывают существенное влияние на бизнес компании, 
+сбой в работе которых ведет к большим финансовым потерям, поэтому к функционированию систем этого уровня 
+предъявляются повышенные требования надежности).</p>
+
+<p>Осуществлял поддержку 4-х таких систем:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. GT.INTEXP -- система передачи биллинговых данных, результатов расчета билинг-системы ICS, в системы формирования счетов и в системы финансового департамента.
+2. GT.TRUNKINT -- система передачи данных о конфигурации сети Вымпелкома в систему LCR (least cost routing).
+3. GT.RAPL -- система передачи данных о тарифных планах в биллинговые системы.
+4. MED.CALLEX3 -- система передачи данных трафика фиксированной сети Вымпелкома в системы-потребители (билинговые, системы анти-фрода и прочие).
+</code></pre></div></div>
+
+<p>Первые из двух названных систем разрабатывал с нуля.</p>
+
+<p>Ниже приведено техническое описание системы GT.INTEXP.</p>
+
+<h2 id="gtinexp">GT.INEXP.</h2>
+
+<p>Система осуществляет поддержку следующих бизнес-процессов:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. Выставление счетов по договорам interconnect voice (услуги голосовой фиксированной связи) и mobile (услуги мобильной связи).
+2. Формирование корпоративной и управленческой отчетности.
+3. Формирование счетов по агентским договорам.
+4. Обработка трафика.
+</code></pre></div></div>
+
+<p>В рамках поддержки перечисленных бизнес-процессов система GT.INTEXP предоставляет данных системам-потребителям.</p>
+
+<p>Для системы GT.INTEXP источником данных являются:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. Билинговая система ICS, инстанс оффлайн (результат расчета трафика сегмента фиксированной сети Вымпелкома).
+2. Билинговая система ICS, инстанс онлайн (результат расчета трафика сегмента мобильной сети Вымпелкома).
+3. Система GT.TRUNKINT (предоставляет данные о конфигурации сети).
+4. Система GT.INRS (предоставляет данные о клиентах и партнерах).
+5. Система GT.FastRater (информация мастер-справочника направлений).
+</code></pre></div></div>
+
+<p>Система GT.INTEXP предоставляет данные в следующие системы:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. Система GT.Softel (система формирования счетов).
+2. Система PartnerReports и Crm3.
+</code></pre></div></div>
+
+<p>Система GT.INTEXP состоит из нескольких модулей (интерфейсных и консольных приложений):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. Программа IE2 (формирование данных в систему GT.Softel из ICS Offline).
+2. Программа IE3 (формирование данных в систему GT.Softel из ICS Online).
+3. Программа sms3softel (модуль формирования данных в систему GT.Softel из ICS Online для потока SMS_IW).
+4. Программа gt2crm3 (формирование данных в системы PartnerReports и crm3 из ICS Offline, а также клиентской детализации).
+5. Программа vk2crm3 (формирование данных в системы PartnerReports и crm3 из ICS Online, а также клиентской детализации).
+6. Программа ictrep7 (формирование отчетной информации).
+7. Программа expmon (мониторинг работы, и выполнение административных настроек).
+8. Другие технологические модули.
+</code></pre></div></div>
+
+<p>При разработке были использованы следующие инструменты:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. Среда разработки Borland C++ Builder (v. 6.0) (для написания GUI- и консольных приложений).
+2. БД Oracle (начиная с версии 9, затем 11g и 12c).
+3. Компоненты библиотеки ODAC.
+4. Другие компоненты.
+</code></pre></div></div>
+
+<p>Система GT.INTEXP находится в фактической эксплуатации в компании Вымпелком (до этого Совинтел), начиная с 2007 года.</p>
+
+<p>С этого времени постоянно развивалась и совершенствовалась, за одиннадцать лет эксплуатации выпущено более сотни релизов. 
+Разработка велась со средней скоростью -  1 релиз в месяц (иногда чаше).</p>
+
+<p>Система осуществляет обработку трафика, ежемесячный объем которого составляет несколько миллиардов звонков.</p>
+
+   	</div>
+</div></section>
+
+    <footer class="footer hexlet-footer py-5 mt-5 text-muted">
+  <div class="container">
+    <div class="row mt-1">
+      <div class="col-12 text-center">
+        <a href="https://aveligzhanin.github.io/">Велигжанин Андрей</a> — Программист-разработчик C++ и Oracle.
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>

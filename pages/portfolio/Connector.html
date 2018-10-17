@@ -1,0 +1,301 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Описание программы Connector</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Our style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/avel.css">
+</head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+  <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse menu">
+			<ul class="nav navbar-nav navbar-right">
+                 
+                    <li>
+                       <a href="/index.html#about">Обо мне</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#education">Образование</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#work">Работа</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#skills">Навыки</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#portfolio">Портфолио</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#hobby">Увлечения</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#contact">Контакты</a>
+                    </li>
+                 
+        	</ul>
+        </div>
+      </div>
+  </div>
+</nav>
+
+    <section class="pfblock"><div class="container">  		<!-- Translations -->
+	<div class="col-xs-6" align=left>
+		<a href="/index.html">home</a> \ <a href="/index.html#portfolio">Портфолио</a>
+	</div>
+
+	<div class="col-xs-6" align=right>
+		Написано: 07.10.2018
+	</div>
+
+   	<div class="col-sm-12 my">
+		<h1 id="описание-программы-connectorexe">Описание программы Connector.exe</h1>
+
+<p>Connector представляет собой несложную утилиту, простое консольное приложение, которое используется для проверки соединения с нужной базой данных Oracle.</p>
+
+<p>Необходимость в подобной утилите возникает время от времени при возможных проблемах доступа в ту или иную среду (тестовую, среду разработки или продуктивную).</p>
+
+<p>Конечно, выполнить подключение в БД несложно при использовании программ типа SQL Navigator или SQL Developer. 
+(Небольшое затруднение состоит в том, что при наличии большого количества схем, с которыми приходиться иметь дело, 
+где-то нужно еще хранить информацию о параметрах подключения).</p>
+
+<p>Поэтому мною была написана несложная утилита для проверки подключения.</p>
+
+<p>Программа работает с конфигурационным файлом, из которого считываются параметры подключения.</p>
+
+<p>Конфигурационный файл – это обычный текстовый файл, в котором можно собрать параметры подключения ко всем нужным средам.</p>
+
+<h2 id="пример-конфигурационного-файла">Пример конфигурационного файла.</h2>
+
+<div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">[Dirs]</span>
+<span class="py">Tmp</span><span class="p">=</span><span class="s">Tmp</span>
+<span class="py">Log</span><span class="p">=</span><span class="s">Log</span>
+
+<span class="c">; При наличии в файле нескольких секций с одинаковым именем принимаются параметры той секции,
+; которая расположена выше. Поэтому, для чтобы просто изменить параметры коннекта, 
+; достаточно перенести нужную секцию [DB] наверх (используя copy/past)
+</span>
+<span class="c">; Параметр может использоваться в закодированном виде. 
+; Признак наличия кодирования определяется по префиксу {CODE}
+; Через двоеточие в префиксе {CODE} может быть задан способ кодирования
+; Валидные значения способа кодирования INTEXP, RAPL, CALLEX
+; INTEXP и RAPL - синонимы.
+; По умолчанию используется INTEXP.
+</span>
+<span class="nn">[DB]</span>																<span class="c">; RAPL prod, via client
+</span><span class="py">UseOraClient</span><span class="p">=</span><span class="s">yes</span>
+<span class="py">UserName</span><span class="p">=</span><span class="s">rapl</span>
+<span class="py">Password</span><span class="p">=</span><span class="s">{CODE}2689854434440530446/22100</span>
+<span class="py">TnsName</span><span class="p">=</span><span class="s">ICT6GT.SOVINTEL.NET</span>
+<span class="c">; ok, 06/10/2017
+</span>
+<span class="nn">[DB]</span>																<span class="c">; RAPL prod, direct
+</span><span class="py">UseOraClient</span><span class="p">=</span><span class="s">no</span>
+<span class="py">UserName</span><span class="p">=</span><span class="s">rapl</span>
+<span class="py">Password</span><span class="p">=</span><span class="s">{CODE}2689854434440530446/22100</span>
+<span class="py">Server</span><span class="p">=</span><span class="s">ics6gt.vimpelcom.ru</span>
+<span class="py">SID</span><span class="p">=</span><span class="s">ICT6GT</span>
+<span class="c">; ok, 06/10/2017
+</span>
+</code></pre></div></div>
+
+<p>Программа считывает параметы первой секции [DB] и далее выполняет попытку соединения к схеме и серверу, которые были в ней указаны.</p>
+
+<p>О результатах соединения сообщается в текстовом журнале (он формируется в каталоге LOG с именем вида Connector_YYYY_MM_DD_HH_MI_SS.log).</p>
+
+<p>Ниже приведен пример журнала.</p>
+
+<p><img src="http:/assets/images/connector_log.png" alt="Пример журнала" /></p>
+
+<p>В случае неудачного подключения текст сообщения в журнале будет, разумеется, иным.</p>
+
+<h2 id="проект-connectorbpr">Проект Connector.bpr</h2>
+
+<p>Для реализации данного несложного проекта была использована интергированная среда разработки Borland C++ Builder (v.6.0)</p>
+
+<p><img src="http:/assets/images/connector_bpg.png/100x100" alt="Проект Connector" /></p>
+
+<p>Для доступа к БД Oracle использовался компонент ODAC (в данном случае версии 6.9)</p>
+
+<h2 id="файл-sl_maincpp">Файл SL_main.cpp</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;vcl.h&gt;
+#include "USL.h"
+#include "stdio.h"
+</span>
+<span class="n">namespace</span> <span class="n">sln</span> <span class="o">=</span> <span class="n">SL_Names</span><span class="p">;</span>
+
+<span class="n">sln</span><span class="o">::</span><span class="n">TSL</span> <span class="o">*</span><span class="n">sln</span><span class="o">::</span><span class="n">SL</span><span class="p">;</span>
+
+<span class="cp">#pragma argsused
+</span><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span>
+<span class="p">{</span>
+
+    <span class="n">sln</span><span class="o">::</span><span class="n">SL</span> <span class="o">=</span> <span class="n">new</span> <span class="n">sln</span><span class="o">::</span><span class="n">TSL</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">);</span>
+    <span class="n">sln</span><span class="o">::</span><span class="n">SL</span><span class="o">-&gt;</span><span class="n">Init</span><span class="p">();</span>
+    <span class="n">sln</span><span class="o">::</span><span class="n">SL</span><span class="o">-&gt;</span><span class="n">Run</span><span class="p">();</span>
+
+    <span class="n">delete</span> <span class="n">sln</span><span class="o">::</span><span class="n">SL</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>В файле сначала конструируется объект класса TSL (представляющий собой программу), затем происходит инициализация (метод Init), 
+вызов кода выполнения (метод Run). По завершении объект-программа удаляется.</p>
+
+<h2 id="фрагмент-файла-uslh">Фрагмент файла USL.h</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#ifndef USLH
+#define USLH
+</span>
+<span class="cp">#include "vcl.h"
+#include "Ora.hpp"
+#include "SyncObjs.hpp"
+#include "USL_Cfg.h"
+#include "UAL_Log.h"
+#include "UAL_Prg.h"
+</span>
+<span class="n">namespace</span> <span class="n">AL</span> <span class="o">=</span> <span class="n">AL_Names</span><span class="p">;</span>
+
+<span class="n">namespace</span> <span class="n">SL_Names</span> <span class="p">{</span>
+
+<span class="n">class</span> <span class="n">TSL</span> <span class="o">:</span> <span class="n">public</span> <span class="n">AL</span><span class="o">::</span><span class="n">TAL_Prg</span> <span class="p">{</span>
+    <span class="p">...</span>
+<span class="n">public</span><span class="o">:</span>
+    <span class="kr">__fastcall</span> <span class="n">TSL</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">);</span>
+    <span class="k">virtual</span> <span class="kr">__fastcall</span> <span class="o">~</span><span class="n">TSL</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+    <span class="kt">void</span> <span class="kr">__fastcall</span> <span class="n">Run</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+	<span class="p">...</span>
+<span class="p">};</span>
+
+<span class="k">extern</span> <span class="n">TSL</span> <span class="o">*</span><span class="n">SL</span><span class="p">;</span>
+
+<span class="p">};</span>
+
+<span class="cp">#endif
+</span></code></pre></div></div>
+
+<h2 id="фрагмент-файла-uslcpp-процедура-выполненения-run">Фрагмент файла USL.cpp. Процедура выполненения Run()</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* Процедура выполнения
+*/</span>
+<span class="kt">void</span> <span class="kr">__fastcall</span> <span class="n">TSL</span><span class="o">::</span><span class="n">Run</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"%s: SIMPLE</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">FileName</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Writing to log %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">FLogName</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="n">FDoBasic</span> <span class="o">==</span> <span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">DoBasicStart</span><span class="p">();</span>
+        <span class="n">DoBasic</span><span class="p">();</span>
+        <span class="n">DoBasicEnd</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Thanks</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Как видно, здесь осуществляется вызов процедуры DoBasic(), в которой и сосредоточен весь полезный код по проверке соединения с БД.</p>
+
+<h2 id="процедура-dobasic">Процедура DoBasic()</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="kr">__fastcall</span> <span class="n">TSL</span><span class="o">::</span><span class="n">DoBasic</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">MsgLog</span> <span class="o">=</span> <span class="s">"Выполняется соединение к серверу БД Oracle..."</span><span class="p">;</span>
+    <span class="n">MsgLog</span> <span class="o">=</span> <span class="s">"Применяются параметры конфигурационного файла (секция [DB])."</span><span class="p">;</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="n">FCfg</span><span class="o">-&gt;</span><span class="n">DbUseOraClient</span> <span class="o">==</span> <span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">MsgLog</span> <span class="o">=</span> <span class="s">"Используется ora-клиент."</span><span class="p">;</span>
+        <span class="n">MsgLog</span> <span class="o">=</span> <span class="n">Format</span><span class="p">(</span><span class="s">"Строка коннекта конструируется как: %s\/%s@%s"</span><span class="p">,</span> <span class="n">ARRAYOFCONST</span><span class="p">((</span>
+            <span class="s">"UserName"</span><span class="p">,</span> <span class="s">"Password"</span><span class="p">,</span> <span class="s">"TnsName"</span>
+        <span class="p">)));</span>
+        <span class="n">MsgLog</span> <span class="o">=</span> <span class="s">"Значения параметров:"</span><span class="p">;</span>
+        <span class="n">MsgLog</span> <span class="o">=</span> <span class="n">Format</span><span class="p">(</span><span class="s">"UserName=%s"</span><span class="p">,</span> <span class="n">ARRAYOFCONST</span><span class="p">((</span><span class="n">FCfg</span><span class="o">-&gt;</span><span class="n">DbUserName</span><span class="p">)));</span>
+        <span class="n">MsgLog</span> <span class="o">=</span> <span class="n">Format</span><span class="p">(</span><span class="s">"Password=%s"</span><span class="p">,</span> <span class="n">ARRAYOFCONST</span><span class="p">((</span><span class="n">FCfg</span><span class="o">-&gt;</span><span class="n">DbPassword</span><span class="p">)));</span>
+        <span class="n">MsgLog</span> <span class="o">=</span> <span class="n">Format</span><span class="p">(</span><span class="s">"TnsName=%s"</span><span class="p">,</span> <span class="n">ARRAYOFCONST</span><span class="p">((</span><span class="n">FCfg</span><span class="o">-&gt;</span><span class="n">DbTnsName</span><span class="p">)));</span>
+        <span class="n">MsgLog</span> <span class="o">=</span> <span class="n">Format</span><span class="p">(</span><span class="s">"Строка коннекта: %s\/%s@%s"</span><span class="p">,</span> <span class="n">ARRAYOFCONST</span><span class="p">((</span>
+            <span class="n">ValidCfg</span><span class="p">(</span><span class="n">FCfg</span><span class="o">-&gt;</span><span class="n">DbUserName</span><span class="p">,</span> <span class="s">"UserName"</span><span class="p">)</span>
+            <span class="p">,</span> <span class="n">ValidCfg</span><span class="p">(</span><span class="n">FCfg</span><span class="o">-&gt;</span><span class="n">DbPassword</span><span class="p">,</span> <span class="s">"Password"</span><span class="p">)</span>
+            <span class="p">,</span> <span class="n">ValidCfg</span><span class="p">(</span><span class="n">FCfg</span><span class="o">-&gt;</span><span class="n">DbTnsName</span><span class="p">,</span> <span class="s">"TnsName"</span><span class="p">)</span>
+        <span class="p">)));</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">MsgLog</span> <span class="o">=</span> <span class="s">"Ora-клиент не используется."</span><span class="p">;</span>
+        <span class="n">MsgLog</span> <span class="o">=</span> <span class="n">Format</span><span class="p">(</span><span class="s">"Строка коннекта конструируется как: %s\/%s@%s:%s:%s"</span><span class="p">,</span> <span class="n">ARRAYOFCONST</span><span class="p">((</span>
+            <span class="s">"UserName"</span><span class="p">,</span> <span class="s">"Password"</span><span class="p">,</span> <span class="s">"Server"</span><span class="p">,</span> <span class="s">"Port"</span><span class="p">,</span> <span class="s">"SID"</span>
+        <span class="p">)));</span>
+        <span class="n">MsgLog</span> <span class="o">=</span> <span class="s">"Значения параметров:"</span><span class="p">;</span>
+        <span class="n">MsgLog</span> <span class="o">=</span> <span class="n">Format</span><span class="p">(</span><span class="s">"UserName=%s"</span><span class="p">,</span> <span class="n">ARRAYOFCONST</span><span class="p">((</span><span class="n">FCfg</span><span class="o">-&gt;</span><span class="n">DbUserName</span><span class="p">)));</span>
+        <span class="n">MsgLog</span> <span class="o">=</span> <span class="n">Format</span><span class="p">(</span><span class="s">"Password=%s"</span><span class="p">,</span> <span class="n">ARRAYOFCONST</span><span class="p">((</span><span class="n">FCfg</span><span class="o">-&gt;</span><span class="n">DbPassword</span><span class="p">)));</span>
+        <span class="n">MsgLog</span> <span class="o">=</span> <span class="n">Format</span><span class="p">(</span><span class="s">"Server=%s"</span><span class="p">,</span> <span class="n">ARRAYOFCONST</span><span class="p">((</span><span class="n">FCfg</span><span class="o">-&gt;</span><span class="n">DbServer</span><span class="p">)));</span>
+        <span class="n">MsgLog</span> <span class="o">=</span> <span class="n">Format</span><span class="p">(</span><span class="s">"Port=%s"</span><span class="p">,</span> <span class="n">ARRAYOFCONST</span><span class="p">((</span><span class="n">FCfg</span><span class="o">-&gt;</span><span class="n">DbPort</span><span class="p">)));</span>
+        <span class="n">MsgLog</span> <span class="o">=</span> <span class="n">Format</span><span class="p">(</span><span class="s">"SID=%s"</span><span class="p">,</span> <span class="n">ARRAYOFCONST</span><span class="p">((</span><span class="n">FCfg</span><span class="o">-&gt;</span><span class="n">DbSID</span><span class="p">)));</span>
+        <span class="n">MsgLog</span> <span class="o">=</span> <span class="n">Format</span><span class="p">(</span><span class="s">"Строка коннекта: %s\/%s@%s:%s:%s"</span><span class="p">,</span> <span class="n">ARRAYOFCONST</span><span class="p">((</span>
+            <span class="n">ValidCfg</span><span class="p">(</span><span class="n">FCfg</span><span class="o">-&gt;</span><span class="n">DbUserName</span><span class="p">,</span> <span class="s">"UserName"</span><span class="p">)</span>
+            <span class="p">,</span> <span class="n">ValidCfg</span><span class="p">(</span><span class="n">FCfg</span><span class="o">-&gt;</span><span class="n">DbPassword</span><span class="p">,</span> <span class="s">"Password"</span><span class="p">)</span>
+            <span class="p">,</span> <span class="n">ValidCfg</span><span class="p">(</span><span class="n">FCfg</span><span class="o">-&gt;</span><span class="n">DbServer</span><span class="p">,</span> <span class="s">"Server"</span><span class="p">)</span>
+            <span class="p">,</span> <span class="n">ValidCfg</span><span class="p">(</span><span class="n">FCfg</span><span class="o">-&gt;</span><span class="n">DbPort</span><span class="p">,</span> <span class="s">"Port"</span><span class="p">)</span>
+            <span class="p">,</span> <span class="n">ValidCfg</span><span class="p">(</span><span class="n">FCfg</span><span class="o">-&gt;</span><span class="n">DbSID</span><span class="p">,</span> <span class="s">"SID"</span><span class="p">)</span>
+        <span class="p">)));</span>
+    <span class="p">}</span>
+
+    <span class="n">try</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">FOra</span><span class="o">-&gt;</span><span class="n">Connected</span> <span class="o">==</span> <span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">FOra</span><span class="o">-&gt;</span><span class="n">Disconnect</span><span class="p">();</span>
+        <span class="p">}</span>
+        <span class="n">FOra</span><span class="o">-&gt;</span><span class="n">Options</span><span class="o">-&gt;</span><span class="n">Net</span> <span class="o">=</span> <span class="n">FDbNet</span><span class="p">;</span>
+        <span class="n">FOra</span><span class="o">-&gt;</span><span class="n">ConnectString</span> <span class="o">=</span> <span class="n">FDbConnectString</span><span class="p">;</span>
+        <span class="n">FOra</span><span class="o">-&gt;</span><span class="n">Connected</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+        <span class="n">FOra</span><span class="o">-&gt;</span><span class="n">Connected</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+        <span class="n">MsgLog</span> <span class="o">=</span> <span class="s">"Успешное соединение!"</span><span class="p">;</span>
+    <span class="p">}</span> <span class="n">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="o">&amp;</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">AnsiString</span> <span class="n">S</span><span class="p">;</span>
+        <span class="n">S</span> <span class="o">=</span> <span class="n">Format</span><span class="p">(</span><span class="s">"ERR: неудачное соединение: %s"</span><span class="p">,</span> <span class="n">ARRAYOFCONST</span><span class="p">((</span><span class="n">e</span><span class="p">.</span><span class="n">Message</span><span class="p">)));</span>
+        <span class="n">MsgLog</span> <span class="o">=</span> <span class="n">S</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>В процедуре на основании сформированных параметров происходит формирование строк-сообщений в файл журнала (с помощью свойства MsgLog).
+Затем используется объект FOra для организации коннекции к нужной базе. В случае соединения формируется строка.
+Объект FOra представляет собой экземпляр класса TOraSession (библиотека ODAC).</p>
+
+   	</div>
+</div></section>
+
+    <footer class="footer hexlet-footer py-5 mt-5 text-muted">
+  <div class="container">
+    <div class="row mt-1">
+      <div class="col-12 text-center">
+        <a href="https://aveligzhanin.github.io/">Велигжанин Андрей</a> — Программист-разработчик C++ и Oracle.
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>

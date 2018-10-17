@@ -1,0 +1,341 @@
+/* Отступ сверху для содержимого body (высота navbar = 50px)*/
+html, body {
+	font-family: "Times New Roman", Raleway, Times, sans-serif;
+     margin: 0px;
+     height: 100%;
+}
+#background {
+ left:0;
+  position: relative;
+ top:50px;
+  width: 100%;
+  height: 100%;
+}
+#body {
+  top:50px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+/* ---------------------------------------------- /*
+ * General Styles
+/* ---------------------------------------------- */
+
+.pfblock {
+	padding: 120px 0 100px;
+}
+
+.pfblock-gray {
+	background: #f5f5f5;
+}
+
+.pfblock-image {
+	padding: 0;
+ left:0;
+  position: relative;
+ top:0;
+  width: 100%;
+  height: 100%;
+}
+
+.calltoaction h1,
+.calltoaction h2,
+.calltoaction h3,
+.calltoaction h4,
+.calltoaction h5,
+.calltoaction h6,
+.pfblock-image,
+.pfblock-image h1,
+.pfblock-image h2,
+.pfblock-image h3,
+.pfblock-image h4,
+.pfblock-image h5,
+.pfblock-image h6 {
+	color: #fff;
+}
+
+.pfblock-header {
+	text-align: center;
+	margin: 0 0 60px;
+}
+
+.pfblock-header-left {
+	text-align: left;
+}
+
+.pfblock-header-left .pfblock-line {
+	width: inherit;
+	margin: 30px 0;
+}
+
+.pfblock-title{
+    font-weight: 800;
+}
+
+.pfblock-subtitle {
+	font-family: "Times New Roman", Raleway, Times, sans-serif;
+	font-style: normal;
+	font-size: 18px;
+}
+
+.pfblock-line {
+	background: rgba(135, 135, 135, 0.5);
+	width: 100px;
+	height: 1px;
+	margin: 30px auto;
+}
+
+.pfblock-icon {
+	font-size: 32px;
+}
+.calltoaction *{
+    text-align: center;
+}
+.calltoaction {
+    background: url(../images/item-3.jpg);
+	background-color: #222;
+	background-repeat: no-repeat;
+	background-position: 0 0;
+	-webkit-background-size: cover;
+	   -moz-background-size: cover;
+		 -o-background-size: cover;
+			background-size: cover;
+	padding: 50px 0;
+	color: #999;
+}
+
+.calltoaction h2 {
+	font-size: 20px;
+	letter-spacing: 1px;
+	margin-bottom: 5px;
+}
+
+.calltoaction-decription{
+    padding-top: 20px;
+    padding-bottom: 30px;
+    font-size: 20px;
+    color: #fff;
+}
+
+.calltoaction-btn {
+	text-align: center;
+}
+
+.calltoaction-btn > .btn {
+    background: rgba(255, 255, 255, .8);
+    color: #111;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+.calltoaction-btn > .btn:hover{
+    background: #fff;
+}
+
+.long-down {
+	margin-bottom: 40px;
+}
+
+/* ---------------------------------------------- /*
+ * Reset border-radius
+/* ---------------------------------------------- */
+
+.btn,
+.iconbox,
+.progress,
+#filter li,
+.scroll-up a,
+.form-control,
+.input-group-addon {
+	-webkit-border-radius: 3px;
+	   -moz-border-radius: 3px;
+		 -o-border-radius: 3px;
+			border-radius: 3px;
+}
+
+
+/* ---------------------------------------------- /*
+ * Servise
+/* ---------------------------------------------- */
+
+.iconbox {
+	background: #fff;
+	border-bottom: 1px solid #d4d4d4;
+	text-align: center;
+	padding: 40px 20px;
+	margin: 0 0 20px;
+}
+
+.iconbox-icon {
+	margin: 0 0 15px;
+	font-size: 32px;
+	color: #222;
+}
+
+.iconbox-title {
+	margin: 0 0 15px;
+	padding: 0;
+}
+
+/* ---------------------------------------------- /*
+ * Resume
+/* ---------------------------------------------- */
+#resume {
+	background-color: rgb(23, 23, 23);
+}
+#resume h3 {
+	text-align: center;
+}
+@media all and (min-width:768px)
+{
+#resume h3 {
+	text-align: left;
+}
+}
+#resume .education {
+	margin-top: 30px;
+}
+#resume .work-experience {
+	margin-top: 50px;
+}
+.panel-group.resume {
+	margin-top: 30px; position: relative;
+}
+.panel-group.resume .resume-item {
+	margin-bottom: 40px; position: relative;
+}
+@media all and (min-width:568px)
+{
+.panel-group.resume .resume-item {
+	margin-bottom: 20px;
+}
+}
+@media all and (min-width:768px)
+{
+.panel-group.resume .resume-item::before {
+	left: 170px; top: 0px; width: 1px; height: calc(100% + 20px); border-left-color: rgb(72, 72, 72); border-left-width: 1px; border-left-style: dashed; position: absolute; content: "";
+}
+}
+.panel-group.resume :last-child.resume-item {
+	margin-bottom: 0px;
+}
+.panel-group.resume :last-child.resume-item::before {
+	display: none;
+}
+.panel-group.resume .resume-item .resume-year {
+	border-radius: 4px; width: 120px; height: 40px; text-align: center; text-transform: uppercase; line-height: 40px; font-weight: 700; margin-right: auto; margin-bottom: -20px; margin-left: auto; display: block; position: relative; background-color: rgb(200, 10, 72);
+}
+@media all and (min-width:568px)
+{
+.panel-group.resume .resume-item .resume-year {
+	margin: 0px; left: 0px; top: 0px; position: absolute;
+}
+}
+.panel-group.resume .resume-item .resume-btn {
+	border-radius: 4px; left: 150px; top: 0px; width: 40px; height: 40px; position: absolute; z-index: 5; background-color: rgb(46, 46, 46);
+}
+@media all and (max-width:767px)
+{
+.panel-group.resume .resume-item .resume-btn {
+	display: none;
+}
+}
+.panel-group.resume .resume-item .resume-btn > a {
+	left: 0px; top: 0px; width: 40px; height: 40px; display: block; position: absolute; z-index: 10;
+}
+.panel-group.resume .resume-item .resume-btn > a::before {
+	left: 0px; top: 0px; width: 40px; height: 40px; text-align: center; color: rgb(255, 255, 255); line-height: 38px; font-size: 30px; font-weight: 700; display: block; position: absolute; z-index: 15; content: "-";
+}
+.panel-group.resume .resume-item .resume-btn > a.collapsed::before {
+	content: "+";
+}
+.panel-group.resume .resume-item .panel {
+	background: none; padding: 10px; border-radius: 0px; border: 1px solid rgb(110, 110, 110); border-image: none; width: 100%;
+}
+@media all and (min-width:568px)
+{
+.panel-group.resume .resume-item .panel {
+	width: calc(100% - 140px); margin-left: 140px;
+}
+}
+@media all and (min-width:768px)
+{
+.panel-group.resume .resume-item .panel {
+	width: calc(100% - 210px); margin-left: 210px;
+}
+}
+.panel-group.resume .resume-item .panel .panel-heading {
+	position: relative;
+}
+.panel-group.resume .resume-item .panel .panel-heading .panel-title {
+	text-transform: uppercase;
+}
+@media all and (max-width:567px)
+{
+.panel-group.resume .resume-item .panel .panel-heading .panel-title {
+	padding-top: 20px;
+}
+}
+.panel-group.resume .resume-item .panel .panel-collapse .panel-body {
+	padding-top: 5px; border-top-color: currentColor; border-top-width: medium; border-top-style: none;
+}
+.panel-group.resume .resume-item .panel .panel-collapse .panel-body p {
+	margin-bottom: 0px;
+}
+
+        .resume-years, .resume-years-0, .resume-years-1, 
+		.resume-details, .resume-details-0, .resume-details-1 {
+            font-size: 20px;
+            color: black;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+
+        .resume-years {
+            text-align: center;
+            background-color: #4f81bd;
+        }
+
+        .resume-years-0 {
+            text-align: center;
+            background-color: hsl(0,0%,95%);
+        }
+
+        .resume-years-1 {
+            text-align: center;
+            background-color: hsl(0,0%,90%);
+        }
+
+        .resume-details {
+            text-align: left;
+            background-color: #ffc000;
+        }
+
+        .resume-details-0 {
+            text-align: left;
+            background-color: hsl(0,0%,95%);
+        }
+
+        .resume-details-1 {
+            text-align: left;
+            background-color: hsl(0,0%,90%);
+        }
+
+p.my {
+	font-size: 17px;
+	text-indent: 25px;
+	text-align: justify;
+}
+.my p {
+	font-size: 17px;
+	text-indent: 25px;
+	text-align: justify;
+}
+.menu a {
+	font-size: 17px;
+}
+
+.my_verse p {
+	font-size: 17px;
+	text-align: justify;
+}
