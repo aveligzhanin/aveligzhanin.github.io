@@ -223,12 +223,12 @@ Scanner          630  582  595  446  622  651  395  579  728  484  573  381
 <span class="p">)</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">product</span><span class="p">;</span>
 </code></pre></div></div>
 
-<h3 id="5-генерация-непрерывного-интервала-номеров">5. ГЕНЕРАЦИЯ НЕПРЕРЫВНОГО ИНТЕРВАЛА НОМЕРОВ.</h3>
+<h4 id="5-генерация-непрерывного-интервала-номеров">5. ГЕНЕРАЦИЯ НЕПРЕРЫВНОГО ИНТЕРВАЛА НОМЕРОВ.</h4>
 
 <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">LEVEL</span> <span class="k">AS</span> <span class="n">ID</span> <span class="k">FROM</span> <span class="n">dual</span> <span class="k">CONNECT</span> <span class="k">BY</span> <span class="k">LEVEL</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="p">;</span>
 </code></pre></div></div>
 
-<h3 id="6-генерация-непрерывного-интервала-дат">6. ГЕНЕРАЦИЯ НЕПРЕРЫВНОГО ИНТЕРВАЛА ДАТ.</h3>
+<h4 id="6-генерация-непрерывного-интервала-дат">6. ГЕНЕРАЦИЯ НЕПРЕРЫВНОГО ИНТЕРВАЛА ДАТ.</h4>
 
 <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">to_date</span><span class="p">(</span><span class="s1">'1-7-2018'</span><span class="p">,</span> <span class="s1">'dd-mm-yyyy'</span><span class="p">)</span><span class="o">+</span><span class="k">LEVEL</span><span class="o">-</span><span class="mi">1</span> <span class="k">AS</span> <span class="n">dt</span> 
 <span class="k">FROM</span> <span class="n">dual</span> 
@@ -241,7 +241,7 @@ Scanner          630  582  595  446  622  651  395  579  728  484  573  381
 <span class="k">CONNECT</span> <span class="k">BY</span> <span class="p">:</span><span class="n">p_date_begin</span> <span class="o">+</span> <span class="p">(</span><span class="n">rownum</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">:</span><span class="n">p_period</span> <span class="o">&lt;</span> <span class="p">:</span><span class="n">p_date_end</span> <span class="o">+</span> <span class="p">:</span><span class="n">p_period</span><span class="p">;</span>
 </code></pre></div></div>
 
-<h3 id="7-запрос-из-функции">7. ЗАПРОС ИЗ ФУНКЦИИ.</h3>
+<h4 id="7-запрос-из-функции">7. ЗАПРОС ИЗ ФУНКЦИИ.</h4>
 
 <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Создать объектный тип.</span>
 <span class="k">create</span> <span class="k">or</span> <span class="k">replace</span> <span class="k">type</span> <span class="n">t_test</span> <span class="k">AS</span> <span class="k">object</span><span class="p">(</span>
@@ -272,7 +272,7 @@ Scanner          630  582  595  446  622  651  395  579  728  484  573  381
 <span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="k">table</span><span class="p">(</span><span class="n">pipe_test</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">));</span>
 </code></pre></div></div>
 
-<h3 id="8-еще-пример-pipeline-функции">8. ЕЩЕ ПРИМЕР PIPELINE-ФУНКЦИИ.</h3>
+<h4 id="8-еще-пример-pipeline-функции">8. ЕЩЕ ПРИМЕР PIPELINE-ФУНКЦИИ.</h4>
 
 <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Объявление пакета:</span>
 <span class="k">create</span> <span class="k">or</span> <span class="k">replace</span> <span class="n">package</span> <span class="n">pkg_test</span> <span class="k">as</span>
@@ -301,7 +301,7 @@ Scanner          630  582  595  446  622  651  395  579  728  484  573  381
 <span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="k">table</span> <span class="p">(</span><span class="n">pkg_test</span><span class="p">.</span><span class="n">get_emp</span><span class="p">);</span>
 </code></pre></div></div>
 
-<h3 id="9-произведение-вещественных-чисел">9. ПРОИЗВЕДЕНИЕ ВЕЩЕСТВЕННЫХ ЧИСЕЛ.</h3>
+<h4 id="9-произведение-вещественных-чисел">9. ПРОИЗВЕДЕНИЕ ВЕЩЕСТВЕННЫХ ЧИСЕЛ.</h4>
 
 <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Создание таблицы:</span>
 <span class="k">create</span> <span class="k">table</span> <span class="n">test_double</span> <span class="p">(</span><span class="n">a</span> <span class="n">number</span><span class="p">);</span>
@@ -311,13 +311,10 @@ Scanner          630  582  595  446  622  651  395  579  728  484  573  381
     <span class="k">commit</span><span class="p">;</span>
 <span class="k">end</span><span class="p">;</span>
 <span class="c1">-- Вычисление:</span>
-<span class="c1">-- 1) заменяем произведение возведением E в степень по сумме логарифмов.</span>
-<span class="c1">-- 2) определяем знак (* -1, если кол-во отрицательных чисел нечетно)</span>
-<span class="c1">-- 3) при вырожденном случае (все нули), умножаем на 0.</span>
 <span class="k">select</span>
-  <span class="n">exp</span><span class="p">(</span><span class="k">sum</span><span class="p">(</span> <span class="n">ln</span><span class="p">(</span><span class="n">decode</span><span class="p">(</span><span class="n">sign</span><span class="p">(</span><span class="n">a</span><span class="p">),</span>  <span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span>  <span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="n">a</span><span class="p">,</span>  <span class="n">a</span><span class="p">))))</span>            <span class="c1">-- 1)</span>
- <span class="o">*</span><span class="n">decode</span><span class="p">(</span><span class="k">mod</span><span class="p">(</span><span class="k">sum</span><span class="p">(</span><span class="n">decode</span><span class="p">(</span><span class="n">sign</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span><span class="mi">2</span><span class="p">),</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>         <span class="c1">-- 2)</span>
- <span class="o">*</span><span class="n">sign</span><span class="p">(</span><span class="k">min</span><span class="p">(</span><span class="k">abs</span><span class="p">(</span><span class="n">a</span><span class="p">)))</span>                                           <span class="c1">-- 3)</span>
+  <span class="n">exp</span><span class="p">(</span><span class="k">sum</span><span class="p">(</span> <span class="n">ln</span><span class="p">(</span><span class="n">decode</span><span class="p">(</span><span class="n">sign</span><span class="p">(</span><span class="n">a</span><span class="p">),</span>  <span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span>  <span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="n">a</span><span class="p">,</span>  <span class="n">a</span><span class="p">))))</span>            <span class="c1">-- 1) заменяем произведение возведением E в степень по сумме логарифмов.</span>
+ <span class="o">*</span><span class="n">decode</span><span class="p">(</span><span class="k">mod</span><span class="p">(</span><span class="k">sum</span><span class="p">(</span><span class="n">decode</span><span class="p">(</span><span class="n">sign</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span><span class="mi">2</span><span class="p">),</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>         <span class="c1">-- 2) определяем знак (* -1, если кол-во отрицательных чисел нечетно)</span>
+ <span class="o">*</span><span class="n">sign</span><span class="p">(</span><span class="k">min</span><span class="p">(</span><span class="k">abs</span><span class="p">(</span><span class="n">a</span><span class="p">)))</span>                                           <span class="c1">-- 3) при вырожденном случае (все нули), умножаем на 0.</span>
 <span class="k">from</span> <span class="n">test_double</span>
 <span class="p">;</span>
 </code></pre></div></div>
