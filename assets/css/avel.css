@@ -339,3 +339,7 @@ p.my {
 	font-size: 17px;
 	text-align: justify;
 }
+
+.my_verse h3 {
+	margin: 36px 0 24px 0;
+}
