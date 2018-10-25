@@ -342,4 +342,21 @@ p.my {
 
 .my_verse h3 {
 	margin: 36px 0 24px 0;
+	font-weight: bold;
 }
+
+.my_sonnet a {
+	font-size: 17px;
+}
+
+.my_sonnet p {
+	font-size: 17px;
+	text-align: justify;
+}
+
+.my_sonnet h2 {
+	margin: 0 0 24px 0;
+	font-size: 24px;
+	font-weight: bold;
+}
+

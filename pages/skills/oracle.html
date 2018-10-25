@@ -130,7 +130,7 @@
 <span class="k">where</span> <span class="n">rw</span> <span class="o">&gt;=</span> <span class="mi">10</span> <span class="k">and</span> <span class="n">rw</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">;</span>
 </code></pre></div></div>
 
-<h4 id="3-автоинкрементое-поле">3. АВТОИНКРЕМЕНТОЕ ПОЛЕ.</h4>
+<h4 id="3-автоинкрементное-поле">3. АВТОИНКРЕМЕНТНОЕ ПОЛЕ.</h4>
 
 <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Создать таблицу.</span>
 <span class="k">create</span> <span class="k">table</span> <span class="n">test</span> <span class="p">(</span><span class="n">test_id</span> <span class="n">number</span><span class="p">(</span><span class="mi">38</span><span class="p">),</span> <span class="n">code</span> <span class="n">varchar2</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
@@ -152,10 +152,10 @@
 <span class="k">Insert</span> <span class="k">into</span> <span class="n">test</span> <span class="p">(</span><span class="n">code</span><span class="p">)</span> <span class="k">values</span> <span class="p">(</span><span class="s1">'Two'</span><span class="p">);</span>
 <span class="k">Insert</span> <span class="k">into</span> <span class="n">test</span> <span class="p">(</span><span class="n">test_id</span><span class="p">,</span> <span class="n">code</span><span class="p">)</span> <span class="k">values</span> <span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="s1">'Three'</span><span class="p">);</span>
 
-<span class="c1">-- Для 12-го оракла можно обойтись без триггера:</span>
+<span class="c1">-- В Oracle 12c можно обойтись без триггера:</span>
 <span class="k">create</span> <span class="k">table</span> <span class="n">test</span><span class="p">(</span><span class="n">test_id</span> <span class="n">number</span><span class="p">(</span><span class="mi">38</span><span class="p">)</span><span class="k">default</span> <span class="n">sq_test</span><span class="p">.</span><span class="n">nextval</span>
 
-<span class="c1">-- Говорят, в 12-м оракла можно еще и так:</span>
+<span class="c1">-- Также в Oracle 12c есть следующая возможность:</span>
 <span class="k">create</span> <span class="k">global</span> <span class="k">temporary</span> <span class="k">table</span> <span class="n">my_temp_table</span> <span class="p">(</span>
 <span class="n">id_temp</span> <span class="n">number</span> <span class="k">generated</span> <span class="n">always</span> <span class="k">as</span> <span class="k">identity</span><span class="p">,</span>
 <span class="n">text_temp</span> <span class="n">varchar2</span><span class="p">(</span><span class="mi">4000</span><span class="p">),</span>
