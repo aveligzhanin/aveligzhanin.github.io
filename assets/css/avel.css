@@ -321,6 +321,11 @@ html, body {
             background-color: hsl(0,0%,90%);
         }
 
+.my_contact p {
+	font-size: 17px;
+	text-align: justify;
+}
+
 p.my {
 	font-size: 17px;
 	text-indent: 25px;

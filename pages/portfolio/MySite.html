@@ -1,0 +1,204 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Сайт на Jekyll</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Our style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/avel.css">
+</head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+  <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse menu">
+			<ul class="nav navbar-nav navbar-right">
+                 
+                    <li>
+                       <a href="/index.html#about">Обо мне</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#education">Образование</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#work">Работа</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#skills">Навыки</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#portfolio">Портфолио</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#hobby">Увлечения</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#contact">Контакты</a>
+                    </li>
+                 
+        	</ul>
+        </div>
+      </div>
+  </div>
+</nav>
+
+    <section class="pfblock"><div class="container">  		<!-- Translations -->
+	<div class="col-xs-6" align=left>
+		<a href="/index.html">home</a> \ <a href="/index.html#portfolio">Портфолио</a>
+	</div>
+
+	<div class="col-xs-6" align=right>
+		Написано: 27.10.2018
+	</div>
+
+   	<div class="col-sm-12 my">
+		<h2 id="использование-jekyll-для-сайта">Использование Jekyll для сайта.</h2>
+
+<p><a href="https://jekyllrb.com/docs/">Jekyll</a> представляет собой прекрасный инструмент для генерации статического сайта 
+(такого, что может быть размещен на свободном хостинге GitHub Pages).</p>
+
+<p>Использование Jekyll для разработки сайта - может также служить примером портфолио (потому что включает в себя элементы программирования).</p>
+
+<p>Использовать Jekyll – очень просто. Нужно придерживаться несложных соглашений и применять несколько команд для генерации результата.</p>
+
+<p>Эта команда используется для генерации сайта:</p>
+
+<pre><code class="language-jekyll">jekyll build
+</code></pre>
+
+<p>А эта команда используется запуска локльной копии сайта (отображается в браузере через //localhost:4000) :</p>
+
+<pre><code class="language-jekyll">jekyll serve
+</code></pre>
+
+<p>Мой сайт разработан с применением Jekyll, а ниже приведены интересные фрагменты, которые иллюстрируют применение возможностей, предоставляемых Jekyll.</p>
+
+<p>Так выглядит главная страница сайта, файл index.html (по существу, это простое включение секций, из которых состоит страница):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>---
+layout: default
+title: Home
+---
+  { % include logo.html %}
+  { % include about.html %}
+  { % include education.html %}
+  { % include work.html %}
+  { % include skills.html %}
+  { % include portfolio.html %}
+  { % include hobby.html %}
+  { % include contacts.html %}
+</code></pre></div></div>
+
+<p>А так выглядит файл work.html, содержащий секцию, посвященную “работе”:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;section id="work" class="pfblock"&gt;&lt;div class="container"&gt;              &lt;!-- work --&gt;
+    &lt;DIV class="container section-wrapper"&gt;
+        &lt;DIV class="section-content"&gt;
+            &lt;DIV class="row"&gt;
+                   &lt;div class="col-sm-6 col-sm-offset-3"&gt;
+                       &lt;div class="pfblock-header"&gt;
+                           &lt;h2 class="pfblock-title"&gt;{ { site.topic_work }}&lt;/h2&gt;
+                           &lt;div class="pfblock-line"&gt;&lt;/div&gt;
+                       &lt;/div&gt;
+                   &lt;/div&gt;
+               &lt;/div&gt;
+            &lt;DIV class="row work-experience"&gt;
+                   &lt;div class="col-xs-5 col-sm-5 col-md-4 col-lg-3 resume-years-1"&gt;{ { site.msg_resumePeriods }}&lt;/div&gt;
+                   &lt;div class="col-xs-7 col-sm-7 col-md-8 col-lg-9 resume-details-1"&gt;{ { site.msg_resumeTitle }}&lt;/div&gt;
+                { % assign resume_style = '1' %}
+                  { % for item in site.data.resume %}
+                    { % if resume_style == '1' %}
+                        { % assign resume_style = '0' %}
+                    { % else %}
+                        { % assign resume_style = '1' %}
+                    { % endif %}
+                       &lt;div class="col-xs-5 col-sm-5 col-md-4 col-lg-3 resume-years-{ { resume_style}}"&gt;
+                        &lt;P&gt;&lt;a href=""&gt;{ { item.years }}&lt;/a&gt;&lt;/P&gt;
+                    &lt;/div&gt;
+                       &lt;div class="col-xs-7 col-sm-7 col-md-8 col-lg-9 resume-details-{ {resume_style}}"&gt;
+                        { % assign delim = '' %}
+                        { % for name in item.name %}
+                            { { delim }}
+                              &lt;a href="" target="_blank"&gt;{ { name.job }}&lt;/a&gt;
+                            { % assign delim = ', ' %}
+                            { % if name.tip contains '(' %}
+                                { { name.tip }}
+                            { % endif %}
+                        { % endfor %}
+                           &lt;P&gt;{ { item.position }}&lt;/P&gt;
+                        &lt;ul&gt;
+                        { % for details in item.details %}
+                              &lt;li&gt;{ { details.detail }}&lt;/li&gt;
+                        { % endfor %}
+                        &lt;/ul&gt;
+                       &lt;/div&gt;
+                  { % endfor %}
+               &lt;/div&gt;
+        &lt;/DIV&gt;&lt;!-- //.section-content --&gt; 
+    &lt;/DIV&gt;&lt;!-- //.container --&gt;     
+&lt;/div&gt;&lt;/section&gt;
+</code></pre></div></div>
+
+<p>Секция содержит конструкцию, обрабатывающую цикл, в котором перебираются элементы коллекции (site.datа.resume), 
+из которых собирается контент.</p>
+
+<p>Коллекция site.data.resume выглядит следующим образом (приведен фрагмент первого элемента коллекции):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- item: BellIntegrator
+  years: "04.2007 - 08.2018"
+  page: "/pages/work/vimpelcom.html"
+  name: 
+    - job: "Совинтел"
+      site: "http://www.veon.com"
+    - job: "Вымпелком"
+      site: "http://www.beeline.ru"
+    - job: "Бэлл Интегратор"
+      site: "http://www.bellintegrator.ru/"
+  position: "Старший инженер-программист"
+  details: 
+    - detail: "Разработка систем business critical (полный цикл разработки)."
+    - detail: "Тестирование, внедрение в эксплуатацию."
+    - detail: "Поддержка III-го уровня."
+    - detail: "Консультирование администраторов систем."
+    - detail: "Составление технической документации и инструкций."
+</code></pre></div></div>
+
+   	</div>
+</div></section>
+
+    <footer class="footer hexlet-footer py-5 mt-5 text-muted">
+  <div class="container">
+    <div class="row mt-1">
+      <div class="col-12 text-center">
+        <a href="https://aveligzhanin.github.io/">Велигжанин Андрей</a> — Программист-разработчик C++ и Oracle.
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>

@@ -1,0 +1,439 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>UG7_Total.cpp</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Our style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/avel.css">
+</head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+  <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse menu">
+			<ul class="nav navbar-nav navbar-right">
+                 
+                    <li>
+                       <a href="/index.html#about">Обо мне</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#education">Образование</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#work">Работа</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#skills">Навыки</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#portfolio">Портфолио</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#hobby">Увлечения</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#contact">Контакты</a>
+                    </li>
+                 
+        	</ul>
+        </div>
+      </div>
+  </div>
+</nav>
+
+    <section class="pfblock"><div class="container">  		<!-- Translations -->
+	<div class="col-xs-6" align=left>
+		<a href="/index.html">home</a> \ <a href="/index.html#portfolio">Портфолио</a>
+	</div>
+
+	<div class="col-xs-6" align=right>
+		Написано: 27.10.2018
+	</div>
+
+   	<div class="col-sm-12 my">
+		<h2 id="ug7_totalcpp-использование-stl-в-модуле-проверки-результатов-звонкового-экспорта">UG7_Total.cpp, использование STL в модуле проверки результатов звонкового экспорта.</h2>
+
+<p>Модуль <strong>UG7_Total.cpp</strong> является частью функционала программы <strong>Gt2crm3</strong> 
+(которая предназначена для формирования текстового файла звонков, 
+необходимого для загрузки данных в систему CRM3 (звонковое хранилище)).</p>
+
+<p>Модуль выполняет проверку сформированных данных, то есть:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>а) производит считывание данных из сформированного файла, 
+б) суммирует данные по оператору, направлению доходности и направлению трафика (и по коду платежа, если нужно), 
+в) сохраняет итоги в файле и/или в БД (в зависимости от конфигурации).  
+</code></pre></div></div>
+
+<p>Данная проверка позволяет оперативно реагировать на проблемы, если со стороны потребителей данных (системы crm3) 
+возникнут претензии о том, что данные искажены или недостоверны. 
+В этом случае есть возможность быстро выполнить сверку данных (без обращения к звонковому файлу, содержащего миллионы строк данных) и 
+в приемлемые сроки обнаружить ошибку, в какой бы системе и по какой бы причине она не возникла.</p>
+
+<p>Алгоритмически задача проверки выполняется с помощью контейнера <strong>map</strong> STL:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">typedef</span> <span class="n">map</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="n">TGood</span><span class="o">&gt;</span> <span class="n">goods</span><span class="p">;</span> 
+</code></pre></div></div>
+
+<p>Здесь <strong>string</strong> представляет собой ключ (который содержит в качестве составных частей код оператора, направление доходности и трафика),
+а <strong>TGood</strong> представляет собой класс, содержащий итоги (количество звонков, общая длительность, сумма в валюте счета и в долларовом эквиваленте).</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">class</span> <span class="n">TGood</span> <span class="p">{</span>
+<span class="n">private</span><span class="o">:</span>
+    <span class="kt">int</span> <span class="n">FCalls</span><span class="p">;</span>
+    <span class="kt">double</span> <span class="n">FDuration</span><span class="p">;</span>
+    <span class="kt">double</span> <span class="n">FRub</span><span class="p">;</span>
+    <span class="kt">double</span> <span class="n">FUsd</span><span class="p">;</span>
+<span class="n">public</span><span class="o">:</span>
+    <span class="kr">__fastcall</span> <span class="n">TGood</span><span class="p">();</span>
+    <span class="kr">__fastcall</span> <span class="n">TGood</span><span class="p">(</span><span class="kt">int</span> <span class="n">calls</span><span class="p">,</span> <span class="kt">double</span> <span class="n">duration</span><span class="p">,</span> <span class="kt">double</span> <span class="n">rub</span><span class="p">,</span> <span class="kt">double</span> <span class="n">usd</span><span class="p">);</span>
+    <span class="kr">__fastcall</span> <span class="n">TGood</span><span class="p">(</span><span class="k">const</span> <span class="n">TGood</span> <span class="o">&amp;</span><span class="n">X</span><span class="p">);</span>
+    <span class="n">TGood</span> <span class="o">&amp;</span> <span class="kr">__fastcall</span> <span class="n">operator</span> <span class="o">=</span><span class="p">(</span><span class="k">const</span> <span class="n">TGood</span> <span class="o">&amp;</span><span class="n">X</span><span class="p">);</span>
+    <span class="n">TGood</span> <span class="o">&amp;</span> <span class="kr">__fastcall</span> <span class="n">operator</span> <span class="o">+=</span><span class="p">(</span><span class="k">const</span> <span class="n">TGood</span> <span class="o">&amp;</span><span class="n">X</span><span class="p">);</span>
+    <span class="n">__property</span> <span class="kt">int</span> <span class="n">Calls</span> <span class="o">=</span> <span class="p">{</span> <span class="n">read</span> <span class="o">=</span> <span class="n">FCalls</span> <span class="p">};</span>
+    <span class="n">__property</span> <span class="kt">double</span> <span class="n">Duration</span> <span class="o">=</span> <span class="p">{</span> <span class="n">read</span> <span class="o">=</span> <span class="n">FDuration</span> <span class="p">};</span>
+    <span class="n">__property</span> <span class="kt">double</span> <span class="n">Rub</span> <span class="o">=</span> <span class="p">{</span> <span class="n">read</span> <span class="o">=</span> <span class="n">FRub</span> <span class="p">};</span>
+    <span class="n">__property</span> <span class="kt">double</span> <span class="n">Usd</span> <span class="o">=</span> <span class="p">{</span> <span class="n">read</span> <span class="o">=</span> <span class="n">FUsd</span> <span class="p">};</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>Работа с контейнером <strong>goods</strong> ведется с помощью следующего класса (показаны основные методы для работы с контейнером):</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">class</span> <span class="n">TTotals</span> <span class="p">{</span>
+<span class="n">private</span><span class="o">:</span>
+    <span class="n">goods</span> <span class="n">FGoods</span><span class="p">;</span>
+    <span class="c1">// остальное удалено</span>
+<span class="n">public</span><span class="o">:</span>
+    <span class="kr">__fastcall</span> <span class="n">TTotals</span><span class="p">();</span>
+    <span class="c1">// остальное удалено</span>
+    <span class="kt">void</span> <span class="kr">__fastcall</span> <span class="n">Add</span><span class="p">(</span>
+        <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">Scala</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">InvDir</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">Dir</span><span class="p">,</span>
+        <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">CallDate</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">PayCode</span><span class="p">,</span>
+        <span class="kt">int</span> <span class="n">calls</span><span class="p">,</span> <span class="kt">double</span> <span class="n">duration</span><span class="p">,</span> <span class="kt">double</span> <span class="n">rub</span><span class="p">,</span> <span class="kt">double</span> <span class="n">usd</span>
+    <span class="p">);</span>
+    <span class="kt">void</span> <span class="kr">__fastcall</span> <span class="n">Print</span><span class="p">(</span><span class="kt">FILE</span> <span class="o">*</span><span class="n">f</span><span class="p">);</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>В методе <strong>TTotals.Add()</strong> происходит заполнение контейнера:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="kr">__fastcall</span> <span class="n">TTotals</span><span class="o">::</span><span class="n">Add</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">Scala</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">InvDir</span><span class="p">,</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">Dir</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">CallDate</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">PayCode</span><span class="p">,</span>
+    <span class="kt">int</span> <span class="n">calls</span><span class="p">,</span> <span class="kt">double</span> <span class="n">duration</span><span class="p">,</span> <span class="kt">double</span> <span class="n">rub</span><span class="p">,</span> <span class="kt">double</span> <span class="n">usd</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">TGood</span> <span class="n">G</span><span class="p">(</span><span class="n">calls</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">rub</span><span class="p">,</span> <span class="n">usd</span><span class="p">);</span>
+    <span class="kt">char</span> <span class="n">buf</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span>
+    <span class="kt">char</span> <span class="n">bfA</span><span class="p">[</span><span class="mi">8</span><span class="p">];</span>
+    <span class="kt">char</span> <span class="n">SDir</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">SInvDir</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+    <span class="kt">char</span> <span class="n">code</span><span class="p">;</span>
+    <span class="n">string</span> <span class="n">key</span><span class="p">;</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="n">InvDir</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="sc">'0'</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">SInvDir</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="sc">'T'</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">SInvDir</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="sc">'F'</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">SInvDir</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="sc">'\0'</span><span class="p">;</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="n">Dir</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="sc">'0'</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">SDir</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="sc">'I'</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">SDir</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="sc">'O'</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">SDir</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="sc">'\0'</span><span class="p">;</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="n">FTstPayCodes</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">sprintf</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="s">"%s;%s;%s;%s;%s"</span><span class="p">,</span> <span class="n">Scala</span><span class="p">,</span> <span class="n">SInvDir</span><span class="p">,</span> <span class="n">SDir</span><span class="p">,</span> <span class="n">CallDate</span><span class="p">,</span> <span class="n">PayCode</span><span class="p">);</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">buf</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">code</span> <span class="o">=</span> <span class="p">(</span><span class="n">CallDate</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="sc">'0'</span><span class="p">)</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="p">(</span><span class="n">CallDate</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="sc">'0'</span><span class="p">);</span>
+        <span class="n">code</span> <span class="o">|=</span> <span class="p">((</span><span class="n">InvDir</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="sc">'0'</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">5</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0x20</span><span class="p">;</span>
+        <span class="n">code</span> <span class="o">|=</span> <span class="p">((</span><span class="n">Dir</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="sc">'0'</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">6</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0x40</span><span class="p">;</span>
+        <span class="n">sprintf</span><span class="p">(</span><span class="n">bfA</span><span class="p">,</span> <span class="s">"%c%s"</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">Scala</span><span class="p">);</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">bfA</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">goods</span><span class="o">::</span><span class="n">iterator</span> <span class="n">p</span> <span class="o">=</span> <span class="n">FGoods</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">p</span> <span class="o">==</span> <span class="n">FGoods</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="p">{</span>
+        <span class="c1">// Нет узла, добавляем</span>
+        <span class="n">FGoods</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">G</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="c1">// Есть узел, модифицируем</span>
+        <span class="n">FGoods</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">+=</span> <span class="n">G</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Метод <strong>TTotals::Print()</strong> содержит код использования контейнера:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="kr">__fastcall</span> <span class="n">TTotals</span><span class="o">::</span><span class="n">Print</span><span class="p">(</span><span class="kt">FILE</span> <span class="o">*</span><span class="n">f</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">char</span> <span class="n">SMin</span><span class="p">[</span><span class="mi">32</span><span class="p">],</span> <span class="n">SAmt</span><span class="p">[</span><span class="mi">32</span><span class="p">],</span> <span class="n">SUsd</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span>
+
+    <span class="n">string</span> <span class="n">value</span><span class="p">;</span>
+    <span class="n">goods</span><span class="o">::</span><span class="n">iterator</span> <span class="n">p</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">calls</span><span class="p">;</span>
+    <span class="kt">double</span> <span class="n">duration</span><span class="p">;</span>
+    <span class="kt">double</span> <span class="n">rub</span><span class="p">;</span>
+    <span class="kt">double</span> <span class="n">usd</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="n">buf</span><span class="p">[</span><span class="mi">128</span><span class="p">];</span>
+    <span class="kt">char</span> <span class="n">code</span><span class="p">,</span> <span class="n">InvDir</span><span class="p">,</span> <span class="n">Dir</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">D</span><span class="p">;</span>
+    <span class="n">TGood</span> <span class="n">G</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">p</span> <span class="o">=</span> <span class="n">FGoods</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span> <span class="n">p</span> <span class="o">!=</span> <span class="n">FGoods</span><span class="p">.</span><span class="n">end</span><span class="p">();</span> <span class="o">++</span><span class="n">p</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">first</span><span class="p">;</span>
+        <span class="n">G</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">;</span>
+        <span class="n">sprintf</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="s">"%s"</span><span class="p">,</span> <span class="n">value</span><span class="p">);</span>
+        <span class="n">GetFloatStr</span><span class="p">(</span><span class="n">SMin</span><span class="p">,</span> <span class="n">G</span><span class="p">.</span><span class="n">Duration</span><span class="o">/</span><span class="mi">60</span><span class="p">);</span>
+        <span class="n">GetFloatStr</span><span class="p">(</span><span class="n">SAmt</span><span class="p">,</span> <span class="n">G</span><span class="p">.</span><span class="n">Rub</span><span class="p">);</span>
+        <span class="n">GetFloatStr</span><span class="p">(</span><span class="n">SUsd</span><span class="p">,</span> <span class="n">G</span><span class="p">.</span><span class="n">Usd</span><span class="p">);</span>
+        <span class="n">calls</span> <span class="o">=</span> <span class="n">G</span><span class="p">.</span><span class="n">Calls</span><span class="p">;</span>
+        <span class="n">duration</span> <span class="o">=</span> <span class="n">G</span><span class="p">.</span><span class="n">Duration</span><span class="p">;</span>
+        <span class="n">rub</span> <span class="o">=</span> <span class="n">G</span><span class="p">.</span><span class="n">Rub</span><span class="p">;</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">FTstPayCodes</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">fprintf</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s">"%s;%d;%s;%s;%s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span>
+                <span class="n">buf</span><span class="p">,</span> <span class="n">calls</span><span class="p">,</span> <span class="n">SMin</span><span class="p">,</span> <span class="n">SAmt</span><span class="p">,</span> <span class="n">SUsd</span> <span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">code</span> <span class="o">=</span> <span class="n">buf</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+            <span class="n">D</span> <span class="o">=</span> <span class="n">code</span> <span class="o">&amp;</span> <span class="mh">0x1F</span><span class="p">;</span>
+            <span class="n">InvDir</span> <span class="o">=</span> <span class="p">(</span><span class="n">code</span> <span class="o">&amp;</span> <span class="mh">0x20</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">5</span><span class="p">;</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">InvDir</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="n">InvDir</span> <span class="o">=</span> <span class="sc">'T'</span><span class="p">;</span> <span class="p">}</span> <span class="k">else</span> <span class="p">{</span> <span class="n">InvDir</span> <span class="o">=</span> <span class="sc">'F'</span><span class="p">;</span> <span class="p">}</span>
+            <span class="n">Dir</span> <span class="o">=</span> <span class="p">(</span><span class="n">code</span> <span class="o">&amp;</span> <span class="mh">0x40</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">6</span><span class="p">;</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">Dir</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="n">Dir</span> <span class="o">=</span> <span class="sc">'I'</span><span class="p">;</span> <span class="p">}</span> <span class="k">else</span> <span class="p">{</span> <span class="n">Dir</span> <span class="o">=</span> <span class="sc">'O'</span><span class="p">;</span> <span class="p">}</span>
+            <span class="n">fprintf</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s">"%s;%c;%c;%02d;%d;%s;%s;%s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span>
+                <span class="o">&amp;</span><span class="n">buf</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">InvDir</span><span class="p">,</span> <span class="n">Dir</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">calls</span><span class="p">,</span> <span class="n">SMin</span><span class="p">,</span> <span class="n">SAmt</span><span class="p">,</span> <span class="n">SUsd</span> <span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Процесс проверки результирующего файла выполняется в классе <strong>TG7_Tst</strong>:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">class</span> <span class="n">TG7_Tst</span> <span class="o">:</span> <span class="n">public</span> <span class="n">TG7_Core</span>
+<span class="p">{</span>
+<span class="n">private</span><span class="o">:</span>
+    <span class="n">TTotals</span> <span class="n">FTotals</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="kr">__fastcall</span> <span class="n">TstBody</span><span class="p">();</span>
+	<span class="n">bool</span> <span class="kr">__fastcall</span> <span class="n">TstFile</span><span class="p">(</span><span class="n">AnsiString</span> <span class="n">Fn</span><span class="p">);</span>
+	<span class="kt">void</span> <span class="kr">__fastcall</span> <span class="n">TstOne</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">s</span><span class="p">);</span>
+	<span class="c1">// остальное удалено</span>
+<span class="n">public</span><span class="o">:</span>
+    <span class="kr">__fastcall</span> <span class="n">TG7_Tst</span><span class="p">();</span>
+    <span class="kr">__fastcall</span> <span class="o">~</span><span class="n">TG7_Tst</span><span class="p">();</span>
+	<span class="c1">// остальное удалено</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>Ниже приводится код функции <strong>TstOne()</strong>, в которой производится разбор одной строки файла-результата:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* Тестирование одной строчки из файла-результата.
+*/</span>
+<span class="kt">void</span> <span class="kr">__fastcall</span> <span class="n">TG7_Tst</span><span class="o">::</span><span class="n">TstOne</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">s</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="n">Scala</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">CallDate</span><span class="p">[</span><span class="mi">24</span><span class="p">],</span> <span class="n">PayCode</span><span class="p">[</span><span class="mi">64</span><span class="p">],</span> <span class="n">RevCost</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">Dir</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">RealDur</span><span class="p">[</span><span class="mi">24</span><span class="p">];</span>
+    <span class="kt">char</span> <span class="n">Amt</span><span class="p">[</span><span class="mi">24</span><span class="p">],</span> <span class="n">AmtUsd</span><span class="p">[</span><span class="mi">24</span><span class="p">];</span>
+    <span class="kt">double</span> <span class="n">FRealDur</span><span class="p">,</span> <span class="n">FAmt</span><span class="p">,</span> <span class="n">FAmtUsd</span><span class="p">;</span>
+
+    <span class="n">ParseStr</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">Scala</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="sc">','</span><span class="p">,</span> <span class="sc">'\''</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">Scala</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">'\0'</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ParseStr</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">CallDate</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="sc">','</span><span class="p">,</span> <span class="sc">'\''</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+        <span class="n">CallDate</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="o">=</span> <span class="sc">'\0'</span><span class="p">;</span>
+        <span class="n">ParseStr</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">PayCode</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="sc">','</span><span class="p">,</span> <span class="sc">'\''</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+        <span class="n">ParseStr</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">RevCost</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="sc">','</span><span class="p">,</span> <span class="sc">'\''</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+        <span class="n">ParseStr</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">Dir</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="sc">','</span><span class="p">,</span> <span class="sc">'\''</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+        <span class="n">ParseStr</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">RealDur</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="sc">','</span><span class="p">,</span> <span class="sc">'\''</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+        <span class="n">ParseStr</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">Amt</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="sc">','</span><span class="p">,</span> <span class="sc">'\''</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+        <span class="n">ParseStr</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">AmtUsd</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="sc">','</span><span class="p">,</span> <span class="sc">'\''</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+        <span class="n">FRealDur</span> <span class="o">=</span> <span class="n">atof</span><span class="p">(</span><span class="n">RealDur</span><span class="p">);</span>
+        <span class="n">FAmt</span> <span class="o">=</span> <span class="n">atof</span><span class="p">(</span><span class="n">Amt</span><span class="p">);</span>
+        <span class="n">FAmtUsd</span> <span class="o">=</span> <span class="n">atof</span><span class="p">(</span><span class="n">AmtUsd</span><span class="p">);</span>
+        <span class="n">FTotals</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span>
+            <span class="n">Scala</span><span class="p">,</span> <span class="n">RevCost</span><span class="p">,</span> <span class="n">Dir</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">CallDate</span><span class="p">[</span><span class="mi">8</span><span class="p">],</span> <span class="n">PayCode</span><span class="p">,</span>
+            <span class="mi">1</span><span class="p">,</span> <span class="n">FRealDur</span><span class="p">,</span> <span class="n">FAmt</span><span class="p">,</span> <span class="n">FAmtUsd</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Здесь производится распарсивание строки на нужные токены (с помощью функции <strong>ParseStr()</strong>, здесь не показана), 
+формирование переменных и вызов метода <strong>FTotals.Add</strong> для заполнения контейнера с итогами разбора.</p>
+
+<p>Ниже приводится код функции для тестирования файла:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#define BUF_SIZE    1024*1024
+</span>
+<span class="cm">/* Тестирование файла
+*/</span>
+<span class="n">bool</span> <span class="kr">__fastcall</span> <span class="n">TG7_Tst</span><span class="o">::</span><span class="n">TstFile</span><span class="p">(</span><span class="n">AnsiString</span> <span class="n">Fn</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">buf</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="n">sbuf</span><span class="p">[</span><span class="mi">256</span><span class="p">];</span>
+    <span class="kt">int</span> <span class="n">FIn</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">BufCnt</span><span class="p">,</span> <span class="n">BufPtr</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">SPtr</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="k">if</span><span class="p">((</span><span class="n">buf</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span> <span class="n">calloc</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">BUF_SIZE</span><span class="p">))</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">CErrLog</span> <span class="o">=</span> <span class="s">"Ошибка выделения буфера"</span><span class="p">;</span>
+        <span class="n">CStat</span> <span class="o">=</span> <span class="n">errERR</span><span class="p">;</span>
+        <span class="k">goto</span> <span class="n">L1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span><span class="p">((</span><span class="n">FIn</span> <span class="o">=</span> <span class="n">FileOpen</span><span class="p">(</span><span class="n">Fn</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">fmOpenRead</span> <span class="o">|</span> <span class="n">fmShareDenyWrite</span><span class="p">))</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">CErrLog</span> <span class="o">=</span> <span class="n">Format</span><span class="p">(</span><span class="s">"Ошибка открытия файла %s"</span><span class="p">,</span> <span class="n">ARRAYOFCONST</span><span class="p">((</span><span class="n">Fn</span><span class="p">)));</span>
+        <span class="n">CStat</span> <span class="o">=</span> <span class="n">errERR</span><span class="p">;</span>
+        <span class="k">goto</span> <span class="n">L2</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">CMsgLog</span> <span class="o">=</span> <span class="n">Format</span><span class="p">(</span><span class="s">"Начало тестирования файла %s"</span><span class="p">,</span> <span class="n">ARRAYOFCONST</span><span class="p">((</span><span class="n">Fn</span><span class="p">)));</span>
+
+    <span class="k">while</span><span class="p">(</span> <span class="p">(</span><span class="n">BufCnt</span> <span class="o">=</span> <span class="n">FileRead</span><span class="p">(</span><span class="n">FIn</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="n">BUF_SIZE</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span><span class="p">(</span> <span class="n">BufPtr</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">BufPtr</span> <span class="o">&lt;</span> <span class="n">BufCnt</span><span class="p">;</span> <span class="n">BufPtr</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="n">BufPtr</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">'\n'</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">sbuf</span><span class="p">[</span><span class="n">SPtr</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">buf</span><span class="p">[</span><span class="n">BufPtr</span><span class="p">];</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="n">sbuf</span><span class="p">[</span><span class="n">SPtr</span><span class="p">]</span> <span class="o">=</span> <span class="sc">'\0'</span><span class="p">;</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">FTstDoIt</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">TstOne</span><span class="p">(</span><span class="n">sbuf</span><span class="p">);</span>
+                <span class="p">}</span>
+                <span class="n">SPtr</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="n">memset</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="sc">'\0'</span><span class="p">,</span> <span class="n">BUF_SIZE</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">FileClose</span><span class="p">(</span><span class="n">FIn</span><span class="p">);</span>
+
+<span class="n">L2</span><span class="o">:</span>
+    <span class="c1">// освобождаем буфер</span>
+    <span class="n">try</span> <span class="p">{</span>
+        <span class="n">free</span><span class="p">(</span><span class="n">buf</span><span class="p">);</span>
+    <span class="p">}</span> <span class="n">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="o">&amp;</span><span class="n">exc</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">CErrLog</span> <span class="o">=</span> <span class="n">Format</span><span class="p">(</span><span class="s">"Ошибка освобождения буфера: %s"</span><span class="p">,</span>
+            <span class="n">ARRAYOFCONST</span><span class="p">((</span>
+            <span class="n">exc</span><span class="p">.</span><span class="n">Message</span>
+        <span class="p">)));</span>
+    <span class="p">}</span>
+
+<span class="n">L1</span><span class="o">:</span>
+    <span class="n">CMsgLog</span> <span class="o">=</span> <span class="n">Format</span><span class="p">(</span><span class="s">"Окончание тестирования файла %s"</span><span class="p">,</span> <span class="n">ARRAYOFCONST</span><span class="p">((</span><span class="n">Fn</span><span class="p">)));</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">CStat</span> <span class="o">==</span> <span class="n">OK</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>В функции происходит выделение памяти под буфер, далее открывается файл для разбора, из файла происходит блочное считывание,
+после чего осуществляется вызов метода <strong>TstOne</strong> для каждой строки, находящейся в буфере.</p>
+
+<p>В заключение приведен код <strong>TG7_Tst::TstBody()</strong>, в котором и осуществляется процесс проверки файла-результата:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* Код процесса.
+*/</span>
+<span class="kt">void</span> <span class="kr">__fastcall</span> <span class="n">TG7_Tst</span><span class="o">::</span><span class="n">TstBody</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">AnsiString</span> <span class="n">S</span><span class="p">,</span> <span class="n">File_to</span><span class="p">,</span> <span class="n">DayStr</span><span class="p">;</span>
+    <span class="n">AnsiString</span> <span class="n">File_det</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">MIdx</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">RCidx</span><span class="p">,</span> <span class="n">fHndl_out</span><span class="p">,</span> <span class="n">Day</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="n">ToDurStr</span><span class="p">[</span><span class="mi">32</span><span class="p">],</span> <span class="n">ToMinStr</span><span class="p">[</span><span class="mi">32</span><span class="p">],</span> <span class="n">ToAmtStr</span><span class="p">[</span><span class="mi">32</span><span class="p">],</span> <span class="n">ToUsdStr</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span>
+    <span class="kt">char</span> <span class="n">FrDurStr</span><span class="p">[</span><span class="mi">32</span><span class="p">],</span> <span class="n">FrMinStr</span><span class="p">[</span><span class="mi">32</span><span class="p">],</span> <span class="n">FrAmtStr</span><span class="p">[</span><span class="mi">32</span><span class="p">],</span> <span class="n">FrUsdStr</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span>
+    <span class="n">bool</span> <span class="n">found</span><span class="p">,</span> <span class="n">created</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="kt">FILE</span> <span class="o">*</span><span class="n">FOut</span><span class="p">,</span> <span class="o">*</span><span class="n">FDet</span><span class="p">;</span>
+
+    <span class="n">DayStr</span> <span class="o">=</span> <span class="n">CCallDate</span><span class="p">.</span><span class="n">FormatString</span><span class="p">(</span><span class="s">"dd"</span><span class="p">);</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="n">FTstDet</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">File_det</span> <span class="o">=</span> <span class="n">Format</span><span class="p">(</span><span class="s">"%s%s.det"</span><span class="p">,</span> <span class="n">ARRAYOFCONST</span><span class="p">((</span>
+            <span class="n">CTotDir</span><span class="p">,</span> <span class="n">CCallDate</span><span class="p">.</span><span class="n">FormatString</span><span class="p">(</span><span class="s">"yyyymmdd"</span><span class="p">)</span> <span class="p">)));</span>
+        <span class="k">if</span><span class="p">((</span><span class="n">FDet</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="n">File_det</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="s">"a"</span><span class="p">))</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">CErrLog</span> <span class="o">=</span> <span class="n">Format</span><span class="p">(</span><span class="s">"Ошибка открытия файла %s"</span><span class="p">,</span>
+                <span class="n">ARRAYOFCONST</span><span class="p">((</span><span class="n">File_det</span>
+            <span class="p">)));</span>
+            <span class="k">return</span> <span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">FTotals</span><span class="p">.</span><span class="n">TstPayCodes</span> <span class="o">=</span> <span class="n">FTstPayCodes</span><span class="p">;</span>
+    <span class="n">FTotals</span><span class="p">.</span><span class="n">TstInsViaProc</span> <span class="o">=</span> <span class="n">FTstInsViaProc</span><span class="p">;</span>
+    <span class="n">FTotals</span><span class="p">.</span><span class="n">Day</span> <span class="o">=</span> <span class="n">FDay</span><span class="p">;</span>
+    <span class="n">FTotals</span><span class="p">.</span><span class="n">ExpID</span> <span class="o">=</span> <span class="n">CExpID</span><span class="p">;</span>
+    <span class="n">FTotals</span><span class="p">.</span><span class="n">CommitRows</span> <span class="o">=</span> <span class="n">CCommitRows</span><span class="p">;</span>
+
+    <span class="n">TstDay</span><span class="p">();</span>       <span class="c1">// тестирование данных за день (может быть несколько файлов)</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="n">FTstMakeCsv</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">File_to</span> <span class="o">=</span> <span class="n">Format</span><span class="p">(</span><span class="s">"%s"</span><span class="p">,</span> <span class="n">ARRAYOFCONST</span><span class="p">((</span> <span class="n">FTarget_tot</span> <span class="p">)));</span>
+        <span class="k">if</span><span class="p">(</span> <span class="n">FileExists</span><span class="p">(</span><span class="n">File_to</span><span class="p">)</span> <span class="o">==</span> <span class="nb">false</span> <span class="p">)</span> <span class="p">{</span>
+            <span class="n">CMsgLog</span> <span class="o">=</span> <span class="n">Format</span><span class="p">(</span><span class="s">"Файл %s не существует. Создаю"</span><span class="p">,</span>
+                <span class="n">ARRAYOFCONST</span><span class="p">((</span><span class="n">File_to</span>
+            <span class="p">)));</span>
+            <span class="n">created</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">if</span><span class="p">((</span><span class="n">FOut</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="n">File_to</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="s">"a"</span><span class="p">))</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">CErrLog</span> <span class="o">=</span> <span class="n">Format</span><span class="p">(</span><span class="s">"Ошибка открытия файла %s"</span><span class="p">,</span> <span class="n">ARRAYOFCONST</span><span class="p">((</span><span class="n">File_to</span><span class="p">)));</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">created</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">FTotals</span><span class="p">.</span><span class="n">PrintHead</span><span class="p">(</span><span class="n">FOut</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="n">FTotals</span><span class="p">.</span><span class="n">Print</span><span class="p">(</span><span class="n">FOut</span><span class="p">);</span>
+            <span class="n">fclose</span><span class="p">(</span><span class="n">FOut</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="n">FTstSaveRez</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">CMsgLog</span> <span class="o">=</span> <span class="s">"Сохранение результатов тестирования в БД"</span><span class="p">;</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">FTotals</span><span class="p">.</span><span class="n">InsIntoRez</span><span class="p">(</span><span class="n">COra</span><span class="p">,</span> <span class="n">CCallDate</span><span class="p">.</span><span class="n">FormatString</span><span class="p">(</span><span class="s">"dd"</span><span class="p">).</span><span class="n">ToIntDef</span><span class="p">(</span><span class="mi">1</span><span class="p">)))</span> <span class="p">{</span>
+            <span class="n">CMsgLog</span> <span class="o">=</span> <span class="s">"Результаты тестирования сохранены в БД"</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">CErrLog</span> <span class="o">=</span> <span class="s">"Ошибка при сохранении результатов тестирования"</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Как видно, <strong>TstBody()</strong> делегирует процесс тестирования функции <strong>TstDay()</strong>, 
+которая осуществляет вызовы функций <strong>TstFile()</strong> (на этой странице не показано), 
+где происходит заполнение контейнера с результатами тестирования.</p>
+
+<p>После чего происходит формирования файла с результатами тестирования (через вызов <strong>FTotals.Print</strong>) 
+либо сохранение результатов в БД (на этой странице не показано).</p>
+
+   	</div>
+</div></section>
+
+    <footer class="footer hexlet-footer py-5 mt-5 text-muted">
+  <div class="container">
+    <div class="row mt-1">
+      <div class="col-12 text-center">
+        <a href="https://aveligzhanin.github.io/">Велигжанин Андрей</a> — Программист-разработчик C++ и Oracle.
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>
