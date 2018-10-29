@@ -272,12 +272,14 @@
         <span class="n">FOra</span><span class="o">-&gt;</span><span class="n">ConnectString</span> <span class="o">=</span> <span class="n">FDbConnectString</span><span class="p">;</span>
         <span class="n">FOra</span><span class="o">-&gt;</span><span class="n">Connected</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
         <span class="n">FOra</span><span class="o">-&gt;</span><span class="n">Connected</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-        <span class="n">MsgLog</span> <span class="o">=</span> <span class="s">"Успешное соединение!"</span><span class="p">;</span>
     <span class="p">}</span> <span class="n">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="o">&amp;</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span>
         <span class="n">AnsiString</span> <span class="n">S</span><span class="p">;</span>
         <span class="n">S</span> <span class="o">=</span> <span class="n">Format</span><span class="p">(</span><span class="s">"ERR: неудачное соединение: %s"</span><span class="p">,</span> <span class="n">ARRAYOFCONST</span><span class="p">((</span><span class="n">e</span><span class="p">.</span><span class="n">Message</span><span class="p">)));</span>
         <span class="n">MsgLog</span> <span class="o">=</span> <span class="n">S</span><span class="p">;</span>
+        <span class="k">return</span><span class="p">;</span>
     <span class="p">}</span>
+
+    <span class="n">MsgLog</span> <span class="o">=</span> <span class="s">"Успешное соединение!"</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div></div>
 <p>В процедуре на основании сформированных параметров происходит формирование строк-сообщений в файл журнала (с помощью свойства MsgLog).
