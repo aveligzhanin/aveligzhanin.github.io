@@ -27,7 +27,7 @@
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея (написано в 2018 г)</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse menu">
 			<ul class="nav navbar-nav navbar-right">
@@ -84,7 +84,7 @@
 
 <p>Модуль выполняет проверку сформированных данных, то есть:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>а) производит считывание данных из сформированного файла, 
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>а) производит считывание данных из сформированного файла, 
 б) суммирует данные по оператору, направлению доходности и направлению трафика (и по коду платежа, если нужно), 
 в) сохраняет итоги в файле и/или в БД (в зависимости от конфигурации).  
 </code></pre></div></div>
@@ -103,12 +103,12 @@
 а <strong>TGood</strong> представляет собой класс, содержащий итоги (количество звонков, общая длительность, сумма в валюте счета и в долларовом эквиваленте).</p>
 
 <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">class</span> <span class="n">TGood</span> <span class="p">{</span>
-<span class="n">private</span><span class="o">:</span>
+<span class="nl">private:</span>
     <span class="kt">int</span> <span class="n">FCalls</span><span class="p">;</span>
     <span class="kt">double</span> <span class="n">FDuration</span><span class="p">;</span>
     <span class="kt">double</span> <span class="n">FRub</span><span class="p">;</span>
     <span class="kt">double</span> <span class="n">FUsd</span><span class="p">;</span>
-<span class="n">public</span><span class="o">:</span>
+<span class="nl">public:</span>
     <span class="kr">__fastcall</span> <span class="n">TGood</span><span class="p">();</span>
     <span class="kr">__fastcall</span> <span class="n">TGood</span><span class="p">(</span><span class="kt">int</span> <span class="n">calls</span><span class="p">,</span> <span class="kt">double</span> <span class="n">duration</span><span class="p">,</span> <span class="kt">double</span> <span class="n">rub</span><span class="p">,</span> <span class="kt">double</span> <span class="n">usd</span><span class="p">);</span>
     <span class="kr">__fastcall</span> <span class="n">TGood</span><span class="p">(</span><span class="k">const</span> <span class="n">TGood</span> <span class="o">&amp;</span><span class="n">X</span><span class="p">);</span>
@@ -124,10 +124,10 @@
 <p>Работа с контейнером <strong>goods</strong> ведется с помощью следующего класса (показаны основные методы для работы с контейнером):</p>
 
 <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">class</span> <span class="n">TTotals</span> <span class="p">{</span>
-<span class="n">private</span><span class="o">:</span>
+<span class="nl">private:</span>
     <span class="n">goods</span> <span class="n">FGoods</span><span class="p">;</span>
     <span class="c1">// остальное удалено</span>
-<span class="n">public</span><span class="o">:</span>
+<span class="nl">public:</span>
     <span class="kr">__fastcall</span> <span class="n">TTotals</span><span class="p">();</span>
     <span class="c1">// остальное удалено</span>
     <span class="kt">void</span> <span class="kr">__fastcall</span> <span class="n">Add</span><span class="p">(</span>
@@ -237,13 +237,13 @@
 
 <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">class</span> <span class="n">TG7_Tst</span> <span class="o">:</span> <span class="n">public</span> <span class="n">TG7_Core</span>
 <span class="p">{</span>
-<span class="n">private</span><span class="o">:</span>
+<span class="nl">private:</span>
     <span class="n">TTotals</span> <span class="n">FTotals</span><span class="p">;</span>
     <span class="kt">void</span> <span class="kr">__fastcall</span> <span class="n">TstBody</span><span class="p">();</span>
 	<span class="n">bool</span> <span class="kr">__fastcall</span> <span class="n">TstFile</span><span class="p">(</span><span class="n">AnsiString</span> <span class="n">Fn</span><span class="p">);</span>
 	<span class="kt">void</span> <span class="kr">__fastcall</span> <span class="n">TstOne</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">s</span><span class="p">);</span>
 	<span class="c1">// остальное удалено</span>
-<span class="n">public</span><span class="o">:</span>
+<span class="nl">public:</span>
     <span class="kr">__fastcall</span> <span class="n">TG7_Tst</span><span class="p">();</span>
     <span class="kr">__fastcall</span> <span class="o">~</span><span class="n">TG7_Tst</span><span class="p">();</span>
 	<span class="c1">// остальное удалено</span>
@@ -329,7 +329,7 @@
 
     <span class="n">FileClose</span><span class="p">(</span><span class="n">FIn</span><span class="p">);</span>
 
-<span class="n">L2</span><span class="o">:</span>
+<span class="nl">L2:</span>
     <span class="c1">// освобождаем буфер</span>
     <span class="n">try</span> <span class="p">{</span>
         <span class="n">free</span><span class="p">(</span><span class="n">buf</span><span class="p">);</span>
@@ -340,7 +340,7 @@
         <span class="p">)));</span>
     <span class="p">}</span>
 
-<span class="n">L1</span><span class="o">:</span>
+<span class="nl">L1:</span>
     <span class="n">CMsgLog</span> <span class="o">=</span> <span class="n">Format</span><span class="p">(</span><span class="s">"Окончание тестирования файла %s"</span><span class="p">,</span> <span class="n">ARRAYOFCONST</span><span class="p">((</span><span class="n">Fn</span><span class="p">)));</span>
 
     <span class="k">return</span> <span class="p">(</span><span class="n">CStat</span> <span class="o">==</span> <span class="n">OK</span><span class="p">);</span>

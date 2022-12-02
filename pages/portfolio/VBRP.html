@@ -27,7 +27,7 @@
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея (написано в 2018 г)</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse menu">
 			<ul class="nav navbar-nav navbar-right">
@@ -97,7 +97,7 @@
 
 <p>Главным образом, система INTEXP должна:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) Предоставить данные модулю VBR+.   
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) Предоставить данные модулю VBR+.   
 2) Получить результаты расчета от модуля VBR+ и консолидировать их с исходными данными.  
 </code></pre></div></div>
 
@@ -109,7 +109,7 @@
 
 <p>Требования к доработке.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1.	Функциональные требования.  
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1.	Функциональные требования.  
     ФТ1.	Реализовать в IntExp объекты для предоставления информации модулю VBRP.
     ФТ2.	Реализовать в IntExp функции для модуля VBRP для предоставления информации.
     ФТ3.	Реализовать в IntExp функции получения информации от модуля VBRP о результатах расчета.
@@ -147,8 +147,8 @@
     <span class="c1">-- Сформировать задание на предоставление данных из ICS offline для VBR+</span>
     <span class="c1">-- </span>
     <span class="k">PROCEDURE</span> <span class="n">GetGt7</span> <span class="p">(</span>                       
-        <span class="n">p_From</span> <span class="k">IN</span> <span class="n">date</span>                           <span class="c1">-- Дата начала периода предоставления данных</span>
-        <span class="p">,</span> <span class="n">p_To</span> <span class="k">IN</span> <span class="n">date</span> <span class="k">DEFAULT</span> <span class="k">null</span>             <span class="c1">-- Дата окончания периода предоставления данных. Если NULL, то используется последний день месяца для параметра p_From</span>
+        <span class="n">p_From</span> <span class="k">IN</span> <span class="nb">date</span>                           <span class="c1">-- Дата начала периода предоставления данных</span>
+        <span class="p">,</span> <span class="n">p_To</span> <span class="k">IN</span> <span class="nb">date</span> <span class="k">DEFAULT</span> <span class="k">null</span>             <span class="c1">-- Дата окончания периода предоставления данных. Если NULL, то используется последний день месяца для параметра p_From</span>
         <span class="p">,</span> <span class="n">p_Scala</span> <span class="k">IN</span> <span class="n">varchar2</span> <span class="k">DEFAULT</span> <span class="k">null</span>        <span class="c1">-- скала, по которой сформировать данные</span>
         <span class="p">,</span> <span class="n">p_InvDir</span> <span class="k">IN</span> <span class="n">varchar2</span> <span class="k">DEFAULT</span> <span class="k">null</span>        <span class="c1">-- направление счета</span>
         <span class="p">,</span> <span class="n">p_SnapID</span> <span class="k">OUT</span> <span class="n">number</span>                    <span class="c1">-- временная метка формирования данных</span>
@@ -158,8 +158,8 @@
     <span class="c1">-- Результат -- в v_dailysum_vk</span>
     <span class="c1">-- </span>
     <span class="k">PROCEDURE</span> <span class="n">GetVk</span> <span class="p">(</span>                       
-        <span class="n">p_From</span> <span class="k">IN</span> <span class="n">date</span>                          <span class="c1">-- Дата начала периода предоставления данных</span>
-        <span class="p">,</span> <span class="n">p_To</span> <span class="k">IN</span> <span class="n">date</span> <span class="k">DEFAULT</span> <span class="k">null</span>             <span class="c1">-- Дата окончания периода предоставления данных. Если NULL, то используется последний день месяца для параметра p_From</span>
+        <span class="n">p_From</span> <span class="k">IN</span> <span class="nb">date</span>                          <span class="c1">-- Дата начала периода предоставления данных</span>
+        <span class="p">,</span> <span class="n">p_To</span> <span class="k">IN</span> <span class="nb">date</span> <span class="k">DEFAULT</span> <span class="k">null</span>             <span class="c1">-- Дата окончания периода предоставления данных. Если NULL, то используется последний день месяца для параметра p_From</span>
         <span class="p">,</span> <span class="n">p_Scala</span> <span class="k">IN</span> <span class="n">varchar2</span> <span class="k">DEFAULT</span> <span class="k">null</span>        <span class="c1">-- скала, по которой сформировать данные</span>
         <span class="p">,</span> <span class="n">p_InvDir</span> <span class="k">IN</span> <span class="n">varchar2</span> <span class="k">DEFAULT</span> <span class="k">null</span>        <span class="c1">-- направление счета</span>
         <span class="p">,</span> <span class="n">p_SnapID</span> <span class="k">OUT</span> <span class="n">number</span>                    <span class="c1">-- возвращается номер среза</span>
@@ -185,7 +185,7 @@
     <span class="c1">-- Сформировать задание на отправку данных в VBR+.</span>
     <span class="c1">-- </span>
     <span class="k">PROCEDURE</span> <span class="n">SendVbrData</span> <span class="p">(</span>       
-        <span class="n">p_Src</span> <span class="k">IN</span> <span class="n">char</span>                            <span class="c1">-- Инстанс</span>
+        <span class="n">p_Src</span> <span class="k">IN</span> <span class="nb">char</span>                            <span class="c1">-- Инстанс</span>
         <span class="p">,</span> <span class="n">p_Year</span> <span class="k">IN</span> <span class="n">number</span>                        <span class="c1">-- год</span>
         <span class="p">,</span> <span class="n">p_Month</span> <span class="k">IN</span> <span class="n">number</span>                        <span class="c1">-- месяц</span>
     <span class="p">);</span>
@@ -193,10 +193,10 @@
     <span class="c1">-- Сформировать задание на отправку справочников в VBR+.</span>
     <span class="c1">-- </span>
     <span class="k">PROCEDURE</span> <span class="n">SendRef</span> <span class="p">(</span>       
-        <span class="n">p_Src</span> <span class="k">IN</span> <span class="n">char</span> <span class="k">DEFAULT</span> <span class="s1">'0'</span>                  <span class="c1">-- Инстанс</span>
+        <span class="n">p_Src</span> <span class="k">IN</span> <span class="nb">char</span> <span class="k">DEFAULT</span> <span class="s1">'0'</span>                  <span class="c1">-- Инстанс</span>
         <span class="p">,</span> <span class="n">p_Mask</span> <span class="k">IN</span> <span class="n">varchar2</span> <span class="k">DEFAULT</span> <span class="s1">'A'</span>        <span class="c1">-- маска</span>
-        <span class="p">,</span> <span class="n">p_From</span> <span class="k">IN</span> <span class="n">date</span> <span class="k">DEFAULT</span> <span class="k">null</span>             <span class="c1">-- дата начала периода</span>
-        <span class="p">,</span> <span class="n">p_To</span> <span class="k">IN</span> <span class="n">date</span> <span class="k">DEFAULT</span> <span class="k">null</span>                <span class="c1">-- дата завершения периода</span>
+        <span class="p">,</span> <span class="n">p_From</span> <span class="k">IN</span> <span class="nb">date</span> <span class="k">DEFAULT</span> <span class="k">null</span>             <span class="c1">-- дата начала периода</span>
+        <span class="p">,</span> <span class="n">p_To</span> <span class="k">IN</span> <span class="nb">date</span> <span class="k">DEFAULT</span> <span class="k">null</span>                <span class="c1">-- дата завершения периода</span>
     <span class="p">);</span>
                 
 <span class="k">END</span><span class="p">;</span>
@@ -234,14 +234,14 @@
     <span class="n">x_TaskType</span> <span class="n">varchar2</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
     <span class="n">x_TaskStatus</span> <span class="n">number</span><span class="p">;</span>
     <span class="n">x_Err</span> <span class="n">number</span><span class="p">;</span>
-    <span class="n">x_Ok</span> <span class="n">boolean</span><span class="p">;</span>
+    <span class="n">x_Ok</span> <span class="nb">boolean</span><span class="p">;</span>
     <span class="n">x_Rows</span> <span class="n">number</span><span class="p">;</span>
     <span class="n">pragma</span> <span class="n">autonomous_transaction</span><span class="p">;</span>
 <span class="k">BEGIN</span>
     <span class="c1">-- Начинаем выполнять задание</span>
-    <span class="k">update</span> <span class="n">task_list</span> <span class="n">partition</span> <span class="p">(</span><span class="n">p_ready</span><span class="p">)</span> <span class="n">r</span> 
+    <span class="k">update</span> <span class="n">task_list</span> <span class="k">partition</span> <span class="p">(</span><span class="n">p_ready</span><span class="p">)</span> <span class="n">r</span> 
     <span class="k">set</span> <span class="n">r</span><span class="p">.</span><span class="n">task_status</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">start_date</span> <span class="o">=</span> <span class="n">sysdate</span><span class="p">,</span> <span class="n">end_date</span> <span class="o">=</span> <span class="k">null</span>
-    <span class="k">where</span> <span class="n">r</span><span class="p">.</span><span class="n">task_id</span> <span class="o">=</span> <span class="p">(</span><span class="k">select</span> <span class="k">min</span><span class="p">(</span><span class="n">task_id</span><span class="p">)</span> <span class="k">from</span> <span class="n">task_list</span> <span class="n">partition</span> <span class="p">(</span><span class="n">p_ready</span><span class="p">))</span>
+    <span class="k">where</span> <span class="n">r</span><span class="p">.</span><span class="n">task_id</span> <span class="o">=</span> <span class="p">(</span><span class="k">select</span> <span class="k">min</span><span class="p">(</span><span class="n">task_id</span><span class="p">)</span> <span class="k">from</span> <span class="n">task_list</span> <span class="k">partition</span> <span class="p">(</span><span class="n">p_ready</span><span class="p">))</span>
     <span class="k">and</span> <span class="n">r</span><span class="p">.</span><span class="n">task_type</span> <span class="k">in</span> <span class="p">(</span><span class="s1">'DoneVbrProcess'</span><span class="p">,</span> <span class="s1">'GetGt7'</span><span class="p">,</span> <span class="s1">'GetVk'</span>
         <span class="p">,</span> <span class="s1">'ClearData'</span><span class="p">,</span> <span class="s1">'SendVbrData'</span><span class="p">,</span> <span class="s1">'SendRef'</span><span class="p">)</span>
     <span class="n">returning</span> <span class="n">r</span><span class="p">.</span><span class="n">task_id</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span><span class="n">task_type</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span><span class="n">errors</span>

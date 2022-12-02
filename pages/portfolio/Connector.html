@@ -27,7 +27,7 @@
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея (написано в 2018 г)</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse menu">
 			<ul class="nav navbar-nav navbar-right">
@@ -146,9 +146,9 @@
 
 <h2 id="файл-sl_maincpp">Файл SL_main.cpp</h2>
 
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;vcl.h&gt;
-#include "USL.h"
-#include "stdio.h"
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;vcl.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">"USL.h"</span><span class="cp">
+#include</span> <span class="cpf">"stdio.h"</span><span class="cp">
 </span>
 <span class="n">namespace</span> <span class="n">sln</span> <span class="o">=</span> <span class="n">SL_Names</span><span class="p">;</span>
 
@@ -175,12 +175,12 @@
 <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#ifndef USLH
 #define USLH
 </span>
-<span class="cp">#include "vcl.h"
-#include "Ora.hpp"
-#include "SyncObjs.hpp"
-#include "USL_Cfg.h"
-#include "UAL_Log.h"
-#include "UAL_Prg.h"
+<span class="cp">#include</span> <span class="cpf">"vcl.h"</span><span class="cp">
+#include</span> <span class="cpf">"Ora.hpp"</span><span class="cp">
+#include</span> <span class="cpf">"SyncObjs.hpp"</span><span class="cp">
+#include</span> <span class="cpf">"USL_Cfg.h"</span><span class="cp">
+#include</span> <span class="cpf">"UAL_Log.h"</span><span class="cp">
+#include</span> <span class="cpf">"UAL_Prg.h"</span><span class="cp">
 </span>
 <span class="n">namespace</span> <span class="n">AL</span> <span class="o">=</span> <span class="n">AL_Names</span><span class="p">;</span>
 
@@ -188,7 +188,7 @@
 
 <span class="n">class</span> <span class="n">TSL</span> <span class="o">:</span> <span class="n">public</span> <span class="n">AL</span><span class="o">::</span><span class="n">TAL_Prg</span> <span class="p">{</span>
     <span class="p">...</span>
-<span class="n">public</span><span class="o">:</span>
+<span class="nl">public:</span>
     <span class="kr">__fastcall</span> <span class="n">TSL</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">);</span>
     <span class="k">virtual</span> <span class="kr">__fastcall</span> <span class="o">~</span><span class="n">TSL</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
     <span class="kt">void</span> <span class="kr">__fastcall</span> <span class="n">Run</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>

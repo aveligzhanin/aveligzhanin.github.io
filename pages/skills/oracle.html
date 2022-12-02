@@ -27,7 +27,7 @@
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея (написано в 2018 г)</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse menu">
 			<ul class="nav navbar-nav navbar-right">
@@ -95,7 +95,7 @@
 <span class="c1">-- 3) Просмотр дубликатов.</span>
 <span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="p">(</span>
    <span class="k">select</span> <span class="n">rowid</span><span class="p">,</span> <span class="n">value</span>
-      <span class="p">,</span> <span class="n">row_number</span><span class="p">()</span> <span class="n">over</span><span class="p">(</span><span class="n">partition</span> <span class="k">by</span> <span class="n">value</span> <span class="k">order</span> <span class="k">by</span> <span class="n">value</span><span class="p">)</span> <span class="k">AS</span> <span class="n">rn</span> 
+      <span class="p">,</span> <span class="n">row_number</span><span class="p">()</span> <span class="n">over</span><span class="p">(</span><span class="k">partition</span> <span class="k">by</span> <span class="n">value</span> <span class="k">order</span> <span class="k">by</span> <span class="n">value</span><span class="p">)</span> <span class="k">AS</span> <span class="n">rn</span> 
       <span class="k">from</span> <span class="n">TEST_DOUBLE</span>
 <span class="p">)</span> <span class="k">where</span> <span class="n">rn</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">;</span> 
 
@@ -103,7 +103,7 @@
 <span class="k">Begin</span>
    <span class="k">delete</span> <span class="k">from</span> <span class="n">TEST_DOUBLE</span> <span class="k">where</span> <span class="n">rowid</span> <span class="k">in</span> <span class="p">(</span>
       <span class="k">select</span> <span class="n">rowid</span> <span class="k">from</span> <span class="p">(</span><span class="k">select</span> <span class="n">rowid</span><span class="p">,</span> <span class="n">value</span>
-      <span class="p">,</span> <span class="n">row_number</span><span class="p">()</span> <span class="n">over</span><span class="p">(</span><span class="n">partition</span> <span class="k">by</span> <span class="n">value</span> <span class="k">order</span> <span class="k">by</span> <span class="n">value</span><span class="p">)</span> <span class="k">AS</span> <span class="n">rn</span> 
+      <span class="p">,</span> <span class="n">row_number</span><span class="p">()</span> <span class="n">over</span><span class="p">(</span><span class="k">partition</span> <span class="k">by</span> <span class="n">value</span> <span class="k">order</span> <span class="k">by</span> <span class="n">value</span><span class="p">)</span> <span class="k">AS</span> <span class="n">rn</span> 
       <span class="k">from</span> <span class="n">TEST_DOUBLE</span><span class="p">)</span> <span class="k">where</span> <span class="n">rn</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">);</span>
    <span class="k">commit</span><span class="p">;</span>
 <span class="k">End</span><span class="p">;</span>
@@ -113,7 +113,7 @@
 <h4 id="2-возврат-части-отсортированной-выборки">2. ВОЗВРАТ ЧАСТИ ОТСОРТИРОВАННОЙ ВЫБОРКИ.</h4>
 
 <p>Условие:</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(Выдать записи с 10-й по 19-ю из выборки по представлению ALL_TABLES, отсортированной по полю TABLE_NAME)
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(Выдать записи с 10-й по 19-ю из выборки по представлению ALL_TABLES, отсортированной по полю TABLE_NAME)
 </code></pre></div></div>
 
 <p>Способ 1 (через rownum):</p>
@@ -166,7 +166,7 @@
 <h4 id="4-транспонирование-строк-в-столбцы">4. ТРАНСПОНИРОВАНИЕ СТРОК В СТОЛБЦЫ.</h4>
 
 <p>Условие:</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-- Есть таблица продаж:
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-- Есть таблица продаж:
 create table sales(product varchar(20),amount int, dt date);
 /* 
 Нужно вывести отчет в виде:
@@ -219,7 +219,7 @@ Scanner          630  582  595  446  622  651  395  579  728  484  573  381
 <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">T</span> <span class="n">PIVOT</span> <span class="p">(</span>
   <span class="k">SUM</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span> <span class="k">FOR</span> <span class="p">(</span><span class="n">mm</span><span class="p">)</span> <span class="k">IN</span> <span class="p">(</span>
 <span class="s1">'01'</span> <span class="k">AS</span> <span class="n">Jan</span><span class="p">,</span> <span class="s1">'02'</span> <span class="k">AS</span> <span class="n">Feb</span><span class="p">,</span> <span class="s1">'03'</span> <span class="k">AS</span> <span class="n">Mar</span><span class="p">,</span> <span class="s1">'04'</span> <span class="k">AS</span> <span class="n">Apr</span><span class="p">,</span> <span class="s1">'05'</span> <span class="k">AS</span> <span class="n">Mai</span><span class="p">,</span> <span class="s1">'06'</span> <span class="k">AS</span> <span class="n">Jun</span>
-<span class="p">,</span> <span class="s1">'07'</span> <span class="k">AS</span> <span class="n">Jul</span><span class="p">,</span> <span class="s1">'08'</span> <span class="k">AS</span> <span class="n">Aug</span><span class="p">,</span> <span class="s1">'09'</span> <span class="k">AS</span> <span class="n">Sep</span><span class="p">,</span> <span class="s1">'10'</span> <span class="k">AS</span> <span class="n">Oct</span><span class="p">,</span> <span class="s1">'11'</span> <span class="k">AS</span> <span class="n">Nov</span><span class="p">,</span> <span class="s1">'12'</span> <span class="k">AS</span> <span class="n">Dec</span><span class="p">)</span>
+<span class="p">,</span> <span class="s1">'07'</span> <span class="k">AS</span> <span class="n">Jul</span><span class="p">,</span> <span class="s1">'08'</span> <span class="k">AS</span> <span class="n">Aug</span><span class="p">,</span> <span class="s1">'09'</span> <span class="k">AS</span> <span class="n">Sep</span><span class="p">,</span> <span class="s1">'10'</span> <span class="k">AS</span> <span class="n">Oct</span><span class="p">,</span> <span class="s1">'11'</span> <span class="k">AS</span> <span class="n">Nov</span><span class="p">,</span> <span class="s1">'12'</span> <span class="k">AS</span> <span class="nb">Dec</span><span class="p">)</span>
 <span class="p">)</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">product</span><span class="p">;</span>
 </code></pre></div></div>
 
