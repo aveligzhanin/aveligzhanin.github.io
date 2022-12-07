@@ -1,0 +1,223 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Перекодировка из UTF-8 в Cp-1251</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Our style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/avel.css">
+</head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+  <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse menu">
+			<ul class="nav navbar-nav navbar-right">
+                 
+                    <li>
+                       <a href="/index.html#about">Обо мне</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#education">Образование</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#work">Работа</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#skills">Навыки</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#portfolio">Портфолио</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#hobby">Увлечения</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#contact">Контакты</a>
+                    </li>
+                 
+        	</ul>
+        </div>
+      </div>
+  </div>
+</nav>
+
+    <section class="pfblock"><div class="container">  		<!-- Translations -->
+	<div class="col-xs-6" align=left>
+		<a href="/index.html">home</a> \ <a href="/pages/skills/cpp.html">Cpp. Задачки для практики</a>
+	</div>
+
+	<div class="col-xs-6" align=right>
+		Написано: 07.12.2022
+	</div>
+
+   	<div class="col-sm-12 my">
+		<h1 id="перекодировка-из-utf-8-в-cp-1251">Перекодировка из UTF-8 в Cp-1251.</h1>
+
+<p>Написать функцию для перекодировки строки из <strong>UTF-8</strong> в <strong>Cp-1251</strong>.</p>
+
+<h3 id="стандартная-функция">Стандартная функция</h3>
+
+<p>UtfToAnsi()</p>
+
+<h3 id="алгоритм">Алгоритм</h3>
+
+<p>Перекодировка осуществляется по следующему алгоритму:</p>
+
+<ol>
+  <li>Проверяем, что последовательность представляет собой uft-8 (старший октет начинается с битов <strong>110</strong>).</li>
+  <li>Определяем последовательность байт, из которых состоит текущий символ (байты в последовательности имеют старшие биты <strong>10</strong>).</li>
+  <li>Отбрасываем маркерные биты и сдвигаем байты вправо на размер отброшенных битов.</li>
+  <li>Полученное число представляет собой символ <strong>Unicode</strong>.</li>
+  <li>Преобразуем символ <strong>Unicode</strong> в символ <strong>Cp1251</strong>.</li>
+</ol>
+
+<h3 id="пример">Пример</h3>
+
+<p>Нужно преобразовать символ ‘Д’.</p>
+
+<p>В <strong>Utf-8</strong> будет код 0xD0 0x94 (<strong>110</strong>1.0000.<strong>10</strong>01.0100).</p>
+
+<p><img src="/assets/images/D094.jpg" alt="AVeligzhanin" /></p>
+
+<p>Отбрасываем маркерные биты (выделены зелёным).</p>
+
+<p><img src="/assets/images/D094a.jpg" alt="AVeligzhanin" /></p>
+
+<p>и сдвигаем биты старшего байта (вправо на два, на количество отброшенных бит младшего байта, сдвигаемые биты помечены серым цветом):</p>
+
+<p><img src="/assets/images/D094b.jpg" alt="AVeligzhanin" /></p>
+
+<p>получаем 0000.0100.0001.0100. Это символ Unicode 0x414</p>
+
+<p><img src="/assets/images/D094c.jpg" alt="AVeligzhanin" /></p>
+
+<h3 id="пример-преобразования-3-х-байтового-символа">Пример преобразования 3-х байтового символа.</h3>
+
+<p>Нужно преобразовать символ <strong>‘№’</strong>.</p>
+
+<p>В Utf-8 будет код 0xE2 0x84 0x96 (<strong>111</strong>0.0010.<strong>10</strong>00.0100.<strong>10</strong>01.0110)</p>
+
+<p><img src="/assets/images/E28496.jpg" alt="AVeligzhanin" /></p>
+
+<p>Отбрасываем маркерные биты (выделены зелёным).</p>
+
+<p><img src="/assets/images/E28496a.jpg" alt="AVeligzhanin" /></p>
+
+<p>Выполняем сдвиг (сдвигаемые биты помечены розовым и серым цветом).</p>
+
+<p><img src="/assets/images/E28496b.jpg" alt="AVeligzhanin" /></p>
+
+<p>Получаем 0010.0001.0001.0110. Это символ <strong>Unicode</strong> 0x2116. То есть ‘№’. В кодировке <strong>Windows-1251</strong> – 0xB9.</p>
+
+<h3 id="кодировка-windows-1251">Кодировка Windows-1251.</h3>
+
+<p><img src="/assets/images/W1251.jpg" alt="AVeligzhanin" /></p>
+
+<h3 id="функция-utf8tocp1251">Функция Utf8ToCp1251()</h3>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="n">AnsiString</span> <span class="kr">__fastcall</span> <span class="n">osopo_func</span><span class="o">::</span><span class="n">Utf8ToCp1251</span><span class="p">(</span><span class="n">AnsiString</span> <span class="n">X</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">AnsiString</span> <span class="n">R</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">stringstream</span> <span class="n">ss</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">s</span> <span class="o">=</span> <span class="n">X</span><span class="p">.</span><span class="n">c_str</span><span class="p">();</span>
+    <span class="kt">char</span> <span class="n">Ch</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">stop</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">n</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">b</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+
+    <span class="n">try</span> <span class="p">{</span>
+        <span class="c1">// проход по строке, символы по одному копируются в std::stringstream</span>
+        <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">'\0'</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span><span class="p">((</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0xC0</span><span class="p">)</span> <span class="o">!=</span> <span class="mh">0xC0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="c1">// не utf-8</span>
+                <span class="n">ss</span> <span class="o">&lt;&lt;</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="c1">// если utf-8</span>
+                <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                <span class="c1">// первый байт встреченной последовательности запоминаем в массиве b, префикс '110' отсекается</span>
+                <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0x1F</span><span class="p">;</span>
+                <span class="c1">// разбираем последующие байты вида '10xx xxxx'</span>
+                <span class="k">do</span> <span class="p">{</span>
+                    <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+                    <span class="k">if</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="sc">'\0'</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="c1">// на всякий случай, если встретится конец строки, выйдем</span>
+                        <span class="k">return</span> <span class="n">ss</span><span class="p">.</span><span class="n">str</span><span class="p">().</span><span class="n">c_str</span><span class="p">();</span>
+                    <span class="p">}</span>
+                    <span class="c1">// запоминаются в массиве, отсекая префиксы '10'</span>
+                    <span class="n">b</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="n">j</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0x3F</span><span class="p">;</span>
+                    <span class="c1">// повторяем до тех пор, пока идут байты '10xx xxxx'</span>
+                <span class="p">}</span> <span class="k">while</span> <span class="p">((</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0xC0</span><span class="p">)</span> <span class="o">==</span> <span class="mh">0x80</span><span class="p">);</span>
+                <span class="c1">// теперь байты сдвигаются вправо на величину префикса</span>
+                <span class="c1">// то есть нужно от предыдущего байта нужно взять 2 младших бита</span>
+                <span class="c1">// и записать их в старшие биты нашего байта</span>
+                <span class="n">l</span> <span class="o">=</span> <span class="n">j</span><span class="p">;</span>
+                <span class="k">while</span><span class="p">(</span><span class="n">j</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">b</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">|=</span> <span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0x03</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">6</span><span class="p">;</span>
+                    <span class="n">b</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;&gt;=</span> <span class="mi">2</span><span class="p">;</span>
+                    <span class="n">j</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">l</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="c1">// 2-х байтовая последовательность utf-8</span>
+                    <span class="n">n</span> <span class="o">=</span> <span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">|</span> <span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+                <span class="p">}</span>  <span class="k">else</span> <span class="p">{</span>
+                    <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                <span class="p">}</span>
+
+                <span class="c1">// теперь у нас в n -- символ Unicode</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">n</span> <span class="o">&gt;=</span> <span class="mh">0x410</span> <span class="o">&amp;&amp;</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mh">0x44F</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="c1">// если это кириллица, перекодируем в cp-1251</span>
+                    <span class="n">Ch</span> <span class="o">=</span> <span class="p">(</span><span class="mh">0xC0</span> <span class="o">+</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span><span class="p">)(</span><span class="n">n</span> <span class="o">-</span> <span class="mh">0x410</span><span class="p">));</span>
+                    <span class="n">ss</span> <span class="o">&lt;&lt;</span> <span class="n">Ch</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="n">l</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="n">R</span> <span class="o">=</span> <span class="n">ss</span><span class="p">.</span><span class="n">str</span><span class="p">().</span><span class="n">c_str</span><span class="p">();</span>
+    <span class="p">}</span> <span class="n">catch</span><span class="p">(...)</span> <span class="p">{}</span>
+
+    <span class="k">return</span> <span class="n">R</span><span class="p">;</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+   	</div>
+</div></section>
+
+    <footer class="footer hexlet-footer py-5 mt-5 text-muted">
+  <div class="container">
+    <div class="row mt-1">
+      <div class="col-12 text-center">
+        <a href="https://aveligzhanin.github.io/">Велигжанин Андрей</a> — Программист-разработчик C++ и Oracle.
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>
