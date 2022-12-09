@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Cpp. Задачки для практики</title>
+    <title>Диаграммы последовательностей</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -68,23 +68,66 @@
 
     <section class="pfblock"><div class="container">  		<!-- Translations -->
 	<div class="col-xs-6" align=left>
-		<a href="/index.html">home</a> \ <a href="/index.html#skills">Навыки</a>
+		<a href="/index.html">home</a> \ <a href="/pages/skills/uml.html">Uml. Примеры диаграмм</a>
 	</div>
 
 	<div class="col-xs-6" align=right>
-		Написано: 06.12.2022
+		Написано: 09.12.2022
 	</div>
 
    	<div class="col-sm-12 my">
-		<h1 id="cpp-задачки-для-практики">Cpp. Задачки для практики.</h1>
+		<h1 id="диаграммы-последовательностей">Диаграммы последовательностей</h1>
 
-<p>Иногда используются в качестве вопросов на собеседовании.</p>
+<h3 id="отправка-договора-в-арм-через-веб-сервис">Отправка договора в АРМ через Веб-Сервис</h3>
 
-<p><a href="/pages/skills/cpp/cpp_001.html">1. Поразрядный вывод пятизначного числа.</a></p>
+<div class="row">
+  <div class="col-md-8">
+    <pre><code class="language-uml">@startuml
 
-<p><a href="/pages/skills/cpp/cpp_002.html">2. Перекодировка из UTF-8 в Cp-1251.</a></p>
+box "APO2\nOsopo" 
+participant "Главная\nформа" AS APO2 
+participant "Процесс\nвзаимодействия\nс АРМ4" AS Process 
+database "БД\nAPO2" AS db 
+end box
 
-<p><a href="/pages/skills/cpp/cpp_003.html">3. Перевод числа из метров в километры.</a></p>
+participant "&lt;b&gt;АРМ4&lt;/b&gt;\nWeb Services" AS ARM4 
+participant "&lt;b&gt;SPLUNK&lt;/b&gt;" AS Splunk 
+
+APO2 -&gt; Process : Загрузить договор в ARM
+activate Process
+Process -&gt; ARM4 : createAgentStatement
+alt нет соединения
+Process -&gt; Splunk : ошибка &lt;b&gt;нет соединения&lt;/b&gt;
+else получен валидный ответ
+ARM4 --&gt; Process : createAgentStatementResponse
+alt status != 18
+Process -&gt; Process : отчет агента не создан
+Process -&gt; Splunk : ошибка &lt;b&gt;ОА не создан&lt;/b&gt; (+ подробности)
+else status == 18
+loop timeout &amp;&amp; status != F* 
+Process -&gt; ARM4 : getResultProcessing 
+ARM4 --&gt; Process : getResultProcessingResponse 
+end 
+Process --&gt; APO2 : статус загрузки ОА 
+deactivate Process 
+alt status == F0 
+APO2 -&gt; APO2 : ОА загружен 
+APO2 -&gt; Splunk : успешно загружен договор OSOPO в АРМ4 
+else status != F0 
+APO2 -&gt; APO2 : ошибка загрузки ОА 
+APO2 -&gt; Splunk : ошибка при загрузке договора OSOPO в АРМ4 (+ подробности) 
+end 
+end 
+end 
+APO2 -&gt; db : сохранить xml-файлы сеанса связи с АРМ4\n(запросы и ответы)
+
+@enduml
+</code></pre>
+  </div>
+  <div class="col-md-4">
+    <p><img src="/assets/images/sequence_diagram_1.jpg" /></p>
+  </div>
+</div>
 
 
    	</div>
