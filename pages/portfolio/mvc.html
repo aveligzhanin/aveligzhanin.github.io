@@ -339,6 +339,142 @@
 
 <h2 id="пример-обработчика-события">Пример обработчика события.</h2>
 
+<p>Ниже показан пример обработчика для события osopo_cmd::<strong>ADD_RET_SUM</strong> для фрейма <strong>TCalc</strong> (расчёт). Событие обсуждалось чуть выше.</p>
+
+<p>Событие генерируется <strong>моделью</strong> (классом opo) и только в том случае, когда появляется сумма доплаты (или возврата).</p>
+
+<p>После завершения изменения модели, вызывается <strong>Контроллер</strong> фрейма, который извлекает события из контейнера <strong>Наблюдателя</strong>, и вызывает обработчики событий (если они есть для данного события в карте обработчиков фрейма).</p>
+
+<p>Обязанность обработчика события – извлечь данные из <strong>модели</strong> и изменить нужное <strong>представление</strong>.</p>
+
+<p>В обработчике, показанном ниже, данные модели – это поле obj-&gt;AgrSum, а представление – это метка lDoplataVozvrat</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="kr">__fastcall</span> <span class="n">TCalc</span><span class="o">::</span><span class="n">UV_AddRetSum</span><span class="p">()</span> <span class="p">{</span>                                   		<span class="c1">// Сумма "Доплата/возврат"</span>
+	<span class="n">lDoplataVozvrat</span><span class="o">-&gt;</span><span class="n">Caption</span> <span class="o">=</span> <span class="n">FormatFloat</span><span class="p">(</span><span class="n">_fmt2</span><span class="p">,</span> <span class="n">obj</span><span class="o">-&gt;</span><span class="n">AgrSum</span> <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="как-производятся-изменения-в-модели">Как производятся изменения в модели.</h2>
+
+<p>При установке нового значения для какого-либо из свойств модели производится вызов шаблонной функции opo::<strong>Set</strong>(), код которой показан ниже.</p>
+
+<p>Функция opo::<strong>Set</strong>() работает совместно с охранником (объектом <strong>Guard</strong>) и оповещателем (объектом <strong>Talker</strong>). Подробнее о них будет рассказано.</p>
+
+<p>Функция opo::<strong>Set</strong>()  принимает следующие параметры:</p>
+
+<ul>
+  <li>указатель на поле, которое нужно изменить (<strong>ptr</strong>)</li>
+  <li>значение, которое нужно установить для данного поля (<strong>value</strong>)</li>
+  <li>команду (событие), которая соответствует изменению для данного поля (<strong>cmd</strong>)</li>
+  <li>процедуру изменения зависимостей для данного поля (<strong>p</strong>).</li>
+</ul>
+
+<p>В начале процедуры изменения, функция opo::<strong>Set</strong>() опрашивает охранника, можно ли производить изменения? Если охранник разрешает, установка изменений производится. 
+Перед тем, как произвести изменения, производится установка охранника для полученного события (<strong>cmd</strong>).
+После совершения изменений, охранение снимается. Установка охранника защищает от циклических вызовов функции изменения (в случае, когда при вызове процедуры изменения зависимостей, состоится повторный вызов процедуры, которая уже была вызвана прежде: в этом случае установленный охранник предотвратит зацикливание изменений).</p>
+
+<p>После того, как охранник установлен, изменения начинаются с вызова <strong>BeginUpdate</strong>() и завершаются вызовом <strong>EndUpdate</strong>().</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*------------------------------------------------------------------------------
+    Процедура валидной установки значения переменной модели.
+    Во избежание возможного зацикливания процесса, работа просходит
+    при установленном охраннике (Guard).
+    По завершении изменений будет производится оповещение наблюдателей.
+    Внимание! ID охранника совпадает с командой.
+------------------------------------------------------------------------------*/</span>
+<span class="n">template</span> <span class="o">&lt;</span><span class="n">class</span> <span class="n">T</span><span class="o">&gt;</span> <span class="kt">void</span> <span class="kr">__fastcall</span> <span class="n">opo</span><span class="o">::</span><span class="n">Set</span><span class="p">(</span><span class="n">T</span><span class="o">*</span> <span class="n">ptr</span><span class="p">,</span> <span class="n">T</span> <span class="n">value</span><span class="p">,</span> <span class="kt">int</span> <span class="n">cmd</span><span class="p">,</span> <span class="n">Func</span> <span class="n">p</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">Guard</span><span class="o">-&gt;</span><span class="n">Get</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span> <span class="o">==</span> <span class="nb">false</span><span class="p">)</span> <span class="p">{</span>                                              <span class="c1">// охранника нет? можно приступать к работе.</span>
+        <span class="k">if</span><span class="p">(</span><span class="o">*</span><span class="n">ptr</span> <span class="o">!=</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>                                                     <span class="c1">// полученное значение отличается от значения модели?</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">FLoading</span> <span class="o">==</span> <span class="nb">true</span><span class="p">)</span> <span class="p">{</span>                                              <span class="c1">// в режиме загрузки</span>
+                <span class="o">*</span><span class="n">ptr</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span>                                                   <span class="c1">//      только устанавливаем значение, больше ничего не делаем.</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="n">Guard</span><span class="o">-&gt;</span><span class="n">Set</span><span class="p">(</span><span class="n">cmd</span><span class="p">);</span>                                                <span class="c1">// Устанавливаем охранника.</span>
+                <span class="n">BeginUpdate</span><span class="p">();</span>                                                  <span class="c1">// Начинаем изменения.</span>
+                <span class="o">*</span><span class="n">ptr</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span>                                                   <span class="c1">// меняем значение.</span>
+                <span class="n">CallUpdate</span><span class="p">(</span><span class="n">cmd</span><span class="p">);</span>                                                <span class="c1">// кидаем команду.</span>
+                <span class="n">CallUpdate</span><span class="p">(</span><span class="n">osopo_cmd</span><span class="o">::</span><span class="n">VALIDATE</span><span class="p">);</span>                                <span class="c1">// и команду о проверке.</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">p</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">p</span><span class="p">)();</span> <span class="p">}</span>                                        <span class="c1">// вызываем процедуру изменения зависимостей.</span>
+                <span class="n">EndUpdate</span><span class="p">();</span>                                                    <span class="c1">// Изменения заканчиваются (наблюдатели оповещаются).</span>
+                <span class="n">Guard</span><span class="o">-&gt;</span><span class="n">Clear</span><span class="p">(</span><span class="n">cmd</span><span class="p">);</span>                                              <span class="c1">// Охранение снимается.</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="beginupdate-и-endupdate">BeginUpdate() и EndUpdate()</h2>
+
+<p>С вызовами <strong>BeginUpdate</strong>() и <strong>EndUpdate</strong>() связаны события оповещателя (объекта <strong>Talker</strong>).</p>
+
+<p>Вызовы <strong>BeginUpdate</strong>() и <strong>EndUpdate</strong>() могут быть вложенными и могут вызываться в процедурах изменения зависимостей. Функция <strong>BeginUpdate</strong>() обозначает начало процесса изменения. Функция <strong>EndUpdate</strong>() обозначает окончание процесса изменения. 
+При вложенных изменениях, <strong>EndUpdate</strong>() не выполняет чего-то полезного, но при завершении начального изменения <strong>EndUpdate</strong>() производит вызов наблюдателя, сигнализируя, тем самым, что процесс изменения <strong>модели</strong> завершился 
+(и можно вызывать <strong>контроллер</strong>, с последующим обновлением нужных <strong>представлений</strong>).</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="kr">__fastcall</span> <span class="n">opo</span><span class="o">::</span><span class="n">BeginUpdate</span><span class="p">()</span> <span class="p">{</span><span class="n">Talker</span><span class="o">-&gt;</span><span class="n">BeginUpdate</span><span class="p">();}</span>
+<span class="kt">void</span> <span class="kr">__fastcall</span> <span class="n">opo</span><span class="o">::</span><span class="n">EndUpdate</span><span class="p">()</span> <span class="p">{</span><span class="n">Talker</span><span class="o">-&gt;</span><span class="n">EndUpdate</span><span class="p">();}</span>
+</code></pre></div></div>
+
+<h2 id="оповещатель">Оповещатель</h2>
+
+<p>Оповещатель (<strong>Talker</strong>) является глобальным объектом. Определение содержится в файле UOS_Abstarct.h</p>
+
+<p>Оповещатель – это абстрактный класс, предоставляющий для наблюдателя функции подписаться на наблюдение (<strong>RegObserver</strong>) и отписаться от подписки (<strong>UnRegObserver</strong>).</p>
+
+<p>Также оповещатель предоставляет функции начала (<strong>BeginUpdate</strong>) и завершения изменений (<strong>EndUpdate</strong>) и направления команды в контейнер (<strong>Push</strong>).</p>
+
+<p>При завершении начального <strong>EndUpdate</strong>(), оповещатель производит вызов соответствующих методов наблюдателя.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*------------------------------------------------------------------------------
+    Болтун. Уведомитель об изменениях.
+    Предоставляет возможности подписываться к слежению за изменениями
+    (тот, кто подписался, будет получать уведомления),
+    прекращать подписку.
+    А также можно отмечать блоки начала и окончания изменений,
+    между которыми направлять события в контейнер.
+    По окончании изменений события будут направлены тем,
+    кто на них подписался.
+------------------------------------------------------------------------------*/</span>
+<span class="n">class</span> <span class="n">TOS_Talker</span> <span class="o">:</span> <span class="n">public</span> <span class="n">TOS_Product</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="kr">__fastcall</span> <span class="n">TOS_Talker</span><span class="p">()</span> <span class="p">{}</span>
+    <span class="k">virtual</span> <span class="kr">__fastcall</span> <span class="o">~</span><span class="n">TOS_Talker</span><span class="p">()</span> <span class="p">{}</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="kr">__fastcall</span> <span class="n">RegObserver</span><span class="p">(</span><span class="n">TOS_Observer</span> <span class="o">*</span><span class="n">o</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>	                <span class="c1">// Подписка наблюдателя</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="kr">__fastcall</span> <span class="n">UnRegObserver</span><span class="p">(</span><span class="n">TOS_Observer</span> <span class="o">*</span><span class="n">o</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>                 <span class="c1">// Прекращение наблюдения</span>
+
+    <span class="k">virtual</span> <span class="n">bool</span> <span class="kr">__fastcall</span> <span class="n">Used</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>              			                <span class="c1">// Используется?</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="kr">__fastcall</span> <span class="n">BeginUpdate</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>              			        <span class="c1">// начало изменений</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="kr">__fastcall</span> <span class="n">Push</span><span class="p">(</span><span class="kt">int</span> <span class="n">cmd</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>     						        <span class="c1">// направить команду в контейнер</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="kr">__fastcall</span> <span class="n">EndUpdate</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>                			        <span class="c1">// завершение изменений</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="наблюдатель-1">Наблюдатель</h2>
+
+<p>Наблюдатель (<strong>TOS_Observer</strong>) – абстрактный класс со свойствами события (Event), которое подписывается для отслеживания изменений в модели, и с функциями работы с очередью команд <strong>SetCommand</strong>() (помещения команды в очередь) и <strong>GetCommand</strong>() (извлечения команды из очереди).</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*------------------------------------------------------------------------------
+    Интерфейс наблюдателя.
+	Имеет свойства:
+	1) событие (которое может подписываться для слежения за изменениями в модели).
+	2) очередь команд
+------------------------------------------------------------------------------*/</span>
+<span class="n">class</span> <span class="n">TOS_Observer</span> <span class="p">{</span>
+<span class="nl">protected:</span>
+	<span class="k">virtual</span> <span class="kt">int</span> <span class="kr">__fastcall</span> <span class="n">GetFCount</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	<span class="k">virtual</span> <span class="n">TNotifyEvent</span> <span class="kr">__fastcall</span> <span class="n">GetFEvent</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	<span class="k">virtual</span> <span class="kt">void</span> <span class="kr">__fastcall</span> <span class="n">SetFEvent</span><span class="p">(</span><span class="n">TNotifyEvent</span> <span class="n">value</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="nl">public:</span>
+    <span class="kr">__fastcall</span> <span class="n">TOS_Observer</span><span class="p">()</span> <span class="p">{}</span>
+    <span class="k">virtual</span> <span class="kr">__fastcall</span> <span class="o">~</span><span class="n">TOS_Observer</span><span class="p">()</span> <span class="p">{}</span>
+    <span class="k">virtual</span> <span class="kt">int</span> <span class="kr">__fastcall</span> <span class="n">GetCommand</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>                				    <span class="c1">// извлекает команду из очереди, если -1 -- очередь пустая</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="kr">__fastcall</span> <span class="n">SetCommand</span><span class="p">(</span><span class="kt">int</span> <span class="n">cmd</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>           				    <span class="c1">// помещает команду в очередь</span>
+  	<span class="n">__property</span> <span class="n">TNotifyEvent</span> <span class="n">Event</span> <span class="o">=</span> <span class="p">{</span><span class="n">read</span> <span class="o">=</span> <span class="n">GetFEvent</span><span class="p">,</span> <span class="n">write</span> <span class="o">=</span> <span class="n">SetFEvent</span><span class="p">};</span>
+  	<span class="n">__property</span> <span class="kt">int</span> <span class="n">Count</span> <span class="o">=</span> <span class="p">{</span><span class="n">read</span> <span class="o">=</span> <span class="n">GetFCount</span><span class="p">};</span>								    <span class="c1">// Count - кол-во команд в очереди.</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+
    	</div>
 </div></section>
 
