@@ -1,0 +1,356 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Model-View-Controller</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Our style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/avel.css">
+</head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+  <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse menu">
+			<ul class="nav navbar-nav navbar-right">
+                 
+                    <li>
+                       <a href="/index.html#about">Обо мне</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#education">Образование</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#work">Работа</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#skills">Навыки</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#portfolio">Портфолио</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#hobby">Увлечения</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#contact">Контакты</a>
+                    </li>
+                 
+        	</ul>
+        </div>
+      </div>
+  </div>
+</nav>
+
+    <section class="pfblock"><div class="container">  		<!-- Translations -->
+	<div class="col-xs-6" align=left>
+		<a href="/index.html">home</a> \ <a href="/index.html#portfolio">Портфолио</a>
+	</div>
+
+	<div class="col-xs-6" align=right>
+		Написано: 10.12.2022
+	</div>
+
+   	<div class="col-sm-12 my">
+		<h1 id="model-view-controller-mvc">Model-View-Controller (MVC)</h1>
+
+<h2 id="предисловие">Предисловие</h2>
+
+<p><strong>Model-View-Controller</strong> – представляет собой технологию, которая применяется при организации пользовательского интерфейса.</p>
+
+<p>Договор страхования ОПО (опасного производственного объекта) – достаточно сложный, со множеством зависимостей.</p>
+
+<p>Например:</p>
+<ul>
+  <li>от даты заключения договора – зависят тарифы для расчета страховой премии,</li>
+  <li>от даты регистрации опасного объекта – зависит классификатор объектов и выбор объекта страхования</li>
+  <li>от выбора объекта страхования – зависит страховая сумма, признаки опасности и т.д.</li>
+</ul>
+
+<p>То есть, изменение одного параметра договора может привести к изменению множества других параметров договора (которые, в свою очередь, влияют на изменение параметров, которые заввисят от них) и т.д.</p>
+
+<p>При использовании технологии MVC присходит разделение данных и интерфейсных представлений. Благодаря этому реализация упрощается.</p>
+
+<h2 id="договор-страхования-опо">Договор страхования ОПО</h2>
+
+<p>Договор страхования ОПО выглядит, как окно, содержащее неколько вкладок-фреймов (“Расчет”, “Печать”, “Описание расчета” и т.д.).</p>
+
+<p>На разных вкладках (фреймах) расположены интерфейсные элементы для задания параметров одного договора ОСОПО.</p>
+
+<p><strong>Фреймы</strong> модуля ОСОПО наследуются от общего предка, класса <strong>TAPOFrame</strong>.</p>
+
+<h2 id="диаграмма-классов-для-фреймов-модуля-осопо">Диаграмма классов для фреймов модуля ОСОПО</h2>
+
+<p><img src="/assets/images/class_diagram_1.jpg" /></p>
+
+<h2 id="класс-tapoframe">Класс TAPOFrame</h2>
+
+<p>Класс предоставляет базовую функциональность, которая используется в фреймах-потомках.</p>
+
+<p>А именно:</p>
+
+<ul>
+  <li>Обработку ошибок (и вывод сообщений об ошибках в договоре)</li>
+  <li>Организацию оповещения интерфейсных элементов фрейма о связанных изменениях (часть технологии <strong>MVC</strong>)</li>
+</ul>
+
+<p>Далее будут перечислены части технологии <strong>MVC</strong>, реализованные в модуле ОСОПО.</p>
+
+<h2 id="модель">Модель.</h2>
+
+<p><strong>Моделью</strong> является класс OPO, содержащий полное описание договора ОСОПО (полный набор реквизитов договора и их состояний видимости и редактируемости).</p>
+
+<h2 id="контроллер">Контроллер.</h2>
+
+<p><strong>Контроллером</strong> является функция TAPOFrame.FrameController().</p>
+
+<h2 id="представление">Представление.</h2>
+
+<p><strong>Представлением</strong> является интерфейсный элемент на фрейме.</p>
+
+<h2 id="распределение-ролей">Распределение ролей.</h2>
+
+<p><strong>Модель</strong> реализует бизнес-логику договора. <strong>Модель</strong> производит изменения в договоре и управляет зависимостями при изменениях. 
+<strong>Модель</strong> ничего не знает, каким образом будут отображаться реквизиты договора в интерфейсе (и будут ли отображаться вообще).</p>
+
+<p><strong>Представление</strong> несёт ответственность за отображение того или иного элемента. Представление ничего не знает о бизнес-логике договора.
+Задача <strong>представления</strong> – просто отобразить соответствующий элемент на основании значения, которое <strong>представление</strong> берёт у <strong>модели</strong>.</p>
+
+<p><strong>Контроллер</strong> является координатором между <strong>моделью</strong> и <strong>представлением</strong>. <strong>Контроллер</strong> регистрируется у <strong>модели</strong> в качестве <strong>наблюдателя</strong> за изменениями модели.
+После совершения изменений, <strong>модель</strong> оповещает <strong>наблюдателя</strong> о том, что совершены изменения, об изменениях узнаёт <strong>контроллер</strong> и вызывает нужные <strong>представления</strong> 
+для того , чтобы <strong>представления</strong> отобразили изменения элементов, с которыми они связаны.</p>
+
+<h2 id="наблюдатель">Наблюдатель.</h2>
+
+<p>У класса TAPOFrame есть элемент, который называется наблюдателем, – FObserver (тип TOS_RealObserver). У наблюдателя можно зарегистрировать процедуру, которую наблюдатель вызывает в случае события (завершения изменения в модели).</p>
+
+<p>Таким образом, после того, как модель изменит своё состояние (вместе со всеми зависимостями в модели), наблюдатель вызовет процедуры, которые зарегистрированы.</p>
+
+<p>В качестве процедуры, которую вызовет наблюдатель, указывается процедура TAPOFrame.FrameController().</p>
+
+<p>Процедура представляет собой контроллера.</p>
+
+<p>Цель контроллера состоит в том, чтобы извлечь команды из контейнера наблюдателя и вызвать обработчики представления, которые связаны с этими командами.</p>
+
+<h2 id="tapoframeframecontroller">TAPOFrame::FrameController()</h2>
+
+<p>Фактически, контроллер поочерёдно извлекает команды из контейнера и для каждой совершает вызов RunCommand()</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*------------------------------------------------------------------------------
+    Контролер.
+    Подписывается на изменения в модели.
+------------------------------------------------------------------------------*/</span>
+<span class="kt">void</span> <span class="kr">__fastcall</span> <span class="n">TAPOFrame</span><span class="o">::</span><span class="n">FrameController</span><span class="p">(</span><span class="n">TObject</span> <span class="o">*</span><span class="n">Sender</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">cmd</span><span class="p">;</span>
+
+    <span class="n">bool</span> <span class="n">tmp_Loaded</span> <span class="o">=</span> <span class="n">isLoaded</span><span class="p">;</span>
+    <span class="n">bool</span> <span class="n">RunCalcHeight</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+
+    <span class="n">isLoaded</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>   <span class="c1">// на время работы контроллера не трогаем модель.</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="n">FPrepared</span> <span class="o">==</span> <span class="nb">true</span><span class="p">)</span> <span class="p">{</span>                                                     <span class="c1">// если форма готова обрабатывать сообщения,</span>
+        <span class="k">while</span><span class="p">((</span><span class="n">cmd</span> <span class="o">=</span> <span class="n">FObserver</span><span class="p">.</span><span class="n">GetCommand</span><span class="p">())</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>                           <span class="c1">// извлекаем команды из контейнера,</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">cmd</span> <span class="o">==</span> <span class="n">osopo_cmd</span><span class="o">::</span><span class="n">CALC_HEIGHT</span><span class="p">)</span> <span class="p">{</span>                                 <span class="c1">// придерживаем команды, которые нужно выполнить позднее остальных</span>
+                <span class="n">RunCalcHeight</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>                                           <span class="c1">// так действовать нехорошо, но вводить приоритеты пока муторно.</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="n">RunCommand</span><span class="p">(</span><span class="n">cmd</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">RunCalcHeight</span> <span class="o">==</span> <span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">RunCommand</span><span class="p">(</span><span class="n">osopo_cmd</span><span class="o">::</span><span class="n">CALC_HEIGHT</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">isLoaded</span> <span class="o">=</span> <span class="n">tmp_Loaded</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="tapoframeruncommand">TAPOFrame::RunCommand()</h2>
+
+<p>Процедура TAPOFrame::RunCommand() просматривает карту обработчиков команд и для полученной команды осуществляет вызов её обработчика.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="kr">__fastcall</span> <span class="n">TAPOFrame</span><span class="o">::</span><span class="n">RunCommand</span><span class="p">(</span><span class="kt">int</span> <span class="n">cmd</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">TOS_UpdateViewMap</span><span class="o">::</span><span class="n">iterator</span> <span class="n">i</span><span class="p">;</span>
+    <span class="n">TOS_UpdateViewProc</span> <span class="n">p</span><span class="p">;</span>
+
+    <span class="n">i</span> <span class="o">=</span> <span class="n">FUpdateViewsMap</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">cmd</span><span class="p">);</span>              <span class="c1">// находим для неё обработчик,</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">!=</span> <span class="n">FUpdateViewsMap</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="p">{</span>           <span class="c1">// если обработчик валидный,</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">i</span><span class="p">).</span><span class="n">second</span><span class="p">;</span>
+        <span class="p">(</span><span class="n">p</span><span class="p">)();</span>                                  <span class="c1">// делаем вызов.</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="карта-обработчиков">Карта обработчиков.</h2>
+
+<p>У класса <strong>TAPOFrame</strong> есть элемент, который называется картой обработчиков, – <strong>FUpdateViewsMap</strong> (тип TOS_UpdateViewMap).</p>
+
+<p>Фактически, это карта для числа (которое представляет собой команду из контейнера наблюдателя) и процедуры (которая связана с этой командой).</p>
+
+<p>Процедура обработчика – без параметров и ничего не возвращает.</p>
+
+<p>Карта обработчиков сторится с помощью виртуальной функции <strong>MakeUpdateViewsMap</strong>()</p>
+
+<p>Вызов виртуальной функции выполняется в конструкторе базового класса <strong>TAPOFrame</strong></p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">class</span> <span class="n">TAPOFrame</span> <span class="o">:</span> <span class="n">public</span> <span class="n">TFrame</span>
+<span class="p">{</span>
+    <span class="c1">// пропущено</span>
+ <span class="nl">protected:</span>
+    <span class="c1">// пропущено</span>
+
+	<span class="c1">// Процедура формирования карты для изменения представлений</span>
+	<span class="k">typedef</span> <span class="kt">void</span> <span class="kr">__fastcall</span> <span class="p">(</span><span class="n">__closure</span> <span class="o">*</span><span class="n">TOS_UpdateViewProc</span><span class="p">)();</span>
+	<span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="n">TOS_UpdateViewProc</span><span class="o">&gt;</span> <span class="n">TOS_UpdateViewMap</span><span class="p">;</span>
+	<span class="n">TOS_UpdateViewMap</span> <span class="n">FUpdateViewsMap</span><span class="p">;</span>
+	<span class="k">virtual</span> <span class="kt">void</span> <span class="kr">__fastcall</span> <span class="n">MakeUpdateViewsMap</span><span class="p">()</span> <span class="p">{}</span>
+
+    <span class="c1">// пропущено</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="пример-формирования-карты-обработчиков">Пример формирования карты обработчиков.</h2>
+
+<p>Карта обработчиков – своя для каждого фрейма (потому что в каждом фрейме свой набор интерфейсных элементов и команд для обновления).</p>
+
+<p>Однако, разные фреймы могут реагировать на одну и ту же команду (событие). Потому что в модели может измениться поле, отображаемое в разных фреймах. Например, сумма доплаты или возврата по договору, в случае если она возникла, показывается на вкладке “Расчет” и на вкладке “Печать”.</p>
+
+<p>Ниже, в качестве самого простого, приводится пример формирования карты обработчиков для фрейма TCalcDescription (вкладка “Описание расчёта”).</p>
+
+<p>Для других фреймов код похожий, только событий в карте больше.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*------------------------------------------------------------------------------
+	Процедура формирования карты для изменения представлений.
+------------------------------------------------------------------------------*/</span>
+<span class="kt">void</span> <span class="kr">__fastcall</span> <span class="n">TCalcDescription</span><span class="o">::</span><span class="n">MakeUpdateViewsMap</span><span class="p">()</span>
+<span class="p">{</span>
+	<span class="k">struct</span> <span class="n">InitUpdateViews</span> <span class="p">{</span><span class="kt">int</span> <span class="n">Cmd</span><span class="p">;</span> <span class="n">TOS_UpdateViewProc</span> <span class="n">Proc</span><span class="p">;</span> <span class="p">};</span>
+	<span class="kt">int</span> <span class="n">cmd</span><span class="p">;</span>
+
+	<span class="n">InitUpdateViews</span> <span class="n">initer</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+		<span class="p">{</span><span class="n">osopo_cmd</span><span class="o">::</span><span class="n">SHOW_APO_RESULT</span>             <span class="p">,</span> <span class="o">&amp;</span><span class="n">UV_ShowApoResult</span><span class="p">}</span>            <span class="c1">// отображение результатов расчета АПО</span>
+		<span class="p">,</span> <span class="p">{</span><span class="n">osopo_cmd</span><span class="o">::</span><span class="n">FRAMES_ENABLED</span>            <span class="p">,</span> <span class="o">&amp;</span><span class="n">UV_FramesEnabled</span><span class="p">}</span>            <span class="c1">// разрешено редактирование формы?</span>
+		<span class="p">,</span> <span class="p">{</span><span class="o">-</span><span class="mi">1</span><span class="p">}</span>
+	<span class="p">};</span>
+
+	<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">initer</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">Cmd</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">cmd</span> <span class="o">=</span> <span class="n">initer</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">Cmd</span><span class="p">;</span>
+		<span class="n">FUpdateViewsMap</span><span class="p">[</span><span class="n">cmd</span><span class="p">]</span> <span class="o">=</span> <span class="n">initer</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">Proc</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="события-обработчиков">События обработчиков.</h2>
+
+<p>Команды, для которых строится карта обработчиков, определены в файле TOS_Enums.h</p>
+
+<p>У этих команд (событий) отдельный namespace – <strong>osopo_cmd</strong>.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// команды изменения</span>
+<span class="n">namespace</span> <span class="n">osopo_cmd</span> <span class="p">{</span>
+
+<span class="k">typedef</span> <span class="k">enum</span> <span class="p">{</span>
+	<span class="n">STATUS</span>                                                  <span class="o">=</span> <span class="mi">1</span>
+	<span class="p">,</span> <span class="n">CALC_ID</span>                                               <span class="o">=</span> <span class="mi">2</span>
+	<span class="p">,</span> <span class="n">CALL_STR_SUMM</span>                                         <span class="o">=</span> <span class="mi">3</span>                 <span class="c1">// выбор страховой суммы</span>
+	<span class="p">,</span> <span class="n">CALL_RECALC</span>                                           <span class="o">=</span> <span class="mi">4</span>                 <span class="c1">// вызов пересчета</span>
+    <span class="c1">// пропущено</span>
+
+	<span class="c1">// редактируемость</span>
+	<span class="p">,</span> <span class="n">PAY_DOC_SER_ENABLED</span>									<span class="o">=</span> <span class="mi">600</span> 		 		<span class="c1">// Серия платежного документа</span>
+	<span class="p">,</span> <span class="n">START_DATE_ENABLED</span>                                    <span class="o">=</span> <span class="mi">601</span>               <span class="c1">// изменение разрешенности даты начала действия</span>
+    <span class="c1">// пропущено</span>
+
+	<span class="c1">// видимость</span>
+	<span class="p">,</span> <span class="n">PAY_DOC_SER_VISIBLED</span>									<span class="o">=</span> <span class="mi">700</span>				<span class="c1">// Серия платежного документа</span>
+	<span class="p">,</span> <span class="n">PAY_DOC_NUM_VISIBLED</span>									<span class="o">=</span> <span class="mi">701</span>				<span class="c1">// Номер платежного документа</span>
+    <span class="c1">// пропущено</span>
+
+	<span class="c1">// должны исполняться позднее других команд</span>
+	<span class="p">,</span> <span class="n">CALC_HEIGHT</span>                                           <span class="o">=</span> <span class="mi">10000</span>             <span class="c1">// изменить координаты панели</span>
+<span class="p">}</span>
+<span class="n">TOS_ChangeModelCommands</span><span class="p">;</span>
+
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="события-которые-обрабатываются-в-нескольких-фреймах">События, которые обрабатываются в нескольких фреймах.</h2>
+
+<p>Пример такого события – osopo_cmd::<strong>ADD_RET_SUM</strong> (сумма доплаты или возврата).</p>
+
+<p>Модель генерирует это событие в случае, если появляется доплата или возврат (при расчёте ДС).</p>
+
+<p>Сумма доплаты (возврата) отображается как на фрейме <strong>TCalc</strong> (расчёт), так и на фрейме <strong>TPrint</strong> (печать).</p>
+
+<p>При выполнении изменений, модель ничего не знает о том, какими фреймами будет обрабатываться то или иное событие (и будет ли обрабатываться вообще).</p>
+
+<p>Для того, чтобы событие было обработано фреймом, нужно добавить обработчик события в карту обработчиков.</p>
+
+<p>Ниже показан пример события osopo_cmd::<strong>ADD_RET_SUM</strong> в карте обработчиков для фрейма <strong>TCalc</strong> (расчёт)</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*------------------------------------------------------------------------------
+    Процедура формирования карты для изменения представлений.
+------------------------------------------------------------------------------*/</span>
+<span class="kt">void</span> <span class="kr">__fastcall</span> <span class="n">TCalc</span><span class="o">::</span><span class="n">MakeUpdateViewsMap</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">struct</span> <span class="n">InitUpdateViews</span> <span class="p">{</span><span class="kt">int</span> <span class="n">Cmd</span><span class="p">;</span> <span class="n">TOS_UpdateViewProc</span> <span class="n">Proc</span><span class="p">;</span> <span class="p">};</span>
+    <span class="kt">int</span> <span class="n">cmd</span><span class="p">;</span>
+
+    <span class="n">InitUpdateViews</span> <span class="n">initer</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="p">{</span><span class="n">osopo_cmd</span><span class="o">::</span><span class="n">NSSO_PUBLISH</span>                    <span class="p">,</span> <span class="o">&amp;</span><span class="n">UV_NssoPublish</span><span class="p">}</span>
+        <span class="c1">// пропущено</span>
+		<span class="p">,</span> <span class="p">{</span><span class="n">osopo_cmd</span><span class="o">::</span><span class="n">ADD_RET_SUM</span>          			<span class="p">,</span> <span class="o">&amp;</span><span class="n">UV_AddRetSum</span><span class="p">}</span>       		<span class="c1">// Сумма "Доплата/возврат"</span>
+        <span class="c1">// пропущено</span>
+		<span class="p">,</span> <span class="p">{</span><span class="o">-</span><span class="mi">1</span><span class="p">}</span>
+	<span class="p">};</span>
+
+	<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">initer</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">Cmd</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">cmd</span> <span class="o">=</span> <span class="n">initer</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">Cmd</span><span class="p">;</span>
+		<span class="n">FUpdateViewsMap</span><span class="p">[</span><span class="n">cmd</span><span class="p">]</span> <span class="o">=</span> <span class="n">initer</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">Proc</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="пример-обработчика-события">Пример обработчика события.</h2>
+
+   	</div>
+</div></section>
+
+    <footer class="footer hexlet-footer py-5 mt-5 text-muted">
+  <div class="container">
+    <div class="row mt-1">
+      <div class="col-12 text-center">
+        <a href="https://aveligzhanin.github.io/">Велигжанин Андрей</a> — Программист-разработчик C++ и Oracle.
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>
