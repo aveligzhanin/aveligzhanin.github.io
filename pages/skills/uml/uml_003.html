@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Cpp. Задачки для практики</title>
+    <title>Диаграммы классов</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -68,31 +68,55 @@
 
     <section class="pfblock"><div class="container">  		<!-- Translations -->
 	<div class="col-xs-6" align=left>
-		<a href="/index.html">home</a> \ <a href="/index.html#skills">Навыки</a>
+		<a href="/index.html">home</a> \ <a href="/pages/skills/uml.html">Uml. Примеры диаграмм</a>
 	</div>
 
 	<div class="col-xs-6" align=right>
-		Написано: 06.12.2022
+		Написано: 10.12.2022
 	</div>
 
    	<div class="col-sm-12 my">
-		<h1 id="cpp-задачки-для-практики">Cpp. Задачки для практики.</h1>
+		<h1 id="диаграммы-классов">Диаграммы классов</h1>
 
-<p>Иногда используются в качестве вопросов на собеседовании.</p>
+<h3 id="фреймы-договора-страхования-осопо">Фреймы договора страхования ОСОПО</h3>
 
-<h2 id="простые">Простые</h2>
+<div class="row">
+  <div class="col-md-8">
+    <pre><code class="language-uml">@startuml
 
-<p><a href="/pages/skills/cpp/cpp_001.html">Поразрядный вывод пятизначного числа.</a></p>
+class TAPOFrame { 
+#TOS_RealObserver FObserver 
+#TOS_UpdateViewMap FUpdateViewsMap 
+#virtual void MakeUpdateViewsMap() 
++void FrameController() 
++void Prepare() 
++void ShowErrors() 
+} 
 
-<p><a href="/pages/skills/cpp/cpp_003.html">Перевод числа из метров в километры.</a></p>
+class TOS_RealObserver { 
+} 
+class TCalc { 
+} 
+class TPrint { 
+} 
+class TRekvisit { 
+} 
+class TCalcDescriptiopn { 
+} 
+TAPOFrame -&gt; TOS_RealObserver 
 
-<p><a href="/pages/skills/cpp/cpp_004.html">Нарисовать домик.</a></p>
+TAPOFrame &lt;|-down- TCalc 
+TAPOFrame &lt;|-down- TPrint 
+TAPOFrame &lt;|-down- TRekvisit 
+TAPOFrame &lt;|-down- TCalcDescriptiopn 
+@enduml
+</code></pre>
+  </div>
+  <div class="col-md-4">
+    <p><img src="/assets/images/class_diagram_1.jpg" /></p>
+  </div>
+</div>
 
-<p><a href="/pages/skills/cpp/cpp_005.html">Нарисовать треугольник.</a></p>
-
-<h2 id="сложнее">Сложнее</h2>
-
-<p><a href="/pages/skills/cpp/cpp_002.html">Перекодировка из UTF-8 в Cp-1251.</a></p>
 
    	</div>
 </div></section>
