@@ -1,0 +1,290 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Интеграция между системами</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Our style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/avel.css">
+</head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+  <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse menu">
+			<ul class="nav navbar-nav navbar-right">
+                 
+                    <li>
+                       <a href="/index.html#about">Обо мне</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#education">Образование</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#work">Работа</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#skills">Навыки</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#portfolio">Портфолио</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#hobby">Увлечения</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#contact">Контакты</a>
+                    </li>
+                 
+        	</ul>
+        </div>
+      </div>
+  </div>
+</nav>
+
+    <section class="pfblock"><div class="container">  		<!-- Translations -->
+	<div class="col-xs-6" align=left>
+		<a href="/index.html">home</a> \ <a href="/index.html#portfolio">Портфолио</a>
+	</div>
+
+	<div class="col-xs-6" align=right>
+		Написано: 10.12.2022
+	</div>
+
+   	<div class="col-sm-12 my">
+		<h1 id="интеграция-между-системой-оформления-договоров-осопо-апо-и-учетной-системой-арм">Интеграция между системой оформления договоров ОСОПО (АПО) и учетной системой (АРМ)</h1>
+
+<h2 id="предисловие">Предисловие</h2>
+
+<p>Более десяти лет в «РосГосСтрахе» (РГС) для договоров ОСОПО (обязательного страхования опасных производственных объектов) не было интеграции между системами оформления договоров (АПО) и учётной системой (АРМ).</p>
+
+<p>Информация о договорах ОСОПО подлежит обязательной передаче в регулирующий орган, которым является НССО (Национальный Союз Страховщиков Ответственности), в 3-х месячный срок с даты получения номера договора.</p>
+
+<p>Договора ОСОПО – являются сложными договорами страхования. При их оформлении и учёте возникает множество проблем, в связи с чем информация не обо всех договорах передаётся регулятору вовремя.</p>
+
+<p>Если непереданных договоров много (для них существует специальный норматив), регулятор может выставить штраф.</p>
+
+<p>Долгое время в РГС существовала практика ручного ввода договоров ОСОПО в учётную систему, что увеличивало время на передачу информации между системами в РГС и последующей передачей в НССО.</p>
+
+<p>Передо мной была поставлена задача доработки модуля оформления договоров ОСОПО для автоматической передачи информации в учётную систему (АРМ).</p>
+
+<p>Система АПО была успешно доработана. После ввода в эксплуатацию, информация о договорах ОСОПО стала попадать в систему АРМ автоматически. Количество проблемных договоров уменьшилось до приемлемого показателя. «РосГосСтрахе» перестал попадать на штрафы регулятора.</p>
+
+<h2 id="веб-сервисы-арм">Веб-Сервисы АРМ.</h2>
+
+<p>Технически, интеграция с системой АРМ реализована на основании Веб-Сервисов, которые предоставляет система АРМ.</p>
+
+<p>Упрощённо, система АРМ предоставляет следующие End-Point-ы:</p>
+
+<ul>
+  <li><strong>AgentStatement</strong> (работа с отчётом агента)</li>
+  <li><strong>Ancillary</strong> (вспомогательные операции)</li>
+  <li><strong>Contract</strong> (работа с договором)</li>
+  <li><strong>Search</strong> (поиск)</li>
+</ul>
+
+<p>Методов Веб-Сервисов чуть больше.</p>
+
+<p>Более подробную информацию можно посмотреть в файле-<a href="/assets/files/integration-full.rar">Спецификации веб-сервисов</a></p>
+
+<h2 id="этапы-проекта-интеграции">Этапы проекта интеграции.</h2>
+
+<p>Проект интеграции состоял из нескольких этапов:</p>
+<ol>
+  <li>Интеграция по передаче иноформации о первоначальных договорах.</li>
+  <li>Интеграция по передаче иноформации о доп.соглашениях (об изменениях к договору).</li>
+  <li>Интеграция по передаче иноформации о расторжениях договоров.</li>
+</ol>
+
+<h2 id="сложности-проекта-интеграции">Сложности проекта интеграции.</h2>
+
+<p>Со стороны системы АПО, доработка системы по интеграции с системой АРМ не выглядела слишком сложной: нужно было сформировать xml-запрос, обратиться к соответствующему Веб-Сервису со сформированным запросом и обработать ответ от Веб-сервиса.</p>
+
+<p>Однако, особенности реализации Веб-Сервисов АРМ таковы, что:</p>
+<ul>
+  <li><strong>во-первых</strong>, договор ОСОПО слишком сложный, а xml-запрос, которым передаётся договор, состоит из множества тегов (более 500) и большой, объёмом в несколько Мегабайт.</li>
+  <li><strong>во-вторых</strong>, АРМ обрабатывает один запрос слишком долго (примерно 30-40 минут и дольше), следовательно, возникает необходимость реализации в системе АПО механизма взаимодействия с системой АРМ в фоновом режиме и оповещения пользователей о результатах загрузки договора.</li>
+  <li><strong>в-третьих</strong>, обнаружилась многочисленные расхождения в справочных данных, которыми оперируют взаимодействующие системы (АПО и АРМ), было потрачено большое количество времени и сил на синхронизацию справочных данных и на отладку механизма передачи данных для Веб-Сервиса АРМ.</li>
+  <li><strong>во-четвёртых</strong>, система АРМ требует передачи Веб-Сервису договора целиком (пореквизитная передача не была реализована), в результате чего договор не загружался, если (из-за рассинхронизации данных) происходила ошибка в передаче реквизита, который, по идее, можно было бы передать позднее, отдельным образом.</li>
+</ul>
+
+<h2 id="интеграция-с-нссо">Интеграция с НССО.</h2>
+
+<p>Проект интеграции с АРМ предусматривал прохождение формально-логического контроля (ФЛК) договора с помощью Веб-Сервисов НССО. Для этого, система АПО решала задачу, схожую с задачей передачи информации по договору в АРМ.</p>
+
+<p>А именно: формировался xml-запрос с описанием договора для Веб-сервиса НССО.</p>
+
+<p>Хотя оба Веб-сервиса (НССО и АРМ) требуют передачи информации по договору, однако Веб-Сервис НССО реализован проще на несколько порядков, с обращением к сервису НССО не возникало никаких сложностей.</p>
+
+<h2 id="процесс-взаимодействия-с-арм">Процесс взаимодействия с АРМ.</h2>
+
+<p>Для реализации задач по интеграции, в системе АПО был реализован отдельный механизм по автоматической передаче информации по договорам, механизм, функционирующий в фоновом режиме, незаметно для пользователя, – 
+процесс взаимодействия с АРМ.</p>
+
+<h2 id="диаграмма-последовательностей-отправки-договора-в-арм-через-веб-сервис">Диаграмма последовательностей отправки договора в АРМ через Веб-Сервис</h2>
+
+<p>Для передачи информации о договорах в АРМ, процесс взаимодействия обращается к нескольким Веб-Сервисам АРМ.</p>
+
+<p><strong>Во-первых</strong>, формируется xml-запрос к Веб-Сервису <strong>createAgentStatement</strong> для передачи в АРМ отчета агента (ОА) с договором ОСОПО. Веб-сервис присылает ответ <strong>createAgentStatementResponse</strong> со статусом, принят или не принят договор в обработку.</p>
+
+<p><strong>Во-вторых</strong>, если запрос принят в обработку, нужно периодически обращаться к Веб-Сервису <strong>getResultProcessing</strong>, ожидая статуса того, завершена ли обработка договора в АРМе, успешно или не успешно, либо продолжается.</p>
+
+<p><img src="/assets/images/sequence_diagram_1.jpg" /></p>
+
+<h2 id="пример-запроса-createagentstatement">Пример запроса createAgentStatement</h2>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;s:Envelope</span> <span class="na">xmlns:env=</span><span class="s">"http://schemas.xmlsoap.org/soap/envelope/"</span> <span class="na">xmlns:s=</span><span class="s">"http://schemas.xmlsoap.org/soap/envelope/"</span><span class="nt">&gt;</span>  
+    <span class="nt">&lt;env:Header/&gt;</span>  
+    <span class="nt">&lt;s:Body</span> <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="na">xmlns:xsd=</span><span class="s">"http://www.w3.org/2001/XMLSchema"</span><span class="nt">&gt;</span>    
+        <span class="nt">&lt;createAgentStatement</span> <span class="na">xmlns=</span><span class="s">"http://rgs.ru/arm4/integration"</span><span class="nt">&gt;</span>      
+            <span class="nt">&lt;createRequest&gt;</span>        
+                <span class="nt">&lt;requestAttributes&gt;</span>          
+                    <span class="nt">&lt;requestId&gt;</span>4621a3a0-3148-4342-8ca2-0aa20cc1ddfd<span class="nt">&lt;/requestId&gt;</span>          
+                    <span class="nt">&lt;version&gt;</span>3.3.53<span class="nt">&lt;/version&gt;</span>        
+                <span class="nt">&lt;/requestAttributes&gt;</span>        
+                <span class="nt">&lt;agentStatement&gt;</span>          
+                    <span class="nt">&lt;sysCreateUser&gt;</span>WebSU<span class="nt">&lt;/sysCreateUser&gt;</span>          
+                    <span class="nt">&lt;sysCreateDate&gt;</span>2019-08-20T12:34:40<span class="nt">&lt;/sysCreateDate&gt;</span>
+                    <span class="c">&lt;!-- Параметры отчета агента пропущены --&gt;</span>
+                    <span class="nt">&lt;contract&gt;</span>
+                        <span class="c">&lt;!-- Параметры блока contract пропущены --&gt;</span>
+                    <span class="nt">&lt;/contract&gt;</span>
+                <span class="nt">&lt;/agentStatement&gt;</span>
+            <span class="nt">&lt;/createRequest&gt;</span>
+        <span class="nt">&lt;/createAgentStatement&gt;</span>
+    <span class="nt">&lt;/s:Body&gt;</span>
+<span class="nt">&lt;/s:Envelope&gt;</span>
+</code></pre></div></div>
+
+<h2 id="пример-ответа-createagentstatementresponse">Пример ответа createAgentStatementResponse</h2>
+
+<p>Важная информация в ответе:</p>
+
+<ul>
+  <li><strong>status</strong> – 18 означает, что запрос на создание отчета агента (вместе с договором) принят в обработку, другое число указывает об ошибке.</li>
+  <li><strong>responseId</strong> – идентификатор ответа, с которым следует обращаться к сервису <strong>getResultProcessing</strong>, чтобы узнать, продолжается ли обработка или завершена (успешно или с ошибкой).</li>
+</ul>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;S:Envelope</span> <span class="na">xmlns:env=</span><span class="s">"http://schemas.xmlsoap.org/soap/envelope/"</span> <span class="na">xmlns:S=</span><span class="s">"http://schemas.xmlsoap.org/soap/envelope/"</span><span class="nt">&gt;</span>  
+    <span class="nt">&lt;env:Header&gt;</span>
+        <span class="nt">&lt;work:WorkContext</span> <span class="na">xmlns:work=</span><span class="s">"http://oracle.com/weblogic/soap/workarea/"</span><span class="nt">&gt;</span>rO0ABXdbABp3ZWJsb2dpYy5hcHAuYXJtNC1zZXJ2aWNlcwAAANYAAAAjd2VibG9naWMud29ya2FyZWEuU3RyaW5nV29ya0NvbnRleHQAEHJlbGVhc2UtNC4zNy4wMTEAAA==
+        <span class="nt">&lt;/work:WorkContext&gt;</span>  
+    <span class="nt">&lt;/env:Header&gt;</span>  
+    <span class="nt">&lt;S:Body&gt;</span>
+        <span class="nt">&lt;ns0:createAgentStatementResponse</span> <span class="na">xmlns:ns0=</span><span class="s">"http://rgs.ru/arm4/integration"</span><span class="nt">&gt;</span>      
+            <span class="nt">&lt;ns0:createResponse&gt;</span>        
+                <span class="nt">&lt;ns0:responseAttributes&gt;</span>          
+                    <span class="nt">&lt;ns0:responseId&gt;</span>d37e1c00c32e11e99a1d00505<span class="nt">&lt;/ns0:responseId&gt;</span>          
+                    <span class="nt">&lt;ns0:status&gt;</span>18<span class="nt">&lt;/ns0:status&gt;</span>          
+                    <span class="nt">&lt;ns0:version&gt;</span>3.3.55<span class="nt">&lt;/ns0:version&gt;</span>        
+                <span class="nt">&lt;/ns0:responseAttributes&gt;</span>      
+            <span class="nt">&lt;/ns0:createResponse&gt;</span>    
+        <span class="nt">&lt;/ns0:createAgentStatementResponse&gt;</span>  
+    <span class="nt">&lt;/S:Body&gt;</span>
+<span class="nt">&lt;/S:Envelope&gt;</span>
+</code></pre></div></div>
+
+<h2 id="пример-запроса-getresultprocessing">Пример запроса getResultProcessing</h2>
+
+<p>В запросе указывается идентификатор, который возвратился в ответе <strong>createAgentStatementResponse</strong></p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;s:Envelope</span> <span class="na">xmlns:env=</span><span class="s">"http://schemas.xmlsoap.org/soap/envelope/"</span> <span class="na">xmlns:s=</span><span class="s">"http://schemas.xmlsoap.org/soap/envelope/"</span><span class="nt">&gt;</span>  
+    <span class="nt">&lt;env:Header/&gt;</span>  
+    <span class="nt">&lt;s:Body&gt;</span>    
+        <span class="nt">&lt;getResultProcessing</span> <span class="na">xmlns=</span><span class="s">"http://rgs.ru/arm4/integration"</span><span class="nt">&gt;</span>      
+            <span class="nt">&lt;processRequest&gt;</span>        
+                <span class="nt">&lt;requestAttributes&gt;</span>          
+                    <span class="nt">&lt;requestId&gt;</span>8301b733-c56d-4bc4-88cc-87d12ce16dda<span class="nt">&lt;/requestId&gt;</span>          
+                    <span class="nt">&lt;version&gt;</span>3.3.53<span class="nt">&lt;/version&gt;</span>        
+                <span class="nt">&lt;/requestAttributes&gt;</span>        
+                <span class="nt">&lt;identifierType&gt;</span>Arm4CorrelationId<span class="nt">&lt;/identifierType&gt;</span>        
+                <span class="nt">&lt;identifierList&gt;</span>          
+                    <span class="nt">&lt;id&gt;</span>d37e1c00c32e11e99a1d00505<span class="nt">&lt;/id&gt;</span>        
+                <span class="nt">&lt;/identifierList&gt;</span>      
+            <span class="nt">&lt;/processRequest&gt;</span>    
+        <span class="nt">&lt;/getResultProcessing&gt;</span>  
+    <span class="nt">&lt;/s:Body&gt;</span>
+<span class="nt">&lt;/s:Envelope&gt;</span>
+</code></pre></div></div>
+
+<h2 id="пример-ответа-getresultprocessingresponse">Пример ответа getResultProcessingResponse</h2>
+
+<p>Важная информация в ответе:</p>
+
+<ul>
+  <li><strong>status</strong> – <strong>F0</strong> означает, что запрос на создание отчета агента (вместе с договором) обработан успешно, иначе префикс <strong>F</strong> означает, что обработка завершена и получены ошибки обработки, другой статус означает, что обработка продолжается.</li>
+  <li><strong>violationList</strong> – представляет собой блок ошибок.</li>
+</ul>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;S:Envelope</span> <span class="na">xmlns:S=</span><span class="s">"http://schemas.xmlsoap.org/soap/envelope/"</span><span class="nt">&gt;</span>  
+    <span class="nt">&lt;S:Header&gt;</span>    
+        <span class="nt">&lt;WorkContext</span> <span class="na">xmlns=</span><span class="s">"http://oracle.com/weblogic/soap/workarea/"</span><span class="nt">&gt;</span>rO0ABXdbABp3ZWJsb2dpYy5hcHAuYXJtNC1zZXJ2aWNlcwAAANYAAAAjd2VibG9naWMud29ya2FyZWEuU3RyaW5nV29ya0NvbnRleHQAEHJlbGVhc2UtNC4zNy4wMTEAAA==
+        <span class="nt">&lt;/WorkContext&gt;</span>  
+    <span class="nt">&lt;/S:Header&gt;</span>  
+    <span class="nt">&lt;S:Body&gt;</span>    
+        <span class="nt">&lt;getResultProcessingResponse</span> <span class="na">xmlns=</span><span class="s">"http://rgs.ru/arm4/integration"</span><span class="nt">&gt;</span>      
+            <span class="nt">&lt;resultProcessingResponse&gt;</span>        
+                <span class="nt">&lt;responseAttributes&gt;</span>          
+                    <span class="nt">&lt;status&gt;</span>6<span class="nt">&lt;/status&gt;</span>          
+                    <span class="nt">&lt;version&gt;</span>3.3.55<span class="nt">&lt;/version&gt;</span>        
+                <span class="nt">&lt;/responseAttributes&gt;</span>        
+                <span class="nt">&lt;resultList&gt;</span>          
+                    <span class="nt">&lt;result&gt;</span>            
+                        <span class="nt">&lt;id&gt;</span>30650010-4206025687-140819<span class="nt">&lt;/id&gt;</span>            
+                        <span class="nt">&lt;status&gt;</span>FE1<span class="nt">&lt;/status&gt;</span>            
+                        <span class="nt">&lt;violationList&gt;</span>              
+                            <span class="nt">&lt;violation&gt;</span>                
+                                <span class="nt">&lt;type&gt;</span>ERROR<span class="nt">&lt;/type&gt;</span>                
+                                <span class="nt">&lt;code&gt;</span>0012600<span class="nt">&lt;/code&gt;</span>                
+                                <span class="nt">&lt;fieldName&gt;</span>Краткое наименование<span class="nt">&lt;/fieldName&gt;</span>                
+                                <span class="nt">&lt;message&gt;</span>У ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ "ПОДОРОЖНИК-КЕМЕРОВО" не заполнено поле Краткое наименование.<span class="nt">&lt;/message&gt;</span>
+                            <span class="nt">&lt;/violation&gt;</span>              
+                            <span class="c">&lt;!-- может быть несколько причин неудачной загрузки договора --&gt;</span>
+                        <span class="nt">&lt;/violationList&gt;</span>          
+                    <span class="nt">&lt;/result&gt;</span>        
+                <span class="nt">&lt;/resultList&gt;</span>      
+            <span class="nt">&lt;/resultProcessingResponse&gt;</span>    
+        <span class="nt">&lt;/getResultProcessingResponse&gt;</span>  
+    <span class="nt">&lt;/S:Body&gt;</span>
+<span class="nt">&lt;/S:Envelope&gt;</span>
+</code></pre></div></div>
+
+   	</div>
+</div></section>
+
+    <footer class="footer hexlet-footer py-5 mt-5 text-muted">
+  <div class="container">
+    <div class="row mt-1">
+      <div class="col-12 text-center">
+        <a href="https://aveligzhanin.github.io/">Велигжанин Андрей</a> — Программист-разработчик C++ и Oracle.
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>
