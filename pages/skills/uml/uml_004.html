@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Uml. Примеры диаграмм</title>
+    <title>Диаграммы состояний</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -68,25 +68,55 @@
 
     <section class="pfblock"><div class="container">  		<!-- Translations -->
 	<div class="col-xs-6" align=left>
-		<a href="/index.html">home</a> \ <a href="/index.html#skills">Навыки</a>
+		<a href="/index.html">home</a> \ <a href="/pages/skills/uml.html">Uml. Примеры диаграмм</a>
 	</div>
 
 	<div class="col-xs-6" align=right>
-		Написано: 09.12.2022
+		Написано: 14.12.2022
 	</div>
 
    	<div class="col-sm-12 my">
-		<h1 id="uml-примеры-диаграмм">Uml. Примеры диаграмм.</h1>
+		<h1 id="диаграммы-состояний">Диаграммы состояний</h1>
 
-<p>Для отрисовки диаграмм может использоваться Online-Server <a href="http://www.plantuml.com/plantuml/uml/SyfFKj2rKt3CoKnELR1Io4ZDoSa70000">PlantUml</a> или <a href="https://kroki.io/#try">Kroki</a></p>
+<h3 id="статусы-договора-страхования-осопо">Статусы договора страхования ОСОПО</h3>
 
-<p><a href="/pages/skills/uml/uml_001.html">1. Диаграммы прецедентов.</a></p>
+<div class="row">
+  <div class="col-md-8">
+    <pre><code class="language-uml">@startuml
+[*] --&gt; StateDraft 
+state "Проект" AS StateDraft 
+state "Согласован" AS StateApproved 
+state "Действующий" AS StateActive 
+State "Загружен в АРМ" AS StateInArm 
+State "Загружен в НССО" AS StateInNsso 
+State "Ручной ввод\nв АРМ" AS StateHandMade 
+State "Подготовка к аннулированию" AS StateToNullify 
+State "Аннулирован" AS StateNullify 
+State "Подготовка к расторжению" AS StateToTermination 
+State "Расторгнут" AS StateTermination 
+StateDraft -left-&gt; StateApproved: Пройдена проверка ФЛК.\nЗапрошен номер договора.\nЗаполнены обяз.поля.\nНестандартные критерии согласованы.\n&lt;b&gt;Договор сохраняется.&lt;/b&gt; 
+StateApproved --&gt; StateActive : &lt;b&gt;Печать договора.&lt;/b&gt;\nУспешная повторная проверка ФЛК.\nОтправлен в АРМ. 
+StateActive --&gt; StateInArm : Проверить результат\nзагрузки в АРМ. 
+StateInArm -right-&gt; StateInNsso: Проверить атрибут\nnssoStatus. 
+StateActive --&gt; StateHandMade: При ошибках\nотправки в АРМ. 
+StateHandMade --&gt; StateInArm : Поиск договора\nв АРМ. 
+StateInNsso --&gt; [*] 
+StateInNsso --&gt; StateToNullify: Аннулировать 
+StateToNullify --&gt; StateNullify: Отправить в АРМ.\nПроверять\nсостояние документов 
+StateToNullify --&gt; StateInNsso: При ошибках\nотправки в АРМ. 
+StateNullify --&gt; [*] 
+StateInNsso --&gt; StateToTermination: Расторгнуть 
+StateToTermination --&gt; StateTermination: Отправить в АРМ.\nПроверять\nсостояние документов 
+StateToTermination --&gt; StateInNsso: При ошибках\nотправки в АРМ. 
+StateTermination --&gt; [*]
+@enduml
+</code></pre>
+  </div>
+  <div class="col-md-4">
+    <p><img src="/assets/images/state_diagram_1.jpg" /></p>
+  </div>
+</div>
 
-<p><a href="/pages/skills/uml/uml_002.html">2. Диаграммы последовательностей.</a></p>
-
-<p><a href="/pages/skills/uml/uml_003.html">3. Диаграммы классов.</a></p>
-
-<p><a href="/pages/skills/uml/uml_004.html">4. Диаграммы состояний.</a></p>
 
    	</div>
 </div></section>
