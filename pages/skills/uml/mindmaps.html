@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Uml. Примеры диаграмм</title>
+    <title>MindMaps (Интеллект-карты)</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -68,29 +68,56 @@
 
     <section class="pfblock"><div class="container">  		<!-- Translations -->
 	<div class="col-xs-6" align=left>
-		<a href="/index.html">home</a> \ <a href="/index.html#skills">Навыки</a>
+		<a href="/index.html">home</a> \ <a href="/pages/skills/uml.html">Uml. Примеры диаграмм</a>
 	</div>
 
 	<div class="col-xs-6" align=right>
-		Написано: 09.12.2022
+		Написано: 14.12.2022
 	</div>
 
    	<div class="col-sm-12 my">
-		<h1 id="uml-примеры-диаграмм">Uml. Примеры диаграмм.</h1>
+		<h1 id="mindmaps-интеллект-карты">MindMaps (Интеллект-карты)</h1>
 
-<p>Для отрисовки диаграмм может использоваться Online-Server <a href="http://www.plantuml.com/plantuml/uml/SyfFKj2rKt3CoKnELR1Io4ZDoSa70000">PlantUml</a> или <a href="https://kroki.io/#try">Kroki</a></p>
+<h3 id="паттерны-проектирования">Паттерны проектирования</h3>
 
-<p><a href="/pages/skills/uml/uml_001.html">1. Диаграммы прецедентов.</a></p>
+<div class="row">
+  <div class="col-md-8">
+    <pre><code class="language-uml">@startmindmap
++[#Orange] Шаблоны\n&lt;b&gt;Patterns
+--[#lightgreen] Порождающие\n&lt;b&gt;Creational
+---[#lightgreen] Абстрактная фабрика\n&lt;b&gt;Abstract factory
+---[#lightgreen] Строитель\n&lt;b&gt;Builder
+---[#lightgreen] Фабричный метод\n&lt;b&gt;Factory method
+---[#lightgreen] Прототип\n&lt;b&gt;Prototype
+---[#lightgreen] Одиночка\n&lt;b&gt;Singleton&lt;/b&gt;
+--[#FFBBCC] Структурные\n&lt;b&gt;Structural
+---[#FFBBCC] Адаптер\n&lt;b&gt;Adapter&lt;/b&gt;
+---[#FFBBCC] Мост\n&lt;b&gt;Bridge&lt;/b&gt;
+---[#FFBBCC] Компоновщик\n&lt;b&gt;Composite&lt;/b&gt;
+---[#FFBBCC] Декоратор\n&lt;b&gt;Decorator&lt;/b&gt;
+---[#FFBBCC] Фасад\n&lt;b&gt;Facade&lt;/b&gt;
+---[#FFBBCC] Приспособленец\n&lt;b&gt;Flyweight&lt;/b&gt;
+---[#FFBBCC] Заместитель\n&lt;b&gt;Proxy&lt;/b&gt;
+++[#lightblue] Поведенческие\n&lt;b&gt;Behavioral&lt;/b&gt;
++++[#lightblue] Цепочка обязанностей\n&lt;b&gt;Chain of responsibility
++++[#lightblue] Команда\n&lt;b&gt;Command
++++[#lightblue] Интерпретатор\n&lt;b&gt;Interpreter
++++[#lightblue] Итератор\n&lt;b&gt;Iterator
++++[#lightblue] Посредник\n&lt;b&gt;Mediator
++++[#lightblue] Хранитель\n&lt;b&gt;Memento
++++[#lightblue] Наблюдатель\n&lt;b&gt;Observer
++++[#lightblue] Состояние\n&lt;b&gt;State
++++[#lightblue] Стратегия\n&lt;b&gt;Strategy
++++[#lightblue] Шаблонный метод\n&lt;b&gt;Template method
++++[#lightblue] Посетитель\n&lt;b&gt;Visitor
+@endmindmap
+</code></pre>
+  </div>
+  <div class="col-md-4">
+    <p><img src="/assets/images/patterns.jpg" /></p>
+  </div>
+</div>
 
-<p><a href="/pages/skills/uml/uml_002.html">2. Диаграммы последовательностей.</a></p>
-
-<p><a href="/pages/skills/uml/uml_003.html">3. Диаграммы классов.</a></p>
-
-<p><a href="/pages/skills/uml/uml_004.html">4. Диаграммы состояний.</a></p>
-
-<h1 id="другие">Другие.</h1>
-
-<p><a href="/pages/skills/uml/mindmaps.html">MindMap (Интеллект-карты)</a></p>
 
    	</div>
 </div></section>
