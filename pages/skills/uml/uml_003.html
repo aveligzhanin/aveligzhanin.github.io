@@ -117,6 +117,102 @@ TAPOFrame &lt;|-down- TCalcDescriptiopn
   </div>
 </div>
 
+<h3 id="диаграммы-классов-менеджера-задач">Диаграммы классов менеджера задач</h3>
+
+<div class="row">
+  <div class="col-md-8">
+    <pre><code class="language-uml">@startuml
+
+note As N0 
+void __fastcall TaskThread::Execute() { 
+// если валиден указатель на задачу (FTask), 
+// а также менеджер задач (FTask-&gt;Manager), 
+// тогда 
+// увеличивает счетчик ниток менеджера задач, 
+// затем в цикле, пока не сброшен флаг Manager-&gt;Executed 
+// и не завершилась задача FTask-&gt;Finished == false, 
+// осуществляет вызов FTask-&gt;DoSomeWork() 
+// по окончании процесса уменьшает счетчик менеджера задач, 
+// устанавливается флаг завершенности (FFinished = true) 
+} 
+end note 
+
+One &lt;|-down- RealTaskManager 
+TaskManager &lt;|-down- RealTaskManager 
+Creator &lt;|-down- TaskManagerCreator 
+TaskManagerCreator -&gt; RealTaskManager 
+TaskManager &lt;-down- Task 
+TaskThread &lt;-down- Task 
+Task &lt;-up- TaskThread 
+Task &lt;|-up- GeneralTask 
+TaskThread -down- N0 
+One &lt;|-up- GeneralTask 
+Creator &lt;|-up- GeneralTaskCreator 
+GeneralTaskCreator -&gt; GeneralTask 
+TThread &lt;|-left- TaskThread 
+
+abstract class One { 
+#{abstract} std::string &lt;b&gt;GetFName&lt;/b&gt; () 
+} 
+abstract class Creator { 
++{abstract} One* &lt;b&gt;CreateOne&lt;/b&gt;() 
+} 
+abstract class TaskManager { 
++ __property bool &lt;b&gt;Executed&lt;/b&gt; 
++ __property int &lt;b&gt;ThreadCount&lt;/b&gt; 
++{abstract} bool &lt;b&gt;AddTask&lt;/b&gt;() 
+#{abstract} &lt;b&gt;DoExecute&lt;/b&gt;() 
+#{abstract} &lt;b&gt;DoStop&lt;/b&gt;() 
++ &lt;b&gt;IncThread&lt;/b&gt; () 
++ &lt;b&gt;DecThread&lt;/b&gt; () 
++ &lt;b&gt;Execute&lt;/b&gt; () 
++ &lt;b&gt;Stop&lt;/b&gt; () 
+} 
+class RealTaskManager { 
+- std::string &lt;b&gt;GetFName&lt;/b&gt; () 
+- bool &lt;b&gt;AddTask&lt;/b&gt;() 
+- &lt;b&gt;DoExecute&lt;/b&gt;() 
+- &lt;b&gt;DoStop&lt;/b&gt;() 
+} 
+abstract class Task { 
+- TaskThread* &lt;b&gt;FThread&lt;/b&gt; 
++ __property bool &lt;b&gt;Finished&lt;/b&gt; 
++ &lt;b&gt;Start&lt;/b&gt; (TaskManager* manager) 
+# &lt;b&gt;DoInitThread&lt;/b&gt; () 
++ {abstract} &lt;b&gt;DoSomeWork&lt;/b&gt; () 
++ __property TaskManager* &lt;b&gt;Manager&lt;/b&gt; 
+# &lt;b&gt;Finish&lt;/b&gt; () 
+} 
+
+class TaskThread { 
+- Task* &lt;b&gt;FTask&lt;/b&gt;; 
++ __property bool &lt;b&gt;Finished&lt;/b&gt; 
+- &lt;b&gt;Execute&lt;/b&gt; () 
+} 
+
+class GeneralTask { 
+- std::string &lt;b&gt;GetFName&lt;/b&gt; () 
+- &lt;b&gt;DoInitThread&lt;/b&gt; () 
+- &lt;b&gt;DoSomeWork&lt;/b&gt; () 
+} 
+
+class TaskManagerCreator { 
++One* &lt;b&gt;CreateOne&lt;/b&gt;() 
+} 
+
+class GeneralTaskCreator { 
++One* &lt;b&gt;CreateOne&lt;/b&gt;() 
+}
+
+@enduml
+
+</code></pre>
+  </div>
+  <div class="col-md-4">
+    <p><img src="/assets/images/class_diagram_2.jpg" /></p>
+  </div>
+</div>
+
 
    	</div>
 </div></section>

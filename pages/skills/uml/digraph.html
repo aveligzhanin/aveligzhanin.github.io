@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Cpp. Задачки для практики</title>
+    <title>Графы (GraphViz)</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -68,33 +68,59 @@
 
     <section class="pfblock"><div class="container">  		<!-- Translations -->
 	<div class="col-xs-6" align=left>
-		<a href="/index.html">home</a> \ <a href="/index.html#skills">Навыки</a>
+		<a href="/index.html">home</a> \ <a href="/pages/skills/uml.html">Uml. Примеры диаграмм</a>
 	</div>
 
 	<div class="col-xs-6" align=right>
-		Написано: 06.12.2022
+		Написано: 15.12.2022
 	</div>
 
    	<div class="col-sm-12 my">
-		<h1 id="cpp-задачки-для-практики">Cpp. Задачки для практики.</h1>
+		<h1 id="графы-graphviz">Графы (GraphViz)</h1>
 
-<p>Иногда используются в качестве вопросов на собеседовании.</p>
+<h3 id="цепочка-задач-отправки-договора-в-арм">Цепочка задач отправки договора в АРМ</h3>
 
-<h2 id="простые">Простые</h2>
+<div class="row">
+  <div class="col-md-8">
+    <pre><code class="language-uml">digraph G {
+nPreSearchContract[fillcolor=palegreen3, style="rounded,filled",label="1. searchContract"] 
+nPreGetContractID[fillcolor=palegreen3, style="rounded,filled",label="2. getContractID"] 
+nCreateAgentStatement[fillcolor=palegreen3, style="rounded,filled",label="3. createAgentStatement"] 
+nGetResultProcessing[fillcolor=palegreen3, style="rounded,filled",label="4. getResultProcessing"] 
+nSearchContract[fillcolor=palegreen3, style="rounded,filled",label="5. searchContract"] 
+nGetContractID[fillcolor=palegreen3, style="rounded,filled",label="6. getContractID"] 
+nChangeContractState[fillcolor=palegreen3, style="rounded,filled",label="7. changeContractState"] 
+nGetNssoStatus[fillcolor=palegreen3, style="rounded,filled",label="8. getNssoStatus"] 
+nNextAgentStatement[fillcolor=palegreen3, style="rounded,filled",label="9. nextAgentStatement"] 
+nExit[fillcolor=gray, style="rounded,filled",label="Exit"] 
+nPreSearchContract -&gt; nPreGetContractID[label=" Result = 0"] 
+nPreSearchContract -&gt; nCreateAgentStatement[label=" Result = -1"] 
+nPreGetContractID -&gt; nChangeContractState[label=" Result = 0"] 
+nPreGetContractID -&gt; nChangeContractState[label=" Result = -1"] 
+nCreateAgentStatement -&gt; nGetResultProcessing[label=" Result = 0"] 
+nCreateAgentStatement -&gt; nChangeContractState[label=" Result = -1"] 
+nGetResultProcessing -&gt; nSearchContract[label=" Result = 0"] 
+nGetResultProcessing -&gt; nGetResultProcessing[label=" Result = 1"] 
+nGetResultProcessing -&gt; nChangeContractState[label=" Result = -1"] 
+nGetResultProcessing -&gt; nNextAgentStatement[label=" Result = 2"] 
+nSearchContract -&gt; nGetContractID[label=" Result = 0"] 
+nSearchContract -&gt; nChangeContractState[label=" Result = -1"] 
+nGetContractID -&gt; nChangeContractState[label=" Result = 0"] 
+nGetContractID -&gt; nChangeContractState[label=" Result = -1"] 
+nChangeContractState -&gt; nGetNssoStatus[label=" Result = 0"] 
+nChangeContractState -&gt; nExit[label=" Result = -1"] 
+nGetNssoStatus -&gt; nGetNssoStatus[label=" Result = 1"] 
+nGetNssoStatus -&gt; nExit 
+nNextAgentStatement -&gt; nCreateAgentStatement[label=" Result = 0"] 
+nNextAgentStatement -&gt; nChangeContractState[label=" Result = -1"]
+}
+</code></pre>
+  </div>
+  <div class="col-md-4">
+    <p><img src="/assets/images/digraph_1.jpg" /></p>
+  </div>
+</div>
 
-<p><a href="/pages/skills/cpp/cpp_001.html">Поразрядный вывод пятизначного числа.</a></p>
-
-<p><a href="/pages/skills/cpp/cpp_003.html">Перевод числа из метров в километры.</a></p>
-
-<p><a href="/pages/skills/cpp/cpp_004.html">Нарисовать домик.</a></p>
-
-<p><a href="/pages/skills/cpp/cpp_005.html">Нарисовать треугольник.</a></p>
-
-<p><a href="/pages/skills/cpp/cpp_006.html">Вывод титульной рамки.</a></p>
-
-<h2 id="сложнее">Сложнее</h2>
-
-<p><a href="/pages/skills/cpp/cpp_002.html">Перекодировка из UTF-8 в Cp-1251.</a></p>
 
    	</div>
 </div></section>

@@ -290,6 +290,68 @@
 
 <p>Технически, работа механизма взаимодействия с АРМ реализована с помощью <strong>менеджера задач</strong>.</p>
 
+<p>Менеджер задач – это глобальный объект.</p>
+
+<h2 id="запуск-менеджера-задач">Запуск менеджера задач.</h2>
+
+<p>Запуск менеджера задач осуществляется функцией <strong>StartTaskManager</strong>. Функция вызывается при старте модуля.</p>
+
+<p>Объект менеджера задач запрашивается у фабрики по нужному имени. Могут быть различные реализации менеджера задач. У фабрики запрашивается та реализация, которая определена параметром <strong>OSOPO_TaskManager</strong>.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*------------------------------------------------------------------------------
+    Создание глобальных структур.
+------------------------------------------------------------------------------*/</span>
+<span class="kt">void</span> <span class="nf">ConstructGlobals</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">String</span> <span class="n">TaskManagerName</span><span class="p">;</span>
+
+    <span class="c1">// пропущено</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">osopo</span><span class="o">::</span><span class="n">GV</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">TaskManagerName</span> <span class="o">=</span> <span class="n">osopo</span><span class="o">::</span><span class="n">GV</span><span class="o">-&gt;</span><span class="n">Get</span><span class="p">(</span><span class="s">"OSOPO_TaskManager"</span><span class="p">).</span><span class="n">Trim</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">TaskManagerName</span><span class="p">.</span><span class="n">SubString</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span> <span class="o">!=</span> <span class="s">"TaskManager"</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">TaskManagerName</span> <span class="o">=</span> <span class="s">"TaskManager"</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">osopo</span><span class="o">::</span><span class="n">StartTaskManager</span><span class="p">(</span> <span class="n">TaskManagerName</span> <span class="p">);</span>                                 <span class="c1">// менеджер задач</span>
+    <span class="c1">// пропущено</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="останов-менеджера-задач">Останов менеджера задач.</h2>
+
+<p>Запуск менеджера задач осуществляется функцией <strong>StopTaskManager</strong>. Функция вызывается при завершении работы модуля.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*------------------------------------------------------------------------------
+    Уничтожение глобальных структур.
+------------------------------------------------------------------------------*/</span>
+<span class="kt">void</span> <span class="nf">DestructGlobals</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// пропущено</span>
+    <span class="n">osopo</span><span class="o">::</span><span class="n">StopTaskManager</span><span class="p">();</span>                                 <span class="c1">// менеджер задач</span>
+    <span class="c1">// пропущено</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="диаграмма-классов-менеджера-задач">Диаграмма классов менеджера задач.</h2>
+
+<p><strong>TaskManager</strong> – это абстрактный класс, предоставляющий интерфейс для запуска задач.</p>
+
+<p><img src="/assets/images/class_diagram_2.jpg" /></p>
+
+<h2 id="задачи">Задачи.</h2>
+
+<p><strong>Задача</strong> представляет собой некую последовательность действий для выполнения <strong>законченной</strong> операции. Например, обращение к сервису <strong>createAgentStatement</strong>.</p>
+
+<h2 id="цепочки-задач">Цепочки задач.</h2>
+
+<p>Задачи могут объединяться в <strong>цепочку</strong>. Так, задача – это одно законченное действие (обращение к сервису), а цепочка – это несколько действий, представляющих собой общую операцию (например, отправку договора в АРМ).</p>
+
+<p>Так, для того, чтобы выполнить отправку договора в АРМ необходимо совершить ряд шагов (обратиться к сервису поиска договоров, обратиться к сервису создания отчёта агента, несколько раз вызвать сервис проверки результата и т.д.)</p>
+
+<p>Ниже приведён пример цепочки задач “Chain_01. Экспорт превоначального договора в АРМ”.</p>
+
+<p><img src="/assets/images/digraph_1.jpg" /></p>
+
    	</div>
 </div></section>
 
