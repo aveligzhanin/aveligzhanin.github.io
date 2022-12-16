@@ -1,0 +1,806 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Excel без Microsoft Office</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Our style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/avel.css">
+</head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+  <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse menu">
+			<ul class="nav navbar-nav navbar-right">
+                 
+                    <li>
+                       <a href="/index.html#about">Обо мне</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#education">Образование</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#work">Работа</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#skills">Навыки</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#portfolio">Портфолио</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#hobby">Увлечения</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#contact">Контакты</a>
+                    </li>
+                 
+        	</ul>
+        </div>
+      </div>
+  </div>
+</nav>
+
+    <section class="pfblock"><div class="container">  		<!-- Translations -->
+	<div class="col-xs-6" align=left>
+		<a href="/index.html">home</a> \ <a href="/index.html#portfolio">Портфолио</a>
+	</div>
+
+	<div class="col-xs-6" align=right>
+		Написано: 16.12.2022
+	</div>
+
+   	<div class="col-sm-12 my">
+		<h1 id="excel-без-microsoft-office">Excel без Microsoft Office</h1>
+
+<h2 id="предисловие">Предисловие</h2>
+
+<p>Была поставлена задача программно на компьютерах пользователей (страховых агентов) реализовать выпуск Отчета Агента, заполненного в соответствии с требованиями.</p>
+
+<p>Шаблон Отчёта Агента (форма 113м) представляет собой Еxcel-файл. Ниже представлен его фрагмент.</p>
+
+<p><img src="/assets/images/excel_3.jpg" /></p>
+
+<p>Задача осложнялась тем, что есть страховые агенты, на компьютерах которых пакет <strong>Microsoft Office</strong> установлен, и агенты, у которых <strong>Microsoft Office</strong> отсутствует (вместо него используется другой офисный пакет).</p>
+
+<p>Соответственно, существуют <strong>разные</strong> технологии работы с Excel-файлом в зависимости от среды: в той среде, где пакет <strong>Microsoft Office</strong> отсутствует, нет необходимых компонентов, которые используются обычно при работе с Excel-файлом.</p>
+
+<p>К счастью, оказалось, что с Excel-файлом можно работать напрямую.</p>
+
+<h2 id="работа-с-excel-файлом">Работа с Excel-файлом.</h2>
+
+<p><strong>Excel</strong>-файл – представляет собой <strong>zip</strong>-архив, в котором находятся <strong>xml</strong>-файлы.</p>
+
+<p>Соответственно, можно программно:</p>
+
+<ul>
+  <li>распаковать <strong>zip</strong>-архив,</li>
+  <li>добраться до нужно <strong>xml</strong>-файла (в котором содержится информация о значении, хранящемся в той или иной ячейке таблицы),</li>
+  <li>изменить данные <strong>xml</strong>-файла, как нужно</li>
+  <li>сформировать новый <strong>zip</strong>-архив (сделать <strong>Excel</strong>-файл таким, каким он должен быть).</li>
+</ul>
+
+<h2 id="тестовое-приложение-для-изменения-ячейки-excel-файла">Тестовое приложение для изменения ячейки Excel-файла.</h2>
+
+<p>Технику, которая используется для изменения данных в <strong>Excel</strong>-файле, иллюстрирует тестовое приложение.</p>
+
+<p><a href="/assets/files/008_Excel_Shell.zip">Архив с исходным текстом приложения</a></p>
+
+<p>Ниже показано окно приложения.</p>
+
+<p><img src="/assets/images/excel_window.jpg" /></p>
+
+<p>В приложении запрашиваются параметры:</p>
+
+<ul>
+  <li>Имя исходного Excel-файла ( <strong>Source File</strong> )</li>
+  <li>Имя Excel-файла для записи результата ( <strong>Dest File</strong> )</li>
+  <li>Название временной папки, которая будет использоваться для преобразования ( <strong>Temp Dir</strong> )</li>
+  <li>Значение, которое будет записываться в ячейку ( <strong>Set Value=</strong> )</li>
+  <li>Имя ячейки, куда будет записано значение (<strong>To Cell</strong>)</li>
+</ul>
+
+<p>Также есть кнопка ( <strong>Do It</strong> ), при нажатии на которую происходит процесс преобразования.</p>
+
+<h2 id="результат">Результат.</h2>
+
+<p>Ниже показан результат работы приложения.</p>
+
+<p>На основании файла <strong>3.xlsx</strong> был сформирован файл <strong>4.xlsx</strong>, а в ячейку <strong>AP2</strong> было записано значение <strong>3065010</strong>.</p>
+
+<p><img src="/assets/images/excel_4.jpg" /></p>
+
+<h2 id="проект-texcelbpr">Проект TExcel.bpr</h2>
+
+<p>Для реализации данного несложного приложения была использована интергированная среда разработки Borland C++ Builder (v.6.0)</p>
+
+<p>Исходный текст приложения демонстрирует несколько интересных техник.</p>
+
+<p><img src="/assets/images/excel_bpr.png" alt="Проект TExcel.bpr" /></p>
+
+<h2 id="процедура-tform1b_doitclick">Процедура TForm1::B_DoItClick()</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="kr">__fastcall</span> <span class="n">TForm1</span><span class="o">::</span><span class="n">B_DoItClick</span><span class="p">(</span><span class="n">TObject</span> <span class="o">*</span><span class="n">Sender</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">AnsiString</span> <span class="n">SourceDir</span><span class="p">,</span> <span class="n">SourceFile</span><span class="p">;</span>
+    <span class="n">AnsiString</span> <span class="n">DestDir</span><span class="p">,</span> <span class="n">DestFile</span><span class="p">;</span>
+    <span class="n">AnsiString</span> <span class="n">ZipName</span><span class="p">,</span> <span class="n">DestZip</span><span class="p">;</span>
+    <span class="n">AnsiString</span> <span class="n">Unique</span><span class="p">,</span> <span class="n">TempDir</span><span class="p">;</span>
+    <span class="n">AnsiString</span> <span class="n">WorksheetsPath</span> <span class="o">=</span> <span class="s">"xl</span><span class="se">\\</span><span class="s">worksheets"</span><span class="p">;</span>
+    <span class="n">AnsiString</span> <span class="n">sharedStringsPath</span> <span class="o">=</span> <span class="s">"xl"</span><span class="p">;</span>
+    <span class="n">AnsiString</span> <span class="n">nameSheet1</span> <span class="o">=</span> <span class="s">"sheet1.xml"</span><span class="p">,</span> <span class="n">nameSharedStrings</span> <span class="o">=</span> <span class="s">"sharedStrings.xml"</span><span class="p">;</span>
+    <span class="n">AnsiString</span> <span class="n">Worksheets</span><span class="p">,</span> <span class="n">SharedStrings</span><span class="p">;</span>
+    <span class="n">AnsiString</span> <span class="n">fileNameSheet1</span><span class="p">,</span> <span class="n">fileNameSharedStrings</span><span class="p">;</span>
+    <span class="n">AnsiString</span> <span class="n">X</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">pos</span><span class="p">;</span>
+    <span class="n">bool</span> <span class="n">b</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="n">_di_IXMLDocument</span> <span class="n">xmlSheet1</span><span class="p">,</span> <span class="n">xmlSharedStrings</span><span class="p">;</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="n">E_SourceFile</span><span class="o">-&gt;</span><span class="n">Text</span><span class="p">.</span><span class="n">IsEmpty</span><span class="p">()</span> <span class="o">==</span> <span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ShowMessage</span><span class="p">(</span><span class="s">"Source File не задан"</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span> <span class="n">E_DestFile</span><span class="o">-&gt;</span><span class="n">Text</span><span class="p">.</span><span class="n">IsEmpty</span><span class="p">()</span> <span class="o">==</span> <span class="nb">true</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="n">ShowMessage</span><span class="p">(</span><span class="s">"Dest File не задан"</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span> <span class="n">E_TempDir</span><span class="o">-&gt;</span><span class="n">Text</span><span class="p">.</span><span class="n">IsEmpty</span><span class="p">()</span> <span class="o">==</span> <span class="nb">true</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="n">ShowMessage</span><span class="p">(</span><span class="s">"Temp Dir не задан"</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">SourceFile</span> <span class="o">=</span> <span class="n">GetFileName</span><span class="p">(</span><span class="n">E_SourceFile</span><span class="o">-&gt;</span><span class="n">Text</span><span class="p">);</span>
+        <span class="c1">// проверка существования исходного файла</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">FileExists</span><span class="p">(</span><span class="n">SourceFile</span><span class="p">)</span> <span class="o">==</span> <span class="nb">false</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">X</span><span class="p">.</span><span class="n">sprintf</span><span class="p">(</span><span class="s">"Файл не найден: %s"</span><span class="p">,</span> <span class="n">SourceFile</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+            <span class="n">ShowMessage</span><span class="p">(</span><span class="n">X</span><span class="p">);</span>
+            <span class="k">return</span> <span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Создание темперной папки</span>
+        <span class="n">Unique</span> <span class="o">=</span> <span class="n">GetUnique</span><span class="p">();</span>
+        <span class="n">TempDir</span><span class="p">.</span><span class="n">sprintf</span><span class="p">(</span><span class="s">"%s</span><span class="se">\\</span><span class="s">%s"</span><span class="p">,</span> <span class="n">E_TempDir</span><span class="o">-&gt;</span><span class="n">Text</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">Unique</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+        <span class="n">AssertDir</span><span class="p">(</span><span class="n">TempDir</span><span class="p">);</span>
+
+        <span class="c1">// Копируем исходный файл в темперную папку (и меняем расширение xlsx --&gt;  zip)</span>
+        <span class="n">SourceFile</span><span class="p">.</span><span class="n">sprintf</span><span class="p">(</span><span class="s">"%s"</span><span class="p">,</span> <span class="n">E_SourceFile</span><span class="o">-&gt;</span><span class="n">Text</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">FileExists</span><span class="p">(</span><span class="n">SourceFile</span><span class="p">)</span> <span class="o">==</span> <span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">ExtractFileName</span><span class="p">(</span><span class="n">SourceFile</span><span class="p">);</span>
+            <span class="k">if</span><span class="p">((</span><span class="n">pos</span> <span class="o">=</span> <span class="n">X</span><span class="p">.</span><span class="n">Pos</span><span class="p">(</span><span class="s">"."</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">.</span><span class="n">SubString</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">pos</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="n">ZipName</span><span class="p">.</span><span class="n">sprintf</span><span class="p">(</span><span class="s">"%s</span><span class="se">\\</span><span class="s">%s.zip"</span><span class="p">,</span> <span class="n">TempDir</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">X</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+            <span class="n">CopyFile</span><span class="p">(</span><span class="n">SourceFile</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">ZipName</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">TRUE</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Извлекаем файл 'Sheet1.xml' из архива</span>
+        <span class="n">Worksheets</span><span class="p">.</span><span class="n">sprintf</span><span class="p">(</span><span class="s">"%s</span><span class="se">\\</span><span class="s">%s"</span><span class="p">,</span> <span class="n">ZipName</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">WorksheetsPath</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+        <span class="n">UnZipFile</span><span class="p">(</span><span class="n">Worksheets</span><span class="p">,</span> <span class="n">nameSheet1</span><span class="p">,</span> <span class="n">TempDir</span><span class="p">);</span>
+
+        <span class="c1">// Извлекаем файл 'sharedStrings.xml' из архива</span>
+        <span class="n">SharedStrings</span><span class="p">.</span><span class="n">sprintf</span><span class="p">(</span><span class="s">"%s</span><span class="se">\\</span><span class="s">%s"</span><span class="p">,</span> <span class="n">ZipName</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">sharedStringsPath</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+        <span class="n">UnZipFile</span><span class="p">(</span><span class="n">SharedStrings</span><span class="p">,</span> <span class="n">nameSharedStrings</span><span class="p">,</span> <span class="n">TempDir</span><span class="p">);</span>
+
+        <span class="c1">// Открываем 'Sheet1.xml'</span>
+        <span class="n">xmlSheet1</span> <span class="o">=</span> <span class="n">NewXMLDocument</span><span class="p">();</span>
+        <span class="n">fileNameSheet1</span><span class="p">.</span><span class="n">sprintf</span><span class="p">(</span><span class="s">"%s</span><span class="se">\\</span><span class="s">%s"</span><span class="p">,</span> <span class="n">TempDir</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">nameSheet1</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">FileExists</span><span class="p">(</span><span class="n">fileNameSheet1</span><span class="p">)</span> <span class="o">==</span> <span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">xmlSheet1</span><span class="o">-&gt;</span><span class="n">LoadFromFile</span><span class="p">(</span> <span class="n">fileNameSheet1</span> <span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Открываем 'sharedStrings.xml'</span>
+        <span class="n">xmlSharedStrings</span> <span class="o">=</span> <span class="n">NewXMLDocument</span><span class="p">();</span>
+        <span class="n">fileNameSharedStrings</span><span class="p">.</span><span class="n">sprintf</span><span class="p">(</span><span class="s">"%s</span><span class="se">\\</span><span class="s">%s"</span><span class="p">,</span> <span class="n">TempDir</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">nameSharedStrings</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">FileExists</span><span class="p">(</span><span class="n">fileNameSharedStrings</span><span class="p">)</span> <span class="o">==</span> <span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">xmlSharedStrings</span><span class="o">-&gt;</span><span class="n">LoadFromFile</span><span class="p">(</span> <span class="n">fileNameSharedStrings</span> <span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Редактируем 'Sheet1.xml'</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">EditCell</span><span class="p">(</span><span class="n">xmlSheet1</span><span class="p">,</span> <span class="n">xmlSharedStrings</span><span class="p">,</span> <span class="n">E_Cell</span><span class="o">-&gt;</span><span class="n">Text</span><span class="p">,</span> <span class="n">E_Value</span><span class="o">-&gt;</span><span class="n">Text</span><span class="p">);</span>
+
+        <span class="c1">// Сохраняем 'Sheet1.xml'</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">b</span> <span class="o">==</span> <span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">SaveXml</span><span class="p">(</span><span class="n">xmlSheet1</span><span class="p">,</span> <span class="n">fileNameSheet1</span><span class="p">);</span>
+            <span class="n">SaveXml</span><span class="p">(</span><span class="n">xmlSharedStrings</span><span class="p">,</span> <span class="n">fileNameSharedStrings</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Помещаем в архив файл 'Sheet1.xml'</span>
+        <span class="n">UnZipFile</span><span class="p">(</span><span class="n">TempDir</span><span class="p">,</span> <span class="n">nameSheet1</span><span class="p">,</span> <span class="n">Worksheets</span><span class="p">);</span>
+
+        <span class="c1">// Помещаем в архив файл 'sharedStrings.xml'</span>
+        <span class="n">UnZipFile</span><span class="p">(</span><span class="n">TempDir</span><span class="p">,</span> <span class="n">nameSharedStrings</span><span class="p">,</span> <span class="n">SharedStrings</span><span class="p">);</span>
+
+        <span class="c1">// Копируем результат, куда нужно (и меняем расширение zip --&gt;  xlsx)</span>
+        <span class="n">DestFile</span> <span class="o">=</span> <span class="n">GetFileName</span><span class="p">(</span><span class="n">E_DestFile</span><span class="o">-&gt;</span><span class="n">Text</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">FileExists</span><span class="p">(</span><span class="n">DestFile</span><span class="p">)</span> <span class="o">==</span> <span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
+            <span class="o">::</span><span class="n">DeleteFile</span><span class="p">(</span><span class="n">DestFile</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+        <span class="p">}</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">FileExists</span><span class="p">(</span><span class="n">DestFile</span><span class="p">)</span> <span class="o">==</span> <span class="nb">false</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">MoveFile</span><span class="p">(</span><span class="n">ZipName</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">DestFile</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Удаляем темперную папку</span>
+        <span class="o">::</span><span class="n">RemoveDirectory</span><span class="p">(</span><span class="n">TempDir</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+
+        <span class="c1">// сообщаем, что закончили</span>
+        <span class="n">ShowMessage</span><span class="p">(</span><span class="s">"Done"</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<h2 id="создание-темперной-папки">Создание темперной папки.</h2>
+
+<p>Ниже ещё раз приводится фрагмент создания временной папки:</p>
+<ul>
+  <li>Сначала вызывается функция <strong>GetUnique</strong> (), возвращающая уникальное имя.</li>
+  <li>Затем формируется имя уникальной папки (путём соединения имени временного папки и уникального имени, полученного ранее)</li>
+  <li>После вызывается функция <strong>AssertDir</strong> () для проверки папки (и создания, если её нет).</li>
+</ul>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="c1">// Создание темперной папки</span>
+    <span class="n">Unique</span> <span class="o">=</span> <span class="n">GetUnique</span><span class="p">();</span>
+    <span class="n">TempDir</span><span class="p">.</span><span class="n">sprintf</span><span class="p">(</span><span class="s">"%s</span><span class="se">\\</span><span class="s">%s"</span><span class="p">,</span> <span class="n">E_TempDir</span><span class="o">-&gt;</span><span class="n">Text</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">Unique</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+    <span class="n">AssertDir</span><span class="p">(</span><span class="n">TempDir</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="уникальное-имя">Уникальное имя.</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">AnsiString</span> <span class="kr">__fastcall</span> <span class="n">TForm1</span><span class="o">::</span><span class="n">GetUnique</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">AnsiString</span> <span class="n">X</span><span class="p">;</span>
+    <span class="n">GUID</span> <span class="n">g</span><span class="p">;</span>
+    <span class="kt">wchar_t</span><span class="o">*</span> <span class="n">buf</span><span class="p">;</span>
+
+    <span class="n">try</span><span class="p">{</span>
+        <span class="n">CoCreateGuid</span><span class="p">(</span><span class="o">&amp;</span><span class="n">g</span><span class="p">);</span>
+        <span class="n">buf</span> <span class="o">=</span> <span class="n">new</span> <span class="kt">wchar_t</span><span class="p">[</span><span class="mi">100</span><span class="p">];</span>
+        <span class="n">StringFromGUID2</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">AnsiString</span><span class="p">(</span><span class="n">buf</span><span class="p">);</span>
+        <span class="n">delete</span> <span class="p">[]</span> <span class="n">buf</span><span class="p">;</span>
+    <span class="p">}</span><span class="n">catch</span><span class="p">(...)</span> <span class="p">{}</span>
+
+    <span class="k">return</span> <span class="n">X</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="проверка-папки">Проверка папки.</h2>
+
+<p>Если нет каталога с полученным именем, то проверяются родительские каталоги, если полученное имя содержит имена родительских каталогов, 
+производится проверка для них (путём рекурсивного вызова <strong>AssertDir</strong>), 
+после проверки родительских каталогов, создаётся отсутствующий каталог.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="kr">__fastcall</span> <span class="n">TForm1</span><span class="o">::</span><span class="n">AssertDir</span><span class="p">(</span><span class="k">const</span> <span class="n">AnsiString</span> <span class="n">p</span><span class="p">)</span>
+<span class="p">{</span>
+   <span class="k">if</span> <span class="p">(</span><span class="o">::</span><span class="n">GetFileAttributes</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">c_str</span><span class="p">())</span> <span class="o">==</span> <span class="n">INVALID_FILE_ATTRIBUTES</span><span class="p">)</span> <span class="p">{</span>             <span class="c1">// если каталога нет...</span>
+      <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">ReversePos</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s">"</span><span class="se">\\</span><span class="s">"</span><span class="p">);</span>                                                  <span class="c1">// если есть, проверяем родителей</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+         <span class="n">AssertDir</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">SubString</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">));</span>
+      <span class="p">}</span>
+      <span class="o">::</span><span class="n">CreateDirectory</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="nb">NULL</span><span class="p">);</span>                                           <span class="c1">// создаем каталог</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p>Код функции <strong>ReversePos</strong> () показан ниже.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="kr">__fastcall</span> <span class="n">TForm1</span><span class="o">::</span><span class="n">ReversePos</span><span class="p">(</span><span class="k">const</span> <span class="n">AnsiString</span> <span class="n">S</span><span class="p">,</span> <span class="k">const</span> <span class="n">AnsiString</span> <span class="n">Match</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">p</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">S</span><span class="p">.</span><span class="n">Length</span><span class="p">();</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">S</span><span class="p">.</span><span class="n">Length</span><span class="p">();</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">S</span><span class="p">.</span><span class="n">SubString</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="n">Match</span> <span class="o">&amp;&amp;</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">p</span><span class="p">;</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<h2 id="функция-tform1unzipfile">Функция TForm1::UnZipFile()</h2>
+
+<p>Для Windows shell-а <strong>zip</strong>-файл представляет собой папку.</p>
+
+<p>Соответственно, файлы из этой папки (<strong>zip</strong>-файла) можно скопировать в другую папку (это аналог извлечения файла из архива).</p>
+
+<p>Можно и наоборот: файлы из другой папки переместить в папку <strong>zip</strong>-файла (это аналог архивации файла, помещения файла в архив).</p>
+
+<p>В функции используется функция <strong>GetVariant</strong> (). Текст будет приведён ниже.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bool</span> <span class="kr">__fastcall</span> <span class="n">TForm1</span><span class="o">::</span><span class="n">UnZipFile</span><span class="p">(</span><span class="n">AnsiString</span> <span class="n">SourceDir</span><span class="p">,</span> <span class="n">AnsiString</span> <span class="n">SourceFile</span><span class="p">,</span> <span class="n">AnsiString</span> <span class="n">DestDir</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">bool</span> <span class="n">b</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="n">HRESULT</span> <span class="n">hResult</span> <span class="o">=</span> <span class="n">S_FALSE</span><span class="p">;</span>
+    <span class="n">IShellDispatch</span> <span class="o">*</span><span class="n">pISD</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">IDispatch</span> <span class="o">*</span><span class="n">d</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">Folder</span> <span class="o">*</span><span class="n">pToFolder</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">,</span> <span class="o">*</span><span class="n">pFromFolder</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">,</span> <span class="o">*</span><span class="n">pCurrentFolder</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">FolderItems</span> <span class="o">*</span><span class="n">fi</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">FolderItem</span> <span class="o">*</span><span class="n">item</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+	<span class="n">VARIANT</span> <span class="n">vSrc</span><span class="p">,</span> <span class="n">vDest</span><span class="p">,</span> <span class="n">vOptions</span><span class="p">,</span> <span class="n">vItem</span><span class="p">,</span> <span class="n">vIndex</span><span class="p">;</span>
+    <span class="kt">long</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">OldCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">BSTR</span> <span class="n">name</span><span class="p">;</span>
+    <span class="n">AnsiString</span> <span class="n">ItemName</span><span class="p">,</span> <span class="n">MatchItem</span><span class="p">,</span> <span class="n">MatchStr</span> <span class="o">=</span> <span class="n">SourceFile</span><span class="p">;</span>
+    <span class="n">bool</span> <span class="n">found</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">pos</span><span class="p">;</span>
+    <span class="kt">short</span> <span class="n">is_folder</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="n">CoInitialize</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
+
+    <span class="n">VariantInit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">vOptions</span><span class="p">);</span>
+    <span class="n">vOptions</span><span class="p">.</span><span class="n">vt</span> <span class="o">=</span> <span class="n">VT_I4</span><span class="p">;</span>
+    <span class="n">vOptions</span><span class="p">.</span><span class="n">lVal</span> <span class="o">=</span> <span class="mh">0x0004</span><span class="p">;</span>  <span class="c1">// FOF_SILENT don't create progress/report</span>
+
+    <span class="n">VariantInit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">vItem</span><span class="p">);</span>
+    <span class="n">vItem</span><span class="p">.</span><span class="n">vt</span> <span class="o">=</span> <span class="n">VT_DISPATCH</span><span class="p">;</span>
+
+    <span class="n">VariantInit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">vIndex</span><span class="p">);</span>
+    <span class="n">vIndex</span><span class="p">.</span><span class="n">vt</span> <span class="o">=</span> <span class="n">VT_I4</span><span class="p">;</span>
+
+    <span class="n">hResult</span> <span class="o">=</span> <span class="n">CoCreateInstance</span><span class="p">(</span><span class="n">CLSID_Shell</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">CLSCTX_INPROC_SERVER</span><span class="p">,</span> <span class="n">IID_IShellDispatch</span><span class="p">,</span> <span class="p">(</span><span class="kt">void</span> <span class="o">**</span><span class="p">)</span><span class="o">&amp;</span><span class="n">pISD</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">SUCCEEDED</span><span class="p">(</span><span class="n">hResult</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">pISD</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="n">GetVariant</span><span class="p">(</span><span class="n">DestDir</span><span class="p">,</span> <span class="n">vDest</span><span class="p">);</span>
+        <span class="n">hResult</span> <span class="o">=</span> <span class="n">pISD</span><span class="o">-&gt;</span><span class="n">NameSpace</span><span class="p">(</span><span class="n">vDest</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">pToFolder</span><span class="p">);</span>
+
+        <span class="k">if</span>  <span class="p">(</span><span class="n">SUCCEEDED</span><span class="p">(</span><span class="n">hResult</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">pToFolder</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+
+            <span class="n">GetVariant</span><span class="p">(</span><span class="n">SourceDir</span><span class="p">,</span> <span class="n">vSrc</span><span class="p">);</span>
+            <span class="n">hResult</span> <span class="o">=</span> <span class="n">pISD</span><span class="o">-&gt;</span><span class="n">NameSpace</span><span class="p">(</span><span class="n">vSrc</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">pFromFolder</span><span class="p">);</span>
+
+            <span class="k">if</span>  <span class="p">(</span><span class="n">SUCCEEDED</span><span class="p">(</span><span class="n">hResult</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">pFromFolder</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+
+                <span class="n">pFromFolder</span><span class="o">-&gt;</span><span class="n">Items</span><span class="p">(</span><span class="o">&amp;</span><span class="n">fi</span><span class="p">);</span>
+
+                <span class="c1">// поиск нужно Item-а</span>
+                <span class="n">fi</span><span class="o">-&gt;</span><span class="n">get_Count</span><span class="p">(</span><span class="o">&amp;</span><span class="n">count</span><span class="p">);</span>
+                <span class="k">while</span><span class="p">(</span><span class="n">found</span> <span class="o">==</span> <span class="nb">true</span> <span class="o">&amp;&amp;</span> <span class="n">MatchStr</span><span class="p">.</span><span class="n">IsEmpty</span><span class="p">()</span> <span class="o">==</span> <span class="nb">false</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">found</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+                    <span class="k">if</span><span class="p">((</span><span class="n">pos</span> <span class="o">=</span> <span class="n">MatchStr</span><span class="p">.</span><span class="n">Pos</span><span class="p">(</span><span class="sc">'\\'</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="p">)</span> <span class="p">{</span>
+                        <span class="n">MatchItem</span> <span class="o">=</span> <span class="n">MatchStr</span><span class="p">.</span><span class="n">SubString</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">pos</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+                        <span class="n">MatchStr</span> <span class="o">=</span> <span class="n">MatchStr</span><span class="p">.</span><span class="n">SubString</span><span class="p">(</span><span class="n">pos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">MatchStr</span><span class="p">.</span><span class="n">Length</span><span class="p">()</span> <span class="o">-</span> <span class="n">pos</span><span class="p">);</span>
+                    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                        <span class="n">MatchItem</span> <span class="o">=</span> <span class="n">MatchStr</span><span class="p">;</span>
+                        <span class="n">MatchStr</span> <span class="o">=</span> <span class="s">""</span><span class="p">;</span>
+                    <span class="p">}</span>
+                    <span class="k">for</span><span class="p">(</span><span class="kt">long</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">count</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="n">vIndex</span><span class="p">.</span><span class="n">lVal</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+                        <span class="n">fi</span><span class="o">-&gt;</span><span class="n">Item</span><span class="p">(</span><span class="n">vIndex</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">item</span><span class="p">);</span>
+                        <span class="n">item</span><span class="o">-&gt;</span><span class="n">get_Path</span><span class="p">(</span><span class="o">&amp;</span><span class="n">name</span><span class="p">);</span>
+                        <span class="n">ItemName</span> <span class="o">=</span> <span class="n">name</span><span class="p">;</span>
+                        <span class="k">if</span><span class="p">((</span><span class="n">pos</span> <span class="o">=</span> <span class="n">ItemName</span><span class="p">.</span><span class="n">LastDelimiter</span><span class="p">(</span><span class="sc">'\\'</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                            <span class="n">ItemName</span> <span class="o">=</span> <span class="n">ItemName</span><span class="p">.</span><span class="n">SubString</span><span class="p">(</span><span class="n">pos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ItemName</span><span class="p">.</span><span class="n">Length</span><span class="p">()</span> <span class="o">-</span> <span class="n">pos</span><span class="p">);</span>
+                        <span class="p">}</span>
+                        <span class="k">if</span><span class="p">(</span><span class="n">ItemName</span> <span class="o">==</span> <span class="n">MatchItem</span><span class="p">)</span> <span class="p">{</span>
+                            <span class="n">found</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+                            <span class="k">break</span><span class="p">;</span>
+                        <span class="p">}</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+
+                <span class="k">if</span><span class="p">(</span><span class="n">found</span> <span class="o">==</span> <span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">vItem</span><span class="p">.</span><span class="n">pdispVal</span> <span class="o">=</span> <span class="n">item</span><span class="p">;</span>
+                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                    <span class="n">vItem</span><span class="p">.</span><span class="n">pdispVal</span> <span class="o">=</span> <span class="n">fi</span><span class="p">;</span>
+                <span class="p">}</span>
+
+                <span class="n">pToFolder</span><span class="o">-&gt;</span><span class="n">Items</span><span class="p">(</span><span class="o">&amp;</span><span class="n">fi</span><span class="p">);</span>
+                <span class="n">fi</span><span class="o">-&gt;</span><span class="n">get_Count</span><span class="p">(</span><span class="o">&amp;</span><span class="n">OldCount</span><span class="p">);</span>
+                <span class="n">hResult</span> <span class="o">=</span> <span class="n">pToFolder</span><span class="o">-&gt;</span><span class="n">MoveHere</span><span class="p">(</span><span class="n">vItem</span><span class="p">,</span> <span class="n">vOptions</span><span class="p">);</span>
+
+                <span class="c1">// ждем завершения перемещения.</span>
+                <span class="k">while</span><span class="p">(</span> <span class="nb">true</span> <span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="n">Sleep</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+
+                    <span class="n">fi</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+                    <span class="n">pToFolder</span><span class="o">-&gt;</span><span class="n">Items</span><span class="p">(</span><span class="o">&amp;</span><span class="n">fi</span><span class="p">);</span>
+                    <span class="n">fi</span><span class="o">-&gt;</span><span class="n">get_Count</span><span class="p">(</span><span class="o">&amp;</span><span class="n">count</span><span class="p">);</span>
+
+                    <span class="n">Application</span><span class="o">-&gt;</span><span class="n">ProcessMessages</span><span class="p">();</span>
+
+                    <span class="k">if</span><span class="p">(</span> <span class="n">count</span> <span class="o">&gt;</span> <span class="n">OldCount</span> <span class="p">)</span> <span class="p">{</span>
+                        <span class="k">break</span><span class="p">;</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+
+                <span class="n">pFromFolder</span><span class="o">-&gt;</span><span class="n">Release</span><span class="p">();</span>
+            <span class="p">}</span>
+            <span class="n">pToFolder</span><span class="o">-&gt;</span><span class="n">Release</span><span class="p">();</span>
+        <span class="p">}</span>
+        <span class="n">pISD</span><span class="o">-&gt;</span><span class="n">Release</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="n">CoUninitialize</span><span class="p">();</span>
+
+    <span class="k">return</span> <span class="n">b</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="функция-getvariant">Функция GetVariant().</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="kr">__fastcall</span> <span class="n">TForm1</span><span class="o">::</span><span class="n">GetVariant</span><span class="p">(</span><span class="n">AnsiString</span> <span class="n">str</span><span class="p">,</span> <span class="n">VARIANT</span> <span class="o">&amp;</span><span class="n">var</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">DWORD</span> <span class="n">strlen</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">BSTR</span>  <span class="n">strptr</span><span class="p">;</span>
+
+    <span class="n">strlen</span> <span class="o">=</span> <span class="n">MultiByteToWideChar</span><span class="p">(</span><span class="n">CP_ACP</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">str</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">strptr</span> <span class="o">=</span> <span class="n">SysAllocStringLen</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">strlen</span><span class="p">);</span>
+    <span class="n">MultiByteToWideChar</span><span class="p">(</span><span class="n">CP_ACP</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">str</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">strptr</span><span class="p">,</span> <span class="n">strlen</span><span class="p">);</span>
+
+    <span class="n">VariantInit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">var</span><span class="p">);</span>
+    <span class="n">var</span><span class="p">.</span><span class="n">vt</span> <span class="o">=</span> <span class="n">VT_BSTR</span><span class="p">;</span>
+    <span class="n">var</span><span class="p">.</span><span class="n">bstrVal</span> <span class="o">=</span> <span class="n">strptr</span><span class="p">;</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<h2 id="разбор-xml-файла">Разбор xml-файла.</h2>
+
+<p>Приложение демонстрирует также технику разбора <strong>xml</strong>-файла.</p>
+
+<p>В <strong>excel</strong>-файле <strong>xml</strong>-файлами являются как вкладки, так и коллекции строк.</p>
+
+<p>Для работы с xml-файлами используются переменные типа <strong>_di_IXMLDocument</strong></p>
+
+<p>Ниже показано, как инициализируется переменная данного типа и как происходит загрузка данных из соответствующего файла.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="n">_di_IXMLDocument</span> <span class="n">xmlSheet1</span><span class="p">,</span> <span class="n">xmlSharedStrings</span><span class="p">;</span>
+    
+	<span class="c1">// Открываем 'Sheet1.xml'</span>
+    <span class="n">xmlSheet1</span> <span class="o">=</span> <span class="n">NewXMLDocument</span><span class="p">();</span>
+    <span class="n">fileNameSheet1</span><span class="p">.</span><span class="n">sprintf</span><span class="p">(</span><span class="s">"%s</span><span class="se">\\</span><span class="s">%s"</span><span class="p">,</span> <span class="n">TempDir</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">nameSheet1</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">FileExists</span><span class="p">(</span><span class="n">fileNameSheet1</span><span class="p">)</span> <span class="o">==</span> <span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
+    	<span class="n">xmlSheet1</span><span class="o">-&gt;</span><span class="n">LoadFromFile</span><span class="p">(</span> <span class="n">fileNameSheet1</span> <span class="p">);</span>
+    <span class="p">}</span>
+
+</code></pre></div></div>
+
+<h2 id="редактирование-ячейки">Редактирование ячейки.</h2>
+
+<p>Редактирование ячейки осуществляется с помощью функции <strong>EditCell</strong> ()</p>
+
+<p>В качестве параметров функции передаются:</p>
+
+<ul>
+  <li>указатели на <strong>xml</strong>-структуры для <strong>sheet1</strong> и для <strong>sharedStrings</strong></li>
+  <li>адрес ячейки, которую нужно изменить.</li>
+  <li>значение, которое необходимо записать в ячейку.</li>
+</ul>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="c1">// Редактируем 'Sheet1.xml'</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">EditCell</span><span class="p">(</span><span class="n">xmlSheet1</span><span class="p">,</span> <span class="n">xmlSharedStrings</span><span class="p">,</span> <span class="n">E_Cell</span><span class="o">-&gt;</span><span class="n">Text</span><span class="p">,</span> <span class="n">E_Value</span><span class="o">-&gt;</span><span class="n">Text</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="функция-editcell">Функция EditCell().</h2>
+
+<p>Для редактирования ячейки:</p>
+
+<ul>
+  <li>сначала производится поиск нужного узла для полученного адреса из <strong>xmlSheet1</strong></li>
+  <li>затем производится запись значения в <strong>xmlSharedStrings</strong></li>
+  <li>для найденного узла из <strong>xmlSheet1</strong> производится обновление индекса</li>
+</ul>
+
+<p>Для выполнения необходимых действий в <strong>EditCell</strong> () используются соответствующие функции. Они поясняются ниже.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Редактирование ячейки 'CellName'</span>
+<span class="c1">// (если ячейка найдена, устанавливается значение 'Value').</span>
+<span class="c1">// Внимание! Value прописывается в 'sharedStrings.xml',</span>
+<span class="c1">// а в ячейке прописывается индекс записи из 'sharedStrings'</span>
+<span class="c1">//</span>
+<span class="n">bool</span> <span class="kr">__fastcall</span> <span class="n">TForm1</span><span class="o">::</span><span class="n">EditCell</span><span class="p">(</span>
+    <span class="n">_di_IXMLDocument</span> <span class="n">xmlSheet1</span><span class="p">,</span> <span class="n">_di_IXMLDocument</span> <span class="n">xmlSharedStrings</span>
+    <span class="p">,</span> <span class="n">AnsiString</span> <span class="n">CellName</span><span class="p">,</span> <span class="n">AnsiString</span> <span class="n">Value</span>
+<span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">_di_IXMLNode</span> <span class="n">xNode</span><span class="p">;</span>
+    <span class="n">AnsiString</span> <span class="n">StrIndex</span><span class="p">;</span>
+    <span class="n">bool</span> <span class="n">b</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">((</span><span class="n">xNode</span> <span class="o">=</span> <span class="n">FindCellNode</span><span class="p">(</span><span class="n">xmlSheet1</span><span class="p">,</span> <span class="n">CellName</span><span class="p">))</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+        <span class="p">;</span> <span class="c1">// ячейка не найдена</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">((</span><span class="n">StrIndex</span> <span class="o">=</span> <span class="n">SetSharedStrings</span><span class="p">(</span><span class="n">xmlSharedStrings</span><span class="p">,</span> <span class="n">Value</span><span class="p">)).</span><span class="n">IsEmpty</span><span class="p">()</span> <span class="o">==</span> <span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
+        <span class="p">;</span> <span class="c1">// неудачная запись в sharedStrings.xml</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">xNode</span><span class="o">-&gt;</span><span class="n">Attributes</span><span class="p">[</span><span class="s">"t"</span><span class="p">]</span> <span class="o">=</span> <span class="n">AnsiString</span><span class="p">(</span><span class="s">"s"</span><span class="p">);</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">SetNodeValue</span><span class="p">(</span> <span class="n">xNode</span><span class="p">,</span> <span class="s">"v"</span><span class="p">,</span> <span class="n">StrIndex</span> <span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">b</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="функция-findcellnode-поиск-ячейки">Функция FindCellNode(), поиск ячейки.</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">_di_IXMLNode</span> <span class="kr">__fastcall</span> <span class="n">TForm1</span><span class="o">::</span><span class="n">FindCellNode</span><span class="p">(</span><span class="n">_di_IXMLDocument</span> <span class="n">xmlDoc</span><span class="p">,</span> <span class="n">AnsiString</span> <span class="n">CellName</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">_di_IXMLNode</span> <span class="n">xNode</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">xRoot</span><span class="p">;</span>
+    <span class="n">AnsiString</span> <span class="n">RowName</span> <span class="o">=</span> <span class="n">GetRowName</span><span class="p">(</span><span class="n">CellName</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">((</span><span class="n">xRoot</span> <span class="o">=</span> <span class="n">xmlDoc</span><span class="o">-&gt;</span><span class="n">DocumentElement</span><span class="p">)</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+        <span class="p">;</span> <span class="c1">// отсутствует рут</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">((</span><span class="n">xNode</span> <span class="o">=</span> <span class="n">FindNode</span><span class="p">(</span> <span class="n">xRoot</span><span class="p">,</span> <span class="s">"sheetData"</span> <span class="p">))</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+        <span class="p">;</span> <span class="c1">// отсутствует дата</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">((</span><span class="n">xNode</span> <span class="o">=</span> <span class="n">FindNodeAttr</span><span class="p">(</span> <span class="n">xNode</span><span class="p">,</span> <span class="s">"row"</span><span class="p">,</span> <span class="s">"r"</span><span class="p">,</span> <span class="n">RowName</span> <span class="p">))</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+        <span class="p">;</span> <span class="c1">// отсутствует нужная строка</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="c1">// ищем ячейку</span>
+        <span class="n">xNode</span> <span class="o">=</span> <span class="n">FindNodeAttr</span><span class="p">(</span> <span class="n">xNode</span><span class="p">,</span> <span class="s">"c"</span><span class="p">,</span> <span class="s">"r"</span><span class="p">,</span> <span class="n">CellName</span> <span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">xNode</span><span class="p">;</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<h2 id="функция-setsharedstrings-запись-в-sharedstringsxml">Функция SetSharedStrings(), запись в sharedStrings.xml</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Запись полученной строки 'S' в sharedStrings.xml</span>
+<span class="c1">// Возвращается строковое представление индекса строки.</span>
+<span class="c1">//</span>
+<span class="n">AnsiString</span> <span class="kr">__fastcall</span> <span class="n">TForm1</span><span class="o">::</span><span class="n">SetSharedStrings</span><span class="p">(</span>
+    <span class="n">_di_IXMLDocument</span> <span class="n">xmlDoc</span><span class="p">,</span> <span class="n">AnsiString</span> <span class="n">S</span>
+<span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">_di_IXMLNode</span> <span class="n">xNode</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">xRoot</span><span class="p">;</span>
+    <span class="n">AnsiString</span> <span class="n">R</span><span class="p">,</span> <span class="n">X</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">Count</span><span class="p">,</span> <span class="n">UniqueCount</span><span class="p">;</span>
+    <span class="n">_di_IXMLNodeList</span> <span class="n">xChildNodes</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">((</span><span class="n">xRoot</span> <span class="o">=</span> <span class="n">xmlDoc</span><span class="o">-&gt;</span><span class="n">DocumentElement</span><span class="p">)</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+        <span class="p">;</span> <span class="c1">// отсутствует рут</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">Count</span> <span class="o">=</span> <span class="n">AnsiString</span><span class="p">(</span><span class="n">xRoot</span><span class="o">-&gt;</span><span class="n">Attributes</span><span class="p">[</span><span class="s">"count"</span><span class="p">]).</span><span class="n">ToIntDef</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+        <span class="n">UniqueCount</span> <span class="o">=</span> <span class="n">AnsiString</span><span class="p">(</span><span class="n">xRoot</span><span class="o">-&gt;</span><span class="n">Attributes</span><span class="p">[</span><span class="s">"uniqueCount"</span><span class="p">]).</span><span class="n">ToIntDef</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+        <span class="n">xChildNodes</span> <span class="o">=</span> <span class="n">xRoot</span><span class="o">-&gt;</span><span class="n">GetChildNodes</span><span class="p">();</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">xChildNodes</span><span class="o">-&gt;</span><span class="n">Count</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">xNode</span> <span class="o">=</span> <span class="n">xChildNodes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">];</span>
+            <span class="n">xNode</span> <span class="o">=</span> <span class="n">xNode</span><span class="o">-&gt;</span><span class="n">ChildNodes</span><span class="o">-&gt;</span><span class="n">FindNode</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="s">L"t"</span><span class="p">);</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">xNode</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">X</span> <span class="o">=</span> <span class="n">xNode</span><span class="o">-&gt;</span><span class="n">Text</span><span class="p">;</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">X</span> <span class="o">==</span> <span class="n">S</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">R</span><span class="p">.</span><span class="n">sprintf</span><span class="p">(</span><span class="s">"%i"</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span> <span class="c1">// строка найдена</span>
+                    <span class="n">X</span><span class="p">.</span><span class="n">sprintf</span><span class="p">(</span><span class="s">"%i"</span><span class="p">,</span> <span class="n">Count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+                    <span class="n">xRoot</span><span class="o">-&gt;</span><span class="n">Attributes</span><span class="p">[</span><span class="s">"count"</span><span class="p">]</span> <span class="o">=</span> <span class="n">X</span><span class="p">;</span>
+                    <span class="k">break</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">R</span><span class="p">.</span><span class="n">IsEmpty</span><span class="p">()</span> <span class="o">==</span> <span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// строка в коллекции не найдена</span>
+            <span class="k">if</span><span class="p">((</span><span class="n">xNode</span> <span class="o">=</span> <span class="n">xRoot</span><span class="o">-&gt;</span><span class="n">AddChild</span><span class="p">(</span><span class="s">"si"</span><span class="p">,</span> <span class="s">L""</span><span class="p">,</span> <span class="nb">false</span><span class="p">))</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// добавляем узел "si"</span>
+                <span class="k">if</span><span class="p">((</span><span class="n">xNode</span> <span class="o">=</span> <span class="n">xNode</span><span class="o">-&gt;</span><span class="n">AddChild</span><span class="p">(</span><span class="s">"t"</span><span class="p">,</span> <span class="s">L""</span><span class="p">,</span> <span class="nb">false</span><span class="p">))</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// добавляем узел "t"</span>
+                    <span class="n">xNode</span><span class="o">-&gt;</span><span class="n">Text</span> <span class="o">=</span> <span class="n">S</span><span class="p">.</span><span class="n">c_str</span><span class="p">();</span>
+                    <span class="n">R</span><span class="p">.</span><span class="n">sprintf</span><span class="p">(</span><span class="s">"%i"</span><span class="p">,</span> <span class="n">UniqueCount</span><span class="p">);</span>
+                    <span class="n">X</span><span class="p">.</span><span class="n">sprintf</span><span class="p">(</span><span class="s">"%i"</span><span class="p">,</span> <span class="n">UniqueCount</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+                    <span class="n">xRoot</span><span class="o">-&gt;</span><span class="n">Attributes</span><span class="p">[</span><span class="s">"uniqueCount"</span><span class="p">]</span> <span class="o">=</span> <span class="n">X</span><span class="p">;</span>
+                    <span class="n">X</span><span class="p">.</span><span class="n">sprintf</span><span class="p">(</span><span class="s">"%i"</span><span class="p">,</span> <span class="n">Count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+                    <span class="n">xRoot</span><span class="o">-&gt;</span><span class="n">Attributes</span><span class="p">[</span><span class="s">"count"</span><span class="p">]</span> <span class="o">=</span> <span class="n">X</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">R</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="функция-setnodevalue-установка-значения-для-узла">Функция SetNodeValue(), установка значения для узла</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bool</span> <span class="kr">__fastcall</span> <span class="n">TForm1</span><span class="o">::</span><span class="n">SetNodeValue</span><span class="p">(</span><span class="n">_di_IXMLNode</span> <span class="n">parent</span><span class="p">,</span> <span class="n">AnsiString</span> <span class="n">NodeName</span><span class="p">,</span> <span class="n">AnsiString</span> <span class="n">Value</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">bool</span> <span class="n">b</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+
+    <span class="n">try</span> <span class="p">{</span>
+        <span class="n">_di_IXMLNode</span> <span class="n">n</span> <span class="o">=</span> <span class="n">FindNode</span><span class="p">(</span> <span class="n">parent</span><span class="p">,</span> <span class="n">NodeName</span> <span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="n">parent</span><span class="o">-&gt;</span><span class="n">AddChild</span><span class="p">(</span><span class="n">NodeName</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="s">L""</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">n</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">n</span><span class="o">-&gt;</span><span class="n">Text</span> <span class="o">=</span> <span class="n">Value</span><span class="p">.</span><span class="n">c_str</span><span class="p">();</span>
+            <span class="n">b</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span> <span class="n">catch</span><span class="p">(...)</span> <span class="p">{}</span>
+
+    <span class="k">return</span> <span class="n">b</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="функция-findnode-поиск-узла">Функция FindNode(), поиск узла</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// возвращает узел по полученному имени NodeStr</span>
+<span class="c1">// (оно может быть составным, например: "aaa\bbb\ccc\ddd")</span>
+<span class="c1">//</span>
+<span class="n">_di_IXMLNode</span> <span class="kr">__fastcall</span> <span class="n">TForm1</span><span class="o">::</span><span class="n">FindNode</span><span class="p">(</span> <span class="n">_di_IXMLNode</span> <span class="n">parent</span><span class="p">,</span> <span class="n">AnsiString</span> <span class="n">NodeStr</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">AnsiString</span> <span class="n">S</span> <span class="o">=</span> <span class="n">NodeStr</span><span class="p">,</span> <span class="n">X</span><span class="p">;</span>
+    <span class="n">_di_IXMLNode</span> <span class="n">n</span> <span class="o">=</span> <span class="n">parent</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">p</span><span class="p">;</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="n">n</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">((</span><span class="n">p</span> <span class="o">=</span> <span class="n">S</span><span class="p">.</span><span class="n">Pos</span><span class="p">(</span><span class="s">"</span><span class="se">\\</span><span class="s">"</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// пора на выход</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">n</span><span class="o">-&gt;</span><span class="n">ChildNodes</span><span class="o">-&gt;</span><span class="n">FindNode</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="s">L""</span><span class="p">);</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">S</span><span class="p">.</span><span class="n">SubString</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+            <span class="n">S</span> <span class="o">=</span> <span class="n">S</span><span class="p">.</span><span class="n">SubString</span><span class="p">(</span><span class="n">p</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">S</span><span class="p">.</span><span class="n">Length</span><span class="p">()</span> <span class="o">-</span> <span class="n">p</span><span class="p">);</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="n">n</span><span class="o">-&gt;</span><span class="n">ChildNodes</span><span class="o">-&gt;</span><span class="n">FindNode</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="s">L""</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">r</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="функция-findnodeattr-поиск-узла-с-аттрибутами">Функция FindNodeAttr(), поиск узла с аттрибутами</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">_di_IXMLNode</span> <span class="kr">__fastcall</span> <span class="n">TForm1</span><span class="o">::</span><span class="n">FindNodeAttr</span><span class="p">(</span>
+    <span class="n">_di_IXMLNode</span> <span class="n">node</span><span class="p">,</span> <span class="n">AnsiString</span> <span class="n">NodeName</span><span class="p">,</span> <span class="n">AnsiString</span> <span class="n">AttrName</span><span class="p">,</span> <span class="n">AnsiString</span> <span class="n">Value</span>
+<span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">bool</span> <span class="n">found</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="n">_di_IXMLNode</span> <span class="n">xNode</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">FoundNode</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">_di_IXMLNodeList</span> <span class="n">xChildNodes</span><span class="p">;</span>
+    <span class="n">AnsiString</span> <span class="n">CurrentName</span><span class="p">,</span> <span class="n">CurrentAttr</span><span class="p">;</span>
+
+    <span class="n">xChildNodes</span> <span class="o">=</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">GetChildNodes</span><span class="p">();</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">xChildNodes</span><span class="o">-&gt;</span><span class="n">Count</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">xNode</span> <span class="o">=</span> <span class="n">xChildNodes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">];</span>
+        <span class="n">CurrentName</span> <span class="o">=</span> <span class="n">AnsiString</span><span class="p">(</span><span class="n">xNode</span><span class="o">-&gt;</span><span class="n">NodeName</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">CurrentName</span> <span class="o">==</span> <span class="n">NodeName</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// проверяем совпадение аттрибутов</span>
+            <span class="n">CurrentAttr</span> <span class="o">=</span> <span class="n">AnsiString</span><span class="p">(</span><span class="n">xNode</span><span class="o">-&gt;</span><span class="n">Attributes</span><span class="p">[</span><span class="n">AttrName</span><span class="p">]);</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">CurrentAttr</span> <span class="o">==</span> <span class="n">Value</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">FoundNode</span> <span class="o">=</span> <span class="n">xNode</span><span class="p">;</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">FoundNode</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="функция-findchildnode">Функция FindChildNode()</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">_di_IXMLNode</span> <span class="kr">__fastcall</span> <span class="n">TForm1</span><span class="o">::</span><span class="n">FindChildNode</span><span class="p">(</span> <span class="n">_di_IXMLNode</span> <span class="n">node</span><span class="p">,</span> <span class="n">AnsiString</span> <span class="n">FoundName</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">bool</span> <span class="n">found</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="n">_di_IXMLNode</span> <span class="n">xNode</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">FoundNode</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">_di_IXMLNodeList</span> <span class="n">xChildNodes</span><span class="p">;</span>
+    <span class="n">AnsiString</span> <span class="n">NodeName</span><span class="p">;</span>
+
+    <span class="n">xChildNodes</span> <span class="o">=</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">GetChildNodes</span><span class="p">();</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">xChildNodes</span><span class="o">-&gt;</span><span class="n">Count</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">xNode</span> <span class="o">=</span> <span class="n">xChildNodes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">];</span>
+        <span class="n">NodeName</span> <span class="o">=</span> <span class="n">AnsiString</span><span class="p">(</span><span class="n">xNode</span><span class="o">-&gt;</span><span class="n">NodeName</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">NodeName</span> <span class="o">==</span> <span class="n">FoundName</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">FoundNode</span> <span class="o">=</span> <span class="n">xNode</span><span class="p">;</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">FoundNode</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="функция-parsecellrowcol">Функция ParseCellRowCol()</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="kr">__fastcall</span> <span class="n">TForm1</span><span class="o">::</span><span class="n">ParseCellRowCol</span><span class="p">(</span><span class="n">AnsiString</span> <span class="n">Cell</span><span class="p">,</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">row</span><span class="p">,</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">col</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">cp</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">rp</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">c</span> <span class="o">=</span> <span class="n">Cell</span><span class="p">.</span><span class="n">c_str</span><span class="p">();</span>
+
+    <span class="n">row</span> <span class="o">=</span> <span class="n">col</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">'\0'</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">);</span>
+    <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="sc">'1'</span> <span class="o">&amp;&amp;</span> <span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="sc">'9'</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">row</span> <span class="o">+=</span> <span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="sc">'0'</span><span class="p">)</span> <span class="o">*</span> <span class="n">rp</span><span class="p">;</span>
+            <span class="n">rp</span> <span class="o">*=</span> <span class="mi">10</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="sc">'A'</span> <span class="o">&amp;&amp;</span> <span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="sc">'Z'</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">col</span> <span class="o">+=</span> <span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="sc">'A'</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">cp</span><span class="p">;</span>
+            <span class="n">cp</span> <span class="o">*=</span> <span class="mi">26</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="sc">'a'</span> <span class="o">&amp;&amp;</span> <span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="sc">'z'</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">col</span> <span class="o">+=</span> <span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="sc">'a'</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">cp</span><span class="p">;</span>
+            <span class="n">cp</span> <span class="o">*=</span> <span class="mi">26</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="функция-getrowname">Функция GetRowName()</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">AnsiString</span> <span class="kr">__fastcall</span> <span class="n">TForm1</span><span class="o">::</span><span class="n">GetRowName</span><span class="p">(</span><span class="n">AnsiString</span> <span class="n">CellName</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">;</span>
+    <span class="n">AnsiString</span> <span class="n">X</span><span class="p">;</span>
+
+    <span class="n">ParseCellRowCol</span><span class="p">(</span><span class="n">CellName</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">);</span>
+    <span class="n">X</span><span class="p">.</span><span class="n">sprintf</span><span class="p">(</span><span class="s">"%i"</span><span class="p">,</span> <span class="n">row</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">X</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="функция-savexml">Функция SaveXml()</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bool</span> <span class="kr">__fastcall</span> <span class="n">TForm1</span><span class="o">::</span><span class="n">SaveXml</span><span class="p">(</span><span class="n">_di_IXMLDocument</span> <span class="n">xmlDoc</span><span class="p">,</span> <span class="n">AnsiString</span> <span class="n">FileName</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">AnsiString</span> <span class="n">X</span><span class="p">,</span> <span class="n">OldFile</span><span class="p">;</span>
+
+    <span class="n">X</span> <span class="o">=</span> <span class="n">StringReplace</span><span class="p">(</span><span class="n">xmlDoc</span><span class="o">-&gt;</span><span class="n">XML</span><span class="o">-&gt;</span><span class="n">Text</span><span class="p">,</span> <span class="s">" xmlns=</span><span class="se">\"\"</span><span class="s">"</span><span class="p">,</span> <span class="s">""</span><span class="p">,</span> <span class="n">TReplaceFlags</span><span class="p">()</span><span class="o">&lt;&lt;</span> <span class="n">rfReplaceAll</span> <span class="o">&lt;&lt;</span> <span class="n">rfIgnoreCase</span><span class="p">);</span> <span class="c1">// убираем ' xlmns=""'</span>
+<span class="c1">//        xmlDoc-&gt;SaveToFile( FileName ); // после того, как убрали пустые xlmns, xmlDoc стал ругаться при сохранении, будем сохранять самостоятельно</span>
+<span class="c1">//        xmlDoc-&gt;XML-&gt;Text = X;</span>
+    <span class="n">OldFile</span><span class="p">.</span><span class="n">sprintf</span><span class="p">(</span><span class="s">"%s.1"</span><span class="p">,</span> <span class="n">FileName</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">RenameFile</span><span class="p">(</span><span class="n">FileName</span><span class="p">,</span> <span class="n">OldFile</span><span class="p">)</span> <span class="o">==</span> <span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">FILE</span><span class="o">*</span> <span class="n">f</span><span class="p">;</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="n">FileName</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="s">"wb"</span><span class="p">);</span>
+        <span class="n">fclose</span><span class="p">(</span><span class="n">f</span><span class="p">);</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="n">FileName</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="s">"a+"</span><span class="p">);</span>
+        <span class="n">fputs</span><span class="p">(</span><span class="n">X</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">f</span><span class="p">);</span>
+        <span class="n">fclose</span><span class="p">(</span><span class="n">f</span><span class="p">);</span>
+        <span class="n">DeleteFile</span><span class="p">(</span><span class="n">OldFile</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<h2 id="функция-getfilename">Функция GetFileName()</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">AnsiString</span> <span class="kr">__fastcall</span> <span class="nf">GetFileName</span><span class="p">(</span><span class="n">AnsiString</span> <span class="n">FileName</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">AnsiString</span> <span class="n">X</span><span class="p">,</span> <span class="n">R</span><span class="p">;</span>
+
+    <span class="n">X</span><span class="p">.</span><span class="n">sprintf</span><span class="p">(</span><span class="s">"%s"</span><span class="p">,</span> <span class="n">FileName</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">X</span><span class="p">.</span><span class="n">Pos</span><span class="p">(</span><span class="s">"</span><span class="se">\\</span><span class="s">"</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">X</span><span class="p">.</span><span class="n">Pos</span><span class="p">(</span><span class="s">":"</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// ôàéë ñ ïóòåì, âîçâðàùàåì, êàê åñòü</span>
+        <span class="n">R</span> <span class="o">=</span> <span class="n">X</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="c1">// ïóòè íåò, äîáàâëÿåì ïóòü çàïóñêà</span>
+        <span class="n">R</span><span class="p">.</span><span class="n">sprintf</span><span class="p">(</span><span class="s">"%s%s"</span>
+            <span class="p">,</span> <span class="n">ExtractFilePath</span><span class="p">(</span><span class="n">Application</span><span class="o">-&gt;</span><span class="n">ExeName</span><span class="p">).</span><span class="n">c_str</span><span class="p">()</span>
+            <span class="p">,</span> <span class="n">X</span><span class="p">.</span><span class="n">c_str</span><span class="p">()</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">R</span><span class="p">;</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+   	</div>
+</div></section>
+
+    <footer class="footer hexlet-footer py-5 mt-5 text-muted">
+  <div class="container">
+    <div class="row mt-1">
+      <div class="col-12 text-center">
+        <a href="https://aveligzhanin.github.io/">Велигжанин Андрей</a> — Программист-разработчик C++ и Oracle.
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>
