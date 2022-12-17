@@ -92,7 +92,145 @@
 
 <h2 id="решение">Решение.</h2>
 
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code></code></pre></div></div>
+<p>Задача по выводу рамки разбивается на несколько простых действий.</p>
+
+<p>Следует:</p>
+
+<ul>
+  <li>запросить данные</li>
+  <li>сформировать три строки, которые выводятся в рамке</li>
+  <li>определить длину наибольшей строки</li>
+  <li>дополнить строки, кроме наибольшей, пробелами справа</li>
+  <li>сормировать строчку из звездочек, которая выводится сверху и снизу рамки</li>
+  <li>вывести рамку</li>
+</ul>
+
+<p>Удобнее задачу решать с помощью класса, у которого есть методы:</p>
+<ul>
+  <li><strong>Input</strong>() – для ввода данных</li>
+  <li><strong>PrintTitle</strong>() – для вывода результатов</li>
+</ul>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+#include</span> <span class="cpf">"LabInfo.h"</span><span class="cp">
+#include</span> <span class="cpf">"Windows.h"</span><span class="cp">
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">LabInfo</span> <span class="n">l</span><span class="p">;</span>
+    
+    <span class="c1">// Кириллица в консоли</span>
+    <span class="n">SetConsoleCP</span><span class="p">(</span><span class="mi">1251</span><span class="p">);</span> <span class="c1">// функция устанавливает кодовую таблицу(win-cp 1251) для работы с потоком ввода</span>
+    <span class="n">SetConsoleOutputCP</span><span class="p">(</span><span class="mi">1251</span><span class="p">);</span> <span class="c1">// функция устанавливает кодовую таблицу(win-cp 1251) для работы с потоком вывода</span>
+
+    <span class="n">l</span><span class="p">.</span><span class="n">Input</span><span class="p">();</span>
+    <span class="n">l</span><span class="p">.</span><span class="n">PrintTitle</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="определение-класса-labinfo">Определение класса LabInfo</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#pragma once
+#include</span> <span class="cpf">"string"</span><span class="cp">
+</span><span class="n">class</span> <span class="n">LabInfo</span>
+<span class="p">{</span>
+	<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">LabNo</span><span class="p">;</span>		<span class="c1">// номер лабораторной работы</span>
+	<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">LName</span><span class="p">;</span>		<span class="c1">// фамилия студента</span>
+	<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">FName</span><span class="p">;</span>		<span class="c1">// имя студента</span>
+	<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">SName</span><span class="p">;</span>		<span class="c1">// отчество</span>
+	<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">GroupNum</span><span class="p">;</span>	<span class="c1">// номер группы</span>
+
+	<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">Lines</span><span class="p">[</span><span class="mi">5</span><span class="p">];</span>	<span class="c1">// Лабораторная работа № LabNo</span>
+	<span class="kt">void</span> <span class="n">MakeLines</span><span class="p">();</span>		<span class="c1">// процедура формирования строк внутри рамки</span>
+
+<span class="nl">public:</span>
+	<span class="kt">void</span> <span class="n">Input</span><span class="p">();</span>			<span class="c1">// процедура ввода данных</span>
+	<span class="kt">void</span> <span class="n">PrintTitle</span><span class="p">();</span>		<span class="c1">// процедура отображения рамки</span>
+<span class="p">};</span>
+
+</code></pre></div></div>
+
+<h2 id="процедура-ввода-данных">Процедура ввода данных</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">LabInfo</span><span class="o">::</span><span class="n">Input</span><span class="p">()</span>
+<span class="p">{</span>
+	<span class="c1">// номер лабораторной работы</span>
+	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Введите номер лабораторной работы: "</span><span class="p">;</span>
+	<span class="n">std</span><span class="o">::</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">LabNo</span><span class="p">;</span>		
+	<span class="c1">// фамилия студента</span>
+	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Введите фамилию студента: "</span><span class="p">;</span>
+	<span class="n">std</span><span class="o">::</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">LName</span><span class="p">;</span>
+	<span class="c1">// имя студента</span>
+	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Введите имя студента: "</span><span class="p">;</span>
+	<span class="n">std</span><span class="o">::</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">FName</span><span class="p">;</span>
+	<span class="c1">// отчество</span>
+	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Введите отчество студента: "</span><span class="p">;</span>
+	<span class="n">std</span><span class="o">::</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">SName</span><span class="p">;</span>
+	<span class="c1">// номер группы</span>
+	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Введите номер группы: "</span><span class="p">;</span>
+	<span class="n">std</span><span class="o">::</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">GroupNum</span><span class="p">;</span>
+
+	<span class="n">MakeLines</span><span class="p">();</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<h2 id="процедура-отображения-рамки">Процедура отображения рамки</h2>
+
+<p>Это просто цикл по пяти строчкам Lines</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">LabInfo</span><span class="o">::</span><span class="n">PrintTitle</span><span class="p">()</span>
+<span class="p">{</span>
+	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\t\t\t</span><span class="s">"</span> <span class="o">&lt;&lt;</span> <span class="n">Lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="процедура-формирования-линий-lines">Процедура формирования линий Lines</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">LabInfo</span><span class="o">::</span><span class="n">MakeLines</span><span class="p">()</span>
+<span class="p">{</span>
+	<span class="n">Lines</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s">"Лабораторная работа № "</span> <span class="o">+</span> <span class="n">LabNo</span><span class="p">;</span>
+	<span class="n">Lines</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s">"Выполнил(а): ст. гр. "</span> <span class="o">+</span> <span class="n">GroupNum</span><span class="p">;</span>
+	<span class="n">Lines</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">LName</span> <span class="o">+</span> <span class="s">" "</span> <span class="o">+</span> <span class="n">FName</span> <span class="o">+</span> <span class="s">" "</span> <span class="o">+</span> <span class="n">SName</span><span class="p">;</span>
+
+	<span class="c1">// определяем наибольшую длину среди строчек</span>
+	<span class="kt">int</span> <span class="n">len</span> <span class="o">=</span> <span class="n">Lines</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">length</span><span class="p">(),</span> <span class="n">l</span><span class="p">;</span>
+	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">l</span> <span class="o">=</span> <span class="n">Lines</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">length</span><span class="p">();</span>
+		<span class="k">if</span> <span class="p">(</span><span class="n">l</span> <span class="o">&gt;</span> <span class="n">len</span><span class="p">)</span> <span class="p">{</span>
+			<span class="n">len</span> <span class="o">=</span> <span class="n">l</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+
+	<span class="c1">// дополняем пробелами</span>
+	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">l</span> <span class="o">=</span> <span class="n">len</span> <span class="o">-</span> <span class="n">Lines</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">length</span><span class="p">();</span>
+		<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">l</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+			<span class="n">Lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="s">" "</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+
+	<span class="c1">// дополняем звездочками</span>
+	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">Lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s">"* "</span> <span class="o">+</span> <span class="n">Lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s">" *"</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="c1">// формируем верхнюю линию</span>
+	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">len</span> <span class="o">+</span> <span class="mi">4</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">Lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="s">"*"</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="c1">// формируем нижнюю линию</span>
+	<span class="n">Lines</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">Lines</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="результат">Результат</h2>
+
+<p><img src="/assets/images/cpp_006.jpg" alt="Листинг программы" /></p>
 
 
    	</div>
