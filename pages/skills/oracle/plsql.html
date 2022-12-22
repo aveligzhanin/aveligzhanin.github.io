@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>PL/SQL</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Our style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/avel.css">
+</head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+  <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse menu">
+			<ul class="nav navbar-nav navbar-right">
+                 
+                    <li>
+                       <a href="/index.html#about">Обо мне</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#education">Образование</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#work">Работа</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#skills">Навыки</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#portfolio">Портфолио</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#hobby">Увлечения</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#contact">Контакты</a>
+                    </li>
+                 
+        	</ul>
+        </div>
+      </div>
+  </div>
+</nav>
+
+    <section class="pfblock"><div class="container">  		<!-- Translations -->
+	<div class="col-xs-6" align=left>
+		<a href="/index.html">home</a> \ <a href="/pages/skills/oracle.html">Oracle</a>
+	</div>
+
+	<div class="col-xs-6" align=right>
+		Написано: 20.12.2022
+	</div>
+
+   	<div class="col-sm-12 my">
+		<h1 id="plsql"><a href="https://www.oracle.com/database/technologies/application-development-pl/sql.html">PL/SQL.</a></h1>
+
+<p>PL/SQL – это процедурный язык, разработанный специально для включения инструкций SQL в свой синтаксис. 
+Программные блоки PL/SQL компилируются сервером базы данных Oracle и хранятся внутри базы данных. 
+А во время выполнения как PL/SQL, так и SQL-запросы выполняются в рамках одного и того же серверного процесса, обеспечивая оптимальную эффективность. 
+PL/SQL автоматически наследует надёжность, безопасность и переносимость базы данных Oracle.</p>
+
+<h2 id="зачем-использовать-plsql">Зачем использовать PL/SQL?</h2>
+
+<p>Приложение, использующее базу данных Oracle, бесполезно, если не сохраняются только правильные и полные данные. 
+Проверенный временем способ обеспечить это – предоставить доступ к базе данных только через интерфейс, который скрывает детали реализации – таблицы и операторы SQL, которые работают с ними. 
+Этот подход обычно называют парадигмой толстой базы данных, потому что подпрограммы PL/SQL внутри базы данных выдают инструкции SQL из кода, который реализует окружающую бизнес-логику; 
+и потому что данные могут быть изменены и просмотрены только через интерфейс PL/SQL. Брин Ллевеллин (Bryn Llewellyn), выдающийся менеджер по продуктам для PL/SQL и 
+переопределения на основе редакций, подробно объясняет подход к толстым базам данных в своем техническом документе “Зачем использовать PL/SQL?”.</p>
+
+<p>Присоединяйтесь к сообществу PL/SQL Challenge и <a href="https://devgym.oracle.com/pls/apex/f?p=10001:20011::::20011::">попробуйте эти тесты PL/SQL</a>, учитесь по ходу дела. 
+Вы можете выбрать соревновательную игру, ставя себя в один ряд с сотнями других разработчиков со всего мира, или играть просто в зависимости от вашего опыта.
+Прочтите технический документ по свободе, порядку и оптимизации PL/SQL на мощном оптимизаторе PL/SQL, который является основным документом для любых вопросов, касающихся поведения программ PL/SQL, 
+скомпилированных на уровнях оптимизации выше 1.</p>
+
+<h3 id="oracle-plsql-учебник"><a href="https://oracleplsql.ru/contents-oracle-plsql.html">Oracle PL/SQL учебник</a></h3>
+
+   	</div>
+</div></section>
+
+    <footer class="footer hexlet-footer py-5 mt-5 text-muted">
+  <div class="container">
+    <div class="row mt-1">
+      <div class="col-12 text-center">
+        <a href="https://aveligzhanin.github.io/">Велигжанин Андрей</a> — Программист-разработчик C++ и Oracle.
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>

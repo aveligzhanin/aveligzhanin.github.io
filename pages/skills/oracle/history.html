@@ -1,0 +1,156 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Краткая история БД Oracle</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Our style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/avel.css">
+</head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+  <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse menu">
+			<ul class="nav navbar-nav navbar-right">
+                 
+                    <li>
+                       <a href="/index.html#about">Обо мне</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#education">Образование</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#work">Работа</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#skills">Навыки</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#portfolio">Портфолио</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#hobby">Увлечения</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#contact">Контакты</a>
+                    </li>
+                 
+        	</ul>
+        </div>
+      </div>
+  </div>
+</nav>
+
+    <section class="pfblock"><div class="container">  		<!-- Translations -->
+	<div class="col-xs-6" align=left>
+		<a href="/index.html">home</a> \ <a href="/pages/skills/oracle/concepts.html">Oracle. Database Concepts</a>
+	</div>
+
+	<div class="col-xs-6" align=right>
+		Написано: 22.12.2022
+	</div>
+
+   	<div class="col-sm-12 my">
+		<h1 id="краткая-история-бд-oracle"><strong>Краткая история БД Oracle</strong></h1>
+
+<p>Текущая версия БД Oracle является результатом более чем 40-летнего инновационного развития.</p>
+
+<p>Основные моменты в развитии Oracle Database включают следующее:</p>
+
+<h2 id="основание-корпорации-oracle">Основание корпорации Oracle</h2>
+
+<p>В 1977 году Ларри Эллисон, Боб Майнер и Эд Оутс основали консалтинговую компанию Software Development Laboratories, которая стала Relational Software, Inc. (RSI). В 1983 году RSI стала корпорацией Oracle Systems, а затем и Oracle Corporation.</p>
+
+<h2 id="первая-коммерчески-доступная-субд">Первая коммерчески доступная СУБД</h2>
+
+<p>В 1979 году RSI представила Oracle V2 (версия 2) в качестве первой коммерчески доступной РСУБД на базе SQL, что стало знаковым событием в истории реляционных баз данных.</p>
+
+<h2 id="портируемая-версия-бд-oracle">Портируемая версия БД Oracle</h2>
+
+<p>Oracle версии 3, выпущенная в 1983 году, была первой реляционной базой данных, работающей на мэйнфреймах, миникомпьютерах и персональных компьютерах. База данных была написана на C, что позволило перенести ее на несколько платформ.</p>
+
+<h2 id="улучшения-в-управлении-параллелизмом-распределении-данных-и-масштабируемости">Улучшения в управлении параллелизмом, распределении данных и масштабируемости</h2>
+
+<p>В версии 4 введена мультиверсионная согласованность чтения. Версия 5, выпущенная в 1985 году, поддерживала клиент-серверные вычисления и распределенные системы баз данных. Версия 6 внесла улучшения в дисковый ввод-вывод, блокировку строк, масштабируемость, а также резервное копирование и восстановление. Кроме того, в версии 6 была представлена первая версия языка PL/SQL, проприетарного процедурного расширения для SQL.</p>
+
+<h2 id="модули-хранимых-процедур-plsql">Модули хранимых процедур PL/SQL</h2>
+
+<p>Oracle 7, выпущенная в 1992 году, представила хранимые процедуры и триггеры PL/SQL.</p>
+
+<h2 id="объекты-и-партиционирование">Объекты и партиционирование</h2>
+
+<p>Oracle 8 была выпущена в 1997 году как объектно-реляционная база данных, поддерживающая множество новых типов данных. Кроме того, Oracle 8 поддерживала секционирование больших таблиц.</p>
+
+<h2 id="интернет-вычисления">Интернет-вычисления</h2>
+
+<p>База данных Oracle 8i, выпущенная в 1999 году, обеспечивала встроенную поддержку интернет-протоколов и серверную поддержку Java. Oracle 8i был разработан для интернет-вычислений, что позволяет развертывать базу данных в многоуровневой среде.</p>
+
+<h2 id="кластеры-реальных-приложений-oracle-oracle-rac">Кластеры реальных приложений Oracle (Oracle RAC)</h2>
+
+<p>База данных Oracle9i представила Oracle RAC в 2001 году, что позволило нескольким экземплярам одновременно получать доступ к одной базе данных. Кроме того, Oracle XML Database (Oracle XML DB) представила возможность хранения и запроса XML.</p>
+
+<h2 id="сеточные-вычисления">Сеточные вычисления</h2>
+
+<p>Oracle Database 10g представила grid-вычисления в 2003 году. Этот выпуск позволил организациям виртуализировать вычислительные ресурсы путем создания сетевой инфраструктуры на основе недорогих товарных серверов. Ключевой целью было сделать базу данных самоуправляемой и самонастраивающейся. Oracle Automatic Storage Management (Oracle ASM) помогла достичь этой цели за счет виртуализации и упрощения управления хранилищем баз данных.</p>
+
+<h2 id="управляемость-диагностируемость-и-доступность">Управляемость, диагностируемость и доступность</h2>
+
+<p>Oracle Database 11g, выпущенная в 2007 году, представила множество новых функций, которые позволили администраторам и разработчикам быстро адаптироваться к меняющимся бизнес-требованиям. Ключом к адаптации является упрощение информационной инфраструктуры за счет консолидации информации и использования автоматизации везде, где это возможно.</p>
+
+<h2 id="подключение-к-облаку">Подключение к облаку</h2>
+
+<p>Oracle Database 12c, выпущенная в 2013 году, была разработана для облака, отличаясь новой архитектурой с несколькими пользователями, хранилищем столбцов в памяти (IM column store) и поддержкой документов JSON. Oracle Database 12c помогла администраторам баз данных более эффективно использовать свои ИТ-ресурсы, продолжая при этом снижать затраты и повышать уровень обслуживания конечных пользователей.</p>
+
+<h2 id="интеграция-и-производительность-памяти">Интеграция и производительность памяти</h2>
+
+<p>Oracle Database 18c упростила интеграцию со службами каталогов, такими как Microsoft Active Directory. В нем также была введена функциональность для использования памяти для столбчатых моделей данных и высокоскоростного доступа к строкам.</p>
+
+<h2 id="улучшенная-стабильность">Улучшенная стабильность</h2>
+
+<p>Oracle Database 19c была версией семейства продуктов Oracle Database 12c (выпуск 12.2) с длительной поддержкой. Основным направлением этого выпуска была стабильность. Oracle Database 19c также внесла несколько небольших, но существенных улучшений в такие функции, как JSON и Active Data Guard.</p>
+
+<h2 id="усовершенствование-опыта-разработки">Усовершенствование опыта разработки</h2>
+
+<p>Oracle Database 21c улучшает работу разработчиков с помощью таких функций, как таблицы Oracle Blockchain и собственные типы данных JSON. Усовершенствования автоматического сохранения в памяти делают хранилище столбцов обмена мгновенными сообщениями в значительной степени самоуправляемым.</p>
+
+
+   	</div>
+</div></section>
+
+    <footer class="footer hexlet-footer py-5 mt-5 text-muted">
+  <div class="container">
+    <div class="row mt-1">
+      <div class="col-12 text-center">
+        <a href="https://aveligzhanin.github.io/">Велигжанин Андрей</a> — Программист-разработчик C++ и Oracle.
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>
