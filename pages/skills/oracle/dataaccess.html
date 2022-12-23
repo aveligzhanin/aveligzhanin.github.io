@@ -1,0 +1,140 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Доступ к данным</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Our style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/avel.css">
+</head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+  <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse menu">
+			<ul class="nav navbar-nav navbar-right">
+                 
+                    <li>
+                       <a href="/index.html#about">Обо мне</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#education">Образование</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#work">Работа</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#skills">Навыки</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#portfolio">Портфолио</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#hobby">Увлечения</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#contact">Контакты</a>
+                    </li>
+                 
+        	</ul>
+        </div>
+      </div>
+  </div>
+</nav>
+
+    <section class="pfblock"><div class="container">  		<!-- Translations -->
+	<div class="col-xs-6" align=left>
+		<a href="/index.html">home</a> \ <a href="/pages/skills/oracle/concepts.html">Oracle. Database Concepts</a>
+	</div>
+
+	<div class="col-xs-6" align=right>
+		Написано: 22.12.2022
+	</div>
+
+   	<div class="col-sm-12 my">
+		<h1 id="доступ-к-данным">Доступ к данным</h1>
+
+<p>Общим требованием к СУБД является соблюдение принятых отраслевых стандартов для языка доступа к данным.</p>
+
+<h2 id="язык-структурированных-запросов-sql">Язык структурированных запросов (SQL)</h2>
+
+<p>SQL – это декларативный язык, основанный на множествах, который предоставляет интерфейс к РСУБД, такой как БД Oracle.</p>
+
+<p>Процедурные языки, такие как C, описывают, <strong>как</strong> всё должно быть сделано. SQL является непроцедурным и описывает, <strong>что</strong> должно быть сделано.</p>
+
+<p>SQL – это стандартный язык ANSI для реляционных баз данных. Все операции с данными в БД Oracle выполняются с использованием инструкций SQL. Например, можно использовать SQL для создания таблиц, запроса и изменения данных в таблицах.</p>
+
+<p>Оператор SQL можно рассматривать как очень простую, но мощную компьютерную программу или инструкцию. Пользователи указывают желаемый результат (например, имена сотрудников), а не способ его получения. Инструкция SQL – это строка текста SQL, такая как следующая:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span> <span class="k">FROM</span> <span class="n">employees</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>Инструкции SQL позволяют выполнять следующие задачи:</p>
+
+<ul>
+  <li>Получать данные.</li>
+  <li>Добавлять, изменять и удалять строки в таблице.</li>
+  <li>Создавать, заменять, изменять и удалять объекты.</li>
+  <li>Контролировать доступ к БД и её объектам.</li>
+  <li>Обеспечивать согласованность и целостность БД.</li>
+</ul>
+
+<p>SQL объединяет предыдущие задачи на одном согласованном языке. Oracle SQL – это реализация стандарта ANSI. Oracle SQL поддерживает множество функций, выходящих за рамки стандартного SQL.</p>
+
+<h2 id="plsql-и-java">PL/SQL и Java</h2>
+
+<p><strong>PL/SQL</strong> – это процедурное расширение для Oracle SQL.</p>
+
+<p>PL/SQL интегрирован с БД Oracle, что позволяет использовать все SQL-инструкции, функции и типы данных БД Oracle. Можно использовать PL/SQL для управления потоком SQL-программы, использования переменных и написания процедур обработки ошибок.</p>
+
+<p>Основным преимуществом PL/SQL является возможность хранить логику приложения в самой базе данных. Процедура или функция PL/SQL – это объект схемы, который состоит из набора инструкций SQL и других конструкций PL/SQL, сгруппированных вместе, сохраненных в БД и выполняемых как единое целое для решения конкретной проблемы или выполнения набора связанных задач. Основное преимущество программирования на стороне сервера заключается в том, что встроенная функциональность может быть развернута в любом месте.</p>
+
+<p>БД Oracle также может хранить программные модули, написанные на Java. Хранимая процедура Java – это метод Java, опубликованный в SQL и сохраненный в базе данных для общего использования. Можно вызывать существующие программы PL/SQL из Java и Java-программы из PL/SQL.</p>
+
+<p><br /><br /><br /><br /><br /><br /><br /></p>
+<div class="row">
+  <div class="col"><div align="left"><a href="/pages/skills/oracle/schemaobjects.html">&#8592; Объекты схемы</a></div>
+  </div>
+  <div class="col"><div align="right"><a href="/pages/skills/oracle/transactions.html">Управление транзакциями &#8594;</a></div>
+ </div>
+</div>
+
+   	</div>
+</div></section>
+
+    <footer class="footer hexlet-footer py-5 mt-5 text-muted">
+  <div class="container">
+    <div class="row mt-1">
+      <div class="col-12 text-center">
+        <a href="https://aveligzhanin.github.io/">Велигжанин Андрей</a> — Программист-разработчик C++ и Oracle.
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>

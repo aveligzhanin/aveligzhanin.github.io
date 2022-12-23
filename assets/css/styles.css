@@ -2430,4 +2430,16 @@ button.close { padding: 0; cursor: pointer; background: transparent; border: 0; 
 
 .current { color: green; }
 
+.mbtablestyle { border-collapse: collapse; }
+
+.mbtablestyle > table, .mbtablestyle td, .mbtablestyle th { border: 1px solid black; padding: 5px; }
+
+.mbtablestyle .th { background: #efefef; }
+
+.mbtablestyle1 table { border-collapse: collapse; border-spacing: 0; border: 2px solid #ff0000; padding: 5px; }
+
+.mbtablestyle1 th { border: 2px solid #000000; background: #efefef; padding: 5px; }
+
+.mbtablestyle1 td { border: 1px solid #000000; padding: 5px; }
+
 /*# sourceMappingURL=styles.css.map */
