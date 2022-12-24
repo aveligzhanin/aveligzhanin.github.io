@@ -1,0 +1,379 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>CDBs и PDBs</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Our style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/avel.css">
+</head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+  <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse menu">
+			<ul class="nav navbar-nav navbar-right">
+                 
+                    <li>
+                       <a href="/index.html#about">Обо мне</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#education">Образование</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#work">Работа</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#skills">Навыки</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#portfolio">Портфолио</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#hobby">Увлечения</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#contact">Контакты</a>
+                    </li>
+                 
+        	</ul>
+        </div>
+      </div>
+  </div>
+</nav>
+
+    <section class="pfblock"><div class="container">  		<!-- Translations -->
+	<div class="col-xs-6" align=left>
+		<a href="/index.html">home</a> \ <a href="/pages/skills/oracle/concepts.html">Oracle. Database Concepts</a>
+	</div>
+
+	<div class="col-xs-6" align=right>
+		Написано: 23.12.2022
+	</div>
+
+   	<div class="col-sm-12 my">
+		<h1 id="2-cdbs-и-pdbs"><strong>2. CDBs и PDBs</strong></h1>
+
+<p>Мультиконтейерная архитектура позволяет БД Oracle функционировать как многопользовательская контейнерная база данных (CDB).</p>
+
+<p>Начиная с Oracle Database 21c, единственной поддерживаемой архитектурой является многопользовательская контейнерная база данных. В предыдущих выпусках Oracle поддерживала неконтейнерные базы данных (non-CDBS).</p>
+
+<h2 id="о-контейнерах-в-cdb">О контейнерах в CDB</h2>
+
+<p><strong>Контейнер</strong> – это набор схем, объектов и связанных структур в БД контейнеров (CDB). Внутри CDB каждый контейнер имеет уникальный идентификатор и имя.</p>
+
+<p><strong>CDB</strong> включает в себя ноль, одну или множество созданных заказчиком подключаемых баз данных (PDB) и контейнеров приложений. <strong>PDB</strong> – это переносимая коллекция схем, объектов схемы и несхемных объектов, которая отображается клиенту Oracle Net как отдельная база данных. <strong>Контейнер приложения</strong> – это необязательный, созданный пользователем компонент CDB, который хранит данные и метаданные для одного или нескольких внутренних интерфейсов приложения. CDB включает в себя ноль или более контейнеров приложений.</p>
+
+<p>На следующем рисунке представлены возможные контейнеры в CDB.</p>
+
+<p><img src="/assets/images/oracon_fig2-1.jpg" alt="OraCon_Fig2-1" /></p>
+
+<p>Каждый CDB имеет следующие контейнеры:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Ровно один корневой контейнер CDB (также называемый просто корнем)</code></li>
+</ul>
+
+<p><strong>Корневой CDB</strong> – это набор схем, объектов схемы и несхемных объектов, к которым принадлежат все PDB (см. “CDB и PDBS”). В корневом CDB хранятся метаданные, предоставленные Oracle, и общие пользователи. Примером метаданных является исходный код для пакетов PL/SQL, поставляемых Oracle. Общий пользователь – это пользователь БД, известный в каждом контейнере (см. “Общие учетные записи пользователей”). Корневой контейнер называется <code class="language-plaintext highlighter-rouge">CDB$ROOT</code>.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Ровно один системный контейнер</code></li>
+</ul>
+
+<p><strong>Системный контейнер</strong> включает в себя корневой CDB и все PDB в CDB. Таким образом, системный контейнер является логическим контейнером для самого CDB.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Ноль или более контейнеров приложений</code></li>
+</ul>
+
+<p><strong>Контейнер приложения</strong> состоит ровно из одного корня приложения и подключенных к этому корню PDB. В то время как системный контейнер содержит корень CDB и все PDB в CDB, контейнер приложения включает в себя только PDB, подключенные к корню приложения. Корень приложения принадлежит корню CDB и никакому другому контейнеру.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Ноль или более созданных пользователем PDB</code></li>
+</ul>
+
+<p>PDB содержит данные и код, необходимые для определенного набора функций (см. “PDBS”). Например, PDB может поддерживать определенное приложение, такое как приложение для управления персоналом или продажами. При создании CDB никаких PDB не существует. Вы добавляете PDB в соответствии с вашими бизнес-требованиями.</p>
+
+<p>PDB принадлежит ровно нулю или одному контейнеру приложения. Если PDB принадлежит контейнеру приложения, то это PDB приложения. Например, PDB приложений <code class="language-plaintext highlighter-rouge">cust1_pdb</code> и <code class="language-plaintext highlighter-rouge">cust2_pdb</code> могут принадлежать контейнеру приложений <code class="language-plaintext highlighter-rouge">saas_sales_ac</code>, и в этом случае они не принадлежат никаким другим контейнерам приложений. <strong>Начальное приложение</strong> – это необязательный PDB приложения, который действует как созданный пользователем шаблон PDB, позволяющий быстро создавать новые PDB приложений.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Только один начальный PDB</code></li>
+</ul>
+
+<p><strong>Начальный PDB</strong> – это поставляемый системой шаблон, который CDB может использовать для создания новых PDB. Начальный PDB называется <code class="language-plaintext highlighter-rouge">PDB$SEED</code>. Нельзя добавлять или изменять объекты в <code class="language-plaintext highlighter-rouge">PDB$SEED</code>.</p>
+
+<p><strong>Пример 2-1 CDB без контейнеров приложений</strong></p>
+
+<p>В этом примере показан простой CDB с пятью контейнерами: системный контейнер (весь CDB), корневой CDB, начальный PDB (<code class="language-plaintext highlighter-rouge">PDB$SEED</code>) и два PDB. Каждая PDB имеет свое собственное специализированное приложение. Каждым PDB управляет другой администратор PDB. Общий пользователь существует во всем CDB с единым идентификатором. В этом примере обычный пользователь <code class="language-plaintext highlighter-rouge">SYS</code> может управлять корнем и каждой PDB. На физическом уровне этот CDB управляется одним или несколькими экземплярами БД и содержит набор файлов данных для каждой PDB и для самого CDB.</p>
+
+<p><img src="/assets/images/oracon_fig2-2.jpg" alt="OraCon_Fig2-2" /></p>
+
+<p><strong>Пример 2-2 CDB с контейнером приложения</strong></p>
+
+<p>В этом варианте CDB содержит контейнер приложения с именем <code class="language-plaintext highlighter-rouge">saas_sales_ac</code>. В контейнере приложения PDB приложения <code class="language-plaintext highlighter-rouge">cust1_pdb</code> поддерживает приложение для одного клиента, а PDB приложения <code class="language-plaintext highlighter-rouge">cust2_pdb</code> поддерживает приложение для другого клиента. CDB также содержит PDB с именем <code class="language-plaintext highlighter-rouge">hrpdb</code>, который поддерживает приложение HR, но не принадлежит контейнеру приложений.</p>
+
+<p><img src="/assets/images/oracon_fig2-3.jpg" alt="OraCon_Fig2-3" /></p>
+
+<p>В этом примере несколько администраторов баз данных управляют средой CDB:</p>
+
+<ul>
+  <li>
+    <p>Администратор CDB управляет самим CDB.</p>
+  </li>
+  <li>
+    <p>Администратор контейнера приложений управляет контейнером <code class="language-plaintext highlighter-rouge">saas_sales_ac</code>, включая установку и обновления приложений.</p>
+  </li>
+  <li>
+    <p>Администратор PDB приложения управляет двумя PDB в контейнере <code class="language-plaintext highlighter-rouge">saas_sales_ac</code>: <code class="language-plaintext highlighter-rouge">cust1_pdb</code> и <code class="language-plaintext highlighter-rouge">cust2_pdb</code>.</p>
+  </li>
+  <li>
+    <p>Администратор PDB управляет <code class="language-plaintext highlighter-rouge">hrpdb</code>.</p>
+  </li>
+</ul>
+
+<h2 id="корневой-и-системный-контейнер-cdb">Корневой и системный контейнер CDB</h2>
+
+<p><strong>Корневой CDB</strong>, также называемый просто <em>root</em>, представляет собой набор схем, объектов схемы и несхемных объектов, к которым принадлежат все PDB.</p>
+
+<p>Каждый CDB имеет один и только один корневой контейнер с именем <code class="language-plaintext highlighter-rouge">CDB$ROOT</code>. В корневом CDB хранятся системные метаданные, необходимые для управления PDB. Все PDB принадлежат корню. <strong>Системный контейнер</strong> – это корневой CDB и все PDB, принадлежащие этому корню.</p>
+
+<p>Корневой CDB не хранит пользовательские данные. Oracle рекомендует не добавлять общие объекты в корневой CDB и не изменять схемы, предоставляемые Oracle в корневом CDB. Однако можно создать общих пользователей и роли для администрирования БДб. Обычный пользователь с необходимыми привилегиями может переключаться между контейнерами.</p>
+
+<p>Oracle рекомендует <code class="language-plaintext highlighter-rouge">AL32UTF8</code> для корневого набора символов. PDB с разными наборами символов могут находиться в одном и том же CDB без необходимости преобразования набора символов.</p>
+
+<p><strong>Пример 2-3 Все контейнеры в CDB</strong></p>
+
+<p>Следующий запрос, выданный пользователем с правами администратора, подключенным к корневому CDB, содержит список всех контейнеров в CDB (включая начальный и корневой CDB), упорядоченных по CON_ID.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">COL</span> <span class="n">NAME</span> <span class="n">FORMAT</span> <span class="n">A15</span>
+<span class="k">SELECT</span> <span class="n">NAME</span><span class="p">,</span> <span class="n">CON_ID</span><span class="p">,</span> <span class="n">DBID</span><span class="p">,</span> <span class="n">CON_UID</span><span class="p">,</span> <span class="n">GUID</span> 
+<span class="k">FROM</span>   <span class="n">V</span><span class="err">$</span><span class="n">CONTAINERS</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">CON_ID</span><span class="p">;</span>
+
+<span class="n">NAME</span>          <span class="n">CON_ID</span>       <span class="n">DBID</span>    <span class="n">CON_UID</span> <span class="n">GUID</span>
+<span class="c1">------------- ------ ---------- ---------- --------------------------------</span>
+<span class="n">CDB</span><span class="err">$</span><span class="n">ROOT</span>           <span class="mi">1</span> <span class="mi">1895287725</span>          <span class="mi">1</span> <span class="mi">2003321</span><span class="n">EDD4F60D6E0534E40E40A41C5</span>
+<span class="n">PDB</span><span class="err">$</span><span class="n">SEED</span>           <span class="mi">2</span> <span class="mi">2795386505</span> <span class="mi">2795386505</span> <span class="mi">200</span><span class="n">AC90679F07B55E05396C0E40A23FE</span>
+<span class="n">SAAS_SALES_AC</span>      <span class="mi">3</span> <span class="mi">1239646423</span> <span class="mi">1239646423</span> <span class="mi">200</span><span class="n">B4CE0A8DC1D24E05396C0E40AF8EE</span>
+<span class="n">SALESPDB</span>           <span class="mi">4</span> <span class="mi">3692549634</span> <span class="mi">3692549634</span> <span class="mi">200</span><span class="n">B4928319C1BCCE05396C0E40A2432</span>
+<span class="n">HRPDB</span>              <span class="mi">5</span> <span class="mi">3784483090</span> <span class="mi">3784483090</span> <span class="mi">200</span><span class="n">B4928319D1BCCE05396C0E40A2432</span>
+</code></pre></div></div>
+
+<h2 id="pdbs">PDBs</h2>
+
+<p><strong>PDB</strong> – это созданный пользователем набор схем, объектов и связанных структур, который логически отображается в клиентском приложении как отдельная БД.</p>
+
+<p>Каждая PDB принадлежит <code class="language-plaintext highlighter-rouge">SYS</code>, независимо от того, какой пользователь создал PDB. <code class="language-plaintext highlighter-rouge">SYS</code> – это обычный пользователь в CDB, что означает, что этот пользователь имеет одинаковый идентификатор в корневом CDB и во всех существующих и будущих PDB в CDB.</p>
+
+<h3 id="типы-pdbs">Типы PDBs</h3>
+
+<p>Все PDB создаются пользователем с помощью инструкции <code class="language-plaintext highlighter-rouge">CREATE PLUGGABLE DATABASE</code>, за исключением <code class="language-plaintext highlighter-rouge">PDB$SEED</code>, которая поставляется Oracle.</p>
+
+<p>Можно создавать следующие типы PDB.</p>
+
+<p><img src="/assets/images/pdb_types.jpg" alt="pdb_types" /></p>
+
+<p><strong>Стандартный PDB</strong></p>
+
+<p>Этот тип PDB возникает в результате запуска <code class="language-plaintext highlighter-rouge">CREATE PLUGGABLE DATABASE</code> без указания PDB в качестве начального, прокси-PDB или корня приложения. Его возможности зависят от контейнера, в котором он создается:</p>
+
+<ul>
+  <li>PDB, подключенный к корневому CDB</li>
+</ul>
+
+<p>Этот PDB принадлежит корневому CDB, а не контейнеру приложения. Этот тип PDB не может использовать общие объекты приложения. Смотрите раздел “Общие объекты приложения”.</p>
+
+<ul>
+  <li>PDB приложения</li>
+</ul>
+
+<p>PDB приложения принадлежит ровно одному контейнеру приложений. В отличие от PDB, подключенных к корневому CDB, PDB приложений могут совместно использовать основное определение приложения в контейнере приложений. Например, таблица <code class="language-plaintext highlighter-rouge">usa_zipcodes</code> в корне приложения может быть общим объектом, связанным с данными, что означает, что она содержит данные, доступные для всех PDB приложений, подключенных к этому корню. PDB, которые не находятся в контейнере приложения, не могут получить доступ к его общим объектам приложения.</p>
+
+<p><strong>PDB приложения</strong></p>
+
+<p>Рассматривайте корень приложения как корневой контейнер для конкретного приложения. Он служит хранилищем для основного определения серверной части приложения, включая общие данные и метаданные. Чтобы создать корневой каталог приложения, подключитесь к корневому каталогу CDB и укажите предложение <code class="language-plaintext highlighter-rouge">AS APPLICATION CONTAINER</code> в инструкции <code class="language-plaintext highlighter-rouge">CREATE PLUGGABLE DATABASE</code>. Смотрите раздел “Корень приложения”.</p>
+
+<p><strong>Seed PDB</strong></p>
+
+<p>В отличие от стандартной PDB, seed PDB не предназначена для поддержки приложения. Скорее, seed PDB – это шаблон для создания PDB, поддерживающих приложения. Seed может быть любым из следующих:</p>
+
+<ul>
+  <li>Seed PDB, подключённый к корневому CDB (<code class="language-plaintext highlighter-rouge">PDB$SEED</code>)</li>
+</ul>
+
+<p>Можно использовать этот шаблон, поставляемый системой, для создания новых PDB либо в контейнере приложения, либо в системном контейнере. Системный контейнер содержит ровно один seed-PDB. Нельзя удалить <code class="language-plaintext highlighter-rouge">PDB$SEED</code>, а также добавлять объекты в него или изменять объекты внутри него.</p>
+
+<ul>
+  <li>Seed PDB приложения</li>
+</ul>
+
+<p>Для ускорения создания PDB приложений в контейнере приложений, можно создать необязательный seed-PDB приложения. Контейнер приложения содержит либо ноль, либо один seed-PDB приложения.</p>
+
+<p>Для создания seed-PDB, нужно подключиться к контейнеру приложения и выполнить <code class="language-plaintext highlighter-rouge">CREATE PLUGGABLE DATABASE ... AS SEED</code>. Смотрите раздел “Seed приложения”.</p>
+
+<p><strong>Proxy PDB</strong></p>
+
+<p><strong>Прокси-PDB</strong> – это PDB, который использует db-линк данных для ссылки на PDB в удаленном CDB. Когда вызываете инструкцию в прокси-PDB при открытом PDB, инструкция выполняется в указанной PDB.</p>
+
+<p>Прокси-PDB нужно создать при подключении к корневому CDB или к корню приложения. Изменить или удалить прокси-PDB можно так же, как стандартный PDB.</p>
+
+<h3 id="назначение-pdbs">Назначение PDBs</h3>
+
+<p>Для приложения, PDB является автономной, полностью функциональной БД Oracle. Можно объединить PDB в отдельную CDB для экономии за счет масштабирование, сохраняя при этом изоляцию между PDB.</p>
+
+<p>Можно использовать PDB для достижения следующих конкретных целей:</p>
+
+<ul>
+  <li>Сохранения данных, специфичных для приложения</li>
+</ul>
+
+<p>Например, приложение для продаж может иметь свою собственную выделенную PDB, а приложение для управления персоналом может иметь свою собственную выделенную PDB. В качестве альтернативы можно создать контейнер приложения, представляющий собой именованную коллекцию PDB, для хранения серверной части приложения, содержащей общие данные и метаданные.</p>
+
+<ul>
+  <li>Перемещения данных в другой CDB</li>
+</ul>
+
+<p>БД является “подключаемой”, потому что можно упаковать ее как автономную единицу, называемую отключенной PDB, а затем переместить ее в другой CDB.</p>
+
+<ul>
+  <li>Выполнения быстрых обновлений</li>
+</ul>
+
+<p>Можно отключить PDB от CDB низкой версии БД Oracle, а затем подключить ее к CDB более высокой версии.</p>
+
+<ul>
+  <li>Быстрого копирования данных без потери доступности</li>
+</ul>
+
+<p>Для тестирования и разработки можно клонировать PDB, пока она остается открытой, сохраняя клон в том же или другом CDB. При желании можно указать PDB в качестве <strong>обновляемого клонированного PDB</strong>. В качестве альтернативы, для копирования PDB можно использовать seed-PDB или пользовательское seed-приложения.</p>
+
+<ul>
+  <li>Для обращения к данным в другой CDB</li>
+</ul>
+
+<p>Можно создать прокси-PDB, которая ссылается на другой PDB, либо в том же CDB, либо в отдельном CDB. Когда выдаются инструкции в прокси-PDB, они выполняются в удаленной PDB.</p>
+
+<ul>
+  <li>Для изоляции прав в PDB</li>
+</ul>
+
+<p>Локальный или обычный пользователь с соответствующими привилегиями может предоставить права <code class="language-plaintext highlighter-rouge">EXECUTE</code> для объекта схемы для общего доступа в отдельной PDB.</p>
+
+<h3 id="прокси-pdbs">Прокси-PDBs</h3>
+
+<p><strong>Прокси-PDB</strong> ссылается на удаленную PDB, называемую <strong>ссылочной PDB</strong>.</p>
+
+<p>Хотя инструкции SQL вызываются в прокси (ссылающемся) PDB, инструкции выполняются в ссылочном PDB. В этом отношении прокси-PDB в общих чертах аналогичен файлу символической ссылки в Linux.</p>
+
+<p>Прокси-PDB предоставляют следующие преимущества:</p>
+
+<ul>
+  <li>Агрегирование данных из нескольких моделей приложений</li>
+</ul>
+
+<p>Прокси-PDB позволяют создавать приложения, прозрачные для определения местоположения, которые могут агрегировать данные из нескольких источников. Эти источники могут находиться в одном центре обработки данных или распределены по разным центрам обработки данных.</p>
+
+<ul>
+  <li>Разрешают корню приложения в одном CDB распространять изменения приложения на другое корневое приложение</li>
+</ul>
+
+<p>Предположим, что Cdb <code class="language-plaintext highlighter-rouge">cdb_prod</code> и <code class="language-plaintext highlighter-rouge">cdb_test</code> имеют одну и ту же модель приложения. Вы создаете прокси-PDB в контейнере приложения в <code class="language-plaintext highlighter-rouge">cdb_prod</code>, который ссылается на корень приложения в <code class="language-plaintext highlighter-rouge">cdb_test</code>. Когда вы запускаете сценарии установки и обновления в корне приложения в <code class="language-plaintext highlighter-rouge">cdb_prod</code>, БД Oracle передает эти инструкции в прокси-PDB, который, в свою очередь, отправляет их удаленно в корневом приложении в <code class="language-plaintext highlighter-rouge">cdb_test</code>. Таким образом, корень приложения в <code class="language-plaintext highlighter-rouge">cdb_test</code> становится точной копией корня приложения в <code class="language-plaintext highlighter-rouge">cdb_prod</code>.</p>
+
+<p>Для создания прокси-PDB, выполните команду <code class="language-plaintext highlighter-rouge">CREATE PLUGGABLE DATABASE</code> с предложением <code class="language-plaintext highlighter-rouge">AS PROXY FROM</code>, где в предложении <code class="language-plaintext highlighter-rouge">FROM</code> указывается имя ссылочной PDB и db-линк. Инструкция создания копирует только файлы данных, принадлежащие табличным пространствам <code class="language-plaintext highlighter-rouge">SYSTEM</code> и <code class="language-plaintext highlighter-rouge">SYSAUX</code>.</p>
+
+<p><strong>Пример 2-4 Создание прокси-PDB</strong></p>
+
+<p>В этом примере подключаются к контейнеру <code class="language-plaintext highlighter-rouge">saas_sales_ac</code> в локальном продуктивном CDB. Общий пользователь <code class="language-plaintext highlighter-rouge">sales_admin</code> создает прокси-PDB с именем <code class="language-plaintext highlighter-rouge">sales_sync_pdb</code>. Этот PDB приложения ссылается на корневой каталог приложения с именем <code class="language-plaintext highlighter-rouge">saas_sales_test_ac</code> в CDB удаленной разработки, к которому он обращается с помощью ссылки на базу данных <code class="language-plaintext highlighter-rouge">cdb_dev_rem</code>. Когда происходит обновление приложения в <code class="language-plaintext highlighter-rouge">saas_sales_ac</code> в продуктивной БД, обновление автоматически распространяется на корневое приложение <code class="language-plaintext highlighter-rouge">saas_sales_test_ac</code> в удаленном CDB.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">CONNECT</span> <span class="n">sales_admin</span><span class="o">@</span><span class="n">saas_sales_ac</span>
+<span class="n">Password</span><span class="p">:</span> <span class="o">***********</span>
+
+<span class="k">CREATE</span> <span class="n">PLUGGABLE</span> <span class="k">DATABASE</span> <span class="n">sales_sync_pdb</span> <span class="k">AS</span> <span class="n">PROXY</span> <span class="k">FROM</span> <span class="n">saas_sales_test_ac</span><span class="o">@</span><span class="n">cdb_dev_rem</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="имена-для-pdbs">Имена для PDBs</h3>
+
+<p>Контейнеры в CDB совместно используют одно и то же пространство имен, что означает, что они должны иметь уникальные имена в этом пространстве имен.</p>
+
+<p>Имена для следующих контейнеров не должны конфликтовать в пределах одного и того же CDB:</p>
+
+<ul>
+  <li>корневой CDB</li>
+  <li>PDB, подключенные к корневому CDB</li>
+  <li>Корневые приложения</li>
+  <li>PDB приложений</li>
+</ul>
+
+<p>Например, если один и тот же CDB содержит контейнеры приложений <code class="language-plaintext highlighter-rouge">saas_sales_ac</code> и <code class="language-plaintext highlighter-rouge">saas_sales_test_ac</code>, то два PDB приложения, оба с именем <code class="language-plaintext highlighter-rouge">cust1</code>, не могут одновременно находиться в обоих контейнерах. Правила пространства имен также запрещают создание PDB с именем <code class="language-plaintext highlighter-rouge">cust1pdb</code> в корне CDB и PDB с именем <code class="language-plaintext highlighter-rouge">cust1pdb</code> в корне приложения.</p>
+
+<p>Имена для PDB и корневых контейнеров приложений должны соответствовать тем же правилам, что и имена сетевых служб. Более того, поскольку PDB или корневой каталог приложения имеют службу со своим собственным именем, имя контейнера должно быть уникальным для всех CDB, чьи службы доступны через определенный прослушиватель. Первый символ имени контейнера, созданного пользователем, должен быть буквенно-цифровым, остальные символы должны быть либо буквенно-цифровыми, либо подчеркиванием (_). Поскольку имена служб не чувствительны к регистру, имена контейнеров не чувствительны к регистру и пишутся в верхнем регистре, даже если они указаны с использованием идентификаторов с разделителями.</p>
+
+<h3 id="db-линки-между-pdbs">DB-линки между PDBs.</h3>
+
+<p>По умолчанию, пользователь, подключенный к одной PDB, должен использовать ссылки на базу данных для доступа к объектам в другой PDB.</p>
+
+<p><strong>Рисунок 2-4 DB-линки между PDB</strong></p>
+
+<p>На этом рисунке, администратор PDB подключен к PDB с именем <code class="language-plaintext highlighter-rouge">hrpdb1</code>. По умолчанию, во время этого сеанса пользователя <code class="language-plaintext highlighter-rouge">c##dba</code> не может запросить таблицу <code class="language-plaintext highlighter-rouge">emp2</code> в <code class="language-plaintext highlighter-rouge">hrpdb2</code> без указания ссылки на базу данных.</p>
+
+<p><img src="/assets/images/oracon_fig2-4.jpg" alt="OraCon_Fig2-4" /></p>
+
+<p>Исключения из этого правила включают:</p>
+
+<ul>
+  <li>
+    <p>Общий объект, подключенный к данным, которому доступны все PDB приложения, содержащие ссылку на данные, указывающие на этот объект. Например, контейнер приложения <code class="language-plaintext highlighter-rouge">saas_sales_ac</code> может содержать у себя таблицу <code class="language-plaintext highlighter-rouge">usa_zipcodes</code>, связанную с данными. В этом случае, общий пользователь <code class="language-plaintext highlighter-rouge">c##dba</code> может подключиться к PDB приложения в этом контейнере, а затем сделать запрос к <code class="language-plaintext highlighter-rouge">usa_zipcodes</code>, даже если фактическая таблица находится в корне приложения. В этом случае ссылка на базу данных не требуется.</p>
+  </li>
+  <li>
+    <p>Предложение <code class="language-plaintext highlighter-rouge">CONTAINERS()</code> в SQL, выданное из корневого CDB или корневого приложения. Используя это предложение, вы можете запрашивать данные во всех PDB, подключенных к корню контейнера.</p>
+  </li>
+</ul>
+
+<p>При создании прокси-PDB, нужно указать имя db-линка в предложении <code class="language-plaintext highlighter-rouge">FROM</code> команды <code class="language-plaintext highlighter-rouge">CREATE PLUGGABLE DATABASE ... AS PROXY</code>. Если прокси-PDB и ссылочный PDB, находятся в разных CDB, то db-линк должен быть определен в корневом CDB, который будет содержать прокси-PDB. Db-линк должен подключаться либо к удаленному ссылочному PDB, либо к корню удаленного CDB.</p>
+
+<p><br /><br /><br /><br /><br /><br /><br /></p>
+<div class="row">
+  <div class="col"><div align="left"><a href="/pages/skills/oracle/roadmap.html">&#8592; Дорожная карта документации по БД Oracle</a></div>
+  </div>
+  <div class="col"><div align="right"><a href="/pages/skills/oracle/3appcon.html">3. Контейнеры для приложений &#8594;</a></div> 
+ </div> 
+</div>
+
+   	</div>
+</div></section>
+
+    <footer class="footer hexlet-footer py-5 mt-5 text-muted">
+  <div class="container">
+    <div class="row mt-1">
+      <div class="col-12 text-center">
+        <a href="https://aveligzhanin.github.io/">Велигжанин Андрей</a> — Программист-разработчик C++ и Oracle.
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>
