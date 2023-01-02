@@ -1,0 +1,175 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>SQL Tuning Guide</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Our style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/avel.css">
+</head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+  <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse menu">
+			<ul class="nav navbar-nav navbar-right">
+                 
+                    <li>
+                       <a href="/index.html#about">Обо мне</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#education">Образование</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#work">Работа</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#skills">Навыки</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#portfolio">Портфолио</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#hobby">Увлечения</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#contact">Контакты</a>
+                    </li>
+                 
+        	</ul>
+        </div>
+      </div>
+  </div>
+</nav>
+
+    <section class="pfblock"><div class="container">  		<!-- Translations -->
+	<div class="col-xs-6" align=left>
+		<a href="/index.html">home</a> \ <a href="/pages/skills/oracle.html">Oracle</a>
+	</div>
+
+	<div class="col-xs-6" align=right>
+		Написано: 25.12.2022
+	</div>
+
+   	<div class="col-sm-12 my">
+		<h1 id="руководство-по-настройке-sql-оригинал">Руководство по настройке SQL. <a href="https://docs.oracle.com/en/database/oracle/oracle-database/21/tgsql/introduction-to-sql-tuning.html#GUID-B653E5F3-F078-4BBC-9516-B892960046A2">оригинал</a></h1>
+
+<h2 id="предисловие"><a href="/pages/skills/oracle/sql_tuning_guide/preface.html">Предисловие</a></h2>
+
+<h2 id="часть-i-основы-производительности-sql">Часть I. Основы производительности SQL</h2>
+
+<h3 id="1-введение-в-настройку-sql"><a href="/pages/skills/oracle/sql_tuning_guide/1introduction.html">1. Введение в настройку SQL</a></h3>
+
+<h3 id="2-методология-производительности-sql"><a href="/pages/skills/oracle/sql_tuning_guide/2methodology.html">2. Методология производительности SQL</a></h3>
+
+<h2 id="часть-ii-основы-оптимизации-запросов">Часть II Основы оптимизации запросов</h2>
+
+<h3 id="3-обработка-sql">3. Обработка SQL</h3>
+
+<h3 id="4-концепции-оптимизатора-запросов">4. Концепции оптимизатора запросов</h3>
+
+<h3 id="5-преобразования-запросов">5. Преобразования запросов</h3>
+
+<h2 id="часть-iii-планы-выполнения-запросов">Часть III Планы выполнения запросов</h2>
+
+<h3 id="6-объяснение-и-отображение-планов-выполнения">6. Объяснение и отображение планов выполнения</h3>
+
+<h3 id="7-plan_table-справочник">7. PLAN_TABLE справочник</h3>
+
+<h2 id="часть-iv-операторы-sql-пути-доступа-и-соединения">Часть IV Операторы SQL: Пути доступа и соединения</h2>
+
+<h3 id="8-пути-доступа-оптимизатора">8. Пути доступа оптимизатора</h3>
+
+<h3 id="9-соединения">9. Соединения</h3>
+
+<h2 id="часть-v-статистика-оптимизатора">Часть V Статистика оптимизатора</h2>
+
+<h3 id="10-концепции-статистики-оптимизатора">10. Концепции статистики оптимизатора</h3>
+
+<h3 id="11-гистограммы">11. Гистограммы</h3>
+
+<h3 id="12-настройка-параметров-для-сбора-статистики-оптимизатора">12. Настройка параметров для сбора статистики оптимизатора</h3>
+
+<h3 id="13-сбор-статистики-оптимизатора">13. Сбор статистики оптимизатора</h3>
+
+<h3 id="14-управление-расширенной-статистикой">14. Управление расширенной статистикой</h3>
+
+<h3 id="15-контроль-использования-статистики-оптимизатора">15. Контроль использования статистики оптимизатора</h3>
+
+<h3 id="16-управление-исторической-статистикой-оптимизатора">16. Управление исторической статистикой оптимизатора</h3>
+
+<h3 id="17-импорт-и-экспорт-статистики-оптимизатора">17. Импорт и экспорт статистики оптимизатора</h3>
+
+<h3 id="18-анализ-статистики-с-помощью-советника-optimizer-statistics-advisor">18. Анализ статистики с помощью советника Optimizer Statistics Advisor</h3>
+
+<h2 id="часть-vi-элементы-управления-оптимизатором">Часть VI Элементы управления оптимизатором</h2>
+
+<h3 id="19-влияние-на-оптимизатор">19. Влияние на оптимизатор</h3>
+
+<h3 id="20-повышение-производительности-в-реальном-мире-за-счет-совместного-использования-курсора">20. Повышение производительности в реальном мире за счет совместного использования курсора</h3>
+
+<h2 id="часть-vii-мониторинг-и-отслеживание-sql">Часть VII Мониторинг и отслеживание SQL</h2>
+
+<h3 id="21-мониторинг-операций-с-базой-данных">21. Мониторинг операций с базой данных</h3>
+
+<h3 id="22-сбор-диагностических-данных-с-помощью-sql-test-case-builder">22. Сбор диагностических данных с помощью SQL Test Case Builder</h3>
+
+<h3 id="23-выполнение-трассировки-приложений">23. Выполнение трассировки приложений</h3>
+
+<h2 id="часть-viii-автоматическая-настройка-sql">Часть VIII Автоматическая настройка SQL</h2>
+
+<h3 id="24-захват-рабочих-нагрузок-в-sql-tuning-sets">24. Захват рабочих нагрузок в SQL Tuning Sets</h3>
+
+<h3 id="25-анализ-sql-с-помощью-sql-tuning-advisor">25. Анализ SQL с помощью SQL Tuning Advisor</h3>
+
+<h3 id="26-оптимизация-путей-доступа-с-помощью-sql-access-advisor">26. Оптимизация путей доступа с помощью SQL Access Advisor</h3>
+
+<h2 id="часть-ix-объекты-управления-sql">Часть IX Объекты управления SQL</h2>
+
+<h3 id="27-управление-профилями-sql">27. Управление профилями SQL</h3>
+
+<h3 id="28-обзор-управления-планами-sql">28. Обзор управления планами SQL</h3>
+
+<h3 id="29-управление-базовыми-показателями-плана-sql">29. Управление базовыми показателями плана SQL</h3>
+
+<h3 id="30-перенос-сохраненных-планов-в-базовые-показатели-плана-sql">30. Перенос сохраненных планов в базовые показатели плана SQL</h3>
+
+   	</div>
+</div></section>
+
+    <footer class="footer hexlet-footer py-5 mt-5 text-muted">
+  <div class="container">
+    <div class="row mt-1">
+      <div class="col-12 text-center">
+        <a href="https://aveligzhanin.github.io/">Велигжанин Андрей</a> — Программист-разработчик C++ и Oracle.
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>

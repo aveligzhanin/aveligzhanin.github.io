@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>2 Day + Performance Tuning Guide</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Our style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/avel.css">
+</head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+  <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse menu">
+			<ul class="nav navbar-nav navbar-right">
+                 
+                    <li>
+                       <a href="/index.html#about">Обо мне</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#education">Образование</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#work">Работа</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#skills">Навыки</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#portfolio">Портфолио</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#hobby">Увлечения</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#contact">Контакты</a>
+                    </li>
+                 
+        	</ul>
+        </div>
+      </div>
+  </div>
+</nav>
+
+    <section class="pfblock"><div class="container">  		<!-- Translations -->
+	<div class="col-xs-6" align=left>
+		<a href="/index.html">home</a> \ <a href="/pages/skills/oracle.html">Oracle</a>
+	</div>
+
+	<div class="col-xs-6" align=right>
+		Написано: 01.01.2023
+	</div>
+
+   	<div class="col-sm-12 my">
+		<h1 id="2-day--performance-tuning-guide-оригинал">2 Day + Performance Tuning Guide. <a href="https://docs.oracle.com/en/database/oracle/oracle-database/21/tdppt/oracle-database-performance-method.html#GUID-6203E485-FA06-4EE3-9003-4449FBDE214B">оригинал</a></h1>
+
+<h2 id="предисловие"><a href="/pages/skills/oracle/2day/Performance_Tuning_Guide/preface.html">Предисловие</a></h2>
+
+<h2 id="часть-i-приступая-к-работе">Часть I. Приступая к работе</h2>
+
+<h3 id="1-введение"><a href="/pages/skills/oracle/2day/Performance_Tuning_Guide/1introduction.html">1. Введение</a></h3>
+
+<h3 id="2-метод-повышения-производительности-бд-oracle">2. Метод повышения производительности БД Oracle</h3>
+
+<h2 id="часть-ii-упреждающая-настройка-бд">Часть II Упреждающая настройка БД</h2>
+
+<h3 id="3-автоматический-мониторинг-производительности-бд">3. Автоматический мониторинг производительности БД</h3>
+
+<h3 id="4-мониторинг-производительности-бд-в-режиме-реального-времени">4. Мониторинг производительности БД в режиме реального времени</h3>
+
+<h3 id="5-мониторинг-операций-с-бд-в-режиме-реального-времени">5. Мониторинг операций с БД в режиме реального времени</h3>
+
+<h3 id="6-мониторинг-оповещений-о-производительности">6. Мониторинг оповещений о производительности</h3>
+
+<h2 id="часть-iii-настройка-реагирования-бд">Часть III Настройка реагирования БД</h2>
+
+<h3 id="7-ручной-мониторинг-производительности-бд">7. Ручной мониторинг производительности БД</h3>
+
+<h3 id="8-решение-проблем-с-временной-производительностью">8. Решение проблем с временной производительностью</h3>
+
+<h3 id="9-устранение-снижения-производительности-с-течением-времени">9. Устранение снижения производительности с течением времени</h3>
+
+<h3 id="10-использование-хранилища-автоматического-хранилища-рабочей-нагрузки-для-создания-отчетов-о-производительности">10. Использование хранилища автоматического хранилища рабочей нагрузки для создания отчетов о производительности</h3>
+
+<h2 id="часть-iv-настройка-sql">Часть IV Настройка SQL</h2>
+
+<h3 id="11-определение-высоконагруженных-sql-инструкций">11. Определение высоконагруженных SQL-инструкций</h3>
+
+<h3 id="12-настройка-sql-инструкций">12. Настройка SQL-инструкций</h3>
+
+<h3 id="13-оптимизация-путей-доступа-к-данным">13. Оптимизация путей доступа к данным</h3>
+
+
+   	</div>
+</div></section>
+
+    <footer class="footer hexlet-footer py-5 mt-5 text-muted">
+  <div class="container">
+    <div class="row mt-1">
+      <div class="col-12 text-center">
+        <a href="https://aveligzhanin.github.io/">Велигжанин Андрей</a> — Программист-разработчик C++ и Oracle.
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>
