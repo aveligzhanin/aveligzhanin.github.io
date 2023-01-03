@@ -1,0 +1,193 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Database Administrator’s Guide</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Our style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/avel.css">
+</head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+  <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse menu">
+			<ul class="nav navbar-nav navbar-right">
+                 
+                    <li>
+                       <a href="/index.html#about">Обо мне</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#education">Образование</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#work">Работа</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#skills">Навыки</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#portfolio">Портфолио</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#hobby">Увлечения</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#contact">Контакты</a>
+                    </li>
+                 
+        	</ul>
+        </div>
+      </div>
+  </div>
+</nav>
+
+    <section class="pfblock"><div class="container">  		<!-- Translations -->
+	<div class="col-xs-6" align=left>
+		<a href="/index.html">home</a> \ <a href="/pages/skills/oracle.html">Oracle</a>
+	</div>
+
+	<div class="col-xs-6" align=right>
+		Написано: 02.01.2023
+	</div>
+
+   	<div class="col-sm-12 my">
+		<h1 id="database-administrators-guide-оригинал">Database Administrator’s Guide. <a href="https://docs.oracle.com/en/database/oracle/oracle-database/21/admin/getting-started-with-database-administration.html#GUID-EA8CC987-EF18-4434-B962-01312CD3A8AC">оригинал</a></h1>
+
+<h2 id="предисловие"><a href="/pages/skills/oracle/Administrators_Guide/preface.html">Предисловие</a></h2>
+
+<h2 id="часть-i-базовое-администрирование-бд">Часть I Базовое администрирование БД</h2>
+
+<h3 id="1-начало-работы-с-администрированием-бд"><a href="/pages/skills/oracle/Administrators_Guide/1GettingStarted.html">1. Начало работы с администрированием БД</a></h3>
+
+<h3 id="2-настройка-автоматического-перезапуска-бд-oracle">2. Настройка автоматического перезапуска БД Oracle</h3>
+
+<h3 id="3-управление-процессами">3. Управление процессами</h3>
+
+<h3 id="4-управление-памятью">4. Управление памятью</h3>
+
+<h3 id="5-управление-пользователями-и-безопасностью-бд">5. Управление пользователями и безопасностью БД</h3>
+
+<h3 id="6-мониторинг-бд">6. Мониторинг БД</h3>
+
+<h3 id="7-диагностика-и-разрешение-проблем">7. Диагностика и разрешение проблем</h3>
+
+<h2 id="часть-ii-структура-и-хранение-бд-oracle">Часть II Структура и хранение БД Oracle</h2>
+
+<h3 id="8-управление-контрольными-файлами">8. Управление контрольными файлами</h3>
+
+<h3 id="9-управление-журналом-redo">9. Управление журналом Redo</h3>
+
+<h3 id="10-управление-архивом-журналов-redo">10. Управление архивом журналов Redo</h3>
+
+<h3 id="11-управление-табличными-пространствами">11. Управление табличными пространствами</h3>
+
+<h3 id="12-управление-файлами-данных-и-временными-файлами">12. Управление файлами данных и временными файлами</h3>
+
+<h3 id="13-транспортировка-данных">13. Транспортировка данных</h3>
+
+<h3 id="14-управление-undo">14. Управление Undo</h3>
+
+<h3 id="15-использование-файлов-управляемых-oracle">15. Использование файлов, управляемых Oracle</h3>
+
+<h3 id="16-использование-бд-с-постоянной-памятью">16. Использование БД с постоянной памятью</h3>
+
+<h2 id="часть-iii-объекты-схемы">Часть III Объекты схемы</h2>
+
+<h3 id="17-управление-объектами-схемы">17. Управление объектами схемы</h3>
+
+<h3 id="18-управление-пространством-для-объектов-схемы">18. Управление пространством для объектов схемы</h3>
+
+<h3 id="19-управление-таблицами">19. Управление таблицами</h3>
+
+<h3 id="20-управление-индексами">20. Управление индексами</h3>
+
+<h3 id="21-управление-кластерами">21. Управление кластерами</h3>
+
+<h3 id="22-управление-кластерными-хэшем">22. Управление кластерными хэшем</h3>
+
+<h3 id="23-управление-представлениями-последовательностями-и-синонимами">23. Управление представлениями, последовательностями и синонимами</h3>
+
+<h3 id="24-восстановление-повреждённых-данных">24. Восстановление повреждённых данных.</h3>
+
+<h2 id="часть-iv-управление-ресурсами-бд-и-планирование-задач">Часть IV Управление ресурсами БД и планирование задач</h2>
+
+<h3 id="25-управление-задачами-автоматизированного-обслуживания-бд">25. Управление задачами автоматизированного обслуживания БД.</h3>
+
+<h3 id="26-управление-ресурсами-с-помощью-oracle-database-resource-manager">26. Управление ресурсами с помощью Oracle Database Resource Manager</h3>
+
+<h3 id="27-концепции-планировщика-oracle">27. Концепции планировщика Oracle.</h3>
+
+<h3 id="28-планирование-заданий-с-помощью-oracle-scheduler">28. Планирование заданий с помощью Oracle Scheduler</h3>
+
+<h3 id="29-администрирование-планировщика-oracle">29. Администрирование планировщика Oracle</h3>
+
+<h2 id="часть-v-управление-распределенной-бд">Часть V Управление распределенной БД</h2>
+
+<h3 id="30-концепции-распределенной-бд">30. Концепции распределенной БД</h3>
+
+<h3 id="31-управление-распределенной-бд">31. Управление распределенной БД</h3>
+
+<h3 id="32-разработка-приложений-для-распределенной-системы-бд">32. Разработка приложений для распределенной системы БД</h3>
+
+<h3 id="33-концепции-распределенных-транзакций">33. Концепции распределенных транзакций</h3>
+
+<h3 id="34-управление-распределенными-транзакциями">34. Управление распределенными транзакциями</h3>
+
+<h2 id="часть-vi-управление-материализованными-представлениями-доступными-только-для-чтения">Часть VI Управление материализованными представлениями, доступными только для чтения</h2>
+
+<h3 id="35-концепции-материализованного-представления-доступных-только-для-чтения">35. Концепции материализованного представления, доступных только для чтения</h3>
+
+<h3 id="36-архитектура-материализованного-представления-доступного-только-для-чтения">36. Архитектура материализованного представления, доступного только для чтения</h3>
+
+<h3 id="37-планирование-материализованных-представлений-доступных-только-для-чтения">37. Планирование материализованных представлений, доступных только для чтения</h3>
+
+<h3 id="38-создание-материализованных-представлений-доступных-только-для-чтения-и-управление-ими">38. Создание материализованных представлений, доступных только для чтения, и управление ими.</h3>
+
+<h3 id="39-устранение-неполадок-с-материализованными-представлениями-доступными-только-для-чтения">39. Устранение неполадок с материализованными представлениями, доступными только для чтения.</h3>
+
+<h2 id="приложения">Приложения</h2>
+
+<h3 id="a-поддержка-dbms_job">A. Поддержка DBMS_JOB</h3>
+
+<h3 id="b-справочник-для-таблиц-блокчейн">B. Справочник для таблиц блокчейн.</h3>
+
+   	</div>
+</div></section>
+
+    <footer class="footer hexlet-footer py-5 mt-5 text-muted">
+  <div class="container">
+    <div class="row mt-1">
+      <div class="col-12 text-center">
+        <a href="https://aveligzhanin.github.io/">Велигжанин Андрей</a> — Программист-разработчик C++ и Oracle.
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>
