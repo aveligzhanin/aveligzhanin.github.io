@@ -1,0 +1,177 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Объяснение и отображение планов выполнения</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Our style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/avel.css">
+</head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+  <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse menu">
+			<ul class="nav navbar-nav navbar-right">
+                 
+                    <li>
+                       <a href="/index.html#about">Обо мне</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#education">Образование</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#work">Работа</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#skills">Навыки</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#portfolio">Портфолио</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#hobby">Увлечения</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#contact">Контакты</a>
+                    </li>
+                 
+        	</ul>
+        </div>
+      </div>
+  </div>
+</nav>
+
+    <section class="pfblock"><div class="container">  		<!-- Translations -->
+	<div class="col-xs-6" align=left>
+		<a href="/index.html">home</a> \ <a href="/pages/skills/oracle.html">Oracle</a>
+	</div>
+
+	<div class="col-xs-6" align=right>
+		Написано: 04.01.2023
+	</div>
+
+   	<div class="col-sm-12 my">
+		<h1 id="6-объяснение-и-отображение-планов-выполнения">6. Объяснение и отображение планов выполнения</h1>
+
+<p>Знание того, как объяснить запрос и отобразить его план, имеет важное значение для настройки SQL.</p>
+
+<h2 id="61-введение-в-планы-выполнения"><a name="6_1"></a>6.1 Введение в планы выполнения</h2>
+
+<h3 id="611-содержание-плана-выполнения"><a name="6_1_1"></a>6.1.1 Содержание плана выполнения</h3>
+
+<h3 id="612-почему-планы-выполнения-меняются"><a name="6_1_2"></a>6.1.2 Почему планы выполнения меняются</h3>
+
+<h4 id="6121-различные-схемы"><a name="6_1_2_1"></a>6.1.2.1 Различные схемы</h4>
+
+<h4 id="6122-различные-стоимости"><a name="6_1_2_2"></a>6.1.2.2 Различные стоимости</h4>
+
+<h2 id="62-генерация-выходных-данных-плана-с-использованием-инструкции-explain-plan"><a name="6_2"></a>6.2 Генерация выходных данных плана с использованием инструкции EXPLAIN PLAN</h2>
+
+<h3 id="621-об-инструкции-explain-plan"><a name="6_2_1"></a>6.2.1 Об инструкции EXPLAIN PLAN</h3>
+
+<h4 id="6211-о-таблице-plan_table"><a name="6_2_1_1"></a>6.2.1.1 О таблице PLAN_TABLE</h4>
+
+<h4 id="6212-ограничения-explain-table"><a name="6_2_1_2"></a>6.2.1.2 Ограничения EXPLAIN TABLE</h4>
+
+<h3 id="622-объяснение-инструкции-sql-основные-шаги"><a name="6_2_2"></a>6.2.2 Объяснение инструкции SQL: Основные шаги</h3>
+
+<h3 id="623-указание-statement-id-в-explain-plan-пример"><a name="6_2_3"></a>6.2.3 Указание Statement ID в EXPLAIN PLAN: пример</h3>
+
+<h3 id="624-указание-другого-вывода-для-explain-plan-пример"><a name="6_2_4"></a>6.2.4 Указание другого вывода для EXPLAIN PLAN: пример</h3>
+
+<h3 id="625-вывод-explain-plan-для-запроса-с-контейнером-пример"><a name="6_2_5"></a>6.2.5 Вывод EXPLAIN PLAN для запроса с контейнером: пример</h3>
+
+<h2 id="63-отображение-планов-выполнения"><a name="6_3"></a>6.3 Отображение планов выполнения</h2>
+
+<h3 id="631-об-отображении-выходных-данных-plan_table"><a name="6_3_1"></a>6.3.1 Об отображении выходных данных PLAN_TABLE</h3>
+
+<h3 id="632-отображение-планов-выполнения-основные-шаги"><a name="6_3_2"></a>6.3.2 Отображение планов выполнения: Основные шаги</h3>
+
+<h3 id="633-отображение-адаптивных-планов-запросов-учебник"><a name="6_3_3"></a>6.3.3 Отображение адаптивных планов запросов: Учебник</h3>
+
+<h3 id="634-отображение-планов-выполнение-примеры"><a name="6_3_4"></a>6.3.4 Отображение планов выполнение: Примеры</h3>
+
+<h4 id="6341-настройка-вывода-plan_table"><a name="6_3_4_1"></a>6.3.4.1 Настройка вывода PLAN_TABLE</h4>
+
+<h4 id="6342-отображение-планов-параллельного-выполнения-пример"><a name="6_3_4_2"></a>6.3.4.2 Отображение планов параллельного выполнения: Пример</h4>
+
+<h5 id="63421-об-explain-plan-и-параллельных-запросах"><a name="6_3_4_2_1"></a>6.3.4.2.1 Об EXPLAIN PLAN и параллельных запросах</h5>
+
+<h5 id="63422-просмотр-параллельных-запросов-с-explain-plan-пример"><a name="6_3_4_2_2"></a>6.3.4.2.2 Просмотр параллельных запросов с EXPLAIN PLAN: Пример</h5>
+
+<h4 id="6343-отображение-планов-растровых-индексов-пример"><a name="6_3_4_3"></a>6.3.4.3 Отображение планов растровых индексов: Пример</h4>
+
+<h4 id="6344-отображение-планов-с-результирующим-кэшем-пример"><a name="6_3_4_4"></a>6.3.4.4 Отображение планов с результирующим кэшем: Пример</h4>
+
+<h4 id="6345-отображение-планов-для-партиционированных-объектов-пример"><a name="6_3_4_5"></a>6.3.4.5 Отображение планов для партиционированных объектов: Пример</h4>
+
+<h5 id="63451-отображение-диапазона-и-хэш-партиций-с-explain-plan-примеры"><a name="6_3_4_5_1"></a>6.3.4.5.1 Отображение диапазона и хэш-партиций с EXPLAIN PLAN: Примеры</h5>
+
+<h5 id="63452-сокращение-информации-с-помощью-составных-партиционированных-объектов-примеры"><a name="6_3_4_5_2"></a>6.3.4.5.2 Сокращение информации с помощью составных партиционированных объектов: Примеры</h5>
+
+<h5 id="63453-примеры-разумного-соединения-частичных-партиций"><a name="6_3_4_5_3"></a>6.3.4.5.3 Примеры разумного соединения частичных партиций</h5>
+
+<h5 id="63454-примеры-разумного-соединения-полных-партиций"><a name="6_3_4_5_4"></a>6.3.4.5.4 Примеры разумного соединения полных партиций</h5>
+
+<h5 id="63455-примеры-с-inlist-iterator-и-explain-plan"><a name="6_3_4_5_5"></a>6.3.4.5.5 Примеры с INLIST ITERATOR и EXPLAIN PLAN</h5>
+
+<h5 id="63456-примеры-с-домейн-индексом-и-explain-plan"><a name="6_3_4_5_6"></a>6.3.4.5.6 Примеры с домейн-индексом и EXPLAIN PLAN</h5>
+
+<h2 id="64-сравнение-планов-выполнения"><a name="6_4"></a>6.4 Сравнение планов выполнения</h2>
+
+<h3 id="641-цель-сравнения-планов"><a name="6_4_1"></a>6.4.1 Цель сравнения планов</h3>
+
+<h3 id="642-пользовательский-интерфейс-для-сравнения-планов"><a name="6_4_2"></a>6.4.2 Пользовательский интерфейс для сравнения планов</h3>
+
+<h3 id="643-сравнение-планов-выполнения-учебник"><a name="6_4_3"></a>6.4.3 Сравнение планов выполнения: Учебник</h3>
+
+<h3 id="644-сравнение-планов-выполнения-примеры"><a name="6_4_4"></a>6.4.4 Сравнение планов выполнения: Примеры</h3>
+
+<p><br /><br /><br /><br /><br /><br /><br /></p>
+<div class="row">
+  <div class="col"><div align="left"><a href="/pages/skills/oracle/sql_tuning_guide/5querytrans.html">&#8592; 5. Преобразования запросов</a></div>
+  </div>
+  <div class="col"><div align="right"><a href="/pages/skills/oracle/sql_tuning_guide/7plantable.html">Справочник по PLAN_TABLE &#8594;</a></div> 
+ </div>
+</div>
+
+   	</div>
+</div></section>
+
+    <footer class="footer hexlet-footer py-5 mt-5 text-muted">
+  <div class="container">
+    <div class="row mt-1">
+      <div class="col-12 text-center">
+        <a href="https://aveligzhanin.github.io/">Велигжанин Андрей</a> — Программист-разработчик C++ и Oracle.
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>

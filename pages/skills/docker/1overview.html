@@ -1,0 +1,159 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Обзор Docker</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Our style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/avel.css">
+</head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+  <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse menu">
+			<ul class="nav navbar-nav navbar-right">
+                 
+                    <li>
+                       <a href="/index.html#about">Обо мне</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#education">Образование</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#work">Работа</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#skills">Навыки</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#portfolio">Портфолио</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#hobby">Увлечения</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#contact">Контакты</a>
+                    </li>
+                 
+        	</ul>
+        </div>
+      </div>
+  </div>
+</nav>
+
+    <section class="pfblock"><div class="container">  		<!-- Translations -->
+	<div class="col-xs-6" align=left>
+		<a href="/index.html">home</a> \ <a href="/index.html#skills">Навыки</a>
+	</div>
+
+	<div class="col-xs-6" align=right>
+		Написано: 06.01.2023
+	</div>
+
+   	<div class="col-sm-12 my">
+		<h1 id="часть-1-обзор">Часть 1. Обзор</h1>
+
+<p>Добро пожаловать! Мы рады, что вы хотите изучить Docker.</p>
+
+<p>Это руководство содержит пошаговые инструкции о том, как начать работу с Docker. Вот некоторые из вещей, которые вы узнаете и сделаете в этом руководстве:</p>
+
+<ul>
+  <li>
+    <p>Создание и запуск образа в качестве контейнера</p>
+  </li>
+  <li>
+    <p>Публикация образа через Docker Hub</p>
+  </li>
+  <li>
+    <p>Развертывание приложений Docker с использованием нескольких контейнеров с базой данных</p>
+  </li>
+  <li>
+    <p>Запуск приложений с помощью Docker Compose</p>
+  </li>
+</ul>
+
+<p>Прежде чем вы перейдете к практической части руководства, вам следует ознакомиться с контейнерами и изображениями (образами).</p>
+
+<h2 id="что-такое-контейнер">Что такое контейнер?</h2>
+
+<p>По-простому, <strong>контейнер</strong> – это процесс-песочница на вашем компьютере, который изолирован от всех других процессов на главном компьютере. Эта изоляция использует пространства имен ядра и группы, функции, которые были в Linux в течение длительного времени. Docker работал над тем, чтобы сделать эти возможности доступными и простыми в использовании. Подводя итог, контейнер:</p>
+
+<ul>
+  <li>
+    <p>является запущенным экземпляром изображения. Вы можете создавать, запускать, останавливать, перемещать или удалять контейнер с помощью Docker API или CLI.</p>
+  </li>
+  <li>
+    <p>может быть запущен на локальных машинах, виртуальных машинах или развернут в облаке.</p>
+  </li>
+  <li>
+    <p>является портируемым (может быть запущен на любой ОС).</p>
+  </li>
+  <li>
+    <p>изолирован от других контейнеров и запускает свое собственное программное обеспечение, двоичные файлы и конфигурации.</p>
+  </li>
+</ul>
+
+<h2 id="что-такое-изображение-контейнера">Что такое изображение контейнера?</h2>
+
+<p>При запуске контейнера, он использует изолированную файловую систему. Эта пользовательская файловая система предоставляется образом контейнера. Поскольку образ содержит файловую систему контейнера, он должен содержать все необходимое для запуска приложения – все зависимости, конфигурации, скрипты, двоичные файлы и т.д. Изображение также содержит другую конфигурацию контейнера, такую как переменные среды, команда для запуска по умолчанию и другие метаданные.</p>
+
+<p>Позже в этом руководстве вы углубитесь в изучение изображений, охватывая такие темы, как наложение слоев, лучшие практики и многое другое.</p>
+
+<blockquote>
+  <p><strong>Примечание</strong><br />Если вы знакомы с <code class="language-plaintext highlighter-rouge">chroot</code>, думайте о контейнере как о расширенной версии <code class="language-plaintext highlighter-rouge">chroot</code>. Файловая система просто берется из образа. Но контейнер добавляет дополнительную изоляцию, недоступную при простом использовании <code class="language-plaintext highlighter-rouge">chroot</code>.</p>
+</blockquote>
+
+<h2 id="следующие-шаги">Следующие шаги</h2>
+
+<p>В этом разделе вы узнали о контейнерах и изображениях.</p>
+
+<p>В следующем разделе вы разместите свое первое приложение в контейнере.</p>
+
+<p><br /><br /><br /><br /><br /><br /><br /></p>
+<div class="row">
+  <div class="col"><div align="left"><a href="/pages/skills/docker/get_started.html">&#8592; Начало работы с Docker</a></div>
+  </div>
+  <div class="col"><div align="right"><a href="/pages/skills/docker/2containerize_app.html">2. Контейнеризация приложения &#8594;</a></div> 
+ </div>
+</div>
+
+   	</div>
+</div></section>
+
+    <footer class="footer hexlet-footer py-5 mt-5 text-muted">
+  <div class="container">
+    <div class="row mt-1">
+      <div class="col-12 text-center">
+        <a href="https://aveligzhanin.github.io/">Велигжанин Андрей</a> — Программист-разработчик C++ и Oracle.
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>
