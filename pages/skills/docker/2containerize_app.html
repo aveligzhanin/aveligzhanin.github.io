@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Обзор Docker</title>
+    <title>Контейнеризация приложения</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -78,12 +78,126 @@
    	<div class="col-sm-12 my">
 		<h1 id="часть-2-контейнеризация-приложения">Часть 2. Контейнеризация приложения</h1>
 
+<p>В остальной части этого руководства вы будете работать с простым менеджером списков задач, который работает в Node.js . Если вы не знакомы с Node.js, не волнуйтесь. Это руководство не требует опыта работы с JavaScript.</p>
+
+<p>Чтобы изучить это руководство, понадобится следующее:</p>
+
+<ul>
+  <li>
+    <p>Docker, работающий на вашем компьютере. Следуйте инструкциям, чтобы <a href="https://docs.docker.com/get-docker/">загрузить и установить Docker</a>.</p>
+  </li>
+  <li>
+    <p><a href="https://git-scm.com/downloads">Git-клиент</a>.</p>
+  </li>
+  <li>
+    <p>IDE или текстовый редактор для редактирования. Докер рекомендует <a href="https://code.visualstudio.com/">Visual Studio Code</a>.</p>
+  </li>
+  <li>
+    <p>Понимание концепций <a href="https://docs.docker.com/get-started/overview/#docker-objects">контейнеров и изображений</a>.</p>
+  </li>
+</ul>
+
+<h2 id="получить-приложение">Получить приложение</h2>
+
+<p>Прежде чем вы сможете запустить приложение, необходимо загрузить исходный код приложения на ваш компьютер.</p>
+
+<p>1. Склонируйте репозиторий <a href="https://github.com/docker/getting-started/tree/master">getting-started</a>, используя следующую команду:</p>
+
+<pre><code class="language-git"> git clone https://github.com/docker/getting-started.git
+</code></pre>
+
+<p>2. Просмотрите содержимое клонированного репозитория. Внутри каталога <code class="language-plaintext highlighter-rouge">getting-started/app</code> вы должны увидеть <code class="language-plaintext highlighter-rouge">package.json</code> и два подкаталога (<code class="language-plaintext highlighter-rouge">src</code> и <code class="language-plaintext highlighter-rouge">spec</code>).</p>
+
+<p><img src="/assets/images/docker02_1.jpg" alt="Fig2-1" /></p>
+
+<h2 id="создайте-образ-контейнера-приложения">Создайте образ контейнера приложения</h2>
+
+<p>Чтобы создать образ контейнера, вам нужно будет использовать <code class="language-plaintext highlighter-rouge">Dockerfile</code>. <code class="language-plaintext highlighter-rouge">Dockerfile</code> – это просто текстовый файл без расширения. <code class="language-plaintext highlighter-rouge">Dockerfile</code> содержит сценарий инструкций, который <code class="language-plaintext highlighter-rouge">Docker</code> использует для создания образа контейнера.</p>
+
+<p>1. В каталоге приложения, в том же расположении, что и файл <code class="language-plaintext highlighter-rouge">package.json</code>, создайте файл с именем <code class="language-plaintext highlighter-rouge">Dockerfile</code>. Вы можете использовать следующие команды ниже, чтобы создать файл <code class="language-plaintext highlighter-rouge">Dockerfile</code> на основе вашей операционной системы.</p>
+
+<p>В командной строке Windows выполните следующие команды, перечисленные ниже.</p>
+
+<p>Измените каталог на каталог приложения. Замените <code class="language-plaintext highlighter-rouge">\path\to\app</code> на путь к вашему каталогу <code class="language-plaintext highlighter-rouge">getting-started\app</code>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> cd \path\to\app
+</code></pre></div></div>
+
+<p>Создайте пустой файл с именем <code class="language-plaintext highlighter-rouge">Dockerfile</code>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> type nul &gt; Dockerfile
+</code></pre></div></div>
+
+<p>2. Используя текстовый редактор или редактор кода, добавьте следующее содержимое в файл <code class="language-plaintext highlighter-rouge">Dockerfile</code>:</p>
+
+<div class="language-docker highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># syntax=docker/dockerfile:1</span>
+<span class="k">FROM</span><span class="s"> node:18-alpine</span>
+<span class="k">WORKDIR</span><span class="s"> /app</span>
+<span class="k">COPY</span><span class="s"> . .</span>
+<span class="k">RUN </span>yarn <span class="nb">install</span> <span class="nt">--production</span>
+<span class="k">CMD</span><span class="s"> ["node", "src/index.js"]</span>
+<span class="k">EXPOSE</span><span class="s"> 3000</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p><strong>Примечание</strong><br />Выберите инструкцию в примере <code class="language-plaintext highlighter-rouge">Dockerfile</code>, чтобы узнать больше об инструкции.</p>
+</blockquote>
+
+<p>3. Создайте образ контейнера, используя следующие команды:</p>
+
+<p>В терминале измените каталог на каталог <code class="language-plaintext highlighter-rouge">getting-started/app</code>. Замените <code class="language-plaintext highlighter-rouge">/path/to/app</code> на путь к вашему каталогу <code class="language-plaintext highlighter-rouge">getting-started/app</code>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> cd /path/to/app
+</code></pre></div></div>
+
+<p>Соберите образ контейнера.</p>
+
+<div class="language-docker highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker build -t getting-started .
+</code></pre></div></div>
+
+<p>Команда <code class="language-plaintext highlighter-rouge">docker build</code> использует <code class="language-plaintext highlighter-rouge">Dockerfile</code> для создания нового образа контейнера. Возможно, вы заметили, что <code class="language-plaintext highlighter-rouge">Docker</code> загрузил много “слоев”. Это связано с тем, что вы указали разработчику, что хотите начать с изображения <code class="language-plaintext highlighter-rouge">node:18-alpine</code>. Но, поскольку у вас этого не было на вашем компьютере, <code class="language-plaintext highlighter-rouge">Docker</code> необходимо было загрузить изображение.</p>
+
+<p>После того, как <code class="language-plaintext highlighter-rouge">Docker</code> загрузил изображение, инструкции из файла <code class="language-plaintext highlighter-rouge">Dockerfile</code> скопированы в ваше приложение и использованы <code class="language-plaintext highlighter-rouge">yarn</code> для установки зависимостей вашего приложения. Директива <code class="language-plaintext highlighter-rouge">CMD</code> определяет команду по умолчанию, которая выполняется при запуске контейнера из этого образа.</p>
+
+<p>Наконец, флаг <code class="language-plaintext highlighter-rouge">-t</code> определяет имя вашего изображения. Думайте об этом просто как о удобочитаемом названии конечного изображения. Поскольку вы назвали изображение <code class="language-plaintext highlighter-rouge">getting-started</code>, вы можете ссылаться на это изображение при запуске контейнера.</p>
+
+<p>Точка <code class="language-plaintext highlighter-rouge">.</code> в конце команды сборки сообщает <code class="language-plaintext highlighter-rouge">Docker</code>, что он должен искать файл <code class="language-plaintext highlighter-rouge">Dockerfile</code> в текущем каталоге.</p>
+
+<h2 id="запуск-контейнера-приложения">Запуск контейнера приложения</h2>
+
+<p>Теперь, когда у вас есть изображение, вы можете запустить приложение в контейнере. Для этого вы будете использовать команду <code class="language-plaintext highlighter-rouge">docker run</code>.</p>
+
+<p>1. Запустите свой контейнер с помощью команды <code class="language-plaintext highlighter-rouge">docker run</code> и укажите имя только что созданного изображения:</p>
+
+<div class="language-docker highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -dp 3000:3000 getting-started
+</code></pre></div></div>
+
+<p>Вы используете флаг <code class="language-plaintext highlighter-rouge">-d</code> для запуска нового контейнера в “отсоединенном” режиме (в фоновом режиме). Вы также используете флаг <code class="language-plaintext highlighter-rouge">-p</code> для создания сопоставления между портом <code class="language-plaintext highlighter-rouge">3000</code> хоста и портом <code class="language-plaintext highlighter-rouge">3000</code> контейнера. Без сопоставления портов вы не смогли бы получить доступ к приложению.</p>
+
+<p>2. Через несколько секунд откройте свой веб-браузер по адресу <code class="language-plaintext highlighter-rouge">http://localhost:3000</code> . Вы должны увидеть свое приложение.</p>
+
+<p><img src="/assets/images/docker02_2.jpg" alt="Fig2-2" /></p>
+
+<p>3. Идите вперёд и добавьте один или два элемента и убедитесь, что это работает так, как вы ожидаете. Вы можете пометить элементы как завершенные и удалить их. Ваш интерфейс успешно хранит элементы в бэкэнде.</p>
+
+<p>На этом этапе у вас должен быть запущенный менеджер списков задач с несколькими элементами, созданными вами.</p>
+
+<p>Если вы быстро взглянете на панель управления <code class="language-plaintext highlighter-rouge">Docker</code>, вы должны увидеть по крайней мере один запущенный контейнер, который использует образ <code class="language-plaintext highlighter-rouge">getting-started</code> и работает на порту <code class="language-plaintext highlighter-rouge">3000</code>.</p>
+
+<p><img src="/assets/images/docker02_3.jpg" alt="Fig2-3" /></p>
+
+<h2 id="следующие-шаги">Следующие шаги</h2>
+
+<p>В этом коротком разделе вы узнали основы создания файла <code class="language-plaintext highlighter-rouge">Dockerfile</code> для создания образа контейнера. Как только вы создали изображение, вы запустили контейнер и увидели запущенное приложение.</p>
+
+<p>Далее вы внесете изменения в свое приложение и узнаете, как обновить запущенное приложение новым изображением. По пути вы узнаете несколько других полезных команд.</p>
+
 <p><br /><br /><br /><br /><br /><br /><br /></p>
 <div class="row">
   <div class="col"><div align="left"><a href="/pages/skills/docker/1overview.html">&#8592; 1. Обзор</a></div>
   </div>
-<!--  <div class="col"><div align=right><a href="/pages/skills/docker/2containerize_app.html">2. Контейнеризация приложения &#8594;</a></div> 
- </div> -->
+  <div class="col"><div align="right"><a href="/pages/skills/docker/3updating.html">3. Доработка приложения &#8594;</a></div> 
+ </div> 
 </div>
 
    	</div>
