@@ -78,12 +78,94 @@
    	<div class="col-sm-12 my">
 		<h1 id="часть-4-поделиться-приложением">Часть 4. Поделиться приложением</h1>
 
+<p>Теперь, когда мы создали образ, давайте поделимся им! Чтобы поделиться изображениями Docker, вы должны использовать реестр Docker. Реестр по умолчанию – <code class="language-plaintext highlighter-rouge">Docker Hub</code>, и именно оттуда взяты все изображения, которые мы использовали.</p>
+
+<blockquote>
+  <p><strong>Docker ID</strong><br />Docker ID позволяет вам получить доступ к Docker Hub, который является крупнейшей в мире библиотекой и сообществом изображений контейнеров. Создайте <a href="https://hub.docker.com/">Docker ID</a> бесплатно, если у вас его нет.</p>
+</blockquote>
+
+<h2 id="создание-репозитория">Создание репозитория</h2>
+
+<p>Чтобы опубликовать изображеие, нужно сначала создать репозиторий в Docker Hub</p>
+
+<p>1. Зайдите в свой аккаунт на Docker Hub (или зарегистрируйтесь, если аккаунта ещё нет).</p>
+
+<p>2. Нажмите кнопку <strong>Create Repository</strong></p>
+
+<p>3. Для имени репозитория используйте <code class="language-plaintext highlighter-rouge">getting-started</code>. Убедитесь, что видимость установлена как <code class="language-plaintext highlighter-rouge">Public</code>.</p>
+
+<blockquote>
+  <p><strong>Private repositories</strong><br />Знаете ли вы, что Docker предлагает частные репозитории, которые позволяют вам ограничивать контент конкретными пользователями или командами? Ознакомьтесь с подробной информацией на странице <a href="https://www.docker.com/pricing/?utm_source=docker&amp;utm_medium=webreferral&amp;utm_campaign=docs_driven_upgrade">Docker pricing</a>.</p>
+</blockquote>
+
+<p>4. Нажмите кнопку <strong>Create</strong>!</p>
+
+<p>Если вы посмотрите на изображение ниже, можно увидеть пример команды Docker. Эта команда приведет к переходу к этому отчету.</p>
+
+<p><img src="/assets/images/docker04_1.jpg" alt="Fig4-1" /></p>
+
+<h2 id="опубликование-изображения">Опубликование изображения.</h2>
+
+<p>1. В командной строке попробуйте выполнить команду <code class="language-plaintext highlighter-rouge">push</code>, которую вы видите в Docker Hub. Обратите внимание, что ваша команда будет использовать ваше пространство имен, а не “docker”.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker push docker/getting-started
+ The push refers to repository [docker.io/docker/getting-started]
+ An image does not exist locally with the tag: docker/getting-started
+</code></pre></div></div>
+
+<p>Почему не получилось? Команда <code class="language-plaintext highlighter-rouge">push</code> искала изображение с именем <code class="language-plaintext highlighter-rouge">docker/getting-started</code>, но не нашла его. Если вы запустите <code class="language-plaintext highlighter-rouge">docker image ls</code>, вы тоже его не увидите.</p>
+
+<p>Чтобы это исправить, нам поставить метку на созданное изображение, чтобы дать ему другое имя.</p>
+
+<p>2. Войдите в Docker Hub, используя команду <code class="language-plaintext highlighter-rouge">docker login -u YOUR-USER-NAME</code>.</p>
+
+<p>3. Используйте команду <code class="language-plaintext highlighter-rouge">docker tag</code>, чтобы изображению <code class="language-plaintext highlighter-rouge">getting-started</code> новое имя. Обязательно замените <code class="language-plaintext highlighter-rouge">YOUR-USER-NAME</code> на ваш Docker ID.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker tag getting-started YOUR-USER-NAME/getting-started
+</code></pre></div></div>
+
+<p>Узнайте больше о команде <code class="language-plaintext highlighter-rouge">docker tag</code>.</p>
+
+<p>4. Теперь попробуйте свою команду <code class="language-plaintext highlighter-rouge">push</code> еще раз. Если вы копируете значение из Docker Hub, вы можете удалить часть <code class="language-plaintext highlighter-rouge">tagname</code>, так как мы не добавляли тег к имени изображения. Если вы не укажете тег, Docker будет использовать тег с именем <code class="language-plaintext highlighter-rouge">latest</code>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker push YOUR-USER-NAME/getting-started
+</code></pre></div></div>
+
+<h2 id="запуск-образа-на-новом-экземпляре">Запуск образа на новом экземпляре.</h2>
+
+<p>Теперь, когда наш образ создан и помещен в реестр, давайте попробуем запустить наше приложение на совершенно новом экземпляре, который никогда не видел этот образ контейнера! Для этого мы будем использовать Play with Docker.</p>
+
+<p>1. В браузере откройте <a href="https://labs.play-with-docker.com/">Play with Docker</a>.</p>
+
+<p>2. Нажмите <strong>Login</strong>, а затем из выпадающего списка выберите <strong>docker</strong>.</p>
+
+<p>3. Подключитесь к своей учетной записи <strong>Docker Hub</strong>.</p>
+
+<p>4. Как только вы войдете в систему, нажмите на опцию <strong>ADD NEW INSTANCE</strong> на левой боковой панели. Если вы этого не видите, сделайте свой браузер немного шире. Через несколько секунд в вашем браузере откроется окно терминала.</p>
+
+<p><img src="/assets/images/docker04_2.jpg" alt="Fig4-2" /></p>
+
+<p>5. В терминале запустите только что опубликованное приложение.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -dp 3000:3000 YOUR-USER-NAME/getting-started
+</code></pre></div></div>
+
+<p>Вы должны увидеть, как изображение скачивается и в конечном итоге запускается!</p>
+
+<p>6. Нажмите на значок 3000, когда он появится, и вы увидите приложение с вашими изменениями! Ура! Если значок 3000 не отображается, вы можете нажать на кнопку <strong>Open Port</strong> и ввести 3000.</p>
+
+<h2 id="следующие-шаги">Следующие шаги</h2>
+
+<p>В этом разделе вы узнали, как поделиться своими изображениями, поместив их в реестр. Затем вы перешли к совершенно новому экземпляру и смогли запустить только что загруженный образ. Это довольно распространено в конвейерах CI, где конвейер создает образ и помещает его в реестр, а затем производственная среда может использовать последнюю версию образа.</p>
+
+<p>Теперь вы можете вернуться к тому, что вы заметили в конце предыдущего раздела. Напоминаю, вы заметили, что при перезапуске приложения вы потеряли все элементы списка дел. Очевидно, что это не очень удобно для пользователя, поэтому далее вы узнаете, как можно сохранять данные при перезапусках!</p>
+
 <p><br /><br /><br /><br /><br /><br /><br /></p>
 <div class="row">
   <div class="col"><div align="left"><a href="/pages/skills/docker/3updating.html">&#8592; 3. Изменить приложение</a></div>
   </div>
-<!--  <div class="col"><div align=right><a href="/pages/skills/docker/2containerize_app.html">2. Контейнеризация приложения &#8594;</a></div> 
- </div> -->
+  <div class="col"><div align="right"><a href="/pages/skills/docker/5persisting.html">5. Сохранить БД &#8594;</a></div> 
+ </div> 
 </div>
 
    	</div>
