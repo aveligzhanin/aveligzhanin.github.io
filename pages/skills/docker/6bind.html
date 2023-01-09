@@ -1,0 +1,274 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Использовать соединительные привязки</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Our style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/avel.css">
+</head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+  <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse menu">
+			<ul class="nav navbar-nav navbar-right">
+                 
+                    <li>
+                       <a href="/index.html#about">Обо мне</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#education">Образование</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#work">Работа</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#skills">Навыки</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#portfolio">Портфолио</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#hobby">Увлечения</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#contact">Контакты</a>
+                    </li>
+                 
+        	</ul>
+        </div>
+      </div>
+  </div>
+</nav>
+
+    <section class="pfblock"><div class="container">  		<!-- Translations -->
+	<div class="col-xs-6" align=left>
+		<a href="/index.html">home</a> \ <a href="/index.html#skills">Навыки</a>
+	</div>
+
+	<div class="col-xs-6" align=right>
+		Написано: 08.01.2023
+	</div>
+
+   	<div class="col-sm-12 my">
+		<h1 id="часть-6-использовать-соединительные-привязки">Часть 6. Использовать соединительные привязки</h1>
+
+<p>В предыдущей главе мы говорили о монтировании тома и использовали его для сохранения данных в нашей базе данных. Подключение тома – отличный выбор, когда вам нужно постоянное место для хранения данных вашего приложения.</p>
+
+<p>Соединительная привязка – это еще один тип монтирования, который позволяет вам совместно использовать каталог из файловой системы хоста в контейнере. При работе над приложением вы можете использовать привязку для монтирования исходного кода в контейнер. Контейнер видит изменения, которые вы вносите в код, сразу же, как только вы сохраняете файл. Это означает, что вы можете запускать процессы в контейнере, которые отслеживают изменения файловой системы и реагируют на них.</p>
+
+<p>В этой главе мы увидим, как мы можем использовать соединительную привязку и инструмент под названием <code class="language-plaintext highlighter-rouge">nodemon</code> для отслеживания изменений файлов, а затем автоматически перезапустить приложение. В большинстве других языков и фреймворков существуют эквивалентные инструменты.</p>
+
+<h2 id="оперативное-сопоставление-типов-монтирования">Оперативное сопоставление типов монтирования</h2>
+
+<p>В следующей таблице приведены основные различия между монтированием тома и монтированием привязки.</p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th> </th>
+      <th>Именованные тома</th>
+      <th>Соединительные привязки</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Местоположение хоста</td>
+      <td>Выбор докер</td>
+      <td>ваш выбор</td>
+    </tr>
+    <tr>
+      <td>Пример монтирования (<code class="language-plaintext highlighter-rouge">--mount</code>)</td>
+      <td><code class="language-plaintext highlighter-rouge">type=volume,src=my-volume,target=/usr/local/data</code></td>
+      <td><code class="language-plaintext highlighter-rouge">type=bind,src=/path/to/data,target=/usr/local/data</code></td>
+    </tr>
+    <tr>
+      <td>Заполняет новый том содержимым контейнера</td>
+      <td>Да</td>
+      <td>Нет</td>
+    </tr>
+    <tr>
+      <td>Поддерживает драйверы тома</td>
+      <td>Да</td>
+      <td>Нет</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="пробуем-соединительную-привязку">Пробуем соединительную привязку</h2>
+
+<p>Прежде чем рассмотреть, как мы можем использовать привязки для разработки нашего приложения, давайте проведем небольшой эксперимент, чтобы получить практическое представление о том, как работают привязки.</p>
+
+<p>Если вы выполняете эти действия в Windows, убедитесь, что используете <code class="language-plaintext highlighter-rouge">PowerShell</code>, а не командную строку (<code class="language-plaintext highlighter-rouge">cmd</code>).</p>
+
+<p>1. Откройте терминал и убедитесь, что ваш текущий рабочий каталог соответствует каталогу <code class="language-plaintext highlighter-rouge">app</code>, где находится репозиторий приложения getting-started.</p>
+
+<p>2. Выполните следующую команду, чтобы запустить <code class="language-plaintext highlighter-rouge">bash</code> в контейнере <code class="language-plaintext highlighter-rouge">ubuntu</code> с подключением <code class="language-plaintext highlighter-rouge">bind</code>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -it --mount type=bind,src="$(pwd)",target=/src ubuntu bash
+</code></pre></div></div>
+
+<p>Параметр <code class="language-plaintext highlighter-rouge">--mount</code> указывает Docker создать привязку для монтирования, где <code class="language-plaintext highlighter-rouge">src</code> – это текущий рабочий каталог на вашем хост-компьютере (<code class="language-plaintext highlighter-rouge">getting-started/app</code>), а <code class="language-plaintext highlighter-rouge">target</code> – это место, где этот каталог должен появиться внутри контейнера (<code class="language-plaintext highlighter-rouge">/src</code>).</p>
+
+<p>3. После выполнения команды Docker запускает интерактивный сеанс <code class="language-plaintext highlighter-rouge">bash</code> в корневом каталоге файловой системы контейнера.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@ac1237fad8db:/# pwd
+/
+root@ac1237fad8db:/# ls
+bin   dev  home  media  opt   root  sbin  srv  tmp  var
+boot  etc  lib   mnt    proc  run   src   sys  usr
+</code></pre></div></div>
+
+<p>4. Теперь совершим изменения в каталоге <code class="language-plaintext highlighter-rouge">src</code>.</p>
+
+<p>Это каталог, который вы смонтировали при запуске контейнера. В списке содержимого этого каталога отображаются те же файлы, что и в каталоге <code class="language-plaintext highlighter-rouge">getting-started/app</code> на вашем хост-компьютере.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@ac1237fad8db:/# cd src
+root@ac1237fad8db:/src# ls
+Dockerfile  node_modules  package.json  spec  src  yarn.lock
+</code></pre></div></div>
+
+<p>5. Создайте новый файл с именем <code class="language-plaintext highlighter-rouge">myfile.txt</code></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@ac1237fad8db:/src# touch myfile.txt
+root@ac1237fad8db:/src# ls
+Dockerfile  myfile.txt  node_modules  package.json  spec  src  yarn.lock
+</code></pre></div></div>
+
+<p>6. Теперь, если вы откроете этот каталог на хосте, вы увидите, что в каталоге появился файл <code class="language-plaintext highlighter-rouge">myfile.txt</code>.</p>
+
+<p><img src="/assets/images/docker06_1.jpg" alt="Fig6-1" /></p>
+
+<p>7. Удалите файл <code class="language-plaintext highlighter-rouge">myfile.txt</code> на хосте.</p>
+
+<p>8. В контейнере еще раз пересмотрите содержимое каталога <code class="language-plaintext highlighter-rouge">src</code>. Вы увидите, что файл теперь исчез.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@ac1237fad8db:/src# ls
+Dockerfile  node_modules  package.json  spec  src  yarn.lock
+</code></pre></div></div>
+
+<p>9. Остановите интерактивный сеанс контейнера с помощью <code class="language-plaintext highlighter-rouge">Ctrl + D</code>.</p>
+
+<p>Мы кратко познакомились с тем, как монтируются привязки. Эта процедура продемонстрировала, как файлы совместно используются между хостом и контейнером и как изменения немедленно отражаются на обеих сторонах. Теперь давайте посмотрим, как мы можем использовать соединительную привязку для разработки программного обеспечения.</p>
+
+<h2 id="запуск-вашего-приложения-в-контейере-разработки">Запуск вашего приложения в контейере разработки.</h2>
+
+<p>Следующие шаги описывают, как запустить контейнер разработки с подключением привязки, который выполняет следующее:</p>
+
+<ul>
+  <li>Монтирует наш исходный код в контейнер</li>
+  <li>Устанавливает все зависимости</li>
+  <li>Запускает <code class="language-plaintext highlighter-rouge">nodemon</code> для просмотра изменений в файловой системе</li>
+</ul>
+
+<p>Итак, приступим!</p>
+
+<p>1. Убедитесь, что в данный момент у вас нет запущенных контейнеров для приложения <code class="language-plaintext highlighter-rouge">getting-started</code>.</p>
+
+<p>2. Запустите следующую команду из каталога <code class="language-plaintext highlighter-rouge">getting-started/app</code>.</p>
+
+<p>Если у вас Windows, используйте следующую команду в PowerShell.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -dp 3000:3000 `
+    -w /app --mount type=bind,src="$(pwd)",target=/app `
+    node:18-alpine `
+    sh -c "yarn install &amp;&amp; yarn run dev"
+</code></pre></div></div>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">-dp 3000:3000</code> – то же, что и раньше. Запуск в автономном (фоновом) режиме и сопостовление портов</li>
+  <li><code class="language-plaintext highlighter-rouge">-w /app</code> – установка “рабочего каталога” или текущего каталога, откуда будет производиться запуск команды <code class="language-plaintext highlighter-rouge">run</code></li>
+  <li><code class="language-plaintext highlighter-rouge">--mount type=bind,src="$(pwd)",target=/app</code> – монтирование привязки между текущим каталогом хоста и каталогом <code class="language-plaintext highlighter-rouge">/app</code> в контейнере</li>
+  <li><code class="language-plaintext highlighter-rouge">node:18-alpine</code> – изображение для использования. Обратите внимание, что это базовое изображение для нашего приложения из файла <code class="language-plaintext highlighter-rouge">Dockerfile</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">sh -c "yarn install &amp;&amp; yarn run dev"</code> – команда. Мы запускаем оболочку, используя <code class="language-plaintext highlighter-rouge">sh</code> (в alpine нет <code class="language-plaintext highlighter-rouge">bash</code>), и запускаем <code class="language-plaintext highlighter-rouge">yarn install</code> для установки пакетов, а затем запускаем <code class="language-plaintext highlighter-rouge">yarn run dev</code> для запуска сервера разработки. Если мы заглянем в <code class="language-plaintext highlighter-rouge">package.json</code>, мы увидим, что скрипт <code class="language-plaintext highlighter-rouge">dev</code> запускает <code class="language-plaintext highlighter-rouge">nodemon</code>.</li>
+</ul>
+
+<p>3. Вы можете просматривать журналы с помощью <code class="language-plaintext highlighter-rouge">docker logs</code>. Вы поймете, что готовы двигаться дальше, когда увидите это:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker logs -f &lt;container-id&gt;
+nodemon src/index.js
+[nodemon] 2.0.20
+[nodemon] to restart at any time, enter `rs`
+[nodemon] watching dir(s): *.*
+[nodemon] starting `node src/index.js`
+Using sqlite database at /etc/todos/todo.db
+Listening on port 3000
+</code></pre></div></div>
+
+<p>Когда закончите просмотр журналов, выйдите, нажав <code class="language-plaintext highlighter-rouge">Ctrl+C</code>.</p>
+
+<p>4. Теперь внесите изменения в приложение. В файле <code class="language-plaintext highlighter-rouge">src/static/js/app.js</code> в строке 109 измените кнопку “Add item”, написав просто “Add”:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- {submitting ? 'Adding...' : 'Add Item'}
++ {submitting ? 'Adding...' : 'Add'}
+</code></pre></div></div>
+
+<p>Сохраните файл.</p>
+
+<p>5. Обновите страницу в своем веб-браузере, и вы должны увидеть отражение изменений почти сразу. Для перезапуска сервера узла может потребоваться несколько секунд. Если вы получите сообщение об ошибке, попробуйте обновить через несколько секунд.</p>
+
+<p><img src="/assets/images/docker06_2.jpg" alt="Fig6-2" /></p>
+
+<p>6. Не стесняйтесь вносить любые другие изменения, которые вы хотели бы внести. Каждый раз, когда вы вносите изменения и сохраняете файл, процесс nodemon автоматически перезапускает приложение внутри контейнера. Когда вы закончите, остановите контейнер и создайте свое новое изображение, используя:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> docker build -t getting-started .
+</code></pre></div></div>
+
+<p>Использование монтирования привязкой обычно для локальной среды разработки. Преимущество заключается в том, что на машине разработки не обязательно устанавливать все инструменты сборки и среды. С помощью одной команды <code class="language-plaintext highlighter-rouge">docker run</code> зависимости и инструменты извлекаются и готовы к работе. Мы поговорим о <code class="language-plaintext highlighter-rouge">Docker Compose</code> на следующем шаге, так как это поможет упростить наши команды (мы уже получаем много флагов).</p>
+
+<p>В дополнение к монтированию томов и привязке, Docker также поддерживает другие типы монтирования и драйверы хранилища для обработки более сложных и специализированных вариантов использования. Чтобы узнать больше о расширенных концепциях хранения, см. раздел <a href="https://docs.docker.com/storage/">Управление данными в Docker</a>.</p>
+
+<h2 id="следующие-шаги">Следующие шаги</h2>
+
+<p>На этом этапе вы можете сохранить свою базу данных и быстро реагировать на потребности ваших инвесторов и учредителей. Ура! Но, знаешь что? Вы получили отличные новости! Ваш проект был выбран для дальнейшего развития!</p>
+
+<p>Чтобы подготовиться к работе, вам необходимо перенести вашу базу данных с работы в SQLite на что-то, что может масштабироваться немного лучше. Для простоты вы будете использовать реляционную базу данных и переключите свое приложение на использование MySQL. Но как вы должны запускать MySQL? Как вы позволяете контейнерам общаться друг с другом? Вы узнаете об этом дальше!</p>
+
+<p><br /><br /><br /><br /><br /><br /><br /></p>
+<div class="row">
+  <div class="col"><div align="left"><a href="/pages/skills/docker/5persisting.html">&#8592; 5. Сохранить БД</a></div>
+  </div>
+  <div class="col"><div align="right"><a href="/pages/skills/docker/7multi.html">7. Мульти-контейнерные приложения &#8594;</a></div> 
+ </div> 
+</div>
+
+   	</div>
+</div></section>
+
+    <footer class="footer hexlet-footer py-5 mt-5 text-muted">
+  <div class="container">
+    <div class="row mt-1">
+      <div class="col-12 text-center">
+        <a href="https://aveligzhanin.github.io/">Велигжанин Андрей</a> — Программист-разработчик C++ и Oracle.
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>
