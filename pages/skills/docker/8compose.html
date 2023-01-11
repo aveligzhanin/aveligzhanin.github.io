@@ -72,18 +72,263 @@
 	</div>
 
 	<div class="col-xs-6" align=right>
-		Написано: 09.01.2023
+		Написано: 11.01.2023
 	</div>
 
    	<div class="col-sm-12 my">
 		<h1 id="часть-8-применение-docker-compose">Часть 8. Применение Docker Compose</h1>
 
+<p><a href="https://docs.docker.com/compose/">Docker Compose</a> – это инструмент, который был разработан, чтобы помочь определять многоконтейнерные приложения и совместно использовать их. С помощью Compose мы можем создать файл YAML для определения сервисов и с помощью одной команды развернуть все вверх или вниз.</p>
+
+<p><em>Большое</em> преимущество использования Compose заключается в том, что можно определить свой стек приложений в файле, сохранить его в корневом каталоге вашего проекта (теперь он контролируется версиями) и легко разрешить кому-либо другому вносить свой вклад в проект. Кому-то нужно будет только клонировать ваше репозиторий и запустить приложение compose. На самом деле, вы можете увидеть довольно много проектов на GitHub/GitLab, которые сейчас делают именно это.</p>
+
+<p>Итак, с чего мы начнем?</p>
+
+<h2 id="установка-docker-compose">Установка Docker Compose</h2>
+
+<p>Если вы установили Docker Desktop/Toolbox для Windows или Mac, у вас уже есть Docker Compose! В экземплярах Play-with-Docker также уже установлен Docker Compose. Если вы находитесь на компьютере с Linux, вам нужно будет <a href="https://docs.docker.com/compose/install/">установить Docker Compose</a>.</p>
+
+<p>После установки вы должны иметь возможность запустить следующее и просмотреть информацию о версии.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker compose version
+</code></pre></div></div>
+
+<h2 id="создание-файла-compose">Создание файла Compose</h2>
+
+<p>1. В корне проекта приложения создайте файл с именем docker-compose.yml.</p>
+
+<p>2. В файле compose мы начнем с определения списка служб (или контейнеров), которые мы хотим запустить как часть нашего приложения.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>services:
+</code></pre></div></div>
+
+<p>А теперь мы начнем переносить службу по очереди в файл compose.</p>
+
+<h2 id="определение-app-службы">Определение app-службы</h2>
+
+<p>Вспомним, что команда, которую мы использовали для определения нашего контейнера приложения, была такой.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -dp 3000:3000 \
+  -w /app -v "$(pwd):/app" \
+  --network todo-app \
+  -e MYSQL_HOST=mysql \
+  -e MYSQL_USER=root \
+  -e MYSQL_PASSWORD=secret \
+  -e MYSQL_DB=todos \
+  node:18-alpine \
+  sh -c "yarn install &amp;&amp; yarn run dev"
+</code></pre></div></div>
+
+<p>1. Во-первых, давайте определим службу и изображение для контейнера. Мы можем выбрать любое название для сервиса. Имя автоматически станет сетевым псевдонимом, который будет полезен при определении нашего сервиса MySQL.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>services:
+  app:
+    image: node:18-alpine
+</code></pre></div></div>
+
+<p>2. Как правило, вы увидите <code class="language-plaintext highlighter-rouge">command</code> рядом с определением <code class="language-plaintext highlighter-rouge">image</code>, хотя никаких требований к порядку нет. Итак, давайте продолжим и перенесем это в наш файл.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>services:
+  app:
+    image: node:18-alpine
+    command: sh -c "yarn install &amp;&amp; yarn run dev"
+</code></pre></div></div>
+
+<p>3. Давайте перенесем часть команды <code class="language-plaintext highlighter-rouge">-p 3000:3000</code>, определив порты для службы. Здесь мы будем использовать краткий синтаксис, но доступен и более подробный.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>services:
+  app:
+    image: node:18-alpine
+    command: sh -c "yarn install &amp;&amp; yarn run dev"
+    ports:
+      - 3000:3000
+</code></pre></div></div>
+
+<p>4. Далее мы перенесем как рабочий каталог (<code class="language-plaintext highlighter-rouge">-w /app</code>), так и сопоставление томов (<code class="language-plaintext highlighter-rouge">-v "$(pwd):/app"</code>), используя определения <code class="language-plaintext highlighter-rouge">working_dir</code> и <code class="language-plaintext highlighter-rouge">volumes</code>. Тома также имеют короткий и длинный синтаксис.</p>
+
+<p>Одним из преимуществ определений томов Docker Compose является то, что мы можем использовать относительные пути из текущего каталога.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>services:
+  app:
+    image: node:18-alpine
+    command: sh -c "yarn install &amp;&amp; yarn run dev"
+    ports:
+      - 3000:3000
+    working_dir: /app
+    volumes:
+      - ./:/app
+</code></pre></div></div>
+
+<p>5. Наконец, нам нужно перенести определения переменных среды, используя ключ <code class="language-plaintext highlighter-rouge">environment</code>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>services:
+  app:
+    image: node:18-alpine
+    command: sh -c "yarn install &amp;&amp; yarn run dev"
+    ports:
+      - 3000:3000
+    working_dir: /app
+    volumes:
+      - ./:/app
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: root
+      MYSQL_PASSWORD: secret
+      MYSQL_DB: todos
+</code></pre></div></div>
+
+<h2 id="определение-сервиса-для-mysql">Определение сервиса для MySQL</h2>
+
+<p>Теперь пришло время определить службу MySQL. Команда, которую мы использовали для этого контейнера, была следующей:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -d \
+  --network todo-app --network-alias mysql \
+  -v todo-mysql-data:/var/lib/mysql \
+  -e MYSQL_ROOT_PASSWORD=secret \
+  -e MYSQL_DATABASE=todos \
+  mysql:8.0
+</code></pre></div></div>
+
+<p>1. Сначала мы определим новую службу и назовем ее mysql, чтобы она автоматически получала сетевой псевдоним. Мы пойдем дальше и также укажем изображение для использования.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>services:
+  app:
+    # The app service definition
+  mysql:
+    image: mysql:8.0
+</code></pre></div></div>
+
+<p>2. Далее мы определим сопоставление томов. Когда мы запустили контейнер с помощью <code class="language-plaintext highlighter-rouge">docker run</code>, именованный том был создан автоматически. Однако этого не происходит при запуске с помощью Compose. Нам нужно определить том в разделе тома верхнего уровня:, а затем указать точку монтирования в конфигурации службы. При простом указании только имени тома используются параметры по умолчанию. Однако есть еще много доступных вариантов.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>services:
+  app:
+    # The app service definition
+  mysql:
+    image: mysql:8.0
+    volumes:
+      - todo-mysql-data:/var/lib/mysql
+
+volumes:
+  todo-mysql-data:
+</code></pre></div></div>
+
+<p>3. Наконец, нам нужно только указать переменные среды</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>services:
+  app:
+    # The app service definition
+  mysql:
+    image: mysql:8.0
+    volumes:
+      - todo-mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: todos
+
+volumes:
+  todo-mysql-data:
+</code></pre></div></div>
+
+<p>На этом этапе наш полный <code class="language-plaintext highlighter-rouge">docker-compose.yml</code> должен выглядеть следующим образом:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>services:
+  app:
+    image: node:18-alpine
+    command: sh -c "yarn install &amp;&amp; yarn run dev"
+    ports:
+      - 3000:3000
+    working_dir: /app
+    volumes:
+      - ./:/app
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: root
+      MYSQL_PASSWORD: secret
+      MYSQL_DB: todos
+
+  mysql:
+    image: mysql:8.0
+    volumes:
+      - todo-mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: todos
+
+volumes:
+  todo-mysql-data:
+</code></pre></div></div>
+
+<h2 id="запуск-нескольких-приложений">Запуск нескольких приложений</h2>
+
+<p>Теперь, когда у нас есть наш файл <code class="language-plaintext highlighter-rouge">docker-compose.yml</code>, можем его запустить!</p>
+
+<p>1. Убедитесь, что никакие другие копии приложения / базы данных первоначально не запущены (<code class="language-plaintext highlighter-rouge">docker ps</code> и <code class="language-plaintext highlighter-rouge">docker rm -f &lt;ids&gt;</code>).</p>
+
+<p>2. Запустите стек приложений с помощью команды <code class="language-plaintext highlighter-rouge">docker compose up</code>. Мы добавим флаг <code class="language-plaintext highlighter-rouge">-d</code>, чтобы запускать все в фоновом режиме.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker compose up -d
+</code></pre></div></div>
+
+<p>Когда мы запустим это, мы должны увидеть вывод, наподобие этого:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Creating network "app_default" with the default driver
+Creating volume "app_todo-mysql-data" with default driver
+Creating app_app_1   ... done
+Creating app_mysql_1 ... done
+</code></pre></div></div>
+
+<p>Вы заметите, что том был создан так же, как и сеть! По умолчанию Docker Compose автоматически создает сеть специально для стека приложений (именно поэтому мы не определили ее в файле compose).</p>
+
+<p>3. Давайте посмотрим на журналы с помощью команды <code class="language-plaintext highlighter-rouge">docker compose logs -f</code>. Вы увидите журналы из каждой службы, чередующиеся в один поток. Это невероятно полезно, когда вы хотите следить за проблемами, связанными со временем. Флаг <code class="language-plaintext highlighter-rouge">-f</code> “следует” за журналом, поэтому выдаст вам вывод в реальном времени по мере его создания.</p>
+
+<p>Если вы уже выполнили команду, вы увидите вывод, который выглядит следующим образом:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql_1  | 2019-10-03T03:07:16.083639Z 0 [Note] mysqld: ready for connections.
+ mysql_1  | Version: '8.0.31'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server (GPL)
+ app_1    | Connected to mysql db at host mysql
+ app_1    | Listening on port 3000
+</code></pre></div></div>
+
+<p>Название службы отображается в начале строки (часто цветное), чтобы помочь различать сообщения. Если вы хотите просмотреть журналы для определенной службы, вы можете добавить название службы в конец команды logs (например, <code class="language-plaintext highlighter-rouge">docker compose logs -f app</code>).</p>
+
+<blockquote>
+  <p><strong>Совет: Ожидание базы данных перед запуском приложения</strong><br />Когда приложение запускается, оно фактически сидит и ждет, пока MySQL будет запущен и готов, прежде чем пытаться подключиться к нему. Docker не имеет встроенной поддержки для ожидания полной загрузки, запуска и готовности другого контейнера перед запуском другого контейнера. Для проектов, основанных на Node.js, вы можете использовать зависимость <a href="https://github.com/dwmkerr/wait-port">wait-port</a>. Аналогичные проекты существуют для других языков /фреймворков.</p>
+</blockquote>
+
+<p>4. На этом этапе вы должны иметь возможность открыть свое приложение и увидеть, что оно запущено. И эй! Всё сводится к одной команде!</p>
+
+<h2 id="просмотр-стека-приложений-в-docker-dashboard">Просмотр стека приложений в Docker Dashboard</h2>
+
+<p>Если мы посмотрим на панель управления Docker, то увидим, что там есть группа с именем <code class="language-plaintext highlighter-rouge">app</code>. Это “название проекта” из Docker Compose, которое используется для группировки контейнеров вместе. По умолчанию имя проекта – это просто имя каталога, в котором находился <code class="language-plaintext highlighter-rouge">docker-compose.yml</code>.</p>
+
+<p><img src="/assets/images/docker08_1.jpg" alt="Fig8-1" /></p>
+
+<p>Если вы прокрутите приложение вниз, вы увидите два контейнера, которые мы определили в файле compose. Имена также немного более описательны, поскольку они следуют шаблону <code class="language-plaintext highlighter-rouge">&lt;имя службы&gt;-&lt;номер реплики&gt;</code>. Таким образом, очень легко быстро увидеть, какой контейнер является нашим приложением, а какой – базой данных mysql.</p>
+
+<p><img src="/assets/images/docker08_2.jpg" alt="Fig8-2" /></p>
+
+<h2 id="разрушение-всех-приложений">Разрушение всех приложений</h2>
+
+<p>Когда вы будете готовы удалить все это, просто запустите <code class="language-plaintext highlighter-rouge">docker compose down</code> или нажмите на корзину на панели инструментов Docker для всего приложения. Контейнеры остановятся, и сеть будет удалена.</p>
+
+<blockquote>
+  <p><strong>Предупреждение</strong><br />Удаление томов<br />По умолчанию именованные тома в вашем файле compose не удаляются при запуске <code class="language-plaintext highlighter-rouge">docker compose down</code>. Если вы хотите удалить тома, вам нужно будет добавить флаг <code class="language-plaintext highlighter-rouge">--volumes</code>.<br />Панель управления Docker не удаляет тома при удалении стека приложений.</p>
+</blockquote>
+
+<p>После завершения работы вы можете переключиться на другой проект, запустить docker compose up и быть готовым внести свой вклад в этот проект! На самом деле, немногое может быть проще этого!</p>
+
+<h2 id="следующие-шаги">Следующие шаги</h2>
+
+<p>В этом разделе вы узнали о Docker Compose и о том, как он помогает вам значительно упростить определение мультисервисных приложений и совместное использование ими. Вы создали файл Compose, переведя команды, которые вы использовали, в соответствующий формат compose.</p>
+
+<p>На этом этапе начинается завершение учебного пособия. Тем не менее, есть несколько рекомендаций по созданию изображений, которые вы должны рассмотреть, поскольку существует большая проблема с файлом Dockerfile, который вы использовали.</p>
+
 <p><br /><br /><br /><br /><br /><br /><br /></p>
 <div class="row">
   <div class="col"><div align="left"><a href="/pages/skills/docker/7multi.html">&#8592; 7. Мульти-контейнерные приложения</a></div>
   </div>
-<!--  <div class="col"><div align=right><a href="/pages/skills/docker/2containerize_app.html">2. Контейнеризация приложения &#8594;</a></div> 
- </div> -->
+  <div class="col"><div align="right"><a href="/pages/skills/docker/9best.html">9. Лучшие практики построения образов &#8594;</a></div> 
+ </div> 
 </div>
 
    	</div>
