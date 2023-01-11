@@ -78,12 +78,222 @@
    	<div class="col-sm-12 my">
 		<h1 id="часть-7-мульти-контейнерные-приложения">Часть 7. Мульти-контейнерные приложения</h1>
 
+<p>До этого момента мы работали с приложениями с одним контейнером. Но теперь мы хотим добавить MySQL в стек приложений. Часто возникает следующий вопрос - “Где будет работать MySQL? Установите его в тот же контейнер или запустите отдельно?” В общем, <strong>каждый контейнер должен делать что-то одно, и делать это хорошо</strong>.</p>
+
+<p>Причин несколько:</p>
+
+<ul>
+  <li>
+    <p>Есть большая вероятность, что придется масштабировать API и интерфейсы иначе, чем базы данных</p>
+  </li>
+  <li>
+    <p>Отдельные контейнеры позволяют вам создавать версии и обновлять версии изолированною</p>
+  </li>
+  <li>
+    <p>Хотя вы можете использовать контейнер для базы данных локально, вы можете захотеть использовать управляемую службу для базы данных в рабочей среде. Тогда вы не захотите отправлять свой движок базы данных вместе с вашим приложением.</p>
+  </li>
+  <li>
+    <p>Для запуска нескольких процессов потребуется диспетчер процессов (контейнер запускает только один процесс), что усложняет запуск / завершение работы контейнера</p>
+  </li>
+</ul>
+
+<p>И есть еще много причин. Итак, мы обновим наше приложение, чтобы оно работало следующим образом:</p>
+
+<p><img src="/assets/images/docker07_1.jpg" alt="Fig7-1" /></p>
+
+<h2 id="сеть-контейнера">Сеть контейнера</h2>
+
+<p>Помните, что контейнеры по умолчанию выполняются изолированно и ничего не знают о других процессах или контейнерах на том же компьютере. Итак, как мы можем позволить одному контейнеру общаться с другим? Ответ заключается <strong>в создании сетей</strong>. Теперь вам не обязательно быть сетевым инженером (ура!). Просто запомните это правило…</p>
+
+<blockquote>
+  <p><strong>Обратите внимание</strong><br />Если два контейнера находятся в одной сети, они могут взаимодействовать друг с другом. Если не находятся в сети, то не могут.</p>
+</blockquote>
+
+<h2 id="запуск-mysql">Запуск MySQL</h2>
+
+<p>Есть два способа поместить контейнер в сеть: 
+	1) Назначить его при запуске или 
+	2) подключить существующий контейнер.</p>
+
+<p>На данный момент мы сначала создадим сеть и подключим контейнер MySQL при запуске.</p>
+
+<p>1. Создайте сеть.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker network create todo-app
+</code></pre></div></div>
+
+<p>2. Запустите контейнер MySQL и подключите его к сети. Мы также собираемся определить несколько переменных среды, которые база данных будет использовать для инициализации базы данных (см. раздел “Переменные среды” в списке <a href="https://hub.docker.com/_/mysql/">MySQL Docker Hub</a>).</p>
+
+<p>Если вы используете Windows, примените такую команду в PowerShell.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -d `
+     --network todo-app --network-alias mysql `
+     -v todo-mysql-data:/var/lib/mysql `
+     -e MYSQL_ROOT_PASSWORD=secret `
+     -e MYSQL_DATABASE=todos `
+     mysql:8.0
+</code></pre></div></div>
+
+<p>Вы также увидите, что мы указали флаг <code class="language-plaintext highlighter-rouge">--network-alias</code>. Мы вернемся к этому довольно скоро.</p>
+
+<blockquote>
+  <p><strong>Совет</strong><br />Вы заметите, что здесь мы используем том с именем <code class="language-plaintext highlighter-rouge">todo-mysql-data</code> и монтируем его в <code class="language-plaintext highlighter-rouge">/var/lib/mysql</code>, где MySQL хранит свои данные. Однако мы никогда не запускали команду <code class="language-plaintext highlighter-rouge">docker volume create</code>. Docker распознает, что мы хотим использовать именованный том, и автоматически создает его для нас.</p>
+</blockquote>
+
+<p>3. Для подтверждения того, что база данных запущена, подключитесь к ней и убедитесь в этом.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker exec -it &lt;mysql-container-id&gt; mysql -u root -p
+</code></pre></div></div>
+
+<p>Когда появится запрос на ввод пароля, введите <strong>secret</strong>. В командной строке MySQL перечислите базы данных и убедитесь, что вы видите базу данных <code class="language-plaintext highlighter-rouge">todos</code>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; SHOW DATABASES;
+</code></pre></div></div>
+
+<p>Вы должны увидеть вывод, который выглядит следующим образом:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>+--------------------+
+ | Database           |
+ +--------------------+
+ | information_schema |
+ | mysql              |
+ | performance_schema |
+ | sys                |
+ | todos              |
+ +--------------------+
+ 5 rows in set (0.00 sec)
+</code></pre></div></div>
+
+<p>Выйдите из командной строки MySQL, чтобы вернуться к командной строке на нашем компьютере.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; exit
+</code></pre></div></div>
+
+<p>Ура! У нас есть наша база данных <code class="language-plaintext highlighter-rouge">todos</code>, и она готова к использованию!</p>
+
+<h2 id="подключение-к-mysql">Подключение к MySQL</h2>
+
+<p>Теперь, когда мы знаем, что MySQL запущен, давайте его использовать! Но вопрос в том… как? Если мы запустим другой контейнер в той же сети, как мы найдем контейнер (помните, что у каждого контейнера есть свой собственный IP-адрес)?</p>
+
+<p>Чтобы разобраться в этом, мы собираемся использовать контейнер <code class="language-plaintext highlighter-rouge">nicolaka/netshoot</code>, который поставляется с множеством инструментов, полезных для устранения неполадок или отладки сетевых проблем.</p>
+
+<p>1. Запустите новый контейнер, используя изображение <code class="language-plaintext highlighter-rouge">nicolaka/netshoot</code>. Убедитесь, что вы подключили его к той же сети.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -it --network todo-app nicolaka/netshoot
+</code></pre></div></div>
+
+<p>2. Внутри контейнера мы собираемся использовать команду <code class="language-plaintext highlighter-rouge">dig</code>, которая является полезным инструментом <code class="language-plaintext highlighter-rouge">DNS</code>. Мы собираемся найти IP-адрес для имени хоста <code class="language-plaintext highlighter-rouge">mysql</code>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dig mysql
+</code></pre></div></div>
+
+<p>И вы получите результат, подобный этому…</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>; &lt;&lt;&gt;&gt; DiG 9.18.8 &lt;&lt;&gt;&gt; mysql
+ ;; global options: +cmd
+ ;; Got answer:
+ ;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 32162
+ ;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0
+
+ ;; QUESTION SECTION:
+ ;mysql.				IN	A
+
+ ;; ANSWER SECTION:
+ mysql.			600	IN	A	172.23.0.2
+
+ ;; Query time: 0 msec
+ ;; SERVER: 127.0.0.11#53(127.0.0.11)
+ ;; WHEN: Tue Oct 01 23:47:24 UTC 2019
+ ;; MSG SIZE  rcvd: 44
+</code></pre></div></div>
+
+<p>В “ANSWER SECTION” вы увидите запись <code class="language-plaintext highlighter-rouge">A</code> для <code class="language-plaintext highlighter-rouge">mysql</code>, которая принимает значение <code class="language-plaintext highlighter-rouge">172.23.0.2</code> (ваш IP-адрес, скорее всего, будет иметь другое значение). Хотя <code class="language-plaintext highlighter-rouge">mysql</code> обычно не является допустимым именем хоста, Docker смог преобразовать его в IP-адрес контейнера, у которого был этот сетевой псевдоним (помните флаг <code class="language-plaintext highlighter-rouge">--network-alias</code>, который мы использовали ранее?).</p>
+
+<p>Что это означает, так это то, что… нашему приложению достаточно просто подключиться к хосту с именем <code class="language-plaintext highlighter-rouge">mysql</code>, и оно будет взаимодействовать с базой данных! Это не намного проще, чем это!</p>
+
+<h2 id="запуск-приложения-совместно-с-mysql">Запуск приложения совместно с MySQL</h2>
+
+<p>Приложение <code class="language-plaintext highlighter-rouge">todo</code> поддерживает настройку нескольких переменных среды для указания параметров подключения к MySQL. Вот они:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">MYSQL_HOST</code> – имя хоста для запущенного сервера MySQL</li>
+  <li><code class="language-plaintext highlighter-rouge">MYSQL_USER</code> – имя пользователя, используемое для подключения</li>
+  <li><code class="language-plaintext highlighter-rouge">MYSQL_PASSWORD</code> – пароль, используемый для подключения</li>
+  <li><code class="language-plaintext highlighter-rouge">MYSQL_DB</code> – база данных, которую нужно использовать после подключения</li>
+</ul>
+
+<blockquote>
+  <p><strong>Настройка параметров подключения через Env Vars</strong><br />Хотя использование переменных env для установки параметров подключения, как правило, приемлемо для разработки, это <strong>КРАЙНЕ НЕ РЕКОМЕНДУЕТСЯ</strong> при запуске приложений в рабочей среде. Диого Моника, бывший руководитель службы безопасности Docker, <a href="https://blog.diogomonica.com//2017/03/27/why-you-shouldnt-use-env-variables-for-secret-data/">написал фантастический пост в блоге</a>, объясняющий почему.<br />Более безопасный механизм заключается в использовании секретной поддержки, предоставляемой вашей платформой оркестровки контейнеров. В большинстве случаев эти секреты монтируются в виде файлов в запущенном контейнере. Вы увидите, что многие приложения (включая MySQL image и приложение todo) также поддерживают переменные env с суффиксом _FILE, указывающим на файл, содержащий переменную.<br />В качестве примера, установка переменной <code class="language-plaintext highlighter-rouge">MYSQL_PASSWORD_FILE</code> приведет к тому, что приложение будет использовать содержимое файла, на который ссылается ссылка, в качестве пароля для подключения. Docker ничего не делает для поддержки этих переменных среды. Вашему приложению нужно будет знать, как искать переменную и получать содержимое файла.</p>
+</blockquote>
+
+<p>Теперь, когда все это объяснено, давайте запустим наш готовый к разработке контейнер!</p>
+
+<p>1. <strong>Внимание</strong>: для версий MySQL 8.0 и выше обязательно включите в mysql следующие команды</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; ALTER USER 'root' IDENTIFIED WITH mysql_native_password BY 'secret';
+mysql&gt; flush privileges;
+</code></pre></div></div>
+
+<p>2. Мы укажем каждую из приведенных выше переменных среды, а также подключим контейнер к нашей сети приложений.</p>
+
+<p>Если вы используете Windows, то используйте эту команду в PowerShell.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -dp 3000:3000 `
+   -w /app -v "$(pwd):/app" `
+   --network todo-app `
+   -e MYSQL_HOST=mysql `
+   -e MYSQL_USER=root `
+   -e MYSQL_PASSWORD=secret `
+   -e MYSQL_DB=todos `
+   node:18-alpine `
+   sh -c "yarn install &amp;&amp; yarn run dev"
+</code></pre></div></div>
+
+<p>3. Если мы посмотрим на журналы для контейнера (<code class="language-plaintext highlighter-rouge">docker logs -f &lt;container-id&gt;</code>), мы должны увидеть сообщение, указывающее, что он использует базу данных <code class="language-plaintext highlighter-rouge">mysql</code>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nodemon src/index.js
+ [nodemon] 2.0.20
+ [nodemon] to restart at any time, enter `rs`
+ [nodemon] watching dir(s): *.*
+ [nodemon] starting `node src/index.js`
+ Connected to mysql db at host mysql
+ Listening on port 3000
+</code></pre></div></div>
+
+<p>4. Откройте приложение в своем браузере и добавьте несколько пунктов в свой список дел.</p>
+
+<p>5. Подключитесь к базе данных mysql и докажите, что элементы записываются в базу данных. Помните, что паролем является слово <strong>secret</strong>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker exec -it &lt;mysql-container-id&gt; mysql -p todos
+</code></pre></div></div>
+
+<p>И в командной строке mysql запустите следующее:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; select * from todo_items;
+ +--------------------------------------+--------------------+-----------+
+ | id                                   | name               | completed |
+ +--------------------------------------+--------------------+-----------+
+ | c906ff08-60e6-44e6-8f49-ed56a0853e85 | Do amazing things! |         0 |
+ | 2912a79e-8486-4bc3-a4c5-460793a575ab | Be awesome!        |         0 |
+ +--------------------------------------+--------------------+-----------+
+</code></pre></div></div>
+
+<p>Очевидно, что ваша таблица будет выглядеть иначе, потому что на ней содержаться ваши записи. Но вы бы видели, как они там хранятся!</p>
+
+<h2 id="следующие-шаги">Следующие шаги</h2>
+
+<p>На данный момент у вас есть приложение, которое теперь хранит свои данные во внешней базе данных, запущенной в отдельном контейнере. Вы немного узнали о контейнерных сетях и обнаружении служб с помощью DNS.</p>
+
+<p>Но есть большая вероятность, что вы начинаете чувствовать себя немного перегруженным всем, что вам нужно сделать, чтобы запустить это приложение. Вам нужно создать сеть, запустить контейнеры, указать все переменные среды, предоставить порты и многое другое! Это многое нужно запомнить, и это, безусловно, затрудняет передачу информации кому-то другому.</p>
+
+<p>В следующем разделе вы узнаете о Docker Compose. С помощью Docker Compose вы можете гораздо проще делиться стеками своих приложений и позволять другим запускать их с помощью одной (и простой) команды!</p>
+
 <p><br /><br /><br /><br /><br /><br /><br /></p>
 <div class="row">
   <div class="col"><div align="left"><a href="/pages/skills/docker/6bind.html">&#8592; 6. Соединительные привязки</a></div>
   </div>
-<!--  <div class="col"><div align=right><a href="/pages/skills/docker/2containerize_app.html">2. Контейнеризация приложения &#8594;</a></div> 
- </div> -->
+  <div class="col"><div align="right"><a href="/pages/skills/docker/8compose.html">8. Применение Docker Compose &#8594;</a></div> 
+ </div> 
 </div>
 
    	</div>
