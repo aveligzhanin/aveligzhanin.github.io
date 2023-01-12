@@ -78,12 +78,234 @@
    	<div class="col-sm-12 my">
 		<h1 id="часть-9-лучшие-практики-построения-образов">Часть 9. Лучшие практики построения образов</h1>
 
+<h2 id="сканирование-системы-безопасности">Сканирование системы безопасности</h2>
+
+<p>После создания образа рекомендуется проверить его на наличие уязвимостей в системе безопасности с помощью команды <code class="language-plaintext highlighter-rouge">docker scan</code>. Docker сотрудничает со <code class="language-plaintext highlighter-rouge">Snyk</code> для предоставления сервиса сканирования уязвимостей.</p>
+
+<blockquote>
+  <p><strong>Примечание</strong><br />Вы должны войти в аккаунт на Docker Hub, чтобы сканировать свои изображения. Запустите команду <code class="language-plaintext highlighter-rouge">docker scan --login</code>, а затем отсканируйте свои изображения с помощью <code class="language-plaintext highlighter-rouge">docker scan &lt;имя изображения&gt;</code>.</p>
+</blockquote>
+
+<p>Например, чтобы отсканировать изображение <code class="language-plaintext highlighter-rouge">getting-started</code>, созданное ранее в руководстве, вы можете просто ввести</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker scan getting-started
+</code></pre></div></div>
+
+<p>При сканировании используется постоянно обновляемая база данных уязвимостей, поэтому результаты, которые вы видите, будут меняться по мере обнаружения новых уязвимостей, но это может выглядеть примерно так:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>✗ Low severity vulnerability found in freetype/freetype
+  Description: CVE-2020-15999
+  Info: https://snyk.io/vuln/SNYK-ALPINE310-FREETYPE-1019641
+  Introduced through: freetype/freetype@2.10.0-r0, gd/libgd@2.2.5-r2
+  From: freetype/freetype@2.10.0-r0
+  From: gd/libgd@2.2.5-r2 &gt; freetype/freetype@2.10.0-r0
+  Fixed in: 2.10.0-r1
+
+✗ Medium severity vulnerability found in libxml2/libxml2
+  Description: Out-of-bounds Read
+  Info: https://snyk.io/vuln/SNYK-ALPINE310-LIBXML2-674791
+  Introduced through: libxml2/libxml2@2.9.9-r3, libxslt/libxslt@1.1.33-r3, nginx-module-xslt/nginx-module-xslt@1.17.9-r1
+  From: libxml2/libxml2@2.9.9-r3
+  From: libxslt/libxslt@1.1.33-r3 &gt; libxml2/libxml2@2.9.9-r3
+  From: nginx-module-xslt/nginx-module-xslt@1.17.9-r1 &gt; libxml2/libxml2@2.9.9-r3
+  Fixed in: 2.9.9-r4
+</code></pre></div></div>
+
+<p>В выходных данных указан тип уязвимости, URL-адрес для получения дополнительной информации и, что важно, какая версия соответствующей библиотеки устраняет уязвимость.</p>
+
+<p>Есть несколько других вариантов, о которых можно прочитать в <a href="https://docs.docker.com/engine/scan/">документации docker scan</a>.</p>
+
+<p>Помимо сканирования только что созданного образа в командной строке, вы также можете <a href="https://docs.docker.com/docker-hub/vulnerability-scanning/">настроить Docker Hub</a> на автоматическое сканирование всех вновь загруженных изображений, после чего вы сможете просмотреть результаты как в Docker Hub, так и в Docker Desktop.</p>
+
+<p><img src="/assets/images/docker09_1.jpg" alt="Fig9-1" /></p>
+
+<h2 id="слои-изображений">Слои изображений</h2>
+
+<p>Знаете ли вы, что вы можете посмотреть на то, что составляет изображение? Используя команду <code class="language-plaintext highlighter-rouge">docker image history</code>, можно просмотреть команду, которая использовалась для создания каждого слоя в изображении.</p>
+
+<p>1. Используйте команду <code class="language-plaintext highlighter-rouge">docker image history</code>, чтобы просмотреть слои в изображении getting-started, созданном ранее в руководстве.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker image history getting-started
+</code></pre></div></div>
+
+<p>Вы должны получить выходные данные, которые выглядят примерно так (даты / идентификаторы могут отличаться).</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
+ a78a40cbf866        18 seconds ago      /bin/sh -c #(nop)  CMD ["node" "src/index.j…    0B                  
+ f1d1808565d6        19 seconds ago      /bin/sh -c yarn install --production            85.4MB              
+ a2c054d14948        36 seconds ago      /bin/sh -c #(nop) COPY dir:5dc710ad87c789593…   198kB               
+ 9577ae713121        37 seconds ago      /bin/sh -c #(nop) WORKDIR /app                  0B                  
+ b95baba1cfdb        13 days ago         /bin/sh -c #(nop)  CMD ["node"]                 0B                  
+ &lt;missing&gt;           13 days ago         /bin/sh -c #(nop)  ENTRYPOINT ["docker-entry…   0B                  
+ &lt;missing&gt;           13 days ago         /bin/sh -c #(nop) COPY file:238737301d473041…   116B                
+ &lt;missing&gt;           13 days ago         /bin/sh -c apk add --no-cache --virtual .bui…   5.35MB              
+ &lt;missing&gt;           13 days ago         /bin/sh -c #(nop)  ENV YARN_VERSION=1.21.1      0B                  
+ &lt;missing&gt;           13 days ago         /bin/sh -c addgroup -g 1000 node     &amp;&amp; addu…   74.3MB              
+ &lt;missing&gt;           13 days ago         /bin/sh -c #(nop)  ENV NODE_VERSION=12.14.1     0B                  
+ &lt;missing&gt;           13 days ago         /bin/sh -c #(nop)  CMD ["/bin/sh"]              0B                  
+ &lt;missing&gt;           13 days ago         /bin/sh -c #(nop) ADD file:e69d441d729412d24…   5.59MB
+</code></pre></div></div>
+
+<p>Каждая строка представляет собой слой изображения. На дисплее здесь показана основа внизу с самым новым слоем вверху. Используя это, вы также можете быстро увидеть размер каждого слоя, помогая диагностировать большие изображения.</p>
+
+<p>2. Вы заметите, что некоторые строки усечены. Если вы добавите флаг <code class="language-plaintext highlighter-rouge">--no-trunc</code>, вы получите полный вывод (да … забавно, как вы используете усеченный флаг для получения необрезанного вывода, да?)</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker image history --no-trunc getting-started
+</code></pre></div></div>
+
+<h2 id="кэширование-слоев">Кэширование слоев</h2>
+
+<p>Теперь, когда вы увидели многослойность в действии, вам следует усвоить важный урок, который поможет сократить время сборки изображений-контейнеров.</p>
+
+<blockquote>
+  <p>Как только слой изменяется, все нижестоящие слои нужно также пересобрать заново</p>
+</blockquote>
+
+<p>Давайте посмотрим на файл Dockerfile, который мы уже использовали</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># syntax=docker/dockerfile:1
+FROM node:18-alpine
+WORKDIR /app
+COPY . .
+RUN yarn install --production
+CMD ["node", "src/index.js"]
+</code></pre></div></div>
+
+<p>Возвращаясь к выводу истории изображений, мы видим, что каждая команда в Dockerfile становится новым слоем в изображении. Возможно, вы помните, что когда мы вносили изменения в изображение, зависимости yarn пришлось переустановить. Есть ли способ это исправить? Нет особого смысла отправлять одни и те же зависимости каждый раз, когда производится сборка, верно?</p>
+
+<p>Чтобы исправить это, нам нужно реструктурировать наш файл Dockerfile, чтобы помочь поддерживать кэширование зависимостей. Для приложений, основанных на Node.js, эти зависимости определены в файле <code class="language-plaintext highlighter-rouge">package.json</code>. Итак, что, если мы сначала скопируем только этот файл, установим зависимости, а затем скопируем все остальное? Затем мы воссоздаем зависимости <code class="language-plaintext highlighter-rouge">yarn</code> только в том случае, если в <code class="language-plaintext highlighter-rouge">package.json</code> были внесены изменения. Есть смысл?</p>
+
+<p>1. Измените Dockerfile, чтобы сначала скопировать package.json, установить зависимости, а затем скопировать остальное.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># syntax=docker/dockerfile:1
+ FROM node:18-alpine
+ WORKDIR /app
+ COPY package.json yarn.lock ./
+ RUN yarn install --production
+ COPY . .
+ CMD ["node", "src/index.js"]
+</code></pre></div></div>
+
+<p>2. В каталоге, где находится Dockerfile, создайте файл .dockerignore с таким содержанием:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>node_modules
+</code></pre></div></div>
+
+<p>файлы <code class="language-plaintext highlighter-rouge">.dockerignore</code> – это простой способ выборочного копирования только файлов, относящихся к изображениям. Вы можете прочитать больше об этом <a href="https://docs.docker.com/engine/reference/builder/#dockerignore-file">здесь</a>. В этом случае папка <code class="language-plaintext highlighter-rouge">node_modules</code> должна быть опущена на втором шаге <code class="language-plaintext highlighter-rouge">COPY</code>, поскольку в противном случае она, возможно, перезапишет файлы, которые были созданы командой на шаге <code class="language-plaintext highlighter-rouge">RUN</code>. Для получения более подробной информации о том, почему это рекомендуется для приложений Node.js и других передовых практик, ознакомьтесь с их руководством <a href="https://nodejs.org/en/docs/guides/nodejs-docker-webapp/">по настройке Node.js веб-приложений</a>.</p>
+
+<p>3. Создайте новый образ с помощью <code class="language-plaintext highlighter-rouge">docker build</code>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker build -t getting-started .
+</code></pre></div></div>
+
+<p>Вы должны увидеть вывод, подобный этому…</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[+] Building 16.1s (10/10) FINISHED
+ =&gt; [internal] load build definition from Dockerfile
+ =&gt; =&gt; transferring dockerfile: 175B
+ =&gt; [internal] load .dockerignore
+ =&gt; =&gt; transferring context: 2B
+ =&gt; [internal] load metadata for docker.io/library/node:18-alpine
+ =&gt; [internal] load build context
+ =&gt; =&gt; transferring context: 53.37MB
+ =&gt; [1/5] FROM docker.io/library/node:18-alpine
+ =&gt; CACHED [2/5] WORKDIR /app
+ =&gt; [3/5] COPY package.json yarn.lock ./
+ =&gt; [4/5] RUN yarn install --production
+ =&gt; [5/5] COPY . .
+ =&gt; exporting to image
+ =&gt; =&gt; exporting layers
+ =&gt; =&gt; writing image     sha256:d6f819013566c54c50124ed94d5e66c452325327217f4f04399b45f94e37d25
+ =&gt; =&gt; naming to docker.io/library/getting-started
+</code></pre></div></div>
+
+<p>Вы увидите, что все слои были перестроены. Совершенно нормально, так как мы немного изменили файл <code class="language-plaintext highlighter-rouge">Dockerfile</code>.</p>
+
+<p>4. Теперь внесите изменения в src/static/index.html файл (например, измените <title> на “The Awesome Todo App”).</title></p>
+
+<p>5. Создайте образ Docker прямо сейчас, снова используя <code class="language-plaintext highlighter-rouge">docker build -t getting-started .</code>. На этот раз ваш результат должен выглядеть немного по-другому.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[+] Building 1.2s (10/10) FINISHED
+ =&gt; [internal] load build definition from Dockerfile
+ =&gt; =&gt; transferring dockerfile: 37B
+ =&gt; [internal] load .dockerignore
+ =&gt; =&gt; transferring context: 2B
+ =&gt; [internal] load metadata for docker.io/library/node:18-alpine
+ =&gt; [internal] load build context
+ =&gt; =&gt; transferring context: 450.43kB
+ =&gt; [1/5] FROM docker.io/library/node:18-alpine
+ =&gt; CACHED [2/5] WORKDIR /app
+ =&gt; CACHED [3/5] COPY package.json yarn.lock ./
+ =&gt; CACHED [4/5] RUN yarn install --production
+ =&gt; [5/5] COPY . .
+ =&gt; exporting to image
+ =&gt; =&gt; exporting layers
+ =&gt; =&gt; writing image     sha256:91790c87bcb096a83c2bd4eb512bc8b134c757cda0bdee4038187f98148e2eda
+ =&gt; =&gt; naming to docker.io/library/getting-started
+</code></pre></div></div>
+
+<p>Во-первых, вы должны заметить, что сборка была НАМНОГО быстрее! И вы увидите, что в нескольких шагах используются ранее кэшированные слои. Итак, ура! Мы используем кэш сборки. Передача и прием этого изображения и его обновления также будут намного быстрее. Ура!</p>
+
+<h2 id="многоступенчатые-сборки">Многоступенчатые сборки</h2>
+
+<p>Хотя мы не собираемся слишком углубляться в это в этом руководстве, многоступенчатые сборки - невероятно мощный инструмент, помогающий использовать несколько этапов для создания изображения. У них есть такие преимущества:</p>
+
+<ul>
+  <li>
+    <p>Отделиние зависимостей, используемых во время сборки, от зависимостей времени выполнения</p>
+  </li>
+  <li>
+    <p>Уменьшение общего размера изображения, чтобы отправлять только то, что необходимо вашему приложению для запуска.</p>
+  </li>
+</ul>
+
+<h2 id="пример-maventomcat">Пример Maven/Tomcat</h2>
+
+<p>При создании приложений на базе Java необходим JDK для компиляции исходного кода в байт-код Java. Однако этот JDK не нужен в производстве. Кроме того, вы можете использовать такие инструменты, как Maven или Gradle, чтобы помочь в создании приложения. Они также не нужны в нашем окончательном изображении. Многоступенчатые сборки помогают.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># syntax=docker/dockerfile:1
+FROM maven AS build
+WORKDIR /app
+COPY . .
+RUN mvn package
+
+FROM tomcat
+COPY --from=build /app/target/file.war /usr/local/tomcat/webapps
+</code></pre></div></div>
+
+<p>В этом примере мы используем одну стадию (называемую build) для выполнения фактической сборки Java с использованием Maven. На второй стадии (начиная с FROM tomcat) мы копируем файлы со стадии сборки. Окончательное изображение - это только последняя создаваемая стадия (которая может быть переопределена с помощью флага <code class="language-plaintext highlighter-rouge">--target</code>).</p>
+
+<h2 id="пример-react">Пример React</h2>
+
+<p>При создании приложений React нам нужна среда Node.js для компиляции кода JS (обычно JSX), таблиц стилей SASS и многого другого в статический HTML, JS и CSS. Если мы не выполняем рендеринг на стороне сервера, нам даже не нужна среда Node.js для нашей производственной сборки. Почему бы не отправить статические ресурсы в статический контейнер nginx?</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># syntax=docker/dockerfile:1
+FROM node:18 AS build
+WORKDIR /app
+COPY package* yarn.lock ./
+RUN yarn install
+COPY public ./public
+COPY src ./src
+RUN yarn run build
+
+FROM nginx:alpine
+COPY --from=build /app/build /usr/share/nginx/html
+</code></pre></div></div>
+
+<p>Здесь мы используем изображение <code class="language-plaintext highlighter-rouge">node:18</code> для выполнения сборки (максимальное кэширование слоев), а затем копируем выходные данные в контейнер nginx. Круто, да?</p>
+
+<h2 id="следующие-шаги">Следующие шаги</h2>
+
+<p>Немного разбираясь в структуре изображений, вы сможете создавать изображения быстрее и вносить меньше изменений. Сканирование изображений дает вам уверенность в том, что контейнеры, которые вы запускаете и распространяете, безопасны. Многоступенчатые сборки также помогают уменьшить общий размер изображения и повысить безопасность конечного контейнера, отделяя зависимости во время сборки от зависимостей во время выполнения.</p>
+
+<p>В следующем разделе вы узнаете о дополнительных ресурсах, которые вы можете использовать для продолжения изучения контейнеров.</p>
+
 <p><br /><br /><br /><br /><br /><br /><br /></p>
 <div class="row">
   <div class="col"><div align="left"><a href="/pages/skills/docker/8compose.html">&#8592; 8. Применение Docker Compose</a></div>
   </div>
-<!--  <div class="col"><div align=right><a href="/pages/skills/docker/2containerize_app.html">2. Контейнеризация приложения &#8594;</a></div> 
- </div> -->
+  <div class="col"><div align="right"><a href="/pages/skills/docker/Anext.html">Часть 10. Что дальше. &#8594;</a></div> 
+ </div>
 </div>
 
    	</div>
