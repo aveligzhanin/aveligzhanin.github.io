@@ -1,0 +1,302 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Docker и Oracle-Xe 21c</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Our style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/avel.css">
+</head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+  <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse menu">
+			<ul class="nav navbar-nav navbar-right">
+                 
+                    <li>
+                       <a href="/index.html#about">Обо мне</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#education">Образование</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#work">Работа</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#skills">Навыки</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#portfolio">Портфолио</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#hobby">Увлечения</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#contact">Контакты</a>
+                    </li>
+                 
+        	</ul>
+        </div>
+      </div>
+  </div>
+</nav>
+
+    <section class="pfblock"><div class="container">  		<!-- Translations -->
+	<div class="col-xs-6" align=left>
+		<a href="/index.html">home</a> \ <a href="/index.html#skills">Навыки</a>
+	</div>
+
+	<div class="col-xs-6" align=right>
+		Написано: 12.01.2023
+	</div>
+
+   	<div class="col-sm-12 my">
+		<h1 id="docker-и-oracle-xe-21c">Docker и Oracle-Xe 21c.</h1>
+
+<h2 id="oracle-container-registry">Oracle Container Registry</h2>
+
+<p>Официальный репозиторий находится <a href="https://container-registry.oracle.com/ords/f?p=113:4:1030917726486:::4:P4_REPOSITORY,AI_REPOSITORY,AI_REPOSITORY_NAME,P4_REPOSITORY_NAME,P4_EULA_ID,P4_BUSINESS_AREA_ID:803,803,Oracle%20Database%20Express%20Edition,Oracle%20Database%20Express%20Edition,1,0&amp;cs=3TNRecAr1WLEp31BJR9cObv-NGqr3S1MvcRu_ZbydWwR4oHFVIaoKLtdf5mycy-dWOFkH1UB3aIN0vh4copbAHQ">здесь</a></p>
+
+<p>Изображение “Oracle Database XE Release 21c” можно получить так:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull
+container-registry.oracle.com/database/express:latest
+</code></pre></div></div>
+
+<h2 id="запуск-контейнера-с-бд-oracle-xe-21c">Запуск контейнера с БД Oracle XE 21c</h2>
+
+<p>1. Создал каталог c:\my\docker\oracle-xe21</p>
+
+<p>2. В каталоге создал файл <code class="language-plaintext highlighter-rouge">docker-compose.yml</code> со следующим содержанием:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>services:
+  oracle:
+    image: container-registry.oracle.com/database/express:21.3.0-xe        
+    container_name: oracle-xe21
+    ports:    
+      - 1521:1521
+    volumes:
+      - .:/opt/oracle/oradata
+    environment:
+      ORACLE_PWD: oracle
+</code></pre></div></div>
+
+<p>В файле указаны параметры для БД:</p>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">image</code> – образ</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">container_name</code> – имя контейнера</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">ports</code> – маппинг портов</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">volumes</code> – маппинг тома. Здесь указано, что текущий каталог, откуда производится запуск контейнера, будет являться каталогом для контейнера с БД Oracle. Если не указать маппирование тома, контейнер при запуске будет всякий раз создавать базу заново. Таким образом, все изменения в базе, произведенные после запуска контейнера, не сохранятся. Если же маппинг указан, изменения сохраняются.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">environment: ORACLE_PWD</code> – пароль для <strong>sys</strong> и <strong>system</strong>.</p>
+  </li>
+</ul>
+
+<p>3. Создал файл !up.cmd для запуска контейнера БД Oracle.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker compose up -d
+</code></pre></div></div>
+
+<p>4. Создал файл !down.cmd для остановки контейнера БД Oracle.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker compose down
+</code></pre></div></div>
+
+<p>5. Запустил контейнер вызовом файла !up.cmd</p>
+
+<p>После запуска, стек контейнеров виден в Docker Desktop</p>
+
+<p><img src="/assets/images/docker_oracle.jpg" alt="docker_oracle" /></p>
+
+<h2 id="подключение-к-бд-oracle-с-помощью-sql-developer">Подключение к БД Oracle с помощью SQL Developer</h2>
+
+<p>После того, как контейнер с БД Oracle запущен, можно подключиться к БД с помощью SQL Developer</p>
+
+<p><img src="/assets/images/docker_sqldev.jpg" alt="docker_sqldev" /></p>
+
+<h2 id="подключение-к-бд-oracle-с-помощью-sqlplus">Подключение к БД Oracle с помощью sqlplus</h2>
+
+<p>Можно подключиться к БД Oracle с помощью <strong>sqlplus</strong>, расположенной в контейнере.</p>
+
+<p>1. Нужно определить container_id</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker ps
+</code></pre></div></div>
+
+<p><img src="/assets/images/oracle_containerid.jpg" alt="oracle_containerid" /></p>
+
+<p>2. Подключиться к контейнеру, указав <strong>container_id</strong>, определённый на предыдущем шаге</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker exec -it 5f986add5429 //bin/bash
+</code></pre></div></div>
+<p><img src="/assets/images/docker_exec.jpg" alt="docker_exec" /></p>
+
+<p>3. В оболочке набрать <strong>sqlplus</strong>, затем ввести логин (<strong>system</strong>) и пароль (<strong>oracle</strong>). Такой пароль был указан в файле <code class="language-plaintext highlighter-rouge">docker-compose.yml</code>, с помощью которого производился запуск контейнера с БД oracle <code class="language-plaintext highlighter-rouge">environment: ORACLE_PWD</code></p>
+
+<p><img src="/assets/images/docker_sqlplus.jpg" alt="docker_sqlplus" /></p>
+
+<p>4. Для выхода из <strong>sqlplus</strong> нужно указать <strong>exit</strong>.</p>
+
+<p>5. Для выхода из shell-оболочки нужно указать <strong>exit</strong>.</p>
+
+<p><img src="/assets/images/docker_sqlplus.jpg" alt="docker_sqlplus" /></p>
+
+<h2 id="файлы-бд-oracle">Файлы БД Oracle</h2>
+
+<p>После того, как первый раз был запущен контейнер с БД Oracle, создаётся база и в каталоге будут созданы две папки со следующими файлами.</p>
+
+<p><img src="/assets/images/ora_files.jpg" alt="ora_files" /></p>
+
+<p>Файл <strong>tnsnames.ora</strong> содержит следующее:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>XE =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = 0.0.0.0)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SERVICE_NAME = XE)
+    )
+  )
+
+LISTENER_XE =
+  (ADDRESS = (PROTOCOL = TCP)(HOST = 0.0.0.0)(PORT = 1521))
+
+XEPDB1 =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = 0.0.0.0)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SERVICE_NAME = XEPDB1)
+    )
+  )
+
+EXTPROC_CONNECTION_DATA =
+  (DESCRIPTION =
+     (ADDRESS_LIST =
+       (ADDRESS = (PROTOCOL = IPC)(KEY = EXTPROC_FOR_XE))
+     )
+     (CONNECT_DATA =
+       (SID = PLSExtProc)
+       (PRESENTATION = RO)
+     )
+  )
+</code></pre></div></div>
+
+<h2 id="установка-бд-oracle-sample-schemas">Установка БД Oracle Sample Schemas</h2>
+
+<p><strong>Sample Schemas</strong> – это схемы, содержащие объекты для примеров из документации Oracle. Вот – <a href="https://docs.oracle.com/en/database/oracle/oracle-database/21/comsc/installing-sample-schemas.html#GUID-1E645D09-F91F-4BA6-A286-57C5EC66321D">инструкции</a> того, как нужно устанавливать Sample Schemas.</p>
+
+<p>1. Архив находится на GitHub: <a href="https://github.com/oracle/db-sample-schemas/releases/latest">https://github.com/oracle/db-sample-schemas/releases/latest</a></p>
+
+<p>2. Нужно скачать архив, разархивировать (например в папку demo)</p>
+
+<p>3. В скриптах *.sql и файлах *.dat необходимо произвести замену: вместо токена <code class="language-plaintext highlighter-rouge">__SUB__CWD__</code> следует указать правильный путь для скрипта (<code class="language-plaintext highlighter-rouge">/opt/oracle/oradata/demo</code>)</p>
+
+<p>4. запустить скрипт для установки</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@/opt/oracle/oradata/demo/mksample systempw syspw hrpw oepw pmpw ixpw shpw bipw users temp /your/path/to/log/ connect_string
+</code></pre></div></div>
+
+<p>У скрипта используются такие параметры:</p>
+
+<ol>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">systempw</code> – пароль для схемы <code class="language-plaintext highlighter-rouge">system</code> (в данном случае – это <strong>oracle</strong>)</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">syspw</code> – пароль для схемы <code class="language-plaintext highlighter-rouge">sys</code> (в данном случае – это тоже <strong>oracle</strong>)</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">hrpw</code> – пароль для схемы <code class="language-plaintext highlighter-rouge">hr</code> (я использовал <strong>hr</strong>)</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">oepw</code> – пароль для схемы <code class="language-plaintext highlighter-rouge">oe</code> (<strong>oe</strong>)</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">pmpw</code> – пароль для схемы <code class="language-plaintext highlighter-rouge">pm</code> (<strong>pm</strong>)</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">ixpw</code> – пароль для схемы <code class="language-plaintext highlighter-rouge">ix</code> (<strong>ix</strong>)</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">shpw</code> – пароль для схемы <code class="language-plaintext highlighter-rouge">sh</code> (<strong>sh</strong>)</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">bipw</code> – пароль для схемы <code class="language-plaintext highlighter-rouge">bi</code> (<strong>bi</strong>)</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">users</code> – default tablespace (<strong>users</strong>)</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">temp</code> – temporary tablespace (<strong>temp</strong>)</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">/your/path/to/log/</code> – каталог для логов (<strong>/opt/oracle/oradata/demo/log</strong>), предварительно нужно создать этот каталог</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">connect_string</code> – строка коннекта в БД (я использовал <strong>XEPDB1</strong>)</p>
+  </li>
+</ol>
+
+<p>После запуска скрипта, будут созданы схемы (в контейнере <strong>XEPDB1</strong>)</p>
+
+<h2 id="подключение-к-hr-через-sql-developer">Подключение к HR через SQL Developer</h2>
+
+<p>Для подключения к схеме HR необходимо использовать такие параметры:</p>
+
+<p><img src="/assets/images/oracle_hr.jpg" alt="oracle_hr" /></p>
+
+<p>Результат:</p>
+
+<p><img src="/assets/images/ora_hr_tables.jpg" alt="ora_hr_tables" /></p>
+
+
+   	</div>
+</div></section>
+
+    <footer class="footer hexlet-footer py-5 mt-5 text-muted">
+  <div class="container">
+    <div class="row mt-1">
+      <div class="col-12 text-center">
+        <a href="https://aveligzhanin.github.io/">Велигжанин Андрей</a> — Программист-разработчик C++ и Oracle.
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>
