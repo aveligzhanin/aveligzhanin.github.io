@@ -78,6 +78,2909 @@
    	<div class="col-sm-12 my">
 		<h1 id="4-описания-скриптов-схем-и-объектов">4 Описания скриптов Схем и объектов</h1>
 
+<p>Рассмотрим сценарии, используемые для создания примеров схем базы данных Oracle. Каждая схема имеет два основных сценария:</p>
+
+<ul>
+  <li>
+    <p>Сценарий xx_main.sql, где xx – это аббревиатура схемы, сбрасывает и создает все объекты и данные для конкретной схемы. Этот основной сценарий вызывает все другие сценарии, необходимые для построения и загрузки схемы.</p>
+  </li>
+  <li>
+    <p>Скрипт xx_drop.sql, где xx - это имя схемы, удаляет все объекты из определенной схемы.</p>
+  </li>
+</ul>
+
+<h2 id="41-мастер-сценарий-для-схем-sample">4.1 Мастер-сценарий для схем Sample</h2>
+
+<p>Мастер-скрипт, mksample.sql, настраивает общую среду схемы sample и создает все схемы.</p>
+
+<p>В мастер-скрипте (mksample.sql), вы заметите такие переменные, как <code class="language-plaintext highlighter-rouge">%s_pmPath%</code>, <code class="language-plaintext highlighter-rouge">%s_logPath%</code>, и <code class="language-plaintext highlighter-rouge">%s_shPath%</code>. Эти переменные создаются при установке.</p>
+
+<h3 id="411-mksamplesql">4.1.1 mksample.sql</h3>
+
+<p>Ниже следует текст скрипта mksample.sql</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Rem</span>
+<span class="n">Rem</span> <span class="err">$</span><span class="n">Header</span><span class="p">:</span> <span class="n">mksample</span><span class="p">.</span><span class="k">sql</span><span class="p">.</span><span class="n">sbs</span> <span class="mi">02</span><span class="o">-</span><span class="n">apr</span><span class="o">-</span><span class="mi">2003</span><span class="p">.</span><span class="mi">14</span><span class="p">:</span><span class="mi">55</span><span class="p">:</span><span class="mi">17</span> <span class="err">$</span>
+<span class="n">Rem</span>
+<span class="n">Rem</span> <span class="n">mksample</span><span class="p">.</span><span class="k">sql</span>
+<span class="n">Rem</span>
+<span class="n">Rem</span> <span class="n">Copyright</span> <span class="p">(</span><span class="k">c</span><span class="p">)</span> <span class="mi">2001</span><span class="p">,</span> <span class="mi">2003</span><span class="p">,</span> <span class="n">Oracle</span> <span class="n">Corporation</span><span class="p">.</span> <span class="k">All</span> <span class="n">rights</span> <span class="n">reserved</span><span class="p">.</span> 
+<span class="n">Rem</span>
+<span class="n">Rem</span> <span class="n">NAME</span>
+<span class="n">Rem</span> <span class="n">mksample</span><span class="p">.</span><span class="k">sql</span> <span class="o">-</span> <span class="n">creates</span> <span class="k">all</span> <span class="mi">5</span> <span class="n">Sample</span> <span class="n">Schemas</span>
+<span class="n">Rem</span>
+<span class="n">Rem</span> <span class="n">DESCRIPTION</span>
+<span class="n">Rem</span> <span class="n">This</span> <span class="n">script</span> <span class="n">rees</span> <span class="k">and</span> <span class="n">creates</span> <span class="k">all</span> <span class="n">Schemas</span> <span class="n">belonging</span>
+<span class="n">Rem</span> <span class="k">to</span> <span class="n">the</span> <span class="n">Oracle</span> <span class="k">Database</span> <span class="mi">10</span><span class="k">g</span> <span class="n">Sample</span> <span class="n">Schemas</span><span class="p">.</span>
+<span class="n">Rem</span> <span class="n">If</span> <span class="n">you</span> <span class="k">are</span> <span class="n">unsure</span> <span class="n">about</span> <span class="n">the</span> <span class="n">prerequisites</span> <span class="k">for</span> <span class="n">the</span> <span class="n">Sample</span> <span class="n">Schemas</span><span class="p">,</span>
+<span class="n">Rem</span> <span class="n">please</span> <span class="n">use</span> <span class="n">the</span> <span class="k">Database</span> <span class="n">Configuration</span> <span class="n">Assistant</span> <span class="n">DBCA</span> <span class="k">to</span>
+<span class="n">Rem</span> <span class="n">configure</span> <span class="n">the</span> <span class="n">Sample</span> <span class="n">Schemas</span><span class="p">.</span>
+<span class="n">Rem</span>
+<span class="n">Rem</span> <span class="n">NOTES</span>
+<span class="n">Rem</span> <span class="o">-</span> <span class="n">OUI</span> <span class="n">instantiates</span> <span class="n">this</span> <span class="n">script</span> <span class="n">during</span> <span class="n">install</span> <span class="k">and</span> <span class="n">saves</span> <span class="n">it</span>
+<span class="n">Rem</span> <span class="k">as</span> <span class="n">mksample</span><span class="p">.</span><span class="k">sql</span><span class="p">.</span> <span class="n">The</span> <span class="n">instantiated</span> <span class="n">scripts</span> <span class="n">matches</span>
+<span class="n">Rem</span> <span class="n">the</span> <span class="n">directory</span> <span class="k">structure</span> <span class="k">on</span> <span class="n">your</span> <span class="k">system</span>
+<span class="n">Rem</span> <span class="o">-</span> <span class="n">Tablespace</span> <span class="n">EXAMPLE</span> <span class="n">created</span> <span class="k">with</span><span class="p">:</span>
+<span class="n">Rem</span> <span class="k">CREATE</span> <span class="n">TABLESPACE</span> <span class="n">example</span> 
+<span class="n">Rem</span> <span class="n">NOLOGGING</span> 
+<span class="n">Rem</span> <span class="n">DATAFILE</span> <span class="s1">'&lt;filename&gt;'</span> <span class="k">SIZE</span> <span class="mi">150</span><span class="n">M</span> <span class="n">REUSE</span> 
+<span class="n">Rem</span> <span class="n">AUTOEXTEND</span> <span class="k">ON</span> <span class="k">NEXT</span> <span class="mi">640</span><span class="n">k</span>
+<span class="n">Rem</span> <span class="n">MAXSIZE</span> <span class="n">UNLIMITED</span>
+<span class="n">Rem</span> <span class="n">EXTENT</span> <span class="n">MANAGEMENT</span> <span class="k">LOCAL</span>
+<span class="n">Rem</span> <span class="n">SEGMENT</span> <span class="k">SPACE</span> <span class="n">MANAGEMENT</span> <span class="n">AUTO</span><span class="p">;</span>
+<span class="n">Rem</span> 
+<span class="n">Rem</span> <span class="o">-</span> <span class="n">CAUTION</span><span class="p">:</span> <span class="n">This</span> <span class="n">script</span> <span class="n">will</span> <span class="n">erase</span> <span class="n">the</span> <span class="k">following</span> <span class="n">schemas</span><span class="p">:</span>
+<span class="n">Rem</span> <span class="o">-</span> <span class="n">HR</span>
+<span class="n">Rem</span> <span class="o">-</span> <span class="n">OE</span>
+<span class="n">Rem</span> <span class="o">-</span> <span class="n">PM</span>
+<span class="n">Rem</span> <span class="o">-</span> <span class="n">SH</span>
+<span class="n">Rem</span> <span class="o">-</span> <span class="n">IX</span>
+<span class="n">Rem</span> <span class="o">-</span> <span class="n">BI</span>
+<span class="n">Rem</span> <span class="o">-</span> <span class="n">CAUTION</span><span class="p">:</span> <span class="n">Never</span> <span class="n">use</span> <span class="n">the</span> <span class="k">preceding</span> <span class="n">Sample</span> <span class="n">Schemas</span> <span class="k">for</span>
+<span class="n">Rem</span> <span class="n">anything</span> <span class="n">other</span> <span class="k">than</span> <span class="n">demos</span> <span class="k">and</span> <span class="n">examples</span>
+<span class="n">Rem</span> <span class="o">-</span> <span class="k">USAGE</span><span class="p">:</span> <span class="k">To</span> <span class="k">return</span> <span class="n">the</span> <span class="n">Sample</span> <span class="n">Schemas</span> <span class="k">to</span> <span class="n">their</span> <span class="n">initial</span> 
+<span class="n">Rem</span> <span class="k">state</span><span class="p">,</span> <span class="n">you</span> <span class="n">can</span> <span class="k">call</span> <span class="n">this</span> <span class="n">script</span> <span class="k">and</span> <span class="n">pass</span> <span class="n">the</span> <span class="n">passwords</span>
+<span class="n">Rem</span> <span class="k">for</span> <span class="n">SYS</span><span class="p">,</span> <span class="k">SYSTEM</span> <span class="k">and</span> <span class="n">the</span> <span class="n">schemas</span> <span class="k">as</span> <span class="k">parameters</span><span class="p">.</span>
+<span class="n">Rem</span> <span class="n">Example</span><span class="p">:</span> <span class="o">@?/</span><span class="n">demo</span><span class="o">/</span><span class="k">schema</span><span class="o">/</span><span class="n">mksample</span> <span class="n">mgr</span> <span class="n">secure</span> <span class="n">h1</span> <span class="n">o2</span> <span class="n">p3</span> <span class="n">q4</span> <span class="n">s5</span>
+<span class="n">Rem</span> <span class="p">(</span><span class="n">please</span> <span class="n">choose</span> <span class="n">your</span> <span class="n">own</span> <span class="n">passwords</span> <span class="k">for</span> <span class="k">security</span> <span class="n">purposes</span><span class="p">)</span>
+<span class="n">Rem</span>
+<span class="n">Rem</span> <span class="n">MODIFIED</span> <span class="p">(</span><span class="n">MM</span><span class="o">/</span><span class="n">DD</span><span class="o">/</span><span class="n">YY</span><span class="p">)</span>
+<span class="n">Rem</span> 
+<span class="n">Rem</span>
+
+<span class="k">SET</span> <span class="n">FEEDBACK</span> <span class="mi">1</span>
+<span class="k">SET</span> <span class="n">NUMWIDTH</span> <span class="mi">10</span>
+<span class="k">SET</span> <span class="n">LINESIZE</span> <span class="mi">80</span>
+<span class="k">SET</span> <span class="n">TRIMSPOOL</span> <span class="k">ON</span>
+<span class="k">SET</span> <span class="n">TAB</span> <span class="k">OFF</span>
+<span class="k">SET</span> <span class="n">PAGESIZE</span> <span class="mi">999</span>
+<span class="k">SET</span> <span class="n">ECHO</span> <span class="k">OFF</span>
+<span class="k">SET</span> <span class="n">CONCAT</span> <span class="s1">'.'</span>
+<span class="k">SET</span> <span class="n">SHOWMODE</span> <span class="k">OFF</span>
+
+<span class="n">PROMPT</span> 
+<span class="n">PROMPT</span> <span class="n">specify</span> <span class="n">password</span> <span class="k">for</span> <span class="k">SYSTEM</span> <span class="k">as</span> <span class="k">parameter</span> <span class="mi">1</span><span class="p">:</span>
+<span class="n">DEFINE</span> <span class="n">password_system</span> <span class="o">=</span> <span class="o">&amp;</span><span class="mi">1</span>
+<span class="n">PROMPT</span> 
+<span class="n">PROMPT</span> <span class="n">specify</span> <span class="n">password</span> <span class="k">for</span> <span class="n">SYS</span> <span class="k">as</span> <span class="k">parameter</span> <span class="mi">2</span><span class="p">:</span>
+<span class="n">DEFINE</span> <span class="n">password_sys</span> <span class="o">=</span> <span class="o">&amp;</span><span class="mi">2</span>
+<span class="n">PROMPT</span> 
+<span class="n">PROMPT</span> <span class="n">specify</span> <span class="n">password</span> <span class="k">for</span> <span class="n">HR</span> <span class="k">as</span> <span class="k">parameter</span> <span class="mi">3</span><span class="p">:</span>
+<span class="n">DEFINE</span> <span class="n">password_hr</span> <span class="o">=</span> <span class="o">&amp;</span><span class="mi">3</span>
+<span class="n">PROMPT</span>
+<span class="n">PROMPT</span> <span class="n">specify</span> <span class="n">password</span> <span class="k">for</span> <span class="n">OE</span> <span class="k">as</span> <span class="k">parameter</span> <span class="mi">4</span><span class="p">:</span>
+<span class="n">DEFINE</span> <span class="n">password_oe</span> <span class="o">=</span> <span class="o">&amp;</span><span class="mi">4</span>
+<span class="n">PROMPT</span>
+<span class="n">PROMPT</span> <span class="n">specify</span> <span class="n">password</span> <span class="k">for</span> <span class="n">PM</span> <span class="k">as</span> <span class="k">parameter</span> <span class="mi">5</span><span class="p">:</span>
+<span class="n">DEFINE</span> <span class="n">password_pm</span> <span class="o">=</span> <span class="o">&amp;</span><span class="mi">5</span>
+<span class="n">PROMPT</span>
+<span class="n">PROMPT</span> <span class="n">specify</span> <span class="n">password</span> <span class="k">for</span> <span class="n">IX</span> <span class="k">as</span> <span class="k">parameter</span> <span class="mi">6</span><span class="p">:</span>
+<span class="n">DEFINE</span> <span class="n">password_ix</span> <span class="o">=</span> <span class="o">&amp;</span><span class="mi">6</span>
+<span class="n">PROMPT</span>
+<span class="n">PROMPT</span> <span class="n">specify</span> <span class="n">password</span> <span class="k">for</span> <span class="n">SH</span> <span class="k">as</span> <span class="k">parameter</span> <span class="mi">7</span><span class="p">:</span>
+<span class="n">DEFINE</span> <span class="n">password_sh</span> <span class="o">=</span> <span class="o">&amp;</span><span class="mi">7</span>
+<span class="n">PROMPT</span> 
+<span class="n">PROMPT</span> <span class="n">specify</span> <span class="n">password</span> <span class="k">for</span> <span class="n">BI</span> <span class="k">as</span> <span class="k">parameter</span> <span class="mi">8</span><span class="p">:</span>
+<span class="n">DEFINE</span> <span class="n">password_bi</span> <span class="o">=</span> <span class="o">&amp;</span><span class="mi">8</span>
+<span class="n">PROMPT</span> 
+<span class="n">PROMPT</span> <span class="n">specify</span> <span class="k">default</span> <span class="n">tablespace</span> <span class="k">as</span> <span class="k">parameter</span> <span class="mi">9</span><span class="p">:</span>
+<span class="n">DEFINE</span> <span class="n">default_ts</span> <span class="o">=</span> <span class="o">&amp;</span><span class="mi">9</span>
+<span class="n">PROMPT</span>
+<span class="n">PROMPT</span> <span class="n">specify</span> <span class="k">temporary</span> <span class="n">tablespace</span> <span class="k">as</span> <span class="k">parameter</span> <span class="mi">10</span><span class="p">:</span>
+<span class="n">DEFINE</span> <span class="n">temp_ts</span> <span class="o">=</span> <span class="o">&amp;</span><span class="mi">10</span>
+<span class="n">PROMPT</span> 
+<span class="n">PROMPT</span> <span class="n">specify</span> <span class="n">log</span> <span class="n">file</span> <span class="n">directory</span> <span class="p">(</span><span class="k">including</span> <span class="k">trailing</span> <span class="k">delimiter</span><span class="p">)</span> <span class="k">as</span> <span class="k">parameter</span>
+ <span class="mi">11</span><span class="p">:</span>
+<span class="n">DEFINE</span> <span class="n">logfile_dir</span> <span class="o">=</span> <span class="o">&amp;</span><span class="mi">11</span>
+<span class="n">PROMPT</span> 
+<span class="n">PROMPT</span> <span class="n">Sample</span> <span class="n">Schemas</span> <span class="k">are</span> <span class="n">being</span> <span class="n">created</span> <span class="p">...</span>
+<span class="n">PROMPT</span>
+<span class="n">DEFINE</span> <span class="n">vrs</span> <span class="o">=</span> <span class="n">v3</span>
+
+<span class="k">CONNECT</span> <span class="k">system</span><span class="o">/&amp;&amp;</span><span class="n">password_system</span>
+
+<span class="k">DROP</span> <span class="k">USER</span> <span class="n">hr</span> <span class="k">CASCADE</span><span class="p">;</span>
+<span class="k">DROP</span> <span class="k">USER</span> <span class="n">oe</span> <span class="k">CASCADE</span><span class="p">;</span>
+<span class="k">DROP</span> <span class="k">USER</span> <span class="n">pm</span> <span class="k">CASCADE</span><span class="p">;</span>
+<span class="k">DROP</span> <span class="k">USER</span> <span class="n">ix</span> <span class="k">CASCADE</span><span class="p">;</span>
+<span class="k">DROP</span> <span class="k">USER</span> <span class="n">sh</span> <span class="k">CASCADE</span><span class="p">;</span>
+<span class="k">DROP</span> <span class="k">USER</span> <span class="n">bi</span> <span class="k">CASCADE</span><span class="p">;</span>
+
+<span class="k">CONNECT</span> <span class="k">system</span><span class="o">/&amp;&amp;</span><span class="n">password_system</span>
+
+<span class="k">SET</span> <span class="n">SHOWMODE</span> <span class="k">OFF</span>
+
+<span class="o">@?/</span><span class="n">demo</span><span class="o">/</span><span class="k">schema</span><span class="o">/</span><span class="n">human_resources</span><span class="o">/</span><span class="n">hr_main</span><span class="p">.</span><span class="k">sql</span> <span class="o">&amp;&amp;</span><span class="n">password_hr</span> <span class="o">&amp;&amp;</span><span class="n">default_ts</span> <span class="o">&amp;&amp;</span><span class="n">temp_ts</span>
+ <span class="o">&amp;&amp;</span><span class="n">password_sys</span> <span class="o">&amp;&amp;</span><span class="n">logfile_dir</span>
+
+<span class="k">CONNECT</span> <span class="k">system</span><span class="o">/&amp;&amp;</span><span class="n">password_system</span>
+<span class="k">SET</span> <span class="n">SHOWMODE</span> <span class="k">OFF</span>
+
+<span class="o">@?/</span><span class="n">demo</span><span class="o">/</span><span class="k">schema</span><span class="o">/</span><span class="n">order_entry</span><span class="o">/</span><span class="n">oe_main</span><span class="p">.</span><span class="k">sql</span> <span class="o">&amp;&amp;</span><span class="n">password_oe</span> <span class="o">&amp;&amp;</span><span class="n">default_ts</span> <span class="o">&amp;&amp;</span><span class="n">temp_ts</span>
+ <span class="o">&amp;&amp;</span><span class="n">password_hr</span> <span class="o">&amp;&amp;</span><span class="n">password_sys</span> <span class="o">%</span><span class="n">s_oePath</span><span class="o">%</span> <span class="o">&amp;&amp;</span><span class="n">logfile_dir</span> <span class="o">&amp;</span><span class="n">vrs</span>
+
+<span class="k">CONNECT</span> <span class="k">system</span><span class="o">/&amp;&amp;</span><span class="n">password_system</span>
+<span class="k">SET</span> <span class="n">SHOWMODE</span> <span class="k">OFF</span>
+
+<span class="o">@?/</span><span class="n">demo</span><span class="o">/</span><span class="k">schema</span><span class="o">/</span><span class="n">product_media</span><span class="o">/</span><span class="n">pm_main</span><span class="p">.</span><span class="k">sql</span> <span class="o">&amp;&amp;</span><span class="n">password_pm</span> <span class="o">&amp;&amp;</span><span class="n">default_ts</span> <span class="o">&amp;&amp;</span><span class="n">temp_ts</span>
+ <span class="o">&amp;&amp;</span><span class="n">password_oe</span> <span class="o">&amp;&amp;</span><span class="n">password_sys</span> <span class="o">%</span><span class="n">s_pmPath</span><span class="o">%</span> <span class="o">&amp;&amp;</span><span class="n">logfile_dir</span> <span class="o">%</span><span class="n">s_pmPath</span><span class="o">%</span>
+
+<span class="k">CONNECT</span> <span class="k">system</span><span class="o">/&amp;&amp;</span><span class="n">password_system</span>
+<span class="k">SET</span> <span class="n">SHOWMODE</span> <span class="k">OFF</span>
+
+<span class="o">@?/</span><span class="n">demo</span><span class="o">/</span><span class="k">schema</span><span class="o">/</span><span class="n">info_exchange</span><span class="o">/</span><span class="n">ix_main</span><span class="p">.</span><span class="k">sql</span> <span class="o">&amp;&amp;</span><span class="n">password_ix</span> <span class="o">&amp;&amp;</span><span class="n">default_ts</span> <span class="o">&amp;&amp;</span><span class="n">temp_ts</span>
+ <span class="o">&amp;&amp;</span><span class="n">password_sys</span> <span class="o">&amp;&amp;</span><span class="n">logfile_dir</span> <span class="o">&amp;</span><span class="n">vrs</span>
+
+<span class="k">CONNECT</span> <span class="k">system</span><span class="o">/&amp;&amp;</span><span class="n">password_system</span>
+<span class="k">SET</span> <span class="n">SHOWMODE</span> <span class="k">OFF</span>
+
+<span class="o">@?/</span><span class="n">demo</span><span class="o">/</span><span class="k">schema</span><span class="o">/</span><span class="n">sales_history</span><span class="o">/</span><span class="n">sh_main</span> <span class="o">&amp;&amp;</span><span class="n">password_sh</span> <span class="o">&amp;&amp;</span><span class="n">default_ts</span> <span class="o">&amp;&amp;</span><span class="n">temp_ts</span>
+ <span class="o">&amp;&amp;</span><span class="n">password_sys</span> <span class="o">%</span><span class="n">s_shPath</span><span class="o">%</span> <span class="o">&amp;&amp;</span><span class="n">logfile_dir</span> <span class="o">&amp;</span><span class="n">vrs</span>
+
+<span class="k">CONNECT</span> <span class="k">system</span><span class="o">/&amp;&amp;</span><span class="n">password_system</span>
+<span class="k">SET</span> <span class="n">SHOWMODE</span> <span class="k">OFF</span>
+
+<span class="o">@?/</span><span class="n">demo</span><span class="o">/</span><span class="k">schema</span><span class="o">/</span><span class="n">bus_intelligence</span><span class="o">/</span><span class="n">bi_main</span> <span class="o">&amp;&amp;</span><span class="n">password_bi</span> <span class="o">&amp;&amp;</span><span class="n">default_ts</span> <span class="o">&amp;&amp;</span><span class="n">temp_ts</span>
+ <span class="o">&amp;&amp;</span><span class="n">password_sys</span> <span class="o">&amp;&amp;</span><span class="n">password_oe</span> <span class="o">&amp;&amp;</span><span class="n">password_sh</span> <span class="o">&amp;&amp;</span><span class="n">logfile_dir</span> <span class="o">&amp;</span><span class="n">vrs</span>
+
+<span class="k">CONNECT</span> <span class="k">system</span><span class="o">/&amp;&amp;</span><span class="n">password_system</span>
+
+<span class="n">SPOOL</span> <span class="k">OFF</span>
+
+<span class="n">DEFINE</span> <span class="n">veri_spool</span> <span class="o">=</span> <span class="o">&amp;&amp;</span><span class="n">logfile_dir</span><span class="p">.</span><span class="n">mkverify_</span><span class="o">&amp;</span><span class="n">vrs</span><span class="p">..</span><span class="n">log</span>
+
+<span class="o">@?/</span><span class="n">demo</span><span class="o">/</span><span class="k">schema</span><span class="o">/</span><span class="n">mkverify</span> <span class="o">&amp;&amp;</span><span class="n">password_system</span> <span class="o">&amp;</span><span class="n">veri_spool</span> 
+
+<span class="n">EXIT</span>
+</code></pre></div></div>
+
+<h2 id="42-скрипты-и-объекты-схемы-hr-sample">4.2 Скрипты и объекты схемы HR Sample</h2>
+
+<p>В этом разделе перечислены имена сценариев, которые создают схему управления персоналом (HR), и описаны объекты в схеме. В таблице 4-1 перечислены сценарии управления персоналом в алфавитном порядке, в то время как в таблице 4-2 перечислены объекты схемы HR.</p>
+
+<p><strong>Таблица 4-1. Скрипты схемы HR Sample</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Script Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>hr_analz.sql</td>
+      <td>Собирает статистику по таблицам в схеме</td>
+    </tr>
+    <tr>
+      <td>hr_code.sql</td>
+      <td>Создает процедурные объекты в схеме</td>
+    </tr>
+    <tr>
+      <td>hr_comnt.sql</td>
+      <td>Создает комментарии для каждого объекта в схеме</td>
+    </tr>
+    <tr>
+      <td>hr_cre.sql</td>
+      <td>Создает объекты HR</td>
+    </tr>
+    <tr>
+      <td>hr_dn_c.sql</td>
+      <td>Добавляет столбец отличительного имени, используемый Oracle Internet Directory, в таблицы <strong>employees</strong> и <strong>departments</strong></td>
+    </tr>
+    <tr>
+      <td>hr_dn_d.sql</td>
+      <td>Удаляет столбец отличительного имени, используемый Oracle Internet Directory, из таблиц <strong>employees</strong> и <strong>departments</strong></td>
+    </tr>
+    <tr>
+      <td>hr_drop.sql</td>
+      <td>Удаляет объекты схемы HR и саму схему</td>
+    </tr>
+    <tr>
+      <td>hr_idx.sql</td>
+      <td>Создаёт индексы для таблиц HR</td>
+    </tr>
+    <tr>
+      <td>hr_main.sql</td>
+      <td>Главный скрипт для схемы HR, осуществляет вызовы других скриптов</td>
+    </tr>
+    <tr>
+      <td>hr_popul.sql</td>
+      <td>Заполняет объекты</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Таблица 4-1. Объекты схемы HR Sample</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Тип Объекта</th>
+      <th>Объекты</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Индексы</td>
+      <td>COUNTRY_C_ID_PK, DEPT_ID_PK, DEPT_LOCATION_IX, EMP_DEPARTMENT_IX, EMP_EMAIL_UK, EMP_EMP_ID_PK, EMP_JOB_IX, EMP_MANAGER_IX, EMP_NAME_IX, JHIST_DEPARTMENT_IX, JHIST_EMPLOYEE_IX, JHIST_EMP_ID_ST_DATE_PK, JHIST_JOB_IX, JOB_ID_PK, LOC_CITY_IX, LOC_COUNTRY_IX, LOC_ID_PK, LOC_STATE_PROVINCE_IX, REG_ID_PK</td>
+    </tr>
+    <tr>
+      <td>Процедуры</td>
+      <td>ADD_JOB_HISTORY, SECURE_DML</td>
+    </tr>
+    <tr>
+      <td>Последовательнсти</td>
+      <td>DEPARTMENTS_SEQ, EMPLOYEES_SEQ, LOCATIONS_SEQ</td>
+    </tr>
+    <tr>
+      <td>Таблицы</td>
+      <td>COUNTRIES, DEPARTMENTS, EMPLOYEES, JOBS, JOB_HISTORY, LOCATIONS, REGIONS</td>
+    </tr>
+    <tr>
+      <td>Триггеры</td>
+      <td>SECURE_EMPLOYEES, UPDATE_JOB_HISTORY</td>
+    </tr>
+    <tr>
+      <td>Представления</td>
+      <td>EMP_DETAILS_VIEW</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="43-описания-таблиц-схемы-hr-sample">4.3 Описания таблиц схемы HR Sample</h2>
+
+<p>Рассмотрим столбцы каждой таблицы схемы HR sample</p>
+
+<h3 id="431-таблица-hrcountries">4.3.1 Таблица HR.COUNTRIES.</h3>
+
+<p><strong>Таблица 4-3 Описание таблицы HR.COUNTRIES</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Имя колонки</th>
+      <th>Null?</th>
+      <th>Тип</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>COUNTRY_ID</td>
+      <td>NOT NULL</td>
+      <td>CHAR(2)</td>
+    </tr>
+    <tr>
+      <td>COUNTRY_NAME</td>
+      <td> </td>
+      <td>VARCHAR2(40)</td>
+    </tr>
+    <tr>
+      <td>REGION_ID</td>
+      <td> </td>
+      <td>NUMBER</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="432-таблица-hrdepartments">4.3.2 Таблица HR.DEPARTMENTS</h3>
+
+<p><strong>Таблица 4-4 Описание таблицы HR.DEPARTMENTS</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Имя колонки</th>
+      <th>Null?</th>
+      <th>Тип</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>DEPARTMENT_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(4)</td>
+    </tr>
+    <tr>
+      <td>DEPARTMENT_NAME</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(30)</td>
+    </tr>
+    <tr>
+      <td>MANAGER_ID</td>
+      <td> </td>
+      <td>NUMBER(6)</td>
+    </tr>
+    <tr>
+      <td>LOCATION_ID</td>
+      <td> </td>
+      <td>NUMBER(4)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="433-таблица-hremployees">4.3.3 Таблица HR.EMPLOYEES</h3>
+
+<p><strong>Таблица 4-5 Описание таблицы HR.EMPLOYEES</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Имя колонки</th>
+      <th>Null?</th>
+      <th>Тип</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>EMPLOYEE_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(6)</td>
+    </tr>
+    <tr>
+      <td>FIRST_NAME</td>
+      <td> </td>
+      <td>VARCHAR2(20)</td>
+    </tr>
+    <tr>
+      <td>LAST_NAME</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(25)</td>
+    </tr>
+    <tr>
+      <td>EMAIL</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(20)</td>
+    </tr>
+    <tr>
+      <td>PHONE_NUMBER</td>
+      <td> </td>
+      <td>VARCHAR2(20)</td>
+    </tr>
+    <tr>
+      <td>HIRE_DATE</td>
+      <td>NOT NULL</td>
+      <td>DATE</td>
+    </tr>
+    <tr>
+      <td>JOB_ID</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(20)</td>
+    </tr>
+    <tr>
+      <td>SALARY</td>
+      <td> </td>
+      <td>NUMBER(8,2)</td>
+    </tr>
+    <tr>
+      <td>COMMISSION_PCT</td>
+      <td> </td>
+      <td>NUMBER(2,2)</td>
+    </tr>
+    <tr>
+      <td>MANAGER_ID</td>
+      <td> </td>
+      <td>NUMBER(6)</td>
+    </tr>
+    <tr>
+      <td>DEPARTMENT_ID</td>
+      <td> </td>
+      <td>NUMBER(4)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="434-таблица-hrjobs">4.3.4 Таблица HR.JOBS</h3>
+
+<p><strong>Таблица 4-6 Описание таблицы HR.JOBS</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Имя колонки</th>
+      <th>Null?</th>
+      <th>Тип</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>JOB_ID</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(10)</td>
+    </tr>
+    <tr>
+      <td>JOB_TITLE</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(35)</td>
+    </tr>
+    <tr>
+      <td>MIN_SALARY</td>
+      <td> </td>
+      <td>NUMBER(6)</td>
+    </tr>
+    <tr>
+      <td>MAX_SALARY</td>
+      <td> </td>
+      <td>NUMBER(6)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="435-table-hrjob_history">4.3.5 Table HR.JOB_HISTORY</h3>
+
+<p><strong>Таблица 4-7 Описание таблицы HR.JOB_HISTORY</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Имя колонки</th>
+      <th>Null?</th>
+      <th>Тип</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>EMPLOYEE_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(6)</td>
+    </tr>
+    <tr>
+      <td>START_DATE</td>
+      <td>NOT NULL</td>
+      <td>DATE</td>
+    </tr>
+    <tr>
+      <td>END_DATE</td>
+      <td>NOT NULL</td>
+      <td>DATE</td>
+    </tr>
+    <tr>
+      <td>JOB_ID</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(10)</td>
+    </tr>
+    <tr>
+      <td>DEPARTMENT_ID</td>
+      <td> </td>
+      <td>NUMBER(4)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="436-table-hrlocations">4.3.6 Table HR.LOCATIONS</h3>
+
+<p><strong>Таблица 4-8 Описание таблицы HR.LOCATIONS</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Имя колонки</th>
+      <th>Null?</th>
+      <th>Тип</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>LOCATION_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(4)</td>
+    </tr>
+    <tr>
+      <td>STREET_ADDRESS</td>
+      <td> </td>
+      <td>VARCHAR2(40)</td>
+    </tr>
+    <tr>
+      <td>POSTAL_CODE</td>
+      <td> </td>
+      <td>VARCHAR2(12)</td>
+    </tr>
+    <tr>
+      <td>CITY</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(30)</td>
+    </tr>
+    <tr>
+      <td>STATE_PROVINCE</td>
+      <td> </td>
+      <td>VARCHAR2(25)</td>
+    </tr>
+    <tr>
+      <td>COUNTRY_ID</td>
+      <td> </td>
+      <td>CHAR(2)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="437-таблица-hrregions">4.3.7 Таблица HR.REGIONS</h3>
+
+<p><strong>Таблица 4-9 Описание таблицы HR.REGIONS</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Имя колонки</th>
+      <th>Null?</th>
+      <th>Тип</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>REGION_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>REGION_NAME</td>
+      <td> </td>
+      <td>VARCHAR2(25)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="44-скрипты-и-объекты-схемы-oe-sample">4.4 Скрипты и объекты схемы OE Sample</h2>
+
+<p>В этом разделе перечислены имена сценариев, которые создают схему ввода заказа (OE Sample), и описаны объекты в схеме.</p>
+
+<p><strong>Таблица 4-10. Скрипты схемы OE Sample</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Script Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>oc_comnt.sql</td>
+      <td>Добавляет комментарии к подсхеме онлайн-каталога (OC) везде, где это возможно</td>
+    </tr>
+    <tr>
+      <td>oc_cre.sql</td>
+      <td>Создает подсхему OC</td>
+    </tr>
+    <tr>
+      <td>oc_drop.sql</td>
+      <td>Удаляет подсхему OC</td>
+    </tr>
+    <tr>
+      <td>oc_main.sql</td>
+      <td>Главный скрипт для подсхемы OC</td>
+    </tr>
+    <tr>
+      <td>oc_popul.sql</td>
+      <td>Заполняет таблицы объектов</td>
+    </tr>
+    <tr>
+      <td>oe_analz.sql</td>
+      <td>Собирает статистику по объектам OE</td>
+    </tr>
+    <tr>
+      <td>oe_comnt.sql</td>
+      <td>Создает комментарии для объектов в схеме</td>
+    </tr>
+    <tr>
+      <td>oe_cre.sql</td>
+      <td>Создает объекты OE</td>
+    </tr>
+    <tr>
+      <td>oe_drop.sql</td>
+      <td>Удаляет объекты и схему OE</td>
+    </tr>
+    <tr>
+      <td>oe_idx.sql</td>
+      <td>Создаёт индексы для таблиц OE</td>
+    </tr>
+    <tr>
+      <td>oe_main.sql</td>
+      <td>Главный скрипт для схемы OE, вызывает другие скрипты</td>
+    </tr>
+    <tr>
+      <td>oe_views.sql</td>
+      <td>Создаёт представления для схемы OE</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Таблица 4-11. Объекты схемы OE Sample</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Тип Объекта</th>
+      <th>Объекты</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Индексы</td>
+      <td>CUSTOMERS_PK, CUST_ACCOUNT_MANAGER_IX, CUST_EMAIL_IX, CUST_LNAME_IX, CUST_UPPER_NAME_IX, INVENTORY_IX, INV_PRODUCT_IX, ITEM_ORDER_IX, ITEM_PRODUCT_IX, ORDER_ITEMS_PK, ORDER_ITEMS_UK, ORDER_PK, ORD_CUSTOMER_IX, ORD_ORDER_DATE_IX, ORD_SALES_REP_IX, PRD_DESC_PK, PRODUCT_INFORMATION_PK, PROD_NAME_IX, PROD_SUPPLIER_IX, PROMO_ID_PK, REFERENCE_IS_UNIQUE, SYS_C003584, SYS_C003587, SYS_C003588, SYS_C003589, SYS_C003590, WAREHOUSES_PK, WHS_LOCATION_IX</td>
+    </tr>
+    <tr>
+      <td>Функции</td>
+      <td>GET_PHONE_NUMBER_F</td>
+    </tr>
+    <tr>
+      <td>Последовательнсти</td>
+      <td>ORDERS_SEQ</td>
+    </tr>
+    <tr>
+      <td>Lob</td>
+      <td>SYS_LOB0000045843C00022\(, SYS_LOB0000045843C00023\), SYS_LOB0000045852C00003\(, SYS_LOB0000045852C00012\), SYS_LOB0000045852C00013\(, SYS_LOB0000046019C00004\), SYS_LOB0000046019C00005\(, SYS_LOB0000046019C00007\), SYS_LOB0000046019C00011\(, SYS_LOB0000046019C00012\), SYS_LOB0000046019C00015\(, SYS_LOB0000046019C00024\), SYS_LOB0000046019C00031\(, SYS_LOB0000046019C00032\), SYS_LOB0000046044C00003$$</td>
+    </tr>
+    <tr>
+      <td>Синонимы</td>
+      <td>COUNTRIES, DEPARTMENTS, EMPLOYEES, JOBS, JOB_HISTORY, LOCATIONS</td>
+    </tr>
+    <tr>
+      <td>Таблицы</td>
+      <td>CUSTOMERS, INVENTORIES, ORDERS, ORDER_ITEMS, PRODUCT_DESCRIPTIONS, PRODUCT_INFORMATION, WAREHOUSES</td>
+    </tr>
+    <tr>
+      <td>Триггеры</td>
+      <td>INSERT_ORD_LINE, ORDERS_ITEMS_TRG, ORDERS_TRG</td>
+    </tr>
+    <tr>
+      <td>Типы</td>
+      <td>CATALOG_TYP, CATEGORY_TYP, COMPOSITE_CATEGORY_TYP, CORPORATE_CUSTOMER_TYP, CUSTOMER_TYP, CUST_ADDRESS_TYP, INVENTORY_LIST_TYP, INVENTORY_TYP, LEAF_CATEGORY_TYP, ORDER_ITEM_LIST_TYP, ORDER_ITEM_TYP, ORDER_LIST_TYP, ORDER_TYP, PHONE_LIST_TYP, PRODUCT_INFORMATION_TYP, PRODUCT_REF_LIST_TYP, SUBCATEGORY_REF_LIST_TYP, SYS_YOID0000046073$, SYS_YOID0000046075$, SYS_YOID0000046077$, SYS_YOID0000046079$, SYS_YOID0000046081$, WAREHOUSE_TYP, XDBPO_ACTIONS_TYPE, XDBPO_ACTION_COLLECTION, XDBPO_ACTION_TYPE, XDBPO_LINEITEMS_TYPE, XDBPO_LINEITEM_COLLECTION, XDBPO_LINEITEM_TYPE, XDBPO_PART_TYPE, XDBPO_REJECTION_TYPE, XDBPO_SHIPINSTRUCTIONS_TYPE, XDBPO_TYPE</td>
+    </tr>
+    <tr>
+      <td>Тело Типа</td>
+      <td>CATALOG_TYP, COMPOSITE_CATEGORY_TYP, LEAF_CATEGORY_TYP</td>
+    </tr>
+    <tr>
+      <td>Представления</td>
+      <td>ACCOUNT_MANAGERS, BOMBAY_INVENTORY, CUSTOMERS_VIEW, DEPTVIEW, OC_CORPORATE_CUSTOMERS, OC_CUSTOMERS, OC_INVENTORIES, OC_ORDERS, OC_PRODUCT_INFORMATION, ORDERS_VIEW, PRODUCTS, PRODUCT_PRICES, SYDNEY_INVENTORY, TORONTO_INVENTORY</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="45-описание-таблиц-схемы-oe-sample">4.5 Описание таблиц схемы OE Sample</h2>
+
+<h3 id="451-таблица-oecustomers">4.5.1 Таблица OE.CUSTOMERS</h3>
+
+<p><strong>Таблица 4-12 Описание таблицы OE.CUSTOMERS</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Имя колонки</th>
+      <th>Null?</th>
+      <th>Тип</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>CUSTOMER_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(6)</td>
+    </tr>
+    <tr>
+      <td>CUST_FIRST_NAME</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(20)</td>
+    </tr>
+    <tr>
+      <td>CUST_LAST_NAME</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(20)</td>
+    </tr>
+    <tr>
+      <td>CUST_ADDRESS</td>
+      <td> </td>
+      <td>CUST_ADDRESS_TYP</td>
+    </tr>
+    <tr>
+      <td>PHONE_NUMBERS</td>
+      <td> </td>
+      <td>PHONE_LIST_TYP</td>
+    </tr>
+    <tr>
+      <td>NLS_LANGUAGE</td>
+      <td> </td>
+      <td>VARCHAR2(3)</td>
+    </tr>
+    <tr>
+      <td>NLS_TERRITORY</td>
+      <td> </td>
+      <td>VARCHAR2(30)</td>
+    </tr>
+    <tr>
+      <td>CREDIT_LIMIT</td>
+      <td> </td>
+      <td>NUMBER(9,2)</td>
+    </tr>
+    <tr>
+      <td>CUST_EMAIL</td>
+      <td> </td>
+      <td>VARCHAR2(30)</td>
+    </tr>
+    <tr>
+      <td>ACCOUNT_MGR_ID</td>
+      <td> </td>
+      <td>NUMBER(6)</td>
+    </tr>
+    <tr>
+      <td>CUST_GEO_LOCATION</td>
+      <td> </td>
+      <td>MDSYS.SDO_GEOMETRY</td>
+    </tr>
+    <tr>
+      <td>DATE_OF_BIRTH</td>
+      <td> </td>
+      <td>DATE</td>
+    </tr>
+    <tr>
+      <td>MARITAL_STATUS</td>
+      <td> </td>
+      <td>VARCHAR2(20)</td>
+    </tr>
+    <tr>
+      <td>GENDER</td>
+      <td> </td>
+      <td>VARCHAR2(1)</td>
+    </tr>
+    <tr>
+      <td>INCOME_LEVEL</td>
+      <td> </td>
+      <td>VARCHAR2(20)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="452-table-oeinventories">4.5.2 Table OE.INVENTORIES</h3>
+
+<p><strong>Таблица 4-13 Описание таблицы OE.INVENTORIES</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Имя колонки</th>
+      <th>Null?</th>
+      <th>Тип</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PRODUCT_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(6)</td>
+    </tr>
+    <tr>
+      <td>WAREHOUSE_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(3)</td>
+    </tr>
+    <tr>
+      <td>QUANTITY_ON_HAND</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(8)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="453-table-oeorders">4.5.3 Table OE.ORDERS</h3>
+
+<p><strong>Таблица 4-14 Описание таблицы OE.ORDERS</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Имя колонки</th>
+      <th>Null?</th>
+      <th>Тип</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ORDER_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(12)</td>
+    </tr>
+    <tr>
+      <td>ORDER_DATE</td>
+      <td>NOT NULL</td>
+      <td>TIMESTAMP(6) WITH LOCAL TIME ZONE</td>
+    </tr>
+    <tr>
+      <td>ORDER_MODE</td>
+      <td> </td>
+      <td>VARCHAR2(8)</td>
+    </tr>
+    <tr>
+      <td>CUSTOMER_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(6)</td>
+    </tr>
+    <tr>
+      <td>ORDER_STATUS</td>
+      <td> </td>
+      <td>NUMBER(2)</td>
+    </tr>
+    <tr>
+      <td>ORDER_TOTAL</td>
+      <td> </td>
+      <td>NUMBER(8,2)</td>
+    </tr>
+    <tr>
+      <td>SALES_REP_ID</td>
+      <td> </td>
+      <td>NUMBER(6)</td>
+    </tr>
+    <tr>
+      <td>PROMOTION_ID</td>
+      <td> </td>
+      <td>NUMBER(6)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="454-таблица-oeorder_items">4.5.4 Таблица OE.ORDER_ITEMS</h3>
+
+<p><strong>Таблица 4-15 Описание таблицы OE.ORDER_ITEMS</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Имя колонки</th>
+      <th>Null?</th>
+      <th>Тип</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ORDER_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(12)</td>
+    </tr>
+    <tr>
+      <td>LINE_ITEM_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(3)</td>
+    </tr>
+    <tr>
+      <td>PRODUCT_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(6)</td>
+    </tr>
+    <tr>
+      <td>UNIT_PRICE</td>
+      <td> </td>
+      <td>NUMBER(8,2)</td>
+    </tr>
+    <tr>
+      <td>QUANTITY</td>
+      <td> </td>
+      <td>NUMBER(8)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="455-таблица-oeproduct_descriptions">4.5.5 Таблица OE.PRODUCT_DESCRIPTIONS</h3>
+
+<p><strong>Таблица 4-16 Описание таблицы OE.PRODUCT_DESCRIPTIONS</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Имя колонки</th>
+      <th>Null?</th>
+      <th>Тип</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PRODUCT_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(6)</td>
+    </tr>
+    <tr>
+      <td>LANGUAGE_ID</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(3)</td>
+    </tr>
+    <tr>
+      <td>TRANSLATED_NAME</td>
+      <td>NOT NULL</td>
+      <td>NVARCHAR2(50)</td>
+    </tr>
+    <tr>
+      <td>TRANSLATED_DESCRIPTION</td>
+      <td>NOT NULL</td>
+      <td>NVARCHAR2(2000)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="456-таблица-oeproduct_information">4.5.6 Таблица OE.PRODUCT_INFORMATION</h3>
+
+<p><strong>Таблица 4-17 Описание таблицы OE.PRODUCT_INFORMATION</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Имя колонки</th>
+      <th>Null?</th>
+      <th>Тип</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PRODUCT_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(6)</td>
+    </tr>
+    <tr>
+      <td>PRODUCT_NAME</td>
+      <td> </td>
+      <td>VARCHAR2(50)</td>
+    </tr>
+    <tr>
+      <td>PRODUCT_DESCRIPTION</td>
+      <td> </td>
+      <td>VARCHAR2(2000)</td>
+    </tr>
+    <tr>
+      <td>CATEGORY_ID</td>
+      <td> </td>
+      <td>NUMBER(2)</td>
+    </tr>
+    <tr>
+      <td>WEIGHT_CLASS</td>
+      <td> </td>
+      <td>NUMBER(1)</td>
+    </tr>
+    <tr>
+      <td>WARRANTY_PERIOD</td>
+      <td> </td>
+      <td>INTERVAL YEAR(2) TO MONTH</td>
+    </tr>
+    <tr>
+      <td>SUPPLIER_ID</td>
+      <td> </td>
+      <td>NUMBER(6)</td>
+    </tr>
+    <tr>
+      <td>PRODUCT_STATUS</td>
+      <td> </td>
+      <td>VARCHAR2(20)</td>
+    </tr>
+    <tr>
+      <td>LIST_PRICE</td>
+      <td> </td>
+      <td>NUMBER(8,2)</td>
+    </tr>
+    <tr>
+      <td>MIN_PRICE</td>
+      <td> </td>
+      <td>NUMBER(8,2)</td>
+    </tr>
+    <tr>
+      <td>CATALOG_URL</td>
+      <td> </td>
+      <td>VARCHAR2(50)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="457-table-oewarehouses">4.5.7 Table OE.WAREHOUSES</h3>
+
+<p><strong>Таблица 4-17 Описание таблицы OE.WAREHOUSES</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Имя колонки</th>
+      <th>Null?</th>
+      <th>Тип</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>WAREHOUSE_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(3)</td>
+    </tr>
+    <tr>
+      <td>WAREHOUSE_SPEC</td>
+      <td> </td>
+      <td>SYS.XMLTYPE</td>
+    </tr>
+    <tr>
+      <td>WAREHOUSE_NAME</td>
+      <td> </td>
+      <td>VARCHAR2(35)</td>
+    </tr>
+    <tr>
+      <td>LOCATION_ID</td>
+      <td> </td>
+      <td>NUMBER(4)</td>
+    </tr>
+    <tr>
+      <td>WH_GEO_LOCATION</td>
+      <td> </td>
+      <td>MDSYS.SDO_GEOMETRY</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Столбец <code class="language-plaintext highlighter-rouge">warehouse_spec</code> таблицы <code class="language-plaintext highlighter-rouge">OE.warehouses</code> содержит данные <code class="language-plaintext highlighter-rouge">XMLType</code>. Эти данные не основаны на какой-либо XML-схеме, что означает, что они могут принимать любую форму. Однако фактические данные в столбце <code class="language-plaintext highlighter-rouge">warehouse_space</code> с самого начала (до любых изменений, которые вы могли бы внести в него) содержат элемент верхнего уровня <code class="language-plaintext highlighter-rouge">Warehouse</code> со следующими дочерними элементами:</p>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">Building</code> (Здание), с текстовыми узлами <code class="language-plaintext highlighter-rouge">Owned</code> (собственное) или <code class="language-plaintext highlighter-rouge">Rented</code> (арендованное).</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">Area</code> (Площадь), с текстовым узлом в виде числа (представляющего, например, квадратные футы)</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">Docks</code> (Доки), с текстовым узлом количество загрузочных доков (например, 1, 2 или 3)</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">DockType</code> (Тип дока), с пустым текстовым узлом или с <code class="language-plaintext highlighter-rouge">Rear Load</code> (задняя загрузка) или с <code class="language-plaintext highlighter-rouge">Side Load</code> (боковая загрузка)</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">WaterAccess</code> (доступ к воде), с текстовым узлом <code class="language-plaintext highlighter-rouge">Y</code> или <code class="language-plaintext highlighter-rouge">N</code></p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">RailAccess</code> (доступ по жд), с текстовым узлом <code class="language-plaintext highlighter-rouge">Y</code> или <code class="language-plaintext highlighter-rouge">N</code></p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">Parking</code> (парковка), с текстовым узлом <code class="language-plaintext highlighter-rouge">Street</code> (улица) или <code class="language-plaintext highlighter-rouge">Lot</code> (стоянка)</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">VClearance</code> (вертикальный зазор), в текстовом указывается число, за которым следует линейная единица (например, 11,5 футов).</p>
+  </li>
+</ul>
+
+<h3 id="458-таблица-oepurchaseorder">4.5.8 Таблица OE.PURCHASEORDER</h3>
+
+<p>Таблица <code class="language-plaintext highlighter-rouge">OE.purchaseorder</code> – это объектно-реляционная таблица с данными <code class="language-plaintext highlighter-rouge">XMLType</code>. Данные соответствуют XML-схеме <code class="language-plaintext highlighter-rouge">PurchaseOrder.xsd</code>.</p>
+
+<h2 id="46-скрипты-и-объекты-схемы-pm-sample">4.6 Скрипты и объекты схемы PM Sample</h2>
+
+<p>В этом разделе перечислены имена сценариев, которые создают схему Product Media (PM), и описаны объекты в схеме. В таблице 4-19 перечислены сценарии PM в алфавитном порядке, в то время как в таблице 4-20 перечислены его объекты. Обратите внимание, что файл данных загрузчика SQL* pm_p_lub.dat содержит жестко закодированные абсолютные имена путей, которые были установлены во время установки. Прежде чем пытаться загрузить данные в другой среде, вы должны сначала отредактировать пути в этом файле.</p>
+
+<p><strong>Таблица 4-19. Скрипты схемы PM Sample</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Script Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>pm_analz.sql</td>
+      <td>Собирает статистику по таблицам в схеме PM</td>
+    </tr>
+    <tr>
+      <td>pm_cre.sql</td>
+      <td>Создает объекты в схеме PM</td>
+    </tr>
+    <tr>
+      <td>pm_drop.sql</td>
+      <td>Удаляет объекты схемы PM и саму схему</td>
+    </tr>
+    <tr>
+      <td>pm_p_ord.sql, pm_p_lob.sql, pm_p_lob.ctl, pm_p_lob.dat</td>
+      <td>Заполняет объекты</td>
+    </tr>
+    <tr>
+      <td>pm_main.sql</td>
+      <td>Главный скрипт PM, вызывает другие скрипты</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Таблица 4-20. Объекты схемы PM Sample</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Тип Объекта</th>
+      <th>Объекты</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Индексы</td>
+      <td>PRINTMEDIA_PK, SYS_C003538</td>
+    </tr>
+    <tr>
+      <td>Lob</td>
+      <td>SYS_LOB0000045882C00003\(, SYS_LOB0000045882C00017\), SYS_LOB0000045882C00019\(, SYS_LOB0000045882C00034\), SYS_LOB0000045882C00042\(, SYS_LOB0000045882C00054\), SYS_LOB0000045882C00062\(, SYS_LOB0000045882C00069\), SYS_LOB0000045882C00071\(, SYS_LOB0000045882C00080\), SYS_LOB0000045907C00003\(, SYS_LOB0000045907C00004\), SYS_LOB0000045907C00005\(, SYS_LOB0000045907C00006\), SYS_LOB0000045907C00009\(, SYS_LOB0000045907C00015\), SYS_LOB0000045908C00004$$</td>
+    </tr>
+    <tr>
+      <td>Таблицы</td>
+      <td>PRINT_MEDIA</td>
+    </tr>
+    <tr>
+      <td>Типы</td>
+      <td>ADHEADER_TYP, TEXTDOC_TAB, TEXTDOC_TYP</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="47-описание-таблиц-схемы-pm-sample">4.7 Описание таблиц схемы PM Sample</h2>
+
+<h3 id="471-таблица-pmprint_media">4.7.1 Таблица PM.PRINT_MEDIA</h3>
+
+<p><strong>Таблица 4-21 Описание таблицы PM.PRINT_MEDIA</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Имя колонки</th>
+      <th>Null?</th>
+      <th>Тип</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PRODUCT_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(6)</td>
+    </tr>
+    <tr>
+      <td>AD_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(6)</td>
+    </tr>
+    <tr>
+      <td>AD_COMPOSITE</td>
+      <td> </td>
+      <td>BLOB</td>
+    </tr>
+    <tr>
+      <td>AD_SOURCETEXT</td>
+      <td> </td>
+      <td>CLOB</td>
+    </tr>
+    <tr>
+      <td>AD_FINALTEXT</td>
+      <td> </td>
+      <td>CLOB</td>
+    </tr>
+    <tr>
+      <td>AD_FLTEXTN</td>
+      <td> </td>
+      <td>NCLOB</td>
+    </tr>
+    <tr>
+      <td>AD_TEXTDOCS_NTAB</td>
+      <td> </td>
+      <td>TEXTDOC_TAB</td>
+    </tr>
+    <tr>
+      <td>AD_PHOTO</td>
+      <td> </td>
+      <td>BLOB</td>
+    </tr>
+    <tr>
+      <td>AD_GRAPHIC</td>
+      <td> </td>
+      <td>BINARY FILE LOB</td>
+    </tr>
+    <tr>
+      <td>AD_HEADER</td>
+      <td> </td>
+      <td>ADHEADER_TYP</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="48-скрипты-и-объекты-схемы-ix-sample">4.8 Скрипты и объекты схемы IX Sample</h2>
+
+<p>В этом разделе перечислены имена сценариев, которые создают группу схем информационного обмена (IX).</p>
+
+<p><strong>Таблица 4-22. Скрипты схемы IX Sample</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Script Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>cix_v3.sql</td>
+      <td>Создает объекты в схеме IX</td>
+    </tr>
+    <tr>
+      <td>dix_v3.sql</td>
+      <td>Удаляет объекты схемы IX</td>
+    </tr>
+    <tr>
+      <td>ix_main.sql</td>
+      <td>Главный скрипт IX, вызывает другие скрипты</td>
+    </tr>
+    <tr>
+      <td>vix_v3.sql</td>
+      <td>Разрешает, запрещает и проверяет объекты схемы IX</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Таблица 4-23. Объекты схемы IX Sample</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Тип Объекта</th>
+      <th>Объекты</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Контекст выполнения</td>
+      <td>AQ$_ORDERS_QUEUETABLE_V, AQ$_STREAMS_QUEUE_TABLE_V</td>
+    </tr>
+    <tr>
+      <td>Индексы</td>
+      <td>SYS_C003540, SYS_C003543, SYS_C003548, SYS_C003551, SYS_IOT_TOP_45932, SYS_IOT_TOP_45934, SYS_IOT_TOP_45936, SYS_IOT_TOP_45939, SYS_IOT_TOP_45949, SYS_IOT_TOP_45951, SYS_IOT_TOP_45953, SYS_IOT_TOP_45956</td>
+    </tr>
+    <tr>
+      <td>Lob</td>
+      <td>SYS_LOB0000045926C00036\(, SYS_LOB0000045941C00028\), SYS_LOB0000045941C00029$$</td>
+    </tr>
+    <tr>
+      <td>Очереди</td>
+      <td>AQ$_ORDERS_QUEUETABLE_E, AQ$_STREAMS_QUEUE_TABLE_E, ORDERS_QUEUE, STREAMS_QUEUE</td>
+    </tr>
+    <tr>
+      <td>Набор правил</td>
+      <td>ORDERS_QUEUE_N, ORDERS_QUEUE_R, STREAMS_QUEUE_N, STREAMS_QUEUE_R</td>
+    </tr>
+    <tr>
+      <td>Последовательности</td>
+      <td>AQ$_ORDERS_QUEUETABLE_N, AQ$_STREAMS_QUEUE_TABLE_N</td>
+    </tr>
+    <tr>
+      <td>Таблицы</td>
+      <td>ORDERS_QUEUETABLE, STREAMS_QUEUE_TABLE</td>
+    </tr>
+    <tr>
+      <td>Типы</td>
+      <td>ORDER_EVENT_TYP</td>
+    </tr>
+    <tr>
+      <td>Представления</td>
+      <td>AQ$ORDERS_QUEUETABLE, AQ$ORDERS_QUEUETABLE_R, AQ$ORDERS_QUEUETABLE_S, AQ$STREAMS_QUEUE_TABLE, AQ$STREAMS_QUEUE_TABLE_R, AQ$STREAMS_QUEUE_TABLE_S</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="49-описание-таблиц-схемы-ix-sample">4.9 Описание таблиц схемы IX Sample</h2>
+
+<h3 id="491-таблица-ixorders_queuetable">4.9.1 Таблица IX.ORDERS_QUEUETABLE</h3>
+
+<p><strong>Таблица 4-24 Описание таблицы IX.ORDERS_QUEUETABLE</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Имя колонки</th>
+      <th>Null?</th>
+      <th>Тип</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Q_NAME</td>
+      <td> </td>
+      <td>VARCHAR2(30)</td>
+    </tr>
+    <tr>
+      <td>MSGID</td>
+      <td>NOT NULL</td>
+      <td>RAW(16)</td>
+    </tr>
+    <tr>
+      <td>CORRID</td>
+      <td> </td>
+      <td>VARCHAR2(128)</td>
+    </tr>
+    <tr>
+      <td>PRIORITY</td>
+      <td> </td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>STATE</td>
+      <td> </td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>DELAY</td>
+      <td> </td>
+      <td>TIMESTAMP(6)</td>
+    </tr>
+    <tr>
+      <td>EXPIRATION</td>
+      <td> </td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>TIME_MANAGER_INFO</td>
+      <td> </td>
+      <td>TIMESTAMP(6)</td>
+    </tr>
+    <tr>
+      <td>LOCAL_ORDER_NO</td>
+      <td> </td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>CHAIN_NO</td>
+      <td> </td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>CSCN</td>
+      <td> </td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>DSCN</td>
+      <td> </td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>ENQ_TIME</td>
+      <td> </td>
+      <td>TIMESTAMP(6)</td>
+    </tr>
+    <tr>
+      <td>ENQ_UID</td>
+      <td> </td>
+      <td>VARCHAR2(30)</td>
+    </tr>
+    <tr>
+      <td>ENQ_TID</td>
+      <td> </td>
+      <td>VARCHAR2(30)</td>
+    </tr>
+    <tr>
+      <td>DEQ_TIME</td>
+      <td> </td>
+      <td>TIMESTAMP(6)</td>
+    </tr>
+    <tr>
+      <td>EEQ_UID</td>
+      <td> </td>
+      <td>VARCHAR2(30)</td>
+    </tr>
+    <tr>
+      <td>DEQ_TID</td>
+      <td> </td>
+      <td>VARCHAR2(30)</td>
+    </tr>
+    <tr>
+      <td>RETRY_COUNT</td>
+      <td> </td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>EXCEPTION_QSCHEMA</td>
+      <td> </td>
+      <td>VARCHAR2(30)</td>
+    </tr>
+    <tr>
+      <td>EXCEPTION_QUEUE</td>
+      <td> </td>
+      <td>VARCHAR2(30)</td>
+    </tr>
+    <tr>
+      <td>STEP_NO</td>
+      <td> </td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>RECIPIENT_KEY</td>
+      <td> </td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>DEQUEUE_MSGID</td>
+      <td> </td>
+      <td>RAW(16)</td>
+    </tr>
+    <tr>
+      <td>SENDER_NAME</td>
+      <td> </td>
+      <td>VARCHAR2(30)</td>
+    </tr>
+    <tr>
+      <td>SENDER_ADDRESS</td>
+      <td> </td>
+      <td>VARCHAR2(1024)</td>
+    </tr>
+    <tr>
+      <td>SENDER_PROTOCOL</td>
+      <td> </td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>USER_DATA</td>
+      <td> </td>
+      <td>ORDER_EVENT_TYP</td>
+    </tr>
+    <tr>
+      <td>USER_PROP</td>
+      <td> </td>
+      <td>SYS.ANYDATA</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="492-таблица-ixstreams_queue_table">4.9.2 Таблица IX.STREAMS_QUEUE_TABLE</h3>
+
+<p><strong>Таблица 4-25 Описание таблицы IX.STREAMS_QUEUE_TABLE</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Имя колонки</th>
+      <th>Null?</th>
+      <th>Тип</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Q_NAME</td>
+      <td> </td>
+      <td>VARCHAR2(30)</td>
+    </tr>
+    <tr>
+      <td>MSGID</td>
+      <td>NOT NULL</td>
+      <td>RAW(16)</td>
+    </tr>
+    <tr>
+      <td>CORRID</td>
+      <td> </td>
+      <td>VARCHAR2(128)</td>
+    </tr>
+    <tr>
+      <td>PRIORITY</td>
+      <td> </td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>STATE</td>
+      <td> </td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>DELAY</td>
+      <td> </td>
+      <td>TIMESTAMP(6)</td>
+    </tr>
+    <tr>
+      <td>EXPIRATION</td>
+      <td> </td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>TIME_MANAGER_INFO</td>
+      <td> </td>
+      <td>TIMESTAMP(6)</td>
+    </tr>
+    <tr>
+      <td>LOCAL_ORDER_NO</td>
+      <td> </td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>CHAIN_NO</td>
+      <td> </td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>CSCN</td>
+      <td> </td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>DSCN</td>
+      <td> </td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>ENQ_TIME</td>
+      <td> </td>
+      <td>TIMESTAMP(6)</td>
+    </tr>
+    <tr>
+      <td>ENQ_UID</td>
+      <td> </td>
+      <td>VARCHAR2(30)</td>
+    </tr>
+    <tr>
+      <td>ENQ_TID</td>
+      <td> </td>
+      <td>VARCHAR2(30)</td>
+    </tr>
+    <tr>
+      <td>DEQ_TIME</td>
+      <td> </td>
+      <td>TIMESTAMP(6)</td>
+    </tr>
+    <tr>
+      <td>EEQ_UID</td>
+      <td> </td>
+      <td>VARCHAR2(30)</td>
+    </tr>
+    <tr>
+      <td>DEQ_TID</td>
+      <td> </td>
+      <td>VARCHAR2(30)</td>
+    </tr>
+    <tr>
+      <td>RETRY_COUNT</td>
+      <td> </td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>EXCEPTION_QSCHEMA</td>
+      <td> </td>
+      <td>VARCHAR2(30)</td>
+    </tr>
+    <tr>
+      <td>EXCEPTION_QUEUE</td>
+      <td> </td>
+      <td>VARCHAR2(30)</td>
+    </tr>
+    <tr>
+      <td>STEP_NO</td>
+      <td> </td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>RECIPIENT_KEY</td>
+      <td> </td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>DEQUEUE_MSGID</td>
+      <td> </td>
+      <td>RAW(16)</td>
+    </tr>
+    <tr>
+      <td>SENDER_NAME</td>
+      <td> </td>
+      <td>VARCHAR2(30)</td>
+    </tr>
+    <tr>
+      <td>SENDER_ADDRESS</td>
+      <td> </td>
+      <td>VARCHAR2(1024)</td>
+    </tr>
+    <tr>
+      <td>SENDER_PROTOCOL</td>
+      <td> </td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>USER_DATA</td>
+      <td> </td>
+      <td>ORDER_EVENT_TYP</td>
+    </tr>
+    <tr>
+      <td>USER_PROP</td>
+      <td> </td>
+      <td>SYS.ANYDATA</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="410-скрипты-и-объекты-схемы-sh-sample">4.10 Скрипты и объекты схемы SH Sample</h2>
+
+<p>В этом разделе перечислены имена сценариев, которые создают схему истории продаж (SH), и описаны объекты в схеме.</p>
+
+<p><strong>Таблица 4-26. Скрипты схемы SH Sample</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Script Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>sh_analz.sql</td>
+      <td>Собирает статистику по объектам схемы</td>
+    </tr>
+    <tr>
+      <td>sh_comnt.sql</td>
+      <td>Создает комментарии для объектов в схеме</td>
+    </tr>
+    <tr>
+      <td>sh_cons.sql</td>
+      <td>Изменяет ограничения на объекты в схеме</td>
+    </tr>
+    <tr>
+      <td>sh_cre.sql</td>
+      <td>Создаёт объекты в схеме</td>
+    </tr>
+    <tr>
+      <td>sh_cremv.sql</td>
+      <td>Создает материализованные представления и растровые индексы</td>
+    </tr>
+    <tr>
+      <td>sh_drop.sql</td>
+      <td>Удаляет объекты схемы и саму схему</td>
+    </tr>
+    <tr>
+      <td>sh_idx.sql</td>
+      <td>Создаёт индексы для объектов схемы</td>
+    </tr>
+    <tr>
+      <td>sh_main.sql</td>
+      <td>Главный скрипт, осуществляет вызов других скриптов</td>
+    </tr>
+    <tr>
+      <td>olp_v3.sql</td>
+      <td>Создаёт измерения и иерархию, с помощью сервера OLAP</td>
+    </tr>
+    <tr>
+      <td>sh_olp_d.sql</td>
+      <td>Удаляет объекты, используемые сервером OLAP</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Таблица 4-27. Объекты схемы SH Sample</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Тип Объекта</th>
+      <th>Объекты</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Измерения</td>
+      <td>CHANNELS_DIM, CUSTOMERS_DIM, PRODUCTS_DIM, PROMOTIONS_DIM, TIMES_DIM</td>
+    </tr>
+    <tr>
+      <td>Индексы</td>
+      <td>CHANNELS_PK, COSTS_PROD_BIX, COSTS_TIME_BIX, COUNTRIES_PK, CUSTOMERS_GENDER_BIX, CUSTOMERS_MARITAL_BIX, CUSTOMERS_PK, CUSTOMERS_YOB_BIX, DR$SUP_TEXT_IDX$X, FW_PSC_S_MV_CHAN_BIX, FW_PSC_S_MV_PROMO_BIX, FW_PSC_S_MV_SUBCAT_BIX, FW_PSC_S_MV_WD_BIX, PRODUCTS_PK, PRODUCTS_PROD_CAT_IX, PRODUCTS_PROD_STATUS_BIX, PRODUCTS_PROD_SUBCAT_IX, PROMO_PK, SALES_CHANNEL_BIX, SALES_CUST_BIX, SALES_PROD_BIX, SALES_PROMO_BIX, SALES_TIME_BIX, SUP_TEXT_IDX, SYS_IOT_TOP_45927, SYS_IOT_TOP_45932, TIMES_PK</td>
+    </tr>
+    <tr>
+      <td>Индексные Партиции</td>
+      <td>COSTS_PROD_BIX, COSTS_TIME_BIX, SALES_CHANNEL_BIX, SALES_CUST_BIX, SALES_PROD_BIX, SALES_PROMO_BIX, SALES_TIME_BIX</td>
+    </tr>
+    <tr>
+      <td>Lob</td>
+      <td>SYS_LOB0000045924C00006\(, SYS_LOB0000045929C00002\)</td>
+    </tr>
+    <tr>
+      <td>Материализованные Представления</td>
+      <td>CAL_MONTH_SALES_MV, FWEEK_PSCAT_SALES_MV</td>
+    </tr>
+    <tr>
+      <td>Таблицы</td>
+      <td>CHANNELS, COSTS, COUNTRIES, CUSTOMERS, PRODUCTS, PROMOTIONS, SALES, TIMES</td>
+    </tr>
+    <tr>
+      <td>Табличные Партиции</td>
+      <td>COSTS, SALES</td>
+    </tr>
+    <tr>
+      <td>Представления</td>
+      <td>PROFITS</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="411-описание-таблиц-схемы-sh-sample">4.11 Описание таблиц схемы SH Sample</h2>
+
+<h3 id="4111-таблица-shchannels">4.11.1 Таблица SH.CHANNELS</h3>
+
+<p><strong>Таблица 4-28 Описание таблицы SH.CHANNELS</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Имя колонки</th>
+      <th>Null?</th>
+      <th>Тип</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>CHANNEL_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>CHANNEL_DESC</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(20)</td>
+    </tr>
+    <tr>
+      <td>CHANNEL_CLASS</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(20)</td>
+    </tr>
+    <tr>
+      <td>CHANNEL_CLASS_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>CHANNEL_TOTAL</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(13)</td>
+    </tr>
+    <tr>
+      <td>CHANNEL_TOTAL_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="4112-таблица-shcosts">4.11.2 Таблица SH.COSTS</h3>
+
+<p><strong>Таблица 4-29 Описание таблицы SH.COSTS</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Имя колонки</th>
+      <th>Null?</th>
+      <th>Тип</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PROD_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>TIME_DESC</td>
+      <td>NOT NULL</td>
+      <td>DATE</td>
+    </tr>
+    <tr>
+      <td>PROMO_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>CHANNEL_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>UNIT_COST</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(10,2)</td>
+    </tr>
+    <tr>
+      <td>UNIT_PRICE</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(10,2)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="4113-таблица-shcountries">4.11.3 Таблица SH.COUNTRIES</h3>
+
+<p><strong>Таблица 4-30 Описание таблицы SH.COUNTRIES</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Имя колонки</th>
+      <th>Null?</th>
+      <th>Тип</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>COUNTRY_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>COUNTRY_ISO_CODE</td>
+      <td>NOT NULL</td>
+      <td>CHAR(2)</td>
+    </tr>
+    <tr>
+      <td>COUNTRY_NAME</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(40)</td>
+    </tr>
+    <tr>
+      <td>COUNTRY_SUBREGION</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(30)</td>
+    </tr>
+    <tr>
+      <td>COUNTRY_SUBREGION_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>COUNTRY_REGION</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(20)</td>
+    </tr>
+    <tr>
+      <td>COUNTRY_REGION_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>COUNTRY_TOTAL</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(11)</td>
+    </tr>
+    <tr>
+      <td>COUNTRY_TOTAL_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>COUNTRY_NAME_HIST</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(40)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="4114-таблица-shcustomers">4.11.4 Таблица SH.CUSTOMERS</h3>
+
+<p><strong>Таблица 4-31 Описание таблицы SH.CUSTOMERS</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Имя колонки</th>
+      <th>Null?</th>
+      <th>Тип</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>CUST_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>CUST_FIRST_NAME</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(20)</td>
+    </tr>
+    <tr>
+      <td>CUST_LAST_NAME</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(40)</td>
+    </tr>
+    <tr>
+      <td>CUST_GENDER</td>
+      <td>NOT NULL</td>
+      <td>CHAR(1)</td>
+    </tr>
+    <tr>
+      <td>CUST_YEAR_OF_BIRTH</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(4)</td>
+    </tr>
+    <tr>
+      <td>CUST_MARITAL_STATUS</td>
+      <td> </td>
+      <td>VARCHAR2(20)</td>
+    </tr>
+    <tr>
+      <td>CUST_STREET_ADDRESS</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(40)</td>
+    </tr>
+    <tr>
+      <td>CUST_POSTAL_CODE</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(10)</td>
+    </tr>
+    <tr>
+      <td>CUST_CITY</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(30)</td>
+    </tr>
+    <tr>
+      <td>CUST_CITY_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>CUST_STATE_PROVINCE</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(40)</td>
+    </tr>
+    <tr>
+      <td>CUST_STATE_PROVINCE_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>COUNTRY_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>CUST_MAIN_PHONE_NUMBER</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(25)</td>
+    </tr>
+    <tr>
+      <td>CUST_INCOME_LEVEL</td>
+      <td> </td>
+      <td>VARCHAR2(30)</td>
+    </tr>
+    <tr>
+      <td>CUST_CREDIT_LIMIT</td>
+      <td> </td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>CUST_EMAIL</td>
+      <td> </td>
+      <td>VARCHAR2(30)</td>
+    </tr>
+    <tr>
+      <td>CUST_TOTAL</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(14)</td>
+    </tr>
+    <tr>
+      <td>CUST_TOTAL_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>CUST_SRC_ID</td>
+      <td> </td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>CUST_EFF_FROM</td>
+      <td> </td>
+      <td>DATE</td>
+    </tr>
+    <tr>
+      <td>CUST_EFF_TO</td>
+      <td> </td>
+      <td>DATE</td>
+    </tr>
+    <tr>
+      <td>CUST_VALID</td>
+      <td> </td>
+      <td>VARCHAR2(1)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="4115-таблица-shproducts">4.11.5 Таблица SH.PRODUCTS</h3>
+
+<p><strong>Таблица 4-32 Описание таблицы SH.PRODUCTS</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Имя колонки</th>
+      <th>Null?</th>
+      <th>Тип</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PROD_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(6)</td>
+    </tr>
+    <tr>
+      <td>PROD_NAME</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(50)</td>
+    </tr>
+    <tr>
+      <td>PROD_DESC</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(4000)</td>
+    </tr>
+    <tr>
+      <td>PROD_SUBCATEGORY</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(50)</td>
+    </tr>
+    <tr>
+      <td>PROD_SUBCATEGORY_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>PROD_SUBCATEGORY_DESC</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(2000)</td>
+    </tr>
+    <tr>
+      <td>PROD_CATEGORY</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(50)</td>
+    </tr>
+    <tr>
+      <td>PROD_CATEGORY_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>PROD_CATEGORY_DESC</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(2000)</td>
+    </tr>
+    <tr>
+      <td>PROD_WEIGHT_CLASS</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(3)</td>
+    </tr>
+    <tr>
+      <td>PROD_UNIT_OF_MEASURE</td>
+      <td> </td>
+      <td>VARCHAR2(20)</td>
+    </tr>
+    <tr>
+      <td>PRD_PACK_SIZE</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(30)</td>
+    </tr>
+    <tr>
+      <td>PROD_SUPPLIER_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(6)</td>
+    </tr>
+    <tr>
+      <td>PROD_STATUS</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(20)</td>
+    </tr>
+    <tr>
+      <td>PROD_LIST_PRICE</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(8,2)</td>
+    </tr>
+    <tr>
+      <td>PRD_MIN_PRICE</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(8,2)</td>
+    </tr>
+    <tr>
+      <td>PROD_TOTAL</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(13)</td>
+    </tr>
+    <tr>
+      <td>PROD_TOTAL_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>PROD_SRC_ID</td>
+      <td> </td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>PROD_EFF_FROM</td>
+      <td> </td>
+      <td>DATE</td>
+    </tr>
+    <tr>
+      <td>PROD_EFF_TO</td>
+      <td> </td>
+      <td>DATE</td>
+    </tr>
+    <tr>
+      <td>PROD_VALID</td>
+      <td> </td>
+      <td>VARCHAR2(1)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="4116-таблица-shpromotions">4.11.6 Таблица SH.PROMOTIONS</h3>
+
+<p><strong>Таблица 4-33 Описание таблицы SH.PROMOTIONS</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Имя колонки</th>
+      <th>Null?</th>
+      <th>Тип</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PROMO_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(6)</td>
+    </tr>
+    <tr>
+      <td>PROMO_NAME</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(30)</td>
+    </tr>
+    <tr>
+      <td>PROMO_SUBCATEGORY</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(30)</td>
+    </tr>
+    <tr>
+      <td>PROMO_SUBCATEGORY_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>PROMO_CATEGORY</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(30)</td>
+    </tr>
+    <tr>
+      <td>PROMO_CATEGORY_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>PROMO_COST</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(10,2)</td>
+    </tr>
+    <tr>
+      <td>PROMO_BEGIN_DATE</td>
+      <td>NOT NULL</td>
+      <td>DATE</td>
+    </tr>
+    <tr>
+      <td>PROMO_END_DATE</td>
+      <td>NOT NULL</td>
+      <td>DATE</td>
+    </tr>
+    <tr>
+      <td>PROMO_TOTAL</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(13)</td>
+    </tr>
+    <tr>
+      <td>PROMO_TOTAL_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="4117-таблица-shsales">4.11.7 Таблица SH.SALES</h3>
+
+<p><strong>Таблица 4-34 Описание таблицы SH.SALES</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Имя колонки</th>
+      <th>Null?</th>
+      <th>Тип</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PROD_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>CUST_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>TIME_ID</td>
+      <td>NOT NULL</td>
+      <td>DATE</td>
+    </tr>
+    <tr>
+      <td>CHANNEL_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>PROMO_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>QUANTITY_SOLD</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(10,2)</td>
+    </tr>
+    <tr>
+      <td>AMOUNT_SOLD</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(10,2)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="4118-таблица-shtimes">4.11.8 Таблица SH.TIMES</h3>
+
+<p><strong>Таблица 4-35 Описание таблицы SH.TIMES</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Имя колонки</th>
+      <th>Null?</th>
+      <th>Тип</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>TIME_ID</td>
+      <td>NOT NULL</td>
+      <td>DATE</td>
+    </tr>
+    <tr>
+      <td>DAY_NAME</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(9)</td>
+    </tr>
+    <tr>
+      <td>DAY_NUMBER_IN_WEEK</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(1)</td>
+    </tr>
+    <tr>
+      <td>DAY_NUMBER_IN_MONTH</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(2)</td>
+    </tr>
+    <tr>
+      <td>CALENDAR_WEEK_NUMBER</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(2)</td>
+    </tr>
+    <tr>
+      <td>FISCAL_WEEK_NUMBER</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(2)</td>
+    </tr>
+    <tr>
+      <td>WEEK_ENDING_DAY</td>
+      <td>NOT NULL</td>
+      <td>DATE</td>
+    </tr>
+    <tr>
+      <td>WEEK_ENDING_DAY_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>CALENDAR_MONTH_NUMBER</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(2)</td>
+    </tr>
+    <tr>
+      <td>FISCAL_MONTH_NUMBER</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(2)</td>
+    </tr>
+    <tr>
+      <td>CALENDAR_MONTH_DESC</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(8)</td>
+    </tr>
+    <tr>
+      <td>CALENDAR_MONTH_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>FISCAL_MONTH_DESC</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(8)</td>
+    </tr>
+    <tr>
+      <td>FISCAL_MONTH_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>DAYS_IN_CAL_MONTH</td>
+      <td>NOT NULL</td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>DAYS_IN_FIS_MONTH</td>
+      <td>NOT NULL</td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>END_OF_CAL_MONTH</td>
+      <td>NOT NULL</td>
+      <td>DATE</td>
+    </tr>
+    <tr>
+      <td>END_OF_FIS_MONTH</td>
+      <td>NOT NULL</td>
+      <td>DATE</td>
+    </tr>
+    <tr>
+      <td>CALENDAR_MONTH_NAME</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(9)</td>
+    </tr>
+    <tr>
+      <td>FISCAL_MONTH_NAME</td>
+      <td>NOT NULL</td>
+      <td>VARCHAR2(9)</td>
+    </tr>
+    <tr>
+      <td>CALENDAR_QUARTER_DESC</td>
+      <td>NOT NULL</td>
+      <td>CHAR(7)</td>
+    </tr>
+    <tr>
+      <td>CALENDAR_QUARTER_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>FISCAL_QUARTER_DESC</td>
+      <td>NOT NULL</td>
+      <td>CHAR(7)</td>
+    </tr>
+    <tr>
+      <td>FISCAL_QUARTER_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>DAYS_IN_CAL_QUARTER</td>
+      <td>NOT NULL</td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>DAYS_IN_FIS_QUARTER</td>
+      <td>NOT NULL</td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>END_OF_CAL_QUARTER</td>
+      <td>NOT NULL</td>
+      <td>DATE</td>
+    </tr>
+    <tr>
+      <td>END_OF_FIS_QUARTER</td>
+      <td>NOT NULL</td>
+      <td>DATE</td>
+    </tr>
+    <tr>
+      <td>CALENDAR_QUARTER_NUMBER</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(1)</td>
+    </tr>
+    <tr>
+      <td>FISCAL__QUARTER_NUMBER</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(1)</td>
+    </tr>
+    <tr>
+      <td>CALENDAR_YEAR</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(4)</td>
+    </tr>
+    <tr>
+      <td>CALENDAR_YEAR_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>FISCAL_YEAR</td>
+      <td>NOT NULL</td>
+      <td>NUMBER(4)</td>
+    </tr>
+    <tr>
+      <td>FISCAL_YEAR_ID</td>
+      <td>NOT NULL</td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>DAYS_IN_CAL_YEAR</td>
+      <td>NOT NULL</td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>DAYS_IN_FIS_YEAR</td>
+      <td>NOT NULL</td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>END_OF_CAL_YEAR</td>
+      <td>NOT NULL</td>
+      <td>DATE</td>
+    </tr>
+    <tr>
+      <td>END_OF_FIS_YEAR</td>
+      <td>NOT NULL</td>
+      <td>DATE</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="412-скрипты-и-объекты-схемы-co-sample">4.12 Скрипты и объекты схемы CO Sample</h2>
+
+<p>В этом разделе перечислены имена сценариев, которые создают схему заказов клиентов (CO), и описаны объекты в схеме.</p>
+
+<p><strong>Таблица 4-36. Скрипты схемы CO Sample</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Script Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>co_ddl.sql</td>
+      <td>Создает таблицы, представления и индексы</td>
+    </tr>
+    <tr>
+      <td>co_dml.sql</td>
+      <td>Заполняет таблицы</td>
+    </tr>
+    <tr>
+      <td>co_drop_objects.sql</td>
+      <td>Удаляет объекты CO из текущей схемы</td>
+    </tr>
+    <tr>
+      <td>co_drop_user.sql</td>
+      <td>Удаляет пользователя CO</td>
+    </tr>
+    <tr>
+      <td>co_main.sql</td>
+      <td>Главный скрипт для схемы CO, вызывает другие скрипты</td>
+    </tr>
+    <tr>
+      <td>co_set_identity_starts.sql</td>
+      <td>Переопределяет текущее значение колонки идентификации</td>
+    </tr>
+    <tr>
+      <td>co_user.sql</td>
+      <td>Создает пользователя CO</td>
+    </tr>
+    <tr>
+      <td>customers.sql</td>
+      <td>Вставки в таблицу <code class="language-plaintext highlighter-rouge">customers</code></td>
+    </tr>
+    <tr>
+      <td>inventory.sql</td>
+      <td>Вставки в таблицу <code class="language-plaintext highlighter-rouge">inventory</code></td>
+    </tr>
+    <tr>
+      <td>orders.sql</td>
+      <td>Вставки в таблицу <code class="language-plaintext highlighter-rouge">orders</code></td>
+    </tr>
+    <tr>
+      <td>order_items.sql</td>
+      <td>Вставки в таблицу <code class="language-plaintext highlighter-rouge">order_items</code></td>
+    </tr>
+    <tr>
+      <td>products.sql</td>
+      <td>Вставки в таблицу <code class="language-plaintext highlighter-rouge">products</code></td>
+    </tr>
+    <tr>
+      <td>sample_queries.sql</td>
+      <td>Предоставляет примеры SQL-инструкций для анализа данных</td>
+    </tr>
+    <tr>
+      <td>shipments.sql</td>
+      <td>Вставки в таблицу <code class="language-plaintext highlighter-rouge">shipments</code></td>
+    </tr>
+    <tr>
+      <td>stores.sql</td>
+      <td>Вставки в таблицу <code class="language-plaintext highlighter-rouge">stores</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Таблица 4-37. Объекты схемы CO Sample</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Тип Объекта</th>
+      <th>Объекты</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Индексы</td>
+      <td>customers_name_i, orders_customer_id_i, orders_store_id_i, products_pk, stores_pk, store_name_u, customers_pk, customers_email_u, store_at_least_one_address_c, products_json_c, orders_pk, orders_customer_id_fk, orders_status_c, orders_store_id_fk, order_items_order_id_fk, order_items_product_id_fk, order_items_pk, order_items_product_u, inventory_product_id_i, inventory_pk, inventory_store_product_u, shipments_store_id_i, shipments_customer_id_i, shipments_pk</td>
+    </tr>
+    <tr>
+      <td>Таблицы</td>
+      <td>customers, stores, products, orders, order_items, shipments, inventory</td>
+    </tr>
+    <tr>
+      <td>Представления</td>
+      <td>customer_order_products, store_orders, product_reviews, product_orders</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="413-описание-таблиц-схемы-co-sample">4.13 Описание таблиц схемы CO Sample</h2>
+
+<h3 id="4131-таблица-cocustomers">4.13.1 Таблица CO.CUSTOMERS</h3>
+
+<p><strong>Таблица 4-38 Описание таблицы CO.CUSTOMERS</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Имя колонки</th>
+      <th>Nulls Allowed?</th>
+      <th>Тип</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>CUSTOMER_ID</td>
+      <td>NO</td>
+      <td>INTEGER</td>
+    </tr>
+    <tr>
+      <td>EMAIL_ADDRESS</td>
+      <td>NO</td>
+      <td>VARCHAR2(255 CHAR)</td>
+    </tr>
+    <tr>
+      <td>FULL_NAME</td>
+      <td>NO</td>
+      <td>VARCHAR2(255 CHAR)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="4132-таблица-costores">4.13.2 Таблица CO.STORES</h3>
+
+<p><strong>Таблица 4-39 Описание таблицы CO.STORES</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Имя колонки</th>
+      <th>Nulls Allowed?</th>
+      <th>Тип</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>STORE_ID</td>
+      <td>NO</td>
+      <td>INTEGER</td>
+    </tr>
+    <tr>
+      <td>STORE_NAME</td>
+      <td>NO</td>
+      <td>VARCHAR2(255 CHAR)</td>
+    </tr>
+    <tr>
+      <td>WEB_ADDRESS</td>
+      <td>YES</td>
+      <td>VARCHAR2(100 CHAR)</td>
+    </tr>
+    <tr>
+      <td>PHYSICAL_ADDRESS</td>
+      <td>YES</td>
+      <td>VARCHAR2(512 CHAR)</td>
+    </tr>
+    <tr>
+      <td>LATITUDE</td>
+      <td>YES</td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>LONGITUDE</td>
+      <td>YES</td>
+      <td>NUMBER</td>
+    </tr>
+    <tr>
+      <td>LOGO</td>
+      <td>YES</td>
+      <td>BLOB</td>
+    </tr>
+    <tr>
+      <td>LOGO_MIME_TYPE</td>
+      <td>YES</td>
+      <td>VARCHAR2(512 CHAR)</td>
+    </tr>
+    <tr>
+      <td>LOGO_FILENAME</td>
+      <td>YES</td>
+      <td>VARCHAR2(512 CHAR)</td>
+    </tr>
+    <tr>
+      <td>LOGO_CHARSET</td>
+      <td>YES</td>
+      <td>VARCHAR2(512 CHAR)</td>
+    </tr>
+    <tr>
+      <td>LOGO_LAST_UPDATED</td>
+      <td>YES</td>
+      <td>DATE</td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote>
+  <p>**Примечание: **Таблица имеет ограничение для проверки того, что <code class="language-plaintext highlighter-rouge">WEB_ADDRESS</code> или <code class="language-plaintext highlighter-rouge">PHYSICAL ADDRESS</code> был заполнен.</p>
+</blockquote>
+
+<h3 id="4133-таблица-coproducts">4.13.3 Таблица CO.PRODUCTS</h3>
+
+<p><strong>Таблица 4-40 Описание таблицы CO.PRODUCTS</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Имя колонки</th>
+      <th>Nulls Allowed?</th>
+      <th>Тип</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PRODUCT_ID</td>
+      <td>NO</td>
+      <td>INTEGER</td>
+    </tr>
+    <tr>
+      <td>PRODUCT_NAME</td>
+      <td>NO</td>
+      <td>VARCHAR2(255 CHAR)</td>
+    </tr>
+    <tr>
+      <td>UNIT_PRICE</td>
+      <td>YES</td>
+      <td>NUMBER(10,2)</td>
+    </tr>
+    <tr>
+      <td>PRODUCT_DETAILS</td>
+      <td>YES</td>
+      <td>BLOB</td>
+    </tr>
+    <tr>
+      <td>PRODUCT_IMAGE</td>
+      <td>YES</td>
+      <td>BLOB</td>
+    </tr>
+    <tr>
+      <td>IMAGE_MIME_TYPE</td>
+      <td>YES</td>
+      <td>VARCHAR2(512 CHAR)</td>
+    </tr>
+    <tr>
+      <td>IMAGE_FILENAME</td>
+      <td>YES</td>
+      <td>VARCHAR2(512 CHAR)</td>
+    </tr>
+    <tr>
+      <td>IMAGE_CHARSET</td>
+      <td>YES</td>
+      <td>VARCHAR2(512 CHAR)</td>
+    </tr>
+    <tr>
+      <td>IMAGE_LAST_UPDATED</td>
+      <td>YES</td>
+      <td>DATE</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="4134-таблица-coorders">4.13.4 Таблица CO.ORDERS</h3>
+
+<p><strong>Таблица 4-41 Описание таблицы CO.ORDERS</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Имя колонки</th>
+      <th>Nulls Allowed?</th>
+      <th>Тип</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ORDER_ID</td>
+      <td>NO</td>
+      <td>INTEGER</td>
+    </tr>
+    <tr>
+      <td>ORDER_DATETIME</td>
+      <td>NO</td>
+      <td>TIMESTAMP</td>
+    </tr>
+    <tr>
+      <td>CUSTOMER_ID</td>
+      <td>NO</td>
+      <td>INTEGER</td>
+    </tr>
+    <tr>
+      <td>ORDER_STATUS</td>
+      <td>NO</td>
+      <td>VARCHAR2(10 CHAR)</td>
+    </tr>
+    <tr>
+      <td>STORE_ID</td>
+      <td>NO</td>
+      <td>INTEGER</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="4135-таблица-coorder_items">4.13.5 Таблица CO.ORDER_ITEMS</h3>
+
+<p><strong>Таблица 4-42 Описание таблицы CO.ORDER_ITEMS</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Имя колонки</th>
+      <th>Nulls Allowed?</th>
+      <th>Тип</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ORDER_ID</td>
+      <td>NO</td>
+      <td>INTEGER</td>
+    </tr>
+    <tr>
+      <td>LINE_ITEM_ID</td>
+      <td>NO</td>
+      <td>INTEGER</td>
+    </tr>
+    <tr>
+      <td>PRODUCT_ID</td>
+      <td>NO</td>
+      <td>INTEGER</td>
+    </tr>
+    <tr>
+      <td>UNIT_PRICE</td>
+      <td>NO</td>
+      <td>NUMBER(10,2)</td>
+    </tr>
+    <tr>
+      <td>QUANTITY</td>
+      <td>NO</td>
+      <td>INTEGER</td>
+    </tr>
+    <tr>
+      <td>SHIPMENT_ID</td>
+      <td>YES</td>
+      <td>INTEGER</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="4136-таблица-coshipments">4.13.6 Таблица CO.SHIPMENTS</h3>
+
+<p><strong>Таблица 4-43 Описание таблицы CO.SHIPMENTS</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Имя колонки</th>
+      <th>Nulls Allowed?</th>
+      <th>Тип</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>SHIPMENT_ID</td>
+      <td>NO</td>
+      <td>INTEGER</td>
+    </tr>
+    <tr>
+      <td>STORE_ID</td>
+      <td>NO</td>
+      <td>INTEGER</td>
+    </tr>
+    <tr>
+      <td>CUSTOMER_ID</td>
+      <td>NO</td>
+      <td>INTEGER</td>
+    </tr>
+    <tr>
+      <td>DELIVERY_ADDRESS</td>
+      <td>NO</td>
+      <td>VARCHAR2(512 CHAR)</td>
+    </tr>
+    <tr>
+      <td>SHIPMENT_STATUS</td>
+      <td>NO</td>
+      <td>VARCHAR2(100 CHAR)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="4137-таблица-coinventory">4.13.7 Таблица CO.INVENTORY</h3>
+
+<p><strong>Таблица 4-44 Описание таблицы CO.INVENTORY</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Имя колонки</th>
+      <th>Nulls Allowed?</th>
+      <th>Тип</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>INVENTORY_ID</td>
+      <td>NO</td>
+      <td>INTEGER</td>
+    </tr>
+    <tr>
+      <td>STORE_ID</td>
+      <td>NO</td>
+      <td>INTEGER</td>
+    </tr>
+    <tr>
+      <td>PRODUCT_ID</td>
+      <td>NO</td>
+      <td>INTEGER</td>
+    </tr>
+    <tr>
+      <td>PRODUCT_INVENTORY</td>
+      <td>NO</td>
+      <td>INTEGER</td>
+    </tr>
+  </tbody>
+</table>
+
 <p><br /><br /><br /><br /><br /><br /><br /></p>
 <div class="row">
   <div class="col"><div align="left"><a href="/pages/skills/oracle/sample/3diagrams.html">&#8592; 3 Диаграммы Схем</a></div>
