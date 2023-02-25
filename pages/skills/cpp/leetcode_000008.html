@@ -1,0 +1,221 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>String to Integer (atoi) (LeetCode)</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Our style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/avel.css">
+</head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+  <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse menu">
+			<ul class="nav navbar-nav navbar-right">
+                 
+                    <li>
+                       <a href="/index.html#about">Обо мне</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#education">Образование</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#work">Работа</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#skills">Навыки</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#portfolio">Портфолио</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#hobby">Увлечения</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#contact">Контакты</a>
+                    </li>
+                 
+        	</ul>
+        </div>
+      </div>
+  </div>
+</nav>
+
+    <section class="pfblock"><div class="container">  		<!-- Translations -->
+	<div class="col-xs-6" align=left>
+		<a href="/index.html">home</a> \ <a href="/pages/skills/cpp.html">Cpp. Задачки для практики</a>
+	</div>
+
+	<div class="col-xs-6" align=right>
+		Написано: 25.02.2023
+	</div>
+
+   	<div class="col-sm-12 my">
+		<h1 id="8-преобразование-строки-в-целое-число-string-to-integer-atoi">8. <a href="https://leetcode.com/problems/string-to-integer-atoi/description/">Преобразование строки в целое число (String to Integer (atoi))</a></h1>
+
+<p><img src="/assets/images/medium.jpg" alt="medium" /></p>
+
+<h2 id="задание">Задание.</h2>
+
+<p>Реализуйте функцию myAtoi(string s), которая преобразует строку в 32-разрядное целое число со знаком (аналогично функции atoi в C/C++).</p>
+
+<p>Алгоритм для myAtoi(string s) заключается в следующем:</p>
+
+<p>Читайте и игнорируйте любые начальные пробелы.</p>
+
+<p>Проверьте, является ли следующий символ (если он еще не находится в конце строки) ‘-‘ или ‘+’. Прочтите этот символ в, если это либо. Это определяет, будет ли конечный результат отрицательным или положительным соответственно. Предположим, что результат положительный, если ни того, ни другого нет.</p>
+
+<p>Считывайте далее символы до тех пор, пока не будет достигнут следующий нецифровый символ или конец ввода. Остальная часть строки игнорируется.</p>
+
+<p>Преобразуйте эти цифры в целое число (т.е. “123” -&gt; 123, “0032” -&gt; 32). Если не было прочитано ни одной цифры, то целое число равно 0. Измените знак по мере необходимости (начиная с шага 2).</p>
+
+<p>Если целое число находится за пределами 32-разрядного диапазона целых чисел со знаком [-2^31, 2^31 - 1], то зафиксируйте целое число так, чтобы оно оставалось в диапазоне. В частности, целые числа меньше -2^31 должны быть привязаны к -2^31, а целые числа больше 2^31 - 1 должны быть привязаны к 2^31 - 1.</p>
+
+<p>Возвращает целое число в качестве конечного результата.</p>
+
+<p><strong>Примечание:</strong></p>
+
+<ul>
+  <li>
+    <p>Только символ пробела ‘ ‘ считается пробельным символом.</p>
+  </li>
+  <li>
+    <p><strong>Не игнорируйте</strong> никакие символы, кроме начального пробела или остальной части строки после цифр.</p>
+  </li>
+</ul>
+
+<h2 id="пример-1">Пример 1.</h2>
+
+<p><strong>Входные данные:</strong> s = “42”</p>
+
+<p><strong>Результат:</strong> 42</p>
+
+<p><strong>Пояснение:</strong></p>
+
+<p>Подчеркнутые символы – это то, что считывается, курсив – это текущая позиция считывателя.</p>
+
+<p>Шаг 1: “42” (символы не читаются, потому что нет начального пробела)</p>
+
+<p>Шаг 2: “42” (символы не читаются, потому что нет ни ‘-‘, ни ‘+’)</p>
+
+<p>Шаг 3: “42” (“42” читается в)</p>
+
+<p>Проанализированное целое число равно 42.
+Поскольку 42 находится в диапазоне [-2^31, 2^31 - 1], конечный результат равен 42.</p>
+
+<h2 id="пример-2">Пример 2.</h2>
+
+<p><strong>Входные данные:</strong> s = “   -42”</p>
+
+<p><strong>Результат:</strong> -42</p>
+
+<p><strong>Пояснение:</strong></p>
+
+<p>Шаг 1: “ -42” (начальный пробел считывается и игнорируется)</p>
+<p>Шаг 2: “-42” (считывается ‘-‘, поэтому результат должен быть отрицательным)</p>
+<p>Шаг 3: “-42” (“42” считывается в)</p>
+<p>Проанализированное целое число равно -42.
+Поскольку -42 находится в диапазоне [-2^31, 2^31 - 1], конечный результат равен -42.</p>
+
+<h2 id="пример-3">Пример 3.</h2>
+
+<p><strong>Входные данные:</strong> s = “4193 with words”</p>
+
+<p><strong>Результат:</strong> 4193</p>
+
+<p><strong>Пояснение:</strong></p>
+
+<p>Шаг 1: “4193 with words” (символы не читаются, потому что нет начального пробела)</p>
+<p>Шаг 2: “4193 with words” (символы не читаются, потому что нет ни ‘-‘, ни ‘+’)</p>
+<p>Шаг 3: “4193 with words” (считывается “4193”; чтение прекращается, поскольку следующий символ не является цифрой)</p>
+<p>Проанализированное целое число равно 4193.
+Поскольку 4193 находится в диапазоне [-2^31, 2^31 - 1], конечный результат равен 4193.</p>
+
+<h2 id="решение">Решение.</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">class</span> <span class="n">Solution</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="kt">int</span> <span class="n">myAtoi</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">sign</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">value</span><span class="p">;</span>
+
+        <span class="c1">// убираем пробелы</span>
+        <span class="k">while</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="sc">' '</span><span class="p">)</span> <span class="n">i</span><span class="o">++</span><span class="p">;</span>
+
+        <span class="c1">// определяем знак</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="sc">'+'</span><span class="o">||</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="sc">'-'</span><span class="p">){</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="sc">'-'</span><span class="p">)</span> <span class="n">sign</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+            <span class="n">i</span><span class="o">++</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// результат</span>
+        <span class="kt">double</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">s</span><span class="p">.</span><span class="n">length</span><span class="p">())</span> <span class="p">{</span>
+
+            <span class="c1">// цифра</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="sc">'0'</span><span class="p">;</span>
+
+            <span class="c1">// выходим, если не цифра</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">value</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="mi">9</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+
+            <span class="c1">// вычисление</span>
+            <span class="n">result</span> <span class="o">*=</span> <span class="mi">10</span><span class="p">;</span>
+            <span class="n">result</span> <span class="o">+=</span> <span class="n">value</span><span class="p">;</span>
+            <span class="n">i</span><span class="o">++</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// знак</span>
+        <span class="n">result</span> <span class="o">*=</span> <span class="n">sign</span><span class="p">;</span>
+
+        <span class="c1">// диапазон для int</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">result</span> <span class="o">&gt;</span> <span class="n">INT_MAX</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">INT_MAX</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="o">&lt;</span> <span class="n">INT_MIN</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">INT_MIN</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">result</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+
+   	</div>
+</div></section>
+
+    <footer class="footer hexlet-footer py-5 mt-5 text-muted">
+  <div class="container">
+    <div class="row mt-1">
+      <div class="col-12 text-center">
+        <a href="https://aveligzhanin.github.io/">Велигжанин Андрей</a> — Программист-разработчик C++ и Oracle.
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>
