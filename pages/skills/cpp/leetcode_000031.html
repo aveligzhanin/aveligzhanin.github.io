@@ -1,0 +1,196 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Next Permutation (LeetCode)</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Our style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/avel.css">
+</head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+  <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse menu">
+			<ul class="nav navbar-nav navbar-right">
+                 
+                    <li>
+                       <a href="/index.html#about">Обо мне</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#education">Образование</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#work">Работа</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#skills">Навыки</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#portfolio">Портфолио</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#hobby">Увлечения</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#contact">Контакты</a>
+                    </li>
+                 
+        	</ul>
+        </div>
+      </div>
+  </div>
+</nav>
+
+    <section class="pfblock"><div class="container">  		<!-- Translations -->
+	<div class="col-xs-6" align=left>
+		<a href="/index.html">home</a> \ <a href="/pages/skills/cpp.html">Cpp. Задачки для практики</a>
+	</div>
+
+	<div class="col-xs-6" align=right>
+		Написано: 06.03.2023
+	</div>
+
+   	<div class="col-sm-12 my">
+		<h1 id="31-следующая-перестановка-next-permutation">31. <a href="https://leetcode.com/problems/next-permutation/">Следующая перестановка (Next Permutation)</a></h1>
+
+<p><img src="/assets/images/medium.jpg" alt="medium" /></p>
+
+<h2 id="задание">Задание.</h2>
+
+<p><strong>Перестановка</strong> массива целых чисел – это расположение его элементов в последовательности или линейном порядке.</p>
+
+<ul>
+  <li>Например, для arr = [1,2,3], ниже приведены все перестановки arr: [1,2,3], [1,3,2], [2, 1, 3], [2, 3, 1], [3,1,2], [3,2,1].</li>
+</ul>
+
+<p><strong>Следующая перестановка</strong> массива целых чисел – это следующая лексикографически большая перестановка его целого числа.</p>
+
+<p>Более формально: если все перестановки массива отсортированы в одном контейнере в соответствии с их лексикографическим порядком, то <strong>следующая перестановка</strong> этого массива – это перестановка, которая следует за ней в отсортированном контейнере.</p>
+
+<p>Если такое расположение невозможно, массив должен быть переставлен в минимально возможном порядке (т.е. отсортирован в порядке возрастания).</p>
+
+<ul>
+  <li>
+    <p>Например, следующая перестановка arr = [1,2,3] равна [1,3,2].</p>
+  </li>
+  <li>
+    <p>Аналогично, следующая перестановка arr = [2,3,1] равна [3,1,2].</p>
+  </li>
+  <li>
+    <p>В то время как следующая перестановка arr = [3,2,1] равна [1,2,3], потому что [3,2,1] не имеет лексикографической более крупной перестановки.</p>
+  </li>
+</ul>
+
+<p>Итак, да массив целых чисел <code class="language-plaintext highlighter-rouge">nums</code></p>
+
+<p>Нужно найти следующую перестановку в <code class="language-plaintext highlighter-rouge">nums</code>.</p>
+
+<p>Замена нужно сделать на месте (<strong>in-place</strong>) и нужно использовать только <strong>постоянную</strong> дополнительную память.</p>
+
+<h2 id="пример-1">Пример 1.</h2>
+
+<p><strong>Входные данные:</strong> nums = [1,2,3]</p>
+
+<p><strong>Результат:</strong>  [1,3,2]</p>
+
+<h2 id="пример-2">Пример 2.</h2>
+
+<p><strong>Входные данные:</strong> nums = [3,2,1]</p>
+
+<p><strong>Результат:</strong> [1,2,3]</p>
+
+<h2 id="пример-3">Пример 3.</h2>
+
+<p><strong>Входные данные:</strong> nums = [1,1,5]</p>
+
+<p><strong>Результат:</strong> [1,5,1]</p>
+
+<h2 id="решение">Решение.</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">class</span> <span class="n">Solution</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="kt">void</span> <span class="n">nextPermutation</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">nums</span><span class="p">)</span> <span class="p">{</span>
+    	<span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">;</span>
+    	<span class="k">for</span> <span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">;</span> <span class="n">k</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// поиск убывающей последовательности</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">nums</span><span class="p">[</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span> <span class="p">{</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    	<span class="k">if</span> <span class="p">(</span><span class="n">k</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    	    <span class="n">reverse</span><span class="p">(</span><span class="n">nums</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">nums</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+    	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    	    <span class="k">for</span> <span class="p">(</span><span class="n">l</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">l</span> <span class="o">&gt;</span> <span class="n">k</span><span class="p">;</span> <span class="n">l</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// поиск крайнего правого преемника для поворота</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">nums</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="p">{</span>
+                    <span class="k">break</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+    	    <span class="n">swap</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">nums</span><span class="p">[</span><span class="n">l</span><span class="p">]);</span>
+    	    <span class="n">reverse</span><span class="p">(</span><span class="n">nums</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span> <span class="o">+</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">nums</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="алгоритм">Алгоритм</h2>
+
+<p>Согласно Википедии, человек по имени Нараяна Пандита представил следующий простой алгоритм для решения этой проблемы в 14 веке.</p>
+
+<ol>
+  <li>
+    <p>Нужно найти наибольший индекс <code class="language-plaintext highlighter-rouge">k</code> такой, что <code class="language-plaintext highlighter-rouge">nums[k]</code> &lt; <code class="language-plaintext highlighter-rouge">nums[k + 1]</code>. Если такого индекса не существует, нужно просто перевернуть <code class="language-plaintext highlighter-rouge">nums</code> и готово.</p>
+  </li>
+  <li>
+    <p>Нужно найти наибольший индекс <code class="language-plaintext highlighter-rouge">l</code> &gt; <code class="language-plaintext highlighter-rouge">k</code> такой, что <code class="language-plaintext highlighter-rouge">nums[k]</code> &lt; <code class="language-plaintext highlighter-rouge">nums[l]</code>.</p>
+  </li>
+  <li>
+    <p>Нужно поменять местами <code class="language-plaintext highlighter-rouge">nums[k]</code> и <code class="language-plaintext highlighter-rouge">nums[l]</code>.</p>
+  </li>
+  <li>
+    <p>Нужно перевернуть подмассив <code class="language-plaintext highlighter-rouge">nums[k + 1:]</code>.</p>
+  </li>
+</ol>
+
+<h2 id="иллюстрация">Иллюстрация</h2>
+
+<p><img src="/assets/images/next_permutation.jpg" alt="next_permutation" /></p>
+
+   	</div>
+</div></section>
+
+    <footer class="footer hexlet-footer py-5 mt-5 text-muted">
+  <div class="container">
+    <div class="row mt-1">
+      <div class="col-12 text-center">
+        <a href="https://aveligzhanin.github.io/">Велигжанин Андрей</a> — Программист-разработчик C++ и Oracle.
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>
