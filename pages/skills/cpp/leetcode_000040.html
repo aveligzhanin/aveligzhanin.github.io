@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Combination Sum (LeetCode)</title>
+    <title>Combination Sum II (LeetCode)</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -72,66 +72,60 @@
 	</div>
 
 	<div class="col-xs-6" align=right>
-		Написано: 10.03.2023
+		Написано: 11.03.2023
 	</div>
 
    	<div class="col-sm-12 my">
-		<h1 id="39-сумма-комбинаций-combination-sum">39. <a href="https://leetcode.com/problems/count-and-say/">Сумма комбинаций (Combination Sum)</a></h1>
+		<h1 id="40-сумма-комбинаций-ii-combination-sum-ii">40. <a href="https://leetcode.com/problems/combination-sum-ii/">Сумма комбинаций II (Combination Sum II)</a></h1>
 
 <p><img src="/assets/images/medium.jpg" alt="medium" /></p>
 
 <h2 id="задание">Задание.</h2>
 
-<p>Получен массив <strong>различных</strong> (distinct) целых чисел <code class="language-plaintext highlighter-rouge">candidates</code> и целочисленное значение <code class="language-plaintext highlighter-rouge">target</code></p>
+<p>Получена коллекция кандидатов (<code class="language-plaintext highlighter-rouge">candidates</code>) и номер (<code class="language-plaintext highlighter-rouge">target</code>).</p>
 
-<p>Нужно вернуть список <strong>всех</strong> уникальных комбинаций кандидатов, где выбранные числа суммируются с <code class="language-plaintext highlighter-rouge">target</code>. Можно возвращать комбинации в <strong>любом</strong> порядке.</p>
+<p>Нужно найти <strong>все</strong> уникальные комбинации в кандидатах, где номера кандидатов суммируются с <code class="language-plaintext highlighter-rouge">target</code>.</p>
 
-<p><strong>Одно</strong> и то же число может быть выбрано из кандидатов <strong>неограниченное</strong> количество раз. Две комбинации уникальны, если частота хотя бы одного из выбранных чисел отличается.</p>
+<p>Каждое число в кандидатах может быть использовано только <strong>один раз</strong> в комбинации.</p>
 
-<p>Тестовые примеры генерируются таким образом, что количество уникальных комбинаций, которые в сумме приводят к цели, составляет менее 150 комбинаций для заданных входных данных.</p>
+<p><strong>Примечание:</strong> Набор решений не должен содержать повторяющихся комбинаций.</p>
 
 <h2 id="пример-1">Пример 1.</h2>
 
-<p><strong>Входные данные:</strong> candidates = [2,3,6,7], target = 7</p>
+<p><strong>Входные данные:</strong>  candidates = [10,1,2,7,6,1,5], target = 8</p>
 
-<p><strong>Результат:</strong>  [[2,2,3],[7]]</p>
-
-<p><strong>Пояснение:</strong>  2 и 3 являются кандидатами, и 2 + 2 + 3 = 7. Обратите внимание, что 2 можно использовать несколько раз. 7 – это кандидат, и 7 = 7. Это единственные две комбинации.</p>
+<p><strong>Результат:</strong>  [ [1,1,6], [1,2,5], [1,7], [2,6] ]</p>
 
 <h2 id="пример-2">Пример 2.</h2>
 
-<p><strong>Входные данные:</strong> candidates = [2,3,5], target = 8</p>
+<p><strong>Входные данные:</strong> candidates = [2,5,2,1,2], target = 5</p>
 
-<p><strong>Результат:</strong> [[2,2,2,2],[2,3,3],[3,5]]</p>
-
-<h2 id="пример-3">Пример 3.</h2>
-
-<p><strong>Входные данные:</strong> candidates = [2], target = 1</p>
-
-<p><strong>Результат:</strong> []</p>
+<p><strong>Результат:</strong> [ [1,2,2], [5] ]</p>
 
 <h2 id="решение">Решение.</h2>
 
 <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">class</span> <span class="n">Solution</span> <span class="p">{</span>
 <span class="nl">private:</span>
     <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">res</span><span class="p">;</span>
-    <span class="kt">void</span> <span class="n">getcomb</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">nums</span><span class="p">,</span> <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="kt">int</span> <span class="n">sum</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span><span class="n">cur</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="n">getcomb</span><span class="p">(</span><span class="n">vector</span> <span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">nums</span><span class="p">,</span> <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="kt">int</span> <span class="n">sum</span><span class="p">,</span> <span class="n">vector</span> <span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">cur</span><span class="p">){</span>
         <span class="kt">int</span> <span class="n">len</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
-        <span class="k">if</span><span class="p">(</span><span class="n">sum</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">sum</span> <span class="o">==</span> <span class="mi">0</span><span class="p">){</span>
             <span class="n">res</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">cur</span><span class="p">);</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">sum</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">len</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="n">i</span> <span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">len</span><span class="p">;</span> <span class="n">k</span><span class="o">++</span><span class="p">){</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">len</span><span class="p">;</span> <span class="n">k</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">k</span> <span class="o">&gt;</span> <span class="n">i</span> <span class="o">&amp;&amp;</span> <span class="n">nums</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">==</span> <span class="n">nums</span><span class="p">[</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="p">)</span> <span class="k">continue</span><span class="p">;</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">sum</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
                 <span class="n">cur</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">k</span><span class="p">]);</span>
-                <span class="n">getcomb</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">sum</span> <span class="o">-</span> <span class="n">nums</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">cur</span><span class="p">);</span>
+                <span class="n">getcomb</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span> <span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">sum</span> <span class="o">-</span> <span class="n">nums</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">cur</span><span class="p">);</span>
                 <span class="n">cur</span><span class="p">.</span><span class="n">pop_back</span><span class="p">();</span>
             <span class="p">}</span>
         <span class="p">}</span>
-        <span class="k">return</span> <span class="p">;</span>
+        <span class="k">return</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="nl">public:</span>
-    <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">combinationSum</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">candidates</span><span class="p">,</span> <span class="kt">int</span> <span class="n">target</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">sort</span><span class="p">(</span><span class="n">candidates</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">candidates</span><span class="p">.</span><span class="n">end</span><span class="p">());</span> <span class="c1">// sort the array in ascending order</span>
-        <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="n">cur</span><span class="p">;</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">combinationSum2</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">candidates</span><span class="p">,</span> <span class="kt">int</span> <span class="n">target</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">sort</span><span class="p">(</span><span class="n">candidates</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">candidates</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+        <span class="n">vector</span> <span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">cur</span><span class="p">;</span>
         <span class="n">getcomb</span><span class="p">(</span><span class="n">candidates</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cur</span><span class="p">);</span>
         <span class="k">return</span> <span class="n">res</span><span class="p">;</span>
     <span class="p">}</span>
