@@ -1,0 +1,224 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Multiply Strings (LeetCode)</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Our style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/avel.css">
+</head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+  <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse menu">
+			<ul class="nav navbar-nav navbar-right">
+                 
+                    <li>
+                       <a href="/index.html#about">Обо мне</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#education">Образование</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#work">Работа</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#skills">Навыки</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#portfolio">Портфолио</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#hobby">Увлечения</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#contact">Контакты</a>
+                    </li>
+                 
+        	</ul>
+        </div>
+      </div>
+  </div>
+</nav>
+
+    <section class="pfblock"><div class="container">  		<!-- Translations -->
+	<div class="col-xs-6" align=left>
+		<a href="/index.html">home</a> \ <a href="/pages/skills/cpp.html">Cpp. Задачки для практики</a>
+	</div>
+
+	<div class="col-xs-6" align=right>
+		Написано: 11.03.2023
+	</div>
+
+   	<div class="col-sm-12 my">
+		<h1 id="43-перемножение-строк-multiply-strings">43. <a href="https://leetcode.com/problems/multiply-strings/">Перемножение строк (Multiply Strings)</a></h1>
+
+<p><img src="/assets/images/medium.jpg" alt="medium" /></p>
+
+<h2 id="задание">Задание.</h2>
+
+<p>Получены два неотрицательных целых числа <code class="language-plaintext highlighter-rouge">num1</code> и <code class="language-plaintext highlighter-rouge">num2</code>, представленных в виде строк.</p>
+
+<p>Нужно вернуть произведение <code class="language-plaintext highlighter-rouge">num1</code> и <code class="language-plaintext highlighter-rouge">num2</code>, также представленное в виде строки.</p>
+
+<p><strong>Примечание:</strong> Нельзя использовать какую-либо встроенную библиотеку BigInteger или напрямую преобразовывать входные данные в целое число.</p>
+
+<h2 id="пример-1">Пример 1.</h2>
+
+<p><strong>Входные данные:</strong>  num1 = “2”, num2 = “3”</p>
+
+<p><strong>Результат:</strong>  “6”</p>
+
+<h2 id="пример-2">Пример 2.</h2>
+
+<p><strong>Входные данные:</strong> num1 = “123”, num2 = “456”</p>
+
+<p><strong>Результат:</strong> “56088”</p>
+
+<h2 id="решение">Решение.</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">string</span> <span class="nf">multiply</span><span class="p">(</span><span class="n">string</span> <span class="n">a</span><span class="p">,</span> <span class="n">string</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">a</span><span class="o">==</span><span class="s">"0"</span> <span class="o">||</span> <span class="n">b</span><span class="o">==</span><span class="s">"0"</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s">"0"</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="kt">int</span> <span class="n">m</span> <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">b</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">carry</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">string</span> <span class="n">product</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">m</span><span class="o">+</span><span class="n">n</span> <span class="o">||</span> <span class="n">carry</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="o">-</span><span class="n">n</span><span class="p">);</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="n">min</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">m</span><span class="p">);</span> <span class="o">++</span><span class="n">j</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">carry</span> <span class="o">+=</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">m</span><span class="o">-</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="sc">'0'</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="n">i</span><span class="o">+</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="sc">'0'</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">product</span> <span class="o">+=</span> <span class="n">carry</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">+</span> <span class="sc">'0'</span><span class="p">;</span>
+        <span class="n">carry</span> <span class="o">/=</span> <span class="mi">10</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">reverse</span><span class="p">(</span><span class="n">begin</span><span class="p">(</span><span class="n">product</span><span class="p">),</span> <span class="n">end</span><span class="p">(</span><span class="n">product</span><span class="p">));</span>
+    <span class="k">return</span> <span class="n">product</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="пояснение">Пояснение.</h2>
+
+<p>Используется внешний цикл (0:m+n), для определения цифры в соответствующем разряде произведения.</p>
+
+<p>Предположим, перемножаются числа <code class="language-plaintext highlighter-rouge">a = 1234</code> и <code class="language-plaintext highlighter-rouge">b = 5678</code>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a = 1234 = 1*1000 + 2*100 + 3*10 + 4
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>b = 5678 = 5*1000 + 6*100 + 7*10 + 8
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a * b = 1234 * 5678 = (1*1000 + 2*100 + 3*10 + 4) * (5*1000 + 6*100 + 7*10 + 8)
+                    = 4 * 8
+                    + (3 * 8 + 4 * 7) * 10
+                    + (2 * 8 + 3 * 7 + 4 * 6) * 100
+                    + (1 * 8 + 2 * 7 + 3 * 6 + 4 * 5) * 1000
+                    + (1 * 7 + 2 * 6 + 3 * 5) * 10000
+                    + (1 * 6 + 2 * 5) * 100000
+                    + (1 * 5) * 1000000
+</code></pre></div></div>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>разряд</th>
+      <th>вычисление</th>
+      <th>пример</th>
+      <th>цифра</th>
+      <th>carry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>младший</td>
+      <td>a[3] * b[3]</td>
+      <td>4 * 8 = 32</td>
+      <td>2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <td>десятки</td>
+      <td>carry + a[2] * b[3] + a[3] * b[2]</td>
+      <td>3 + 3 * 8 + 4 * 7 = 3 + 24 + 28 = 55</td>
+      <td>5</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <td>сотни</td>
+      <td>carry + a[1] * b[3] + a[2] * b[2] + a[3] * b[1]</td>
+      <td>5 + 2 * 8 + 3 * 7 + 4 * 6 = 5 + 16 + 21 + 24 = 66</td>
+      <td>6</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <td>тысячи</td>
+      <td>carry + a[0] * b[3] + a[1] * b[2] + a[2] * b[1] + a[3] * b[0]</td>
+      <td>6 + 1 * 8 + 2 * 7 + 3 * 6 + 4 * 5 = 6 + 8 + 14 + 18 + 20 = 66</td>
+      <td>6</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <td>10000</td>
+      <td>carry + a[0] * b[2] + a[1] * b[1] + a[2] * b[0]</td>
+      <td>6 + 1 * 7 + 2 * 6 + 3 * 5 = 6 + 7 + 12 + 15 = 40</td>
+      <td>0</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>100000</td>
+      <td>carry + a[0] * b[1] + a[1] * b[0]</td>
+      <td>4 + 1 * 6 + 2 * 5 = 4 + 6 + 10 = 20</td>
+      <td>0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>1000000</td>
+      <td>carry + a[0] * b[0]</td>
+      <td>2 + 1 * 5 = 2 + 5 = 7</td>
+      <td>7</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Результат:</strong> <code class="language-plaintext highlighter-rouge">product = '7' + '0' + '0' + '6' + '6' + '5' + '2'</code></p>
+
+   	</div>
+</div></section>
+
+    <footer class="footer hexlet-footer py-5 mt-5 text-muted">
+  <div class="container">
+    <div class="row mt-1">
+      <div class="col-12 text-center">
+        <a href="https://aveligzhanin.github.io/">Велигжанин Андрей</a> — Программист-разработчик C++ и Oracle.
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>
