@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Partition Labels (LeetCode)</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Our style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/avel.css">
+</head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+  <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse menu">
+			<ul class="nav navbar-nav navbar-right">
+                 
+                    <li>
+                       <a href="/index.html#about">Обо мне</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#education">Образование</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#work">Работа</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#skills">Навыки</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#portfolio">Портфолио</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#hobby">Увлечения</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#contact">Контакты</a>
+                    </li>
+                 
+        	</ul>
+        </div>
+      </div>
+  </div>
+</nav>
+
+    <section class="pfblock"><div class="container">  		<!-- Translations -->
+	<div class="col-xs-6" align=left>
+		<a href="/index.html">home</a> \ <a href="/pages/skills/cpp.html">Cpp. Задачки для практики</a>
+	</div>
+
+	<div class="col-xs-6" align=right>
+		Написано: 15.03.2023
+	</div>
+
+   	<div class="col-sm-12 my">
+		<h1 id="763-разметка-разделов-partition-labels">763. <a href="https://leetcode.com/problems/partition-labels/">Разметка разделов (Partition Labels)</a></h1>
+
+<p><img src="/assets/images/medium.jpg" alt="medium" /></p>
+
+<h2 id="задание">Задание.</h2>
+
+<p>Дана строка <code class="language-plaintext highlighter-rouge">s</code>.</p>
+
+<p>Нужно разделить строку на как можно большее количество частей, чтобы каждая буква появлялась не более чем в одной части.</p>
+
+<p>Обратите внимание, что разбиение выполнено таким образом, что после объединения всех частей по порядку результирующей строкой будет <code class="language-plaintext highlighter-rouge">s</code>.</p>
+
+<p>Верните вектор чисел, представляющих размер этих частей.</p>
+
+<h2 id="пример-1">Пример 1.</h2>
+
+<p><strong>Входные данные:</strong>  s = “ababcbacadefegdehijhklij”</p>
+
+<p><strong>Результат:</strong>  [9,7,8]</p>
+
+<p><strong>Пояснение:</strong> Разделение – “ababcbaca”, “defegde”, “hijhklij”. Это разбиение таким образом, чтобы каждая буква появлялась не более чем в одной части. Разделение “ababcbacadefegde”, “hijhklij” не подходит, поскольку разбивает <code class="language-plaintext highlighter-rouge">s</code> на меньшее количество частей.</p>
+
+<h2 id="пример-2">Пример 2.</h2>
+
+<p><strong>Входные данные:</strong> s = “eccbbbbdec”</p>
+
+<p><strong>Результат:</strong> [10]</p>
+
+<h2 id="решение">Решение.</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">class</span> <span class="n">Solution</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">partitionLabels</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">unordered_map</span><span class="o">&lt;</span><span class="kt">char</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">lp</span><span class="p">;</span>
+        <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="n">ans</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">length</span><span class="p">();</span>
+
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">lp</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// i указывает на начало фрагмента</span>
+        <span class="c1">// lp[ s[i] ] указывает на последнее вхождение символа</span>
+        <span class="kt">int</span> <span class="n">maxExtend</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// указывает на конец последовательности</span>
+        <span class="kt">int</span> <span class="n">prev</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="c1">// указывает на индекс завершения предыдущей последовательности</span>
+
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">maxExtend</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span> <span class="n">maxExtend</span><span class="p">,</span> <span class="n">lp</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="p">);</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">maxExtend</span> <span class="o">==</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">ans</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">maxExtend</span> <span class="o">-</span> <span class="n">prev</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">maxExtend</span> <span class="o">==</span> <span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">ans</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="n">prev</span><span class="p">);</span>
+                <span class="n">prev</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+                <span class="n">maxExtend</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">ans</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="способ-решения">Способ решения.</h2>
+
+<p>1) Сначала для каждого символа в строке определяется последняя позиция, в которой этот символ встречается в строке.</p>
+
+<p>2) Затем ищутся последовательности. Для начального символа последовательности (который отмечается индексом <code class="language-plaintext highlighter-rouge">i</code>) определяется <code class="language-plaintext highlighter-rouge">maxExtend</code>, который указывет на индекс завершения последовательности.</p>
+
+<p>Так, например, для символа <code class="language-plaintext highlighter-rouge">a</code> индекс завершения будет <code class="language-plaintext highlighter-rouge">8</code>, то есть индекс, в котором <code class="language-plaintext highlighter-rouge">a</code> последний раз встречается в строке.</p>
+
+<p><img src="/assets/images/LeetCode_000763.jpg" alt="LeetCode-000763" /></p>
+
+<p>Когда индекс <code class="language-plaintext highlighter-rouge">i</code> совпадёт с <code class="language-plaintext highlighter-rouge">maxExtend</code> – это будет означать, что последовательность определена и можно запомнить её размер, после чего можно перейти к определению следующей последовательности.</p>
+
+<p>Указатель <code class="language-plaintext highlighter-rouge">prev</code> отмечает индекс завершения предыдущей последовательности.</p>
+
+<p>При определении последовательности, <code class="language-plaintext highlighter-rouge">maxExtend</code> может увеличиваться в соответствии с индексом завершения символов, который входят в последовательность. Так например, для второй последовательности при рассмотрении символа <code class="language-plaintext highlighter-rouge">d</code> будет установлен <code class="language-plaintext highlighter-rouge">maxExtend = 14</code>, на следующем шаге при рассмотрении символа <code class="language-plaintext highlighter-rouge">e</code> будет установлен <code class="language-plaintext highlighter-rouge">maxExtend = 15</code>. Другие символы не будут приводить к расширению <code class="language-plaintext highlighter-rouge">maxExtend</code>.</p>
+
+   	</div>
+</div></section>
+
+    <footer class="footer hexlet-footer py-5 mt-5 text-muted">
+  <div class="container">
+    <div class="row mt-1">
+      <div class="col-12 text-center">
+        <a href="https://aveligzhanin.github.io/">Велигжанин Андрей</a> — Программист-разработчик C++ и Oracle.
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>
