@@ -110,7 +110,7 @@
 
 <p><strong>Результат:</strong> [0,1]</p>
 
-<h2 id="решение">Решение.</h2>
+<h2 id="решение-1">Решение 1.</h2>
 
 <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">class</span> <span class="n">Solution</span> <span class="p">{</span>
 <span class="nl">public:</span>
@@ -126,6 +126,49 @@
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
+
+<h2 id="решение-2">Решение 2.</h2>
+
+<p>Используется метод двух указателей (см.ниже). Для этого полученный вектор копируется, копия сортируется (копия также содержит индексы исходного вектора).</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">class</span> <span class="n">Solution</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">twoSum</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">nums</span><span class="p">,</span> <span class="kt">int</span> <span class="n">target</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">vector</span><span class="o">&lt;</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">temp</span><span class="p">;</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+            <span class="n">temp</span><span class="p">.</span><span class="n">push_back</span><span class="p">({</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">i</span><span class="p">});</span>
+        <span class="p">}</span>
+        <span class="n">sort</span><span class="p">(</span><span class="n">temp</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">temp</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+        <span class="kt">int</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+        <span class="k">while</span><span class="p">(</span><span class="n">x</span><span class="o">&lt;</span><span class="n">y</span><span class="p">){</span>
+            <span class="kt">int</span> <span class="n">sum</span><span class="o">=</span><span class="n">temp</span><span class="p">[</span><span class="n">x</span><span class="p">].</span><span class="n">first</span><span class="o">+</span><span class="n">temp</span><span class="p">[</span><span class="n">y</span><span class="p">].</span><span class="n">first</span><span class="p">;</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">sum</span><span class="o">==</span><span class="n">target</span><span class="p">)</span>
+                <span class="k">return</span> <span class="p">{</span><span class="n">temp</span><span class="p">[</span><span class="n">x</span><span class="p">].</span><span class="n">second</span><span class="p">,</span><span class="n">temp</span><span class="p">[</span><span class="n">y</span><span class="p">].</span><span class="n">second</span><span class="p">};</span>
+            <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">sum</span><span class="o">&lt;</span><span class="n">target</span><span class="p">)</span>
+                <span class="n">x</span><span class="o">++</span><span class="p">;</span>
+            <span class="k">else</span><span class="p">{</span>
+                <span class="n">y</span><span class="o">--</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="p">{</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">};</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="способ-решения">Способ решения.</h2>
+
+<p><a href="https://wcademy.ru/two-pointers-method/">Метод двух указателей</a> используется, когда массив упорядочен. Сначала левый указатель указывает на начало массива, а правый на его конец. Если их сумма равна целевому значению, то мы выходим, если нет, то:</p>
+
+<ul>
+  <li>
+    <p>если сумма больше целевого значения, то нам нужна меньшая сумма (логично, да?) и мы сдвигаем левее правый указатель</p>
+  </li>
+  <li>
+    <p>если сумма меньше целевого значения, то мы сдвигаем левый указатель, чтобы её увеличить</p>
+  </li>
+</ul>
+
+<p><img src="/assets/images/LeetCode_000001.jpg" alt="LeetCode-000001" /></p>
 
 
    	</div>
