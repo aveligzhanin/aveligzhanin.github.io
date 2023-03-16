@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Best Time to Buy and Sell Stock with Transaction Fee (LeetCode)</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Our style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/avel.css">
+</head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+  <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse menu">
+			<ul class="nav navbar-nav navbar-right">
+                 
+                    <li>
+                       <a href="/index.html#about">Обо мне</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#education">Образование</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#work">Работа</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#skills">Навыки</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#portfolio">Портфолио</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#hobby">Увлечения</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#contact">Контакты</a>
+                    </li>
+                 
+        	</ul>
+        </div>
+      </div>
+  </div>
+</nav>
+
+    <section class="pfblock"><div class="container">  		<!-- Translations -->
+	<div class="col-xs-6" align=left>
+		<a href="/index.html">home</a> \ <a href="/pages/skills/cpp.html">Cpp. Задачки для практики</a>
+	</div>
+
+	<div class="col-xs-6" align=right>
+		Написано: 16.03.2023
+	</div>
+
+   	<div class="col-sm-12 my">
+		<h1 id="714-лучшее-время-для-покупки-и-продажи-акций-с-комиссией-за-транзакцию-best-time-to-buy-and-sell-stock-with-transaction-fee">714. <a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/">Лучшее время для покупки и продажи акций с комиссией за транзакцию (Best Time to Buy and Sell Stock with Transaction Fee)</a></h1>
+
+<p><img src="/assets/images/medium.jpg" alt="medium" /></p>
+
+<h2 id="задание">Задание.</h2>
+
+<p>Вам предоставляется массив <code class="language-plaintext highlighter-rouge">prices</code>, где <code class="language-plaintext highlighter-rouge">prices[i]</code> – это цена данной акции на i-й день, а также целочисленное <code class="language-plaintext highlighter-rouge">fee</code>, представляющее комиссию за транзакцию.</p>
+
+<p>Найдите максимальную прибыль, которой вы можете достичь. Вы можете совершать столько транзакций, сколько захотите, однако за каждую транзакцию вам необходимо оплатить комиссию.</p>
+
+<p><strong>Примечание:</strong> Вы не можете участвовать в нескольких транзакциях одновременно (т.е. вы должны продать акции, прежде чем покупать снова).</p>
+
+<h2 id="пример-1">Пример 1.</h2>
+
+<p><strong>Входные данные:</strong>  prices = [1,3,2,8,4,9], fee = 2</p>
+
+<p><strong>Результат:</strong>  8</p>
+
+<p><strong>Объяснение:</strong></p>
+
+<p>Максимальная прибыль может быть достигнута за счет:</p>
+
+<ul>
+  <li>
+    <p>Покупка по prices[0] = 1</p>
+  </li>
+  <li>
+    <p>Продажа по prices[3] = 8</p>
+  </li>
+  <li>
+    <p>Покупка по prices[4] = 4</p>
+  </li>
+  <li>
+    <p>Продажа по prices[5] = 9</p>
+  </li>
+</ul>
+
+<p>Общая прибыль составляет ((8 - 1) - 2) + ((9 - 4) - 2) = 8.</p>
+
+<h2 id="пример-2">Пример 2.</h2>
+
+<p><strong>Входные данные:</strong> prices = [1,3,7,5,10,3], fee = 3</p>
+
+<p><strong>Результат:</strong> 6</p>
+
+<h2 id="решение">Решение.</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">class</span> <span class="n">Solution</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="kt">int</span> <span class="n">maxProfit</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">prices</span><span class="p">,</span> <span class="kt">int</span> <span class="n">fee</span><span class="p">)</span> <span class="p">{</span>
+        
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="способ-решения">Способ решения.</h2>
+
+   	</div>
+</div></section>
+
+    <footer class="footer hexlet-footer py-5 mt-5 text-muted">
+  <div class="container">
+    <div class="row mt-1">
+      <div class="col-12 text-center">
+        <a href="https://aveligzhanin.github.io/">Велигжанин Андрей</a> — Программист-разработчик C++ и Oracle.
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>
