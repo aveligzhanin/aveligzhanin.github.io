@@ -1,0 +1,194 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Linked List Cycle (LeetCode)</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Our style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/avel.css">
+</head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+  <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse menu">
+			<ul class="nav navbar-nav navbar-right">
+                 
+                    <li>
+                       <a href="/index.html#about">Обо мне</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#education">Образование</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#work">Работа</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#skills">Навыки</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#portfolio">Портфолио</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#hobby">Увлечения</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#contact">Контакты</a>
+                    </li>
+                 
+        	</ul>
+        </div>
+      </div>
+  </div>
+</nav>
+
+    <section class="pfblock"><div class="container">  		<!-- Translations -->
+	<div class="col-xs-6" align=left>
+		<a href="/index.html">home</a> \ <a href="/pages/skills/cpp.html">Cpp. Задачки для практики</a>
+	</div>
+
+	<div class="col-xs-6" align=right>
+		Написано: 15.03.2023
+	</div>
+
+   	<div class="col-sm-12 my">
+		<h1 id="35-цикл-в-связанном-списке-linked-list-cycle">35. <a href="https://leetcode.com/problems/linked-list-cycle/description/">Цикл в связанном списке (Linked List Cycle)</a></h1>
+
+<p><img src="/assets/images/easy.jpg" alt="easy" /></p>
+
+<h2 id="задание">Задание.</h2>
+
+<p>Получен <code class="language-plaintext highlighter-rouge">head</code>, заголовок связанного списка.</p>
+
+<p>Определите, есть ли в связанном списке цикл.</p>
+
+<p>В связанном списке существует цикл, если в списке есть какой-то узел, до которого можно снова добраться, непрерывно следуя за следующим указателем. Внутренне <code class="language-plaintext highlighter-rouge">pos</code> используется для обозначения индекса узла, к которому подключен следующий указатель <code class="language-plaintext highlighter-rouge">tail</code>. Обратите внимание, что <code class="language-plaintext highlighter-rouge">pos</code> <strong>не передается в качестве параметра</strong>.</p>
+
+<p>Вернните <code class="language-plaintext highlighter-rouge">true</code>, если в связанном списке есть цикл. В противном случае верните значение <code class="language-plaintext highlighter-rouge">false</code>.</p>
+
+<h2 id="пример-1">Пример 1.</h2>
+
+<p><img src="/assets/images/LeetCode_000141a.jpg" alt="LeetCode-000141a" /></p>
+
+<p><strong>Входные данные:</strong> head = [3,2,0,-4], pos = 1</p>
+
+<p><strong>Результат:</strong> true</p>
+
+<p><strong>Объяснение:</strong> В связанном списке есть цикл, где хвост соединяется с 1-м узлом (с индексом 0).</p>
+
+<h2 id="пример-2">Пример 2.</h2>
+
+<p><img src="/assets/images/LeetCode_000141b.jpg" alt="LeetCode-000141b" /></p>
+
+<p><strong>Входные данные:</strong> head = [1,2], pos = 0</p>
+
+<p><strong>Результат:</strong> true</p>
+
+<p><strong>Объяснение:</strong> В связанном списке есть цикл, где хвост соединяется с 0-м узлом.</p>
+
+<h2 id="пример-3">Пример 3.</h2>
+
+<p><img src="/assets/images/LeetCode_000141c.jpg" alt="LeetCode-000141c" /></p>
+
+<p><strong>Входные данные:</strong> head = [1], pos = -1</p>
+
+<p><strong>Результат:</strong> false</p>
+
+<p><strong>Объяснение:</strong> В связанном списке нет циклов.</p>
+
+<h2 id="решение">Решение.</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */</span>
+<span class="n">class</span> <span class="n">Solution</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="n">bool</span> <span class="n">hasCycle</span><span class="p">(</span><span class="n">ListNode</span> <span class="o">*</span><span class="n">head</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="k">if</span><span class="p">(</span><span class="n">head</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+            <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+
+        <span class="n">ListNode</span> <span class="o">*</span><span class="n">fast</span> <span class="o">=</span> <span class="n">head</span><span class="p">;</span>
+        <span class="n">ListNode</span> <span class="o">*</span><span class="n">slow</span> <span class="o">=</span> <span class="n">head</span><span class="p">;</span>
+
+		<span class="c1">// пока указатели fast and fast-&gt; next не достигнут пустого элемента</span>
+		<span class="c1">// будем увеличивать указатель fast на 2 шага, а указатель slow на один</span>
+        <span class="k">while</span><span class="p">(</span><span class="n">fast</span> <span class="o">!=</span> <span class="nb">NULL</span> <span class="o">&amp;&amp;</span> <span class="n">fast</span> <span class="o">-&gt;</span><span class="n">next</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">fast</span> <span class="o">=</span> <span class="n">fast</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+            <span class="n">slow</span> <span class="o">=</span> <span class="n">slow</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+
+			<span class="c1">// Если медленный и быстрый указатели свопали,</span>
+			<span class="c1">// Значит связанный список имеет цикл.</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">fast</span> <span class="o">==</span> <span class="n">slow</span><span class="p">)</span>
+                <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+        <span class="p">}</span>
+
+		<span class="c1">// если при проходе по списку дошли до пустого элемента, значит в списке нет циклов</span>
+        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="способ-решения">Способ решения.</h2>
+
+<p>Для нахождения циклов в списке используется <a href="https://ru.wikipedia.org/wiki/%D0%9D%D0%B0%D1%85%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5_%D1%86%D0%B8%D0%BA%D0%BB%D0%B0">алгоритм Флойда</a> (или алгоритм черепахи и зайца).</p>
+
+<p>Для этого используются два указателя, которые двигаются по списку с различной скоростью: быстро (заяц) и медленно (черепаха). Если при передвижении по списку быстрый указатель догонит медленный, значит в списке есть цикл.</p>
+
+<p>Заяц бежит впереди черепахи.</p>
+
+<p><img src="/assets/images/Floyd_1.jpg" alt="Floyd_1" /></p>
+
+<p>На следующем шаге заяц ещё быстрее убегает от черепахи.</p>
+
+<p><img src="/assets/images/Floyd_2.jpg" alt="Floyd_2" /></p>
+
+<p>Но если в списке есть цикл, когда-нибудь указатели совпадут.</p>
+
+<p><img src="/assets/images/Floyd_3.jpg" alt="Floyd_3" /></p>
+
+   	</div>
+</div></section>
+
+    <footer class="footer hexlet-footer py-5 mt-5 text-muted">
+  <div class="container">
+    <div class="row mt-1">
+      <div class="col-12 text-center">
+        <a href="https://aveligzhanin.github.io/">Велигжанин Андрей</a> — Программист-разработчик C++ и Oracle.
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>
