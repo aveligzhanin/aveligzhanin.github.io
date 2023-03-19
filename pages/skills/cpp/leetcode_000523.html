@@ -1,0 +1,190 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Continuous Subarray Sum (LeetCode)</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Our style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/avel.css">
+</head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+  <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse menu">
+			<ul class="nav navbar-nav navbar-right">
+                 
+                    <li>
+                       <a href="/index.html#about">Обо мне</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#education">Образование</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#work">Работа</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#skills">Навыки</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#portfolio">Портфолио</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#hobby">Увлечения</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#contact">Контакты</a>
+                    </li>
+                 
+        	</ul>
+        </div>
+      </div>
+  </div>
+</nav>
+
+    <section class="pfblock"><div class="container">  		<!-- Translations -->
+	<div class="col-xs-6" align=left>
+		<a href="/index.html">home</a> \ <a href="/pages/skills/cpp.html">Cpp. Задачки для практики</a>
+	</div>
+
+	<div class="col-xs-6" align=right>
+		Написано: 18.03.2023
+	</div>
+
+   	<div class="col-sm-12 my">
+		<h1 id="523-сумма-непрерывного-подмассива-continuous-subarray-sum">523. <a href="https://leetcode.com/problems/continuous-subarray-sum/">Сумма непрерывного подмассива (Continuous Subarray Sum)</a></h1>
+
+<p><img src="/assets/images/medium.jpg" alt="medium" /></p>
+
+<h2 id="задание">Задание.</h2>
+
+<p>Получен целочисленный массив <code class="language-plaintext highlighter-rouge">nums</code> и целое число <code class="language-plaintext highlighter-rouge">k</code></p>
+
+<p>Верните <code class="language-plaintext highlighter-rouge">true</code>, если у <code class="language-plaintext highlighter-rouge">nums</code> есть <strong>хороший подмассив</strong>, или <code class="language-plaintext highlighter-rouge">false</code> в противном случае.</p>
+
+<p><strong>Хороший подмассив</strong> – это подмассив, у которого:</p>
+
+<ul>
+  <li>
+    <p>длина равна по меньшей мере двум,</p>
+  </li>
+  <li>
+    <p>сумма элементов подмассива кратна <code class="language-plaintext highlighter-rouge">k</code>.</p>
+  </li>
+</ul>
+
+<p>Обратите внимание, что:</p>
+
+<p><strong>Подмассив</strong> – это непрерывная часть массива.</p>
+
+<p>Целое число <code class="language-plaintext highlighter-rouge">x</code> кратно <code class="language-plaintext highlighter-rouge">k</code>, если существует целое число <code class="language-plaintext highlighter-rouge">n</code> такое, что <code class="language-plaintext highlighter-rouge">x = n * k</code>.</p>
+
+<p><code class="language-plaintext highlighter-rouge">0</code> всегда кратно <code class="language-plaintext highlighter-rouge">k</code>.</p>
+
+<h2 id="пример-1">Пример 1.</h2>
+
+<p><strong>Входные данные:</strong>  nums = [23,2,4,6,7], k = 6</p>
+
+<p><strong>Результат:</strong>  true</p>
+
+<p><strong>Объяснение:</strong> [2, 4] представляет собой непрерывный подмассив размера <code class="language-plaintext highlighter-rouge">2</code>, элементы которого в сумме составляют <code class="language-plaintext highlighter-rouge">6</code>.</p>
+
+<h2 id="пример-2">Пример 2.</h2>
+
+<p><strong>Входные данные:</strong> nums = [23,2,6,4,7], k = 6</p>
+
+<p><strong>Результат:</strong> true</p>
+
+<p><strong>Объяснение:</strong> [23, 2, 6, 4, 7] представляет собой непрерывный подмассив размера 5, сумма элементов которого составляет 42. 42 кратно 6, потому что 42 = 7 * 6, а 7 - целое число.</p>
+
+<h2 id="пример-3">Пример 3.</h2>
+
+<p><strong>Входные данные:</strong> nums = [23,2,6,4,7], k = 13</p>
+
+<p><strong>Результат:</strong> false</p>
+
+<h2 id="решение">Решение.</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">class</span> <span class="n">Solution</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="n">bool</span> <span class="n">checkSubarraySum</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">nums</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">unordered_map</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="kt">int</span><span class="o">&gt;</span><span class="n">m</span><span class="p">;</span>
+        <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">len</span> <span class="o">=</span> <span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+
+        <span class="k">if</span><span class="p">(</span><span class="n">k</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">len</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">sum</span> <span class="o">+=</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">k</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">sum</span> <span class="o">%=</span> <span class="n">k</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="k">if</span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">sum</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="c1">// такого остатка от деления не было</span>
+                <span class="c1">// запоминаем индекс, на котором он встретился</span>
+                <span class="n">m</span><span class="p">[</span><span class="n">sum</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="c1">// такой остаток уже встречался, </span>
+                <span class="c1">// это кандидат на успешно найденную последовательность</span>
+                <span class="c1">// нужно проверить, чтобы разность текущего и ранее встреченного индексов</span>
+                <span class="c1">// была больше единицы (в последовательности два элемента и больше)</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="n">m</span><span class="p">[</span><span class="n">sum</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="способ-решения">Способ решения.</h2>
+
+<p>Элементы массива <code class="language-plaintext highlighter-rouge">nums</code> последовательно складываются, сумма делится на <code class="language-plaintext highlighter-rouge">k</code>, определяется остаток от деления.</p>
+
+<p>В карте <code class="language-plaintext highlighter-rouge">m</code> запоминаются индексы, в которых встречался соответствующий остаток от деления.</p>
+
+<p>Если данный остаток от деления (<code class="language-plaintext highlighter-rouge">sum</code>) встретится ещё раз, то между текущим положением элемента (<code class="language-plaintext highlighter-rouge">i</code>) и прежним положением (<code class="language-plaintext highlighter-rouge">m[sum]</code>) даст последовательность, которая нацело делится на <code class="language-plaintext highlighter-rouge">k</code>.</p>
+
+<p>Например,</p>
+
+<p><img src="/assets/images/LeetCode_000523a.jpg" alt="LeetCode-000523a" /></p>
+
+   	</div>
+</div></section>
+
+    <footer class="footer hexlet-footer py-5 mt-5 text-muted">
+  <div class="container">
+    <div class="row mt-1">
+      <div class="col-12 text-center">
+        <a href="https://aveligzhanin.github.io/">Велигжанин Андрей</a> — Программист-разработчик C++ и Oracle.
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>
