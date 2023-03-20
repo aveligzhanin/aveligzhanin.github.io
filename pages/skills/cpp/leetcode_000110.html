@@ -124,9 +124,25 @@
  * };
  */</span>
 <span class="n">class</span> <span class="n">Solution</span> <span class="p">{</span>
+<span class="nl">private:</span>
+    <span class="n">bool</span> <span class="n">ans</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">checkBalance</span><span class="p">(</span><span class="n">TreeNode</span><span class="o">*</span> <span class="n">root</span><span class="p">){</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">root</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">ans</span> <span class="o">==</span> <span class="nb">false</span><span class="p">)</span> 
+            <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">leftTree</span> <span class="o">=</span> <span class="n">checkBalance</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">);</span>
+        <span class="kt">int</span> <span class="n">rightTree</span> <span class="o">=</span> <span class="n">checkBalance</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">abs</span><span class="p">(</span><span class="n">leftTree</span> <span class="o">-</span> <span class="n">rightTree</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">ans</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">max</span><span class="p">(</span><span class="n">leftTree</span><span class="p">,</span> <span class="n">rightTree</span><span class="p">);</span>
+    <span class="p">}</span>
 <span class="nl">public:</span>
-    <span class="n">bool</span> <span class="n">isBalanced</span><span class="p">(</span><span class="n">TreeNode</span><span class="o">*</span> <span class="n">root</span><span class="p">)</span> <span class="p">{</span>
-        
+    <span class="n">bool</span> <span class="n">isBalanced</span><span class="p">(</span><span class="n">TreeNode</span><span class="o">*</span> <span class="n">root</span><span class="p">){</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+        <span class="n">checkBalance</span><span class="p">(</span><span class="n">root</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">ans</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">};</span>
 </code></pre></div></div>
