@@ -106,14 +106,122 @@
 
 <p><strong>Результат:</strong> [””]</p>
 
-<h2 id="решение">Решение.</h2>
+<h2 id="решение-1-рекурсивное">Решение 1 (рекурсивное).</h2>
 
 <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">class</span> <span class="n">Solution</span> <span class="p">{</span>
+<span class="nl">private:</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">ans</span><span class="p">;</span>
+    <span class="n">unordered_set</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">uset</span><span class="p">;</span> 
+    <span class="kt">int</span> <span class="n">countRemoval</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">){</span>
+        <span class="n">stack</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> <span class="n">st</span><span class="p">;</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="sc">'('</span><span class="p">){</span>
+                <span class="n">st</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="sc">'('</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="sc">')'</span><span class="p">){</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">st</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">==</span><span class="mi">0</span><span class="p">){</span>
+                    <span class="n">st</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="sc">')'</span><span class="p">);</span>
+                <span class="p">}</span>
+                <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">st</span><span class="p">.</span><span class="n">top</span><span class="p">()</span><span class="o">==</span><span class="sc">')'</span><span class="p">){</span>
+                    <span class="n">st</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="sc">')'</span><span class="p">);</span>
+                <span class="p">}</span>
+                <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">st</span><span class="p">.</span><span class="n">top</span><span class="p">()</span><span class="o">==</span><span class="sc">'('</span><span class="p">){</span>
+                    <span class="n">st</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        
+        <span class="kt">int</span> <span class="n">invalid</span><span class="o">=</span><span class="n">st</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="c1">//minimum removals</span>
+        
+        <span class="k">return</span> <span class="n">invalid</span><span class="p">;</span>
+    <span class="p">}</span>
+   
+    <span class="kt">void</span> <span class="n">helper</span><span class="p">(</span><span class="kt">int</span> <span class="n">invalid</span><span class="p">,</span><span class="n">string</span> <span class="n">s</span><span class="p">){</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">invalid</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">invalid</span><span class="o">==</span><span class="mi">0</span><span class="p">){</span> 
+            <span class="kt">int</span> <span class="n">invalidNow</span><span class="o">=</span><span class="n">countRemoval</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">invalidNow</span><span class="o">==</span><span class="mi">0</span><span class="p">){</span>
+                <span class="n">ans</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+      <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+          <span class="k">if</span> <span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">')'</span> <span class="o">&amp;&amp;</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">'('</span><span class="p">)</span>
+                <span class="p">{</span>
+                <span class="k">continue</span><span class="p">;</span>
+                <span class="p">}</span>
+          
+          <span class="n">string</span> <span class="n">left</span><span class="o">=</span><span class="n">s</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">i</span><span class="p">);</span>
+          <span class="n">string</span> <span class="n">right</span><span class="o">=</span><span class="n">s</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+          <span class="n">string</span> <span class="n">temp</span><span class="o">=</span><span class="n">left</span><span class="o">+</span><span class="n">right</span><span class="p">;</span>
+          <span class="k">if</span><span class="p">(</span><span class="n">uset</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span><span class="o">==</span><span class="n">uset</span><span class="p">.</span><span class="n">end</span><span class="p">()){</span>
+              <span class="n">uset</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+            <span class="n">helper</span><span class="p">(</span><span class="n">invalid</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">temp</span><span class="p">);</span>       
+          <span class="p">}</span>
+               
+      <span class="p">}</span>  
+    <span class="p">}</span>
 <span class="nl">public:</span>
     <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">removeInvalidParentheses</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span>
-        
+        <span class="kt">int</span> <span class="n">invalid</span><span class="o">=</span><span class="n">countRemoval</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+        <span class="n">helper</span><span class="p">(</span><span class="n">invalid</span><span class="p">,</span><span class="n">s</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">ans</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="решение-2-bfs">Решение 2 (BFS).</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class Solution {
+private:
+    bool check(string s)
+    {
+        int count = 0;
+            for (const char ch : s) {
+                if (ch == '(') count++;
+                if (ch == ')') count--;
+                if (count &lt; 0) return false;
+            }
+            return count == 0;
+    }
+public:
+    vector&lt;string&gt; removeInvalidParentheses(string s)
+    {
+        queue&lt;string&gt; q;
+        q.push(s);
+        vector&lt;string&gt; ret;
+        unordered_set&lt;string&gt; v;
+        int flag = 0;
+        while(q.empty() == false &amp;&amp; flag == 0) {
+            int n=q.size();
+            for(int i=0;i&lt;n;++i)
+            {
+                string a=q.front();
+                q.pop();
+                if(check(a) == true) {
+                    ret.push_back(a);
+                    flag = 1;
+                } else if(flag == 0) {
+                    // решение ещё не найдено на данном уровне
+                    for(int j=0;j&lt;(int)a.length();++j) {
+                        // проход по строке
+                        string t=a;
+                        if(a[j]=='('||a[j]==')') {
+                            // удаляем каждую встреченную скобку
+                            t.erase(j,1);
+                            if(v.find(t) == v.end()) {
+                                // добавляем строчку в очередь, если такая прежде не встречалась
+                                q.push(t);
+                                v.insert(t);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return ret;
+    }
+};
 </code></pre></div></div>
 
 <h2 id="способ-решения">Способ решения.</h2>
