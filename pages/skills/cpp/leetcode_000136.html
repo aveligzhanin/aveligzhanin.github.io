@@ -111,11 +111,20 @@
 <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">class</span> <span class="n">Solution</span> <span class="p">{</span>
 <span class="nl">public:</span>
     <span class="kt">int</span> <span class="n">singleNumber</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">nums</span><span class="p">)</span> <span class="p">{</span>
-        
+        <span class="kt">int</span> <span class="n">ans</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">for</span><span class="p">(</span><span class="k">auto</span> <span class="n">x</span><span class="o">:</span> <span class="n">nums</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">ans</span> <span class="o">^=</span> <span class="n">x</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">ans</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">};</span>
 </code></pre></div></div>
 
+<h2 id="способ-решения">Способ решения.</h2>
+
+<p>Используются свойства операции XOR (исключающее ИЛИ), при котором <code class="language-plaintext highlighter-rouge">a XOR a = 0</code> (число, к которому применяется операция “исключающего ИЛИ” с самим собой, в результате даёт ноль).</p>
+
+<p>Таким образом, если в последовательности все числа встречаются дважды, то итогом применения к ним операции “исключающего ИЛИ” будет ноль, а единственным числом последовательности останется число, которое встерчается единожды.</p>
 
    	</div>
 </div></section>
