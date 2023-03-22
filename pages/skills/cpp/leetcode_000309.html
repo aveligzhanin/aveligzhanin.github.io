@@ -109,14 +109,77 @@
 <h2 id="решение">Решение.</h2>
 
 <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">class</span> <span class="n">Solution</span> <span class="p">{</span>
+<span class="nl">private:</span>
+    <span class="kt">int</span> <span class="n">n</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">solve</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">prices</span><span class="p">,</span> <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="kt">int</span> <span class="n">to_buy</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">dp</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">i</span> <span class="o">&gt;=</span> <span class="n">n</span><span class="p">)</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// base case</span>
+
+        <span class="k">if</span><span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">to_buy</span><span class="p">]</span> <span class="o">!=</span> <span class="n">INT_MIN</span><span class="p">)</span> <span class="k">return</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">to_buy</span><span class="p">];</span>
+
+        <span class="kt">int</span> <span class="n">curr_price</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="kt">int</span> <span class="n">ans</span><span class="p">;</span>
+
+        <span class="k">if</span><span class="p">(</span><span class="n">to_buy</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span> 
+            <span class="kt">int</span> <span class="n">buy_curr</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">prices</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">dp</span><span class="p">)</span> <span class="o">-</span> <span class="n">curr_price</span><span class="p">;</span> <span class="c1">// buy on current price</span>
+            <span class="kt">int</span> <span class="n">buy_next</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">prices</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dp</span><span class="p">);</span> <span class="c1">// leave current day</span>
+
+            <span class="n">ans</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">buy_curr</span><span class="p">,</span> <span class="n">buy_next</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="kt">int</span> <span class="n">sold_curr</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">prices</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dp</span><span class="p">)</span> <span class="o">+</span> <span class="n">curr_price</span><span class="p">;</span> <span class="c1">// sell on current price</span>
+            <span class="kt">int</span> <span class="n">sold_next</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">prices</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">dp</span><span class="p">);</span> <span class="c1">// sell on next day's price</span>
+
+            <span class="n">ans</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">sold_curr</span><span class="p">,</span> <span class="n">sold_next</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">to_buy</span><span class="p">]</span> <span class="o">=</span> <span class="n">ans</span><span class="p">;</span>
+    <span class="p">}</span>
 <span class="nl">public:</span>
     <span class="kt">int</span> <span class="n">maxProfit</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">prices</span><span class="p">)</span> <span class="p">{</span>
-        
+        <span class="n">n</span> <span class="o">=</span> <span class="n">prices</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+        <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">dp</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">INT_MIN</span><span class="p">));</span> 
+
+        <span class="k">return</span> <span class="n">solve</span><span class="p">(</span><span class="n">prices</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dp</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">};</span>
 </code></pre></div></div>
 
 <h2 id="способ-решения">Способ решения.</h2>
+
+<p>Нужно сделать выбор, и лучший выбор - это ответ.</p>
+
+<ol>
+  <li>
+    <p>Если вы ничего не купили, то можете либо выбрать текущий товар, либо перейти к следующему.</p>
+  </li>
+  <li>
+    <p>Если вы купили, то либо вы можете продать сегодня, а затем перейти к следующему дню, либо вы можете сделать перерыв и продавать в другие дни.</p>
+  </li>
+</ol>
+
+<p>И если мы построим дерево решений, то сможем увидеть перекрывающиеся подзадачи. Следовательно, мы можем запомнить решение с помощью динамического программирования.</p>
+
+<h2 id="решение-2-конечный-автомат">Решение 2 (конечный автомат)</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class Solution {
+public:
+    int maxProfit(vector&lt;int&gt;&amp; prices) {
+        int len = prices.size();
+        if (len &lt; 2) return 0;
+        int s0 = 0, s1 = -prices[0], s2 = 0;
+        for (int i = 1; i &lt; len; ++i) {
+            int last_s2 = s2;
+            s2 = s1 + prices[i];
+            s1 = max(s0 - prices[i], s1);
+            s0 = max(s0, last_s2);
+        }
+        return max(s0, s2);
+    }
+};
+</code></pre></div></div>
+
+<p><img src="/assets/images/LeetCode_000309a.jpg" alt="LeetCode-000309a" /></p>
+
+<p>Есть три состояния, в зависимости от действия, которое можно предпринять.</p>
 
    	</div>
 </div></section>
