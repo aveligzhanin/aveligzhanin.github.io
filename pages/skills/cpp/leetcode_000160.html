@@ -1,0 +1,185 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Intersection of Two Linked Lists (LeetCode)</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Our style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/avel.css">
+</head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+  <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse menu">
+			<ul class="nav navbar-nav navbar-right">
+                 
+                    <li>
+                       <a href="/index.html#about">Обо мне</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#education">Образование</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#work">Работа</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#skills">Навыки</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#portfolio">Портфолио</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#hobby">Увлечения</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#contact">Контакты</a>
+                    </li>
+                 
+        	</ul>
+        </div>
+      </div>
+  </div>
+</nav>
+
+    <section class="pfblock"><div class="container">  		<!-- Translations -->
+	<div class="col-xs-6" align=left>
+		<a href="/index.html">home</a> \ <a href="/pages/skills/cpp.html">Cpp. Задачки для практики</a>
+	</div>
+
+	<div class="col-xs-6" align=right>
+		Написано: 24.03.2023
+	</div>
+
+   	<div class="col-sm-12 my">
+		<h1 id="160-пересечение-двух-связанных-списков-intersection-of-two-linked-lists">160. <a href="https://leetcode.com/problems/intersection-of-two-linked-lists">Пересечение двух связанных списков (Intersection of Two Linked Lists)</a></h1>
+
+<p><img src="/assets/images/easy.jpg" alt="easy" /></p>
+
+<h2 id="задание">Задание.</h2>
+
+<p>Получены указатели двух односвязных списков <code class="language-plaintext highlighter-rouge">headA</code> и <code class="language-plaintext highlighter-rouge">headB</code></p>
+
+<p>Верните узел, в котором два списка пересекаются. Если два связанных списка вообще не пересекаются, верните значение <code class="language-plaintext highlighter-rouge">null</code>.</p>
+
+<p>Например, следующие два связанных списка начинают пересекаться в узле <code class="language-plaintext highlighter-rouge">c1</code>:</p>
+
+<p><img src="/assets/images/LeetCode_000160a.jpg" alt="LeetCode-000160a" /></p>
+
+<p>Тестовые примеры генерируются таким образом, что нигде во всей связанной структуре нет циклов.</p>
+
+<p><strong>Обратите внимание</strong>, что связанные списки <strong>должны сохранять свою первоначальную структуру</strong> после возврата функции.</p>
+
+<p><strong>Обычная экспертиза</strong></p>
+
+<p>Входные данные для экпсертизы предоставляются следующим образом (вашей программе эти входные данные не предоставляются):</p>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">intersectVal</code> – значение узла, в котором происходит пересечение. Это равно 0, если нет пересекающегося узла.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">listA</code> – Первый связанный список.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">listB</code> – Второй связанный список.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">skipA</code> – количество узлов, которые нужно пропустить вперед в <code class="language-plaintext highlighter-rouge">listA</code> (начиная с заголовка), чтобы добраться до пересекаемого узла.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">skipB</code> – количество узлов, которые нужно пропустить вперед в <code class="language-plaintext highlighter-rouge">listB</code> (начиная с заголовка), чтобы добраться до пересекаемого узла.</p>
+  </li>
+</ul>
+
+<p>Затем эксперт создаст связанную структуру на основе этих входных данных и передаст два заголовка, <code class="language-plaintext highlighter-rouge">headA</code> и <code class="language-plaintext highlighter-rouge">headB</code> в вашу программу. Если вы правильно вернете пересеченный узел, то ваше решение будет принято.</p>
+
+<h2 id="пример-1">Пример 1.</h2>
+
+<p><img src="/assets/images/LeetCode_000160b.jpg" alt="LeetCode-000160b" /></p>
+
+<p><strong>Входные данные:</strong> intersectVal = 8, listA = [4,1,8,4,5], listB = [5,6,1,8,4,5], skipA = 2, skipB = 3</p>
+
+<p><strong>Результат:</strong> Пересечение в узле <code class="language-plaintext highlighter-rouge">8</code></p>
+
+<h2 id="пример-2">Пример 2.</h2>
+
+<p><img src="/assets/images/LeetCode_000160c.jpg" alt="LeetCode-000160c" /></p>
+
+<p><strong>Входные данные:</strong> intersectVal = 2, listA = [1,9,1,2,4], listB = [3,2,4], skipA = 3, skipB = 1</p>
+
+<p><strong>Результат:</strong> Пересечение в узле <code class="language-plaintext highlighter-rouge">2</code></p>
+
+<h2 id="пример-3">Пример 3.</h2>
+
+<p><img src="/assets/images/LeetCode_000160d.jpg" alt="LeetCode-000160d" /></p>
+
+<p><strong>Входные данные:</strong> head = [1], pos = -1</p>
+
+<p><strong>Результат:</strong> NULL, нет пересечений</p>
+
+<h2 id="решение">Решение.</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">class</span> <span class="n">Solution</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="n">ListNode</span> <span class="o">*</span><span class="n">getIntersectionNode</span><span class="p">(</span><span class="n">ListNode</span> <span class="o">*</span><span class="n">headA</span><span class="p">,</span> <span class="n">ListNode</span> <span class="o">*</span><span class="n">headB</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">headA</span> <span class="o">==</span> <span class="nb">NULL</span> <span class="o">||</span> <span class="n">headB</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+        <span class="n">ListNode</span> <span class="o">*</span><span class="n">a</span> <span class="o">=</span> <span class="n">headA</span><span class="p">,</span> <span class="o">*</span><span class="n">b</span> <span class="o">=</span> <span class="n">headB</span><span class="p">;</span>
+        <span class="k">while</span><span class="p">(</span><span class="n">a</span> <span class="o">!=</span> <span class="n">b</span><span class="p">){</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="o">?</span> <span class="n">headB</span> <span class="o">:</span> <span class="n">a</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+            <span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="n">b</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="o">?</span> <span class="n">headA</span> <span class="o">:</span> <span class="n">b</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+        <span class="p">}</span> 
+        <span class="k">return</span> <span class="n">a</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="способ-решения">Способ решения.</h2>
+
+<p>Для поиска узла пересечения используются два указателя.</p>
+
+<p>Первоначально указатели позиционируются на начало списков.</p>
+
+<p>Списки разной длины. Для поиска узла пересечения, списки просматриваются дважды. При достижении конца списка, указатель первого списка перенаправляется на второй список, а указатель второго – не первый. Таким образом, если в списках есть пересечение, то оно будет обнаружено на втором проходе.</p>
+
+<p>Если <code class="language-plaintext highlighter-rouge">m</code> – длина списка <code class="language-plaintext highlighter-rouge">a</code>, а <code class="language-plaintext highlighter-rouge">n</code> – длина списка <code class="language-plaintext highlighter-rouge">b</code>, то в худшем случае первый указатель просмотрит <code class="language-plaintext highlighter-rouge">m+n</code> элементов, а второй указатель просмотрит <code class="language-plaintext highlighter-rouge">n+m</code> эелементов, то есть – оба указателя просмотрят одинаковое количетво элементов и, в конце концов, если пересечений нет, оба станут NULL при завершении второго прохода.</p>
+
+   	</div>
+</div></section>
+
+    <footer class="footer hexlet-footer py-5 mt-5 text-muted">
+  <div class="container">
+    <div class="row mt-1">
+      <div class="col-12 text-center">
+        <a href="https://aveligzhanin.github.io/">Велигжанин Андрей</a> — Программист-разработчик C++ и Oracle.
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>
