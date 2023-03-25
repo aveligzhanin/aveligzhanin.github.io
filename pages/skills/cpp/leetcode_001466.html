@@ -1,0 +1,381 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Reorder Routes to Make All Paths Lead to the City Zero (LeetCode)</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Our style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/avel.css">
+</head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+  <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse menu">
+			<ul class="nav navbar-nav navbar-right">
+                 
+                    <li>
+                       <a href="/index.html#about">Обо мне</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#education">Образование</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#work">Работа</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#skills">Навыки</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#portfolio">Портфолио</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#hobby">Увлечения</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#contact">Контакты</a>
+                    </li>
+                 
+        	</ul>
+        </div>
+      </div>
+  </div>
+</nav>
+
+    <section class="pfblock"><div class="container">  		<!-- Translations -->
+	<div class="col-xs-6" align=left>
+		<a href="/index.html">home</a> \ <a href="/pages/skills/cpp.html">Cpp. Задачки для практики</a>
+	</div>
+
+	<div class="col-xs-6" align=right>
+		Написано: 24.03.2023
+	</div>
+
+   	<div class="col-sm-12 my">
+		<h1 id="1466-изменить-порядок-маршрутов-чтобы-все-пути-вели-к-нулевому-городу-reorder-routes-to-make-all-paths-lead-to-the-city-zero">1466. <a href="https://leetcode.com/problems/reorder-routes-to-make-all-paths-lead-to-the-city-zero">Изменить порядок маршрутов, чтобы все пути вели к нулевому городу (Reorder Routes to Make All Paths Lead to the City Zero)</a></h1>
+
+<p><img src="/assets/images/medium.jpg" alt="medium" /></p>
+
+<h2 id="задание">Задание.</h2>
+
+<p>Существует <code class="language-plaintext highlighter-rouge">n</code> городов, пронумерованных от <code class="language-plaintext highlighter-rouge">0</code> до <code class="language-plaintext highlighter-rouge">n - 1</code>, и <code class="language-plaintext highlighter-rouge">n - 1</code> дорог, так что существует только один способ передвижения между двумя разными городами (эта сеть образует дерево). В прошлом году министерство транспорта решило ориентировать дороги в одном направлении, потому что они слишком узкие.</p>
+
+<p>Дороги представлены соединениями, где <code class="language-plaintext highlighter-rouge">connections[i]</code> = [<strong>a<sub>i</sub></strong>, <strong>b<sub>i</sub></strong>] представляют дорогу из города <strong>a<sub>i</sub></strong> в город <strong>b<sub>i</sub></strong>.</p>
+
+<p>В этом году в столице (город <code class="language-plaintext highlighter-rouge">0</code>) состоится большое событие, и многие люди хотят поехать в этот город.</p>
+
+<p>Ваша задача состоит в том, чтобы переориентировать некоторые дороги таким образом, чтобы каждый город мог посетить город 0.</p>
+
+<p>Верните <strong>минимальное</strong> количество измененных ребер.</p>
+
+<p>Гарантируется, что после переориентирования до города 0 можно будет добраться из каждого города (решение существует).</p>
+
+<h2 id="пример-1">Пример 1.</h2>
+
+<p><img src="/assets/images/LeetCode_001466a.jpg" alt="LeetCode-001466a" /></p>
+
+<p><strong>Входные данные:</strong> n = 6, connections = [[0,1],[1,3],[2,3],[4,0],[4,5]]</p>
+
+<p><strong>Результат:</strong>  3</p>
+
+<p><strong>Пояснение:</strong> Измените направление ребер, выделенных красным цветом, таким образом, чтобы каждый узел мог достигать узла 0 (столицы).</p>
+
+<h2 id="пример-2">Пример 2.</h2>
+
+<p><img src="/assets/images/LeetCode_001466b.jpg" alt="LeetCode-001466b" /></p>
+
+<p><strong>Входные данные:</strong> n = 5, connections = [[1,0],[1,2],[3,2],[3,4]]</p>
+
+<p><strong>Результат:</strong> 2</p>
+
+<p><strong>Пояснение:</strong> Измените направление ребер, выделенных красным цветом, таким образом, чтобы каждый узел мог достигать узла 0 (столицы).</p>
+
+<h2 id="пример-3">Пример 3.</h2>
+
+<p><strong>Входные данные:</strong> n = 3, connections = [[1,0],[2,0]]</p>
+
+<p><strong>Результат:</strong>  0</p>
+
+<h2 id="решение">Решение.</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">class</span> <span class="n">Solution</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="kt">int</span> <span class="n">minReorder</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">connections</span><span class="p">)</span> <span class="p">{</span>
+        
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="способ-решения">Способ решения.</h2>
+
+<h3 id="обзор">Обзор</h3>
+
+<p>Нам дано дерево с <code class="language-plaintext highlighter-rouge">n</code> узлами, где каждый узел представляет собой город, пронумерованный от <code class="language-plaintext highlighter-rouge">0</code> до <code class="language-plaintext highlighter-rouge">n - 1</code>. Ребра называются дорогами между городами.</p>
+
+<p>Дерево, приведенное в задаче, имеет направленные ребра, обеспеченные соединениями (<code class="language-plaintext highlighter-rouge">connections</code>).</p>
+
+<p>Нам нужно вернуть количество ребер, которые нужно перевернуть, чтобы из каждого узла мы могли каким-то образом добраться до узла <code class="language-plaintext highlighter-rouge">0</code>, т.е. от каждого узла есть путь к узлу <code class="language-plaintext highlighter-rouge">0</code>.</p>
+
+<p>Прежде чем перейти к решению, рассмотрим некоторые термины теории графов, которые будут использоваться позже:</p>
+
+<p><img src="/assets/images/LeetCode_001466c.jpg" alt="LeetCode-001466c" /></p>
+
+<p>1. <strong>Дочерний узел</strong> – Узел, который находится на одно ребро дальше от данного узла в корневом дереве. На приведенном выше изображении узлы <code class="language-plaintext highlighter-rouge">3</code>, <code class="language-plaintext highlighter-rouge">4</code> являются дочерними по отношению к <code class="language-plaintext highlighter-rouge">1</code>, который называется <strong>родительским</strong>. (Когда мы рассматриваем <code class="language-plaintext highlighter-rouge">0</code> как <strong>корень</strong>).</p>
+
+<p>2. <strong>Потомки</strong> – Потомками узла являются дочерние элементы, дочерние элементы дочерних элементов и так далее. На приведенном выше изображении все узлы <code class="language-plaintext highlighter-rouge">3</code>, <code class="language-plaintext highlighter-rouge">4</code>, <code class="language-plaintext highlighter-rouge">6</code>, <code class="language-plaintext highlighter-rouge">7</code>, <code class="language-plaintext highlighter-rouge">9</code> являются потомками <code class="language-plaintext highlighter-rouge">1</code>.</p>
+
+<p>3. <strong>Поддерево</strong> – Поддерево узла <code class="language-plaintext highlighter-rouge">T</code> – это дерево <code class="language-plaintext highlighter-rouge">S</code>, состоящее из узла <code class="language-plaintext highlighter-rouge">T</code> и всех его потомков в <code class="language-plaintext highlighter-rouge">T</code>. Поддерево, соответствующее корневому узлу, является всем деревом.</p>
+
+<h3 id="способ-решения-1-dfs-обход-дерева-в-глубину">Способ решения 1. DFS. Обход дерева в глубину.</h3>
+
+<h4 id="интуиция"><strong>Интуиция</strong></h4>
+
+<p>Поскольку нам нужно привести всех к узлу 0, мы можем смоделировать граф как дерево с корнями в узле 0 (постановка задачи намекает на это, заявляя, что сеть образует древовидную структуру). Мы можем себе представить, что для того, чтобы перейти от любого узла к корню, все ребра должны быть направлены от дочернего элемента к его родительскому. Если существует ребро от родительского узла к его дочернему узлу, ни один узел в поддереве дочернего узла не может достичь корневого узла. Этот край должен быть перевернут.</p>
+
+<p>Рассмотрим на примере.</p>
+
+<p><img src="/assets/images/LeetCode_001466d.jpg" alt="LeetCode-001466d" /></p>
+
+<p><strong>Поэтому наша задача сводится к тому, чтобы подсчитать количество ребер в дереве с корнем в узле ‘0’, которые направлены от родительского узла к дочернему узлу.</strong></p>
+
+<p>Мы должны пройти по всему дереву, чтобы определить количество таких ребер, которые направлены от родительского узла к дочернему. Чтобы обойти дерево, мы можем использовать алгоритм обхода графа, такой как поиск в глубину (DFS).</p>
+
+<p>В DFS мы используем рекурсивную функцию для исследования узлов как можно дальше вдоль каждой ветви. Дойдя до конца ветви, мы возвращаемся к предыдущему узлу и продолжаем исследование следующих ветвей.</p>
+
+<p>Как только мы столкиваемся с непросмотренным узлом, мы берем один из его соседних узлов (если он существует) в качестве следующего узла в этой ветви. Рекурсивно вызывается функция, чтобы взять следующий узел в качестве “стартового узла” для решения подзадачи.</p>
+
+<p>Сложность состоит том, что наши ребра являются направленными. Чтобы подсчитать количество ребер, которые направлены от родительского узла к его дочернему, нужно пройти по всему дереву. Если есть ребро от дочернего узла к его родительскому узлу, мы не сможем добраться до дочернего узла из родительского.</p>
+
+<p>Чтобы обойти все дерево, нужно найти способ добраться от узла 0 ко всем узлам в любом случае. Это возможно, если обрабатывать ребра как ненаправленные. Мы добавляем противоположное ребро от узла <code class="language-plaintext highlighter-rouge">b</code> к узлу <code class="language-plaintext highlighter-rouge">a</code> для каждого заданного ребра в <code class="language-plaintext highlighter-rouge">connections</code> от узла <code class="language-plaintext highlighter-rouge">a</code> к узлу <code class="language-plaintext highlighter-rouge">b</code>. Давайте назовем добавленное нами ребро “искусственным” ребром, а ребро, присутствующее в <code class="language-plaintext highlighter-rouge">connections</code>, – “оригинальным” ребром.</p>
+
+<p>Если мы используем “искусственное” ребро для перемещения от родительского узла к дочернему узлу, мы знаем, что исходное ребро направлено от дочернего узла к родительскому узлу. Нам не нужно переворачивать “оригинальное” ребро.</p>
+
+<p>Если мы используем “оригинальное” ребро для перемещения от родительского узла к дочернему узлу, это означает, что нам нужно перевернуть это ребро. Всякий раз, когда мы сталкиваемся с таким ребром, мы увеличиваем нашу переменную ответа на 1.</p>
+
+<p>Различать “исходные” и “искусственные” ребра можно многими различными способами (присваивая логические значения, определенные числа и т.д.). В этой статье мы свяжем дополнительное значение с каждым ребром – <code class="language-plaintext highlighter-rouge">1</code> для “оригинальных” ребер и <code class="language-plaintext highlighter-rouge">0</code> для “искусственных” ребер.</p>
+
+<p>Мы также устанавливаем переменную ответа <code class="language-plaintext highlighter-rouge">count = 0</code>, чтобы подсчитать количество ребер, которые должны быть перевернуты. Теперь мы запускаем DFS с узла <code class="language-plaintext highlighter-rouge">0</code> и продвигаемся вниз по дереву (от родительского к дочернему). Если во время обхода мы натыкаемся на “исходное” ребро, то есть ребро, помеченное знаком <code class="language-plaintext highlighter-rouge">1</code>, мы увеличиваем <code class="language-plaintext highlighter-rouge">count</code> на единицу. Мы не изменяем <code class="language-plaintext highlighter-rouge">count</code>, если сталкиваемся с “искусственным” ребром. Мы можем объединить эти две операции и выполнить <code class="language-plaintext highlighter-rouge">count += sign</code>, где <code class="language-plaintext highlighter-rouge">sign</code> равен либо <code class="language-plaintext highlighter-rouge">0</code>, либо <code class="language-plaintext highlighter-rouge">1</code>, указывая на “искусственное” или “оригинальное” ребро.</p>
+
+<p>При завершении обхода наш ответ содержится в переменной <code class="language-plaintext highlighter-rouge">count</code>.</p>
+
+<h4 id="алгоритм"><strong>Алгоритм</strong></h4>
+
+<p>1. Создадим переменную <code class="language-plaintext highlighter-rouge">count</code> для подсчета ребер, которые нужно перевернуть. Инициализируем ее через <code class="language-plaintext highlighter-rouge">0</code>.</p>
+
+<p>2. Создадим список соседей <code class="language-plaintext highlighter-rouge">adj</code>, который содержит список пар целых чисел, таких, что <code class="language-plaintext highlighter-rouge">adj[node]</code> содержит всех соседей узла в форме <code class="language-plaintext highlighter-rouge">(neighbor, sign)</code>, где <code class="language-plaintext highlighter-rouge">neighbor</code> – это номер узел-соседа, а <code class="language-plaintext highlighter-rouge">sign</code> обозначает направление ребра, т.е. является ли оно “исходным” или “искусственным”.</p>
+
+<p>3. Запускаем обход DFS.</p>
+
+<ul>
+  <li>
+    <p>Мы используем функцию <code class="language-plaintext highlighter-rouge">dfs</code> для выполнения обхода. Для каждого вызова передаются <code class="language-plaintext highlighter-rouge">node</code>, <code class="language-plaintext highlighter-rouge">parent</code>, <code class="language-plaintext highlighter-rouge">adj</code> в качестве параметров. Мы начинаем с узла <code class="language-plaintext highlighter-rouge">0</code> и родительского элемента как -1.</p>
+  </li>
+  <li>
+    <p>Выполняем итерацию по всем дочерним элементам <code class="language-plaintext highlighter-rouge">node</code> (узлам, которые имеют общее ребро), используя <code class="language-plaintext highlighter-rouge">adj[node]</code>. Для каждого <code class="language-plaintext highlighter-rouge">child, sign</code> проверяем в <code class="language-plaintext highlighter-rouge">adj[node]</code>, равны ли <code class="language-plaintext highlighter-rouge">child</code> и <code class="language-plaintext highlighter-rouge">parent</code>. Если равны, то <code class="language-plaintext highlighter-rouge">child</code> больше не посещается.</p>
+  </li>
+  <li>
+    <p>Если <code class="language-plaintext highlighter-rouge">child</code> не равен <code class="language-plaintext highlighter-rouge">parent</code>, выполняется <code class="language-plaintext highlighter-rouge">count += sign</code> и рекурсивно вызывается <code class="language-plaintext highlighter-rouge">dfs</code> с <code class="language-plaintext highlighter-rouge">node = child</code> и <code class="language-plaintext highlighter-rouge">parent = node</code>. В конце обхода <code class="language-plaintext highlighter-rouge">dfs</code> у нас в <code class="language-plaintext highlighter-rouge">count</code> есть общее количество ребер, которые необходимо перевернуть.</p>
+  </li>
+</ul>
+
+<p>4. Возвращаем <code class="language-plaintext highlighter-rouge">count</code>.</p>
+
+<h4 id="реализация"><strong>Реализация</strong></h4>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">class</span> <span class="n">Solution</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="n">dfs</span><span class="p">(</span><span class="kt">int</span> <span class="n">node</span><span class="p">,</span> <span class="kt">int</span> <span class="n">parent</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;&gt;&gt;&amp;</span> <span class="n">adj</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="p">[</span><span class="n">child</span><span class="p">,</span> <span class="n">sign</span><span class="p">]</span> <span class="o">:</span> <span class="n">adj</span><span class="p">[</span><span class="n">node</span><span class="p">])</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">child</span> <span class="o">!=</span> <span class="n">parent</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">count</span> <span class="o">+=</span> <span class="n">sign</span><span class="p">;</span>
+                <span class="n">dfs</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">adj</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kt">int</span> <span class="n">minReorder</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">connections</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;&gt;&gt;</span> <span class="n">adj</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+        <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="n">connection</span> <span class="o">:</span> <span class="n">connections</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">adj</span><span class="p">[</span><span class="n">connection</span><span class="p">[</span><span class="mi">0</span><span class="p">]].</span><span class="n">push_back</span><span class="p">({</span><span class="n">connection</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">});</span>
+            <span class="n">adj</span><span class="p">[</span><span class="n">connection</span><span class="p">[</span><span class="mi">1</span><span class="p">]].</span><span class="n">push_back</span><span class="p">({</span><span class="n">connection</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">});</span>
+        <span class="p">}</span>
+        <span class="n">dfs</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">adj</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">count</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h4 id="анализ-сложности"><strong>Анализ сложности</strong>.</h4>
+
+<p>Здесь <code class="language-plaintext highlighter-rouge">n</code> – это количество узлов.</p>
+
+<ul>
+  <li>
+    <p>Сложность по времени <code class="language-plaintext highlighter-rouge">O(n)</code></p>
+
+    <ul>
+      <li>
+        <p>Нужно <code class="language-plaintext highlighter-rouge">O(n)</code> времени для инициализации списка соседей.</p>
+      </li>
+      <li>
+        <p>Функция <code class="language-plaintext highlighter-rouge">dfs</code> посещает каждый узел один раз, что занимает в общей сложности <code class="language-plaintext highlighter-rouge">O(n)</code> времени. Поскольку у нас есть неориентированные ребра, каждое ребро может быть повторено только дважды (по узлам в конце), что приводит к общему количеству операций <code class="language-plaintext highlighter-rouge">O(e)</code> при посещении всех узлов, где <code class="language-plaintext highlighter-rouge">e</code> – количество ребер. Поскольку данный граф является деревом, существует <code class="language-plaintext highlighter-rouge">n−1</code> неориентированных ребер, поэтому <code class="language-plaintext highlighter-rouge">O (n + e) = O(n)</code>.</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>Сложность по памяти <code class="language-plaintext highlighter-rouge">O(n)</code></p>
+
+    <ul>
+      <li>
+        <p>Для создания списка соседей необходимо <code class="language-plaintext highlighter-rouge">O(n)</code> памяти.</p>
+      </li>
+      <li>
+        <p>Для рекурсивных вызовов <code class="language-plaintext highlighter-rouge">dfs</code> необходим стек, размером <code class="language-plaintext highlighter-rouge">O(n)</code> (в наихудшем варианте).</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="способ-решения-2-bfs-обход-дерева-в-ширину">Способ решения 2. BFS. Обход дерева в ширину.</h3>
+
+<h4 id="интуиция-1"><strong>Интуиция</strong></h4>
+
+<p>Другой метод заключается в использовании Обход дерева в ширину (BFS), потому что нам нужно только найти количество ребер, которые направлены от родительского узла к дочернему узлу в корневом дереве. Этот подход идентичен первому, мы просто используем BFS вместо DFS для выполнения обхода.</p>
+
+<p>BFS – это алгоритм обхода или поиска по графу. Он проходит по уровням, т.е. исследуются все узлы на текущем уровне (скажем, l), прежде чем переходить к узлам на следующем уровне (l + 1), где номер уровня – это расстояние от начального узла. BFS реализуется посредством очереди.</p>
+
+<h4 id="алгоритм-1"><strong>Алгоритм</strong></h4>
+
+<p>1. Создадим переменную <code class="language-plaintext highlighter-rouge">count</code> для подсчета ребер, которые нужно перевернуть. Инициализируем ее через <code class="language-plaintext highlighter-rouge">0</code>.</p>
+
+<p>2. Создадим список соседей <code class="language-plaintext highlighter-rouge">adj</code>, который содержит список пар целых чисел, таких, что <code class="language-plaintext highlighter-rouge">adj[node]</code> содержит всех соседей узла в форме <code class="language-plaintext highlighter-rouge">(neighbor, sign)</code>, где <code class="language-plaintext highlighter-rouge">neighbor</code> – это номер узел-соседа, а <code class="language-plaintext highlighter-rouge">sign</code> обозначает направление ребра, т.е. является ли оно “исходным” или “искусственным”.</p>
+
+<p>3. Запускаем обход BFS.</p>
+
+<ul>
+  <li>
+    <p>Мы используем функцию <code class="language-plaintext highlighter-rouge">dfs</code> для выполнения обхода. Для каждого вызова передаются <code class="language-plaintext highlighter-rouge">node</code>, <code class="language-plaintext highlighter-rouge">n</code>, <code class="language-plaintext highlighter-rouge">adj</code> в качестве параметров. Мы начинаем с узла <code class="language-plaintext highlighter-rouge">0</code>.</p>
+  </li>
+  <li>
+    <p>Создаётся массив <code class="language-plaintext highlighter-rouge">visit</code> размером <code class="language-plaintext highlighter-rouge">n</code> для отслеживания посещённых узлов.</p>
+  </li>
+  <li>
+    <p>Инициализируется очередь <code class="language-plaintext highlighter-rouge">q</code> из целых чисел и первоначально в неё помещаетя <code class="language-plaintext highlighter-rouge">0</code> (корневой узел). Также <code class="language-plaintext highlighter-rouge">0</code> отмечается, как посещенный.</p>
+  </li>
+  <li>
+    <p>Пока очередь не пуста, из неё извлекается <code class="language-plaintext highlighter-rouge">node</code> и выполняеется итерация по всем его соседям, используя <code class="language-plaintext highlighter-rouge">adj[node]</code>. Для каждого <code class="language-plaintext highlighter-rouge">neighbor, sign</code> из <code class="language-plaintext highlighter-rouge">adj[node]</code>, проверяется, посещался ли <code class="language-plaintext highlighter-rouge">neighbor</code>. Если нет, <code class="language-plaintext highlighter-rouge">neighbor</code> отмечается посещенным, выполняется <code class="language-plaintext highlighter-rouge">count += sign</code> и <code class="language-plaintext highlighter-rouge">neighbor</code> помещается в очередь.</p>
+  </li>
+</ul>
+
+<p>4. Возвращаем <code class="language-plaintext highlighter-rouge">count</code>.</p>
+
+<h4 id="реализация-1"><strong>Реализация</strong></h4>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">class</span> <span class="n">Solution</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="n">bfs</span><span class="p">(</span><span class="kt">int</span> <span class="n">node</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;&gt;&gt;&amp;</span> <span class="n">adj</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">queue</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">q</span><span class="p">;</span>
+        <span class="n">vector</span><span class="o">&lt;</span><span class="n">bool</span><span class="o">&gt;</span> <span class="n">visit</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+        <span class="n">q</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">node</span><span class="p">);</span>
+        <span class="n">visit</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+
+        <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="n">q</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="p">{</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">q</span><span class="p">.</span><span class="n">front</span><span class="p">();</span>
+            <span class="n">q</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+            <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="p">[</span><span class="n">neighbor</span><span class="p">,</span> <span class="n">sign</span><span class="p">]</span> <span class="o">:</span> <span class="n">adj</span><span class="p">[</span><span class="n">node</span><span class="p">])</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">visit</span><span class="p">[</span><span class="n">neighbor</span><span class="p">])</span> <span class="p">{</span>
+                    <span class="n">count</span> <span class="o">+=</span> <span class="n">sign</span><span class="p">;</span>
+                    <span class="n">visit</span><span class="p">[</span><span class="n">neighbor</span><span class="p">]</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+                    <span class="n">q</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">neighbor</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kt">int</span> <span class="n">minReorder</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">connections</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;&gt;&gt;</span> <span class="n">adj</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+        <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="n">connection</span> <span class="o">:</span> <span class="n">connections</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">adj</span><span class="p">[</span><span class="n">connection</span><span class="p">[</span><span class="mi">0</span><span class="p">]].</span><span class="n">push_back</span><span class="p">({</span><span class="n">connection</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">});</span>
+            <span class="n">adj</span><span class="p">[</span><span class="n">connection</span><span class="p">[</span><span class="mi">1</span><span class="p">]].</span><span class="n">push_back</span><span class="p">({</span><span class="n">connection</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">});</span>
+        <span class="p">}</span>
+        <span class="n">bfs</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">adj</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">count</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h4 id="анализ-сложности-1"><strong>Анализ сложности</strong>.</h4>
+
+<p>Здесь <code class="language-plaintext highlighter-rouge">n</code> – это количество узлов.</p>
+
+<ul>
+  <li>
+    <p>Сложность по времени: <code class="language-plaintext highlighter-rouge">O(n)</code></p>
+
+    <ul>
+      <li>
+        <p>Нужно <code class="language-plaintext highlighter-rouge">O(n)</code> времени для инициализации списка соседей и <code class="language-plaintext highlighter-rouge">O(n)</code> для инициализации массива <code class="language-plaintext highlighter-rouge">visit</code>.</p>
+      </li>
+      <li>
+        <p>В алгоритме BFS каждая операция помещения в очередь <code class="language-plaintext highlighter-rouge">O(1)</code> времени, и один узел может быть перемещен только один раз, что приводит к <code class="language-plaintext highlighter-rouge">O(n)</code> операций для <code class="language-plaintext highlighter-rouge">n</code> узлов. Мы выполняем итерацию по всем соседям каждого узла, который извлекается из очереди, поэтому для неориентированного ребра данное ребро может быть повторено не более двух раз (узлами на обоих концах), что приводит к общему количеству операций <code class="language-plaintext highlighter-rouge">O(e)</code> для всех узлов. Как упоминалось в предыдущем подходе, <code class="language-plaintext highlighter-rouge">O(e) = O(n)</code>, поскольку граф представляет собой дерево.</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>Сложность по памяти: <code class="language-plaintext highlighter-rouge">O(n)</code></p>
+
+    <ul>
+      <li>
+        <p>Для создания списка соседей необходимо <code class="language-plaintext highlighter-rouge">O(n)</code> памяти.</p>
+      </li>
+      <li>
+        <p>Для массива <code class="language-plaintext highlighter-rouge">visit</code> необходимо <code class="language-plaintext highlighter-rouge">O(n)</code> памяти.</p>
+      </li>
+      <li>
+        <p>Для очереди необходимо <code class="language-plaintext highlighter-rouge">O(n)</code> памяти (в наихудшем варианте).</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+   	</div>
+</div></section>
+
+    <footer class="footer hexlet-footer py-5 mt-5 text-muted">
+  <div class="container">
+    <div class="row mt-1">
+      <div class="col-12 text-center">
+        <a href="https://aveligzhanin.github.io/">Велигжанин Андрей</a> — Программист-разработчик C++ и Oracle.
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>
