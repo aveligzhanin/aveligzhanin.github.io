@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Oracle.</title>
+    <title>Customers Who Never Order (LeetCode)</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -68,53 +68,91 @@
 
     <section class="pfblock"><div class="container">  		<!-- Translations -->
 	<div class="col-xs-6" align=left>
-		<a href="/index.html">home</a> \ <a href="/index.html#skills">Навыки</a>
+		<a href="/index.html">home</a> \ <a href="/pages/skills/Oracle.html">Oracle. Задачки для практики</a>
 	</div>
 
 	<div class="col-xs-6" align=right>
-		Написано: 07.10.2018
+		Написано: 26.03.2023
 	</div>
 
    	<div class="col-sm-12 my">
-		<h1 id="oracle">Oracle.</h1>
+		<h1 id="183-клиенты-без-заказов-customers-who-never-order">183. <a href="https://leetcode.com/problems/customers-who-never-order/">Клиенты без заказов (Customers Who Never Order)</a></h1>
 
-<h2 id="документация-oracle-database-21c">Документация. Oracle Database 21c</h2>
+<p><img src="/assets/images/easy.jpg" alt="easy" /></p>
 
-<h3 id="концепции">Концепции</h3>
+<h2 id="sql-schema">SQL schema</h2>
 
-<h4 id="database-concepts"><a href="/pages/skills/oracle/concepts.html">Database Concepts</a></h4>
+<p>Table: customer</p>
 
-<h3 id="для-старта">Для старта</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>+-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| id          | int     |
+| name        | varchar |
++-------------+---------+
+id is the primary key column for this table.
+Each row of this table indicates the ID and name of a customer.
+</code></pre></div></div>
 
-<h4 id="2-day--performance-tuning-guide"><a href="/pages/skills/oracle/2day/Performance_Tuning_Guide/toc.html">2 Day + Performance Tuning Guide.</a></h4>
+<p>Table: orders</p>
 
-<h4 id="2-day-developers-guide"><a href="/pages/skills/oracle/2day/Developers_Guide/toc.html">2 Day Developer’s Guide</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>+-------------+------+
+| Column Name | Type |
++-------------+------+
+| id          | int  |
+| customerId  | int  |
++-------------+------+
+id is the primary key column for this table.
+customerId is a foreign key of the ID from the Customers table.
+Each row of this table indicates the ID of an order and the ID of the customer who ordered it.
+</code></pre></div></div>
 
-<h4 id="2-day-java-developers-guide"><a href="/pages/skills/oracle/2day/Java_Developers_Guide/toc.html">2 Day Java Developer’s Guide</a></h4>
+<h2 id="задание">Задание.</h2>
 
-<h3 id="руководства">Руководства</h3>
+<p>Напишите SQL-запрос, чтобы сообщить обо всех клиентах, которые никогда ничего не заказывают.</p>
 
-<h4 id="руководство-администратора-database-administrators-guide"><a href="/pages/skills/oracle/Administrators_Guide/toc.html">Руководство Администратора (Database Administrator’s Guide)</a></h4>
+<p>Верните таблицу результатов <strong>в любом порядке</strong>.</p>
 
-<h4 id="руководство-по-настройке-sql-sql-tuning-guide"><a href="/pages/skills/oracle/sql_tuning_guide/toc.html">Руководство по настройке SQL (SQL Tuning Guide)</a></h4>
+<p>Формат результата запроса приведен в следующем примере.</p>
 
-<h3 id="другое">Другое</h3>
+<h2 id="пример-1">Пример 1.</h2>
 
-<h4 id="plsql"><a href="/pages/skills/oracle/plsql.html">PL/SQL</a></h4>
+<p><strong>Входные данные:</strong></p>
 
-<h4 id="полезные-задачи"><a href="/pages/skills/oracle/test.html">Полезные задачи.</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Customers table:
++----+-------+
+| id | name  |
++----+-------+
+| 1  | Joe   |
+| 2  | Henry |
+| 3  | Sam   |
+| 4  | Max   |
++----+-------+
+Orders table:
++----+------------+
+| id | customerId |
++----+------------+
+| 1  | 3          |
+| 2  | 1          |
++----+------------+
+</code></pre></div></div>
 
-<h4 id="sample-schemas"><a href="/pages/skills/oracle/sample/toc.html">Sample Schemas</a></h4>
+<p><strong>Результат:</strong></p>
 
-<h3 id="задачи-с-leetcode-easy">Задачи с LeetCode. Easy</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>+-----------+
+| Customers |
++-----------+
+| Henry     |
+| Max       |
++-----------+
+</code></pre></div></div>
 
-<p><a href="/pages/skills/leetcode/000175.html">175. Объединить две таблицы (Combine Two Tables)</a></p>
+<h2 id="решение">Решение.</h2>
 
-<p><a href="/pages/skills/leetcode/000181.html">181. Работники, зарабатывающие больше менеджеров (Employees Earning More Than Their Managers)</a></p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* Write your PL/SQL query statement below */</span>
+<span class="k">SELECT</span> <span class="n">name</span> <span class="k">AS</span> <span class="n">customers</span> <span class="k">FROM</span> <span class="n">customers</span> <span class="k">WHERE</span> <span class="n">id</span> <span class="k">NOT</span> <span class="k">IN</span> <span class="p">(</span><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">customerId</span> <span class="k">FROM</span> <span class="n">orders</span><span class="p">)</span>
+</code></pre></div></div>
 
-<p><a href="/pages/skills/leetcode/000182.html">182. Дубли email (Duplicate Emails)</a></p>
-
-<p><a href="/pages/skills/leetcode/000183.html">183. Клиенты без заказов (Customers Who Never Order)</a></p>
 
    	</div>
 </div></section>
