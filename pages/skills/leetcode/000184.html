@@ -1,0 +1,179 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Department Highest Salary (LeetCode)</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Our style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/avel.css">
+</head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+  <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse menu">
+			<ul class="nav navbar-nav navbar-right">
+                 
+                    <li>
+                       <a href="/index.html#about">Обо мне</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#education">Образование</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#work">Работа</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#skills">Навыки</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#portfolio">Портфолио</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#hobby">Увлечения</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#contact">Контакты</a>
+                    </li>
+                 
+        	</ul>
+        </div>
+      </div>
+  </div>
+</nav>
+
+    <section class="pfblock"><div class="container">  		<!-- Translations -->
+	<div class="col-xs-6" align=left>
+		<a href="/index.html">home</a> \ <a href="/pages/skills/Oracle.html">Oracle. Задачки для практики</a>
+	</div>
+
+	<div class="col-xs-6" align=right>
+		Написано: 26.03.2023
+	</div>
+
+   	<div class="col-sm-12 my">
+		<h1 id="184-самая-высокая-зарплата-в-департаментеdepartment-highest-salary">184. <a href="https://leetcode.com/problems/department-highest-salary/">Самая высокая зарплата в департаменте(Department Highest Salary)</a></h1>
+
+<p><img src="/assets/images/medium.jpg" alt="medium" /></p>
+
+<h2 id="sql-schema">SQL Schema.</h2>
+
+<p>Table: employee</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>+--------------+---------+
+| Column Name  | Type    |
++--------------+---------+
+| id           | int     |
+| name         | varchar |
+| salary       | int     |
+| departmentId | int     |
++--------------+---------+
+id is the primary key column for this table.
+departmentId is a foreign key of the ID from the Department table.
+Each row of this table indicates the ID, name, and salary of an employee. It also contains the ID of their department.
+</code></pre></div></div>
+
+<p>Table: department</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>+-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| id          | int     |
+| name        | varchar |
++-------------+---------+
+id is the primary key column for this table. It is guaranteed that department name is not NULL.
+Each row of this table indicates the ID of a department and its name.
+</code></pre></div></div>
+
+<h2 id="задание">Задание.</h2>
+
+<p>Напишите SQL-запрос, чтобы найти сотрудников с самой высокой зарплатой в каждом из отделов.</p>
+
+<p>Верните таблицу результатов <strong>в любом порядке</strong>.</p>
+
+<p>Формат результата запроса приведен в следующем примере.</p>
+
+<h2 id="пример-1">Пример 1.</h2>
+
+<p><strong>Входные данные:</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Employee table:
++----+-------+--------+--------------+
+| id | name  | salary | departmentId |
++----+-------+--------+--------------+
+| 1  | Joe   | 70000  | 1            |
+| 2  | Jim   | 90000  | 1            |
+| 3  | Henry | 80000  | 2            |
+| 4  | Sam   | 60000  | 2            |
+| 5  | Max   | 90000  | 1            |
++----+-------+--------+--------------+
+Department table:
++----+-------+
+| id | name  |
++----+-------+
+| 1  | IT    |
+| 2  | Sales |
++----+-------+
+</code></pre></div></div>
+
+<p><strong>Результат:</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>+------------+----------+--------+
+| Department | Employee | Salary |
++------------+----------+--------+
+| IT         | Jim      | 90000  |
+| Sales      | Henry    | 80000  |
+| IT         | Max      | 90000  |
++------------+----------+--------+
+</code></pre></div></div>
+
+<p><strong>Объяснение:</strong> Max and Jim both have the highest salary in the IT department and Henry has the highest salary in the Sales department.</p>
+
+<h2 id="решение">Решение.</h2>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* Write your PL/SQL query statement below */</span>
+<span class="k">SELECT</span> <span class="n">d</span><span class="p">.</span><span class="n">name</span> <span class="k">AS</span> <span class="n">department</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">name</span> <span class="k">AS</span> <span class="n">employee</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">salary</span> <span class="k">FROM</span> <span class="n">employee</span> <span class="n">e</span>
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">department</span> <span class="n">d</span> <span class="k">ON</span> <span class="n">d</span><span class="p">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">e</span><span class="p">.</span><span class="n">departmentId</span> <span class="k">WHERE</span> <span class="p">(</span><span class="n">salary</span><span class="p">,</span> <span class="n">departmentId</span><span class="p">)</span> <span class="k">IN</span> <span class="p">(</span>
+    <span class="k">SELECT</span> <span class="k">MAX</span><span class="p">(</span><span class="n">salary</span><span class="p">),</span> <span class="n">departmentId</span> <span class="k">FROM</span> <span class="n">employee</span> <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">departmentId</span><span class="p">)</span>
+</code></pre></div></div>
+
+
+   	</div>
+</div></section>
+
+    <footer class="footer hexlet-footer py-5 mt-5 text-muted">
+  <div class="container">
+    <div class="row mt-1">
+      <div class="col-12 text-center">
+        <a href="https://aveligzhanin.github.io/">Велигжанин Андрей</a> — Программист-разработчик C++ и Oracle.
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>
