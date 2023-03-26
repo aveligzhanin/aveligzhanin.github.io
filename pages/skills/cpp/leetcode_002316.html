@@ -1,0 +1,564 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Count Unreachable Pairs of Nodes in an Undirected Graph (LeetCode)</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Our style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/avel.css">
+</head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+  <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse menu">
+			<ul class="nav navbar-nav navbar-right">
+                 
+                    <li>
+                       <a href="/index.html#about">Обо мне</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#education">Образование</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#work">Работа</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#skills">Навыки</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#portfolio">Портфолио</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#hobby">Увлечения</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#contact">Контакты</a>
+                    </li>
+                 
+        	</ul>
+        </div>
+      </div>
+  </div>
+</nav>
+
+    <section class="pfblock"><div class="container">  		<!-- Translations -->
+	<div class="col-xs-6" align=left>
+		<a href="/index.html">home</a> \ <a href="/pages/skills/cpp.html">Cpp. Задачки для практики</a>
+	</div>
+
+	<div class="col-xs-6" align=right>
+		Написано: 25.03.2023
+	</div>
+
+   	<div class="col-sm-12 my">
+		<h1 id="2316-подсчет-недостижимой-пары-узлов-в-неориентированном-графе-count-unreachable-pairs-of-nodes-in-an-undirected-graph">2316. <a href="https://leetcode.com/problems/count-unreachable-pairs-of-nodes-in-an-undirected-graph/">Подсчет недостижимой пары узлов в неориентированном графе (Count Unreachable Pairs of Nodes in an Undirected Graph)</a></h1>
+
+<p><img src="/assets/images/medium.jpg" alt="medium" /></p>
+
+<h2 id="задание">Задание.</h2>
+
+<p>Дано целое число <code class="language-plaintext highlighter-rouge">n</code>. Существует неориентированный граф с <code class="language-plaintext highlighter-rouge">n</code> узлами, пронумерованными от <code class="language-plaintext highlighter-rouge">0</code> до <code class="language-plaintext highlighter-rouge">n - 1</code>.</p>
+
+<p>Также даётся двумерный целочисленный массив <code class="language-plaintext highlighter-rouge">edges</code>, где <code class="language-plaintext highlighter-rouge">edges[i]</code> = [<strong>a<sub>i</sub></strong>, <strong>b<sub>i</sub></strong>] обозначают, что существует <strong>неориентированное</strong> ребро, соединяющее узлы <strong>a<sub>i</sub></strong> и <strong>b<sub>i</sub></strong>/</p>
+
+<p>Верните <strong>количество пар</strong> различных узлов, которые <strong>недоступны</strong> друг для друга.</p>
+
+<h2 id="пример-1">Пример 1.</h2>
+
+<p><img src="/assets/images/LeetCode_002316a.jpg" alt="LeetCode-002316a" /></p>
+
+<p><strong>Входные данные:</strong> n = 3, edges = [ [0,1], [0,2], [1,2] ]</p>
+
+<p><strong>Результат:</strong>  0</p>
+
+<p><strong>Пояснение:</strong> Нет пар узлов, которые были бы недоступны друг для друга. Следовательно, мы возвращаем 0.</p>
+
+<h2 id="пример-2">Пример 2.</h2>
+
+<p><img src="/assets/images/LeetCode_002316b.jpg" alt="LeetCode-002316b" /></p>
+
+<p><strong>Входные данные:</strong> n = 7, edges = [ [0,2], [0,5], [2,4], [1,6], [5,4]]</p>
+
+<p><strong>Результат:</strong> 14</p>
+
+<p><strong>Пояснение:</strong> Существует 14 пар узлов, которые недоступны друг для друга:
+[ [0,1], [0,3], [0,6], [1,2], [1,3], [1,4], [1,5], [2,3], [2,6], [3,4], [3,5], [3,6], [4,6], [5,6] ].
+Следовательно, мы возвращаем 14.</p>
+
+<h2 id="решение">Решение.</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">class</span> <span class="n">Solution</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="kt">long</span> <span class="kt">long</span> <span class="n">countPairs</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">edges</span><span class="p">)</span> <span class="p">{</span>
+        
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="способ-решения">Способ решения.</h2>
+
+<h3 id="обзор">Обзор</h3>
+
+<p>У нас есть неориентированный граф с <code class="language-plaintext highlighter-rouge">n</code> узлами, пронумерованными от <code class="language-plaintext highlighter-rouge">0</code> до <code class="language-plaintext highlighter-rouge">n - 1</code>.</p>
+
+<p>Наша задача состоит в том, чтобы вернуть общее количество пар различных узлов, которые недоступны друг для друга.</p>
+
+<h3 id="способ-решения-1-dfs-обход-графа-в-глубину">Способ решения 1. Dfs. Обход графа в глубину.</h3>
+
+<h4 id="интуиция"><strong>Интуиция.</strong></h4>
+
+<p>Как известно, связный компонент неориентированного графа – это подграф, в котором каждая пара узлов соединена друг с другом неким путем. Это означает, что узлы в соединенном компоненте могут достигать всех других узлов в том же соединенном компоненте.</p>
+
+<p>Однако, если два узла принадлежат разным компонентам, невозможно добраться из одного узла до другого.</p>
+
+<p>Давайте вернемся ко второму примеру из постановки задачи.</p>
+
+<p><img src="/assets/images/LeetCode_002316c.jpg" alt="LeetCode-002316c" /></p>
+
+<p>В нем есть три компонента. Мы можем видеть, что нет пути между любыми двумя узлами из разных компонентов.</p>
+
+<p>Первый компонент состоит из четырех узлов. За исключением узлов в своих компонентах, эти четыре узла не могут связаться ни с какими другими узлами. В результате выбор любого из четырех узлов из первого компонента и любого другого узла из остальных компонентов приводит к получению пары узлов, которые недоступны друг для друга.</p>
+
+<p>Общее количество пар узлов с одним узлом в первом компоненте и другим узлом в любом из оставшихся компонентов будет равно количеству узлов в первом компоненте, умноженному на общее количество узлов, за исключением узлов первого компонента, т.е. <code class="language-plaintext highlighter-rouge">4 * (7 - 4) = 12</code> пар. Это означает, что существует <code class="language-plaintext highlighter-rouge">12</code> пар узлов, которые недоступны друг от друга, где один из двух узлов находится в первом компоненте.</p>
+
+<p>Давайте перейдем ко второму компоненту, который имеет только один узел. Таким образом, количество недостижимых пар узлов с одним узлом во втором компоненте будет равно общему количеству узлов во втором компоненте, умноженному на общее количество узлов, кроме текущего компонента и первого компонента (мы уже рассмотрели пары, сформированные с использованием узлов в первом компоненте). Это так <code class="language-plaintext highlighter-rouge">1 * (7 - 4 - 1) = 2</code> пары.</p>
+
+<p>Теперь мы рассмотрели все пары, сформированные с одним узлом в первом компоненте, а также все пары, сформированные с одним узлом во втором компоненте. Поскольку у нас остался только третий компонент, больше не может быть сформировано пар недостижимых узлов. Общее количество необходимых пар равно <code class="language-plaintext highlighter-rouge">12 + 2 = 14</code>.</p>
+
+<p>Итак, чтобы найти общее количество пар, которые недоступны друг от друга, мы должны выполнить итерацию по графику и определить размер каждого компонента. Затем мы умножаем количество узлов в текущем компоненте на общее количество узлов в графике, игнорируя узлы в текущем компоненте и ранее посещенные компоненты (мы уже рассмотрели пары узлов, сформированных с одним из узлов в предыдущих компонентах). Чтобы получить требуемый ответ, мы добавляем это количество пар узлов, перебирая все компоненты один за другим, как рассчитано в предыдущем примере.</p>
+
+<p>Для определения количества узлов в каждом компоненте можно использовать поиск в глубину (DFS).</p>
+
+<p>В DFS мы используем рекурсивную функцию для исследования узлов как можно дальше вдоль каждой ветви. Дойдя до конца ветви, мы возвращаемся к исходному узлу и продолжаем исследовать следующие ветви.</p>
+
+<p>Как только мы столкиваемся с нерассмотренным узлом, мы берём в рассмотрение один из его соседних узлов (если он существует) в качестве следующего узла в этой ветви. Рекурсивно вызываем функцию, чтобы взять следующий узел в качестве “начального узла”, чтобы решить подзадачу.</p>
+
+<h4 id="алгоритм"><strong>Алгоритм</strong>.</h4>
+
+<p>1. Создаём список соседей, где <code class="language-plaintext highlighter-rouge">adj[X]</code> содержит всех соседей узла <code class="language-plaintext highlighter-rouge">X</code>.</p>
+
+<p>2. Для подсчёта количества недоступных пар узлов объявляем переменную <code class="language-plaintext highlighter-rouge">numberOfPairs</code>. Инициализируем нулём (<code class="language-plaintext highlighter-rouge">0</code>).</p>
+
+<p>3. Для хранения количества узлов в текущем компоненте объявляем переменную <code class="language-plaintext highlighter-rouge">sizeOfComponent</code>. Инициализируем нулём (<code class="language-plaintext highlighter-rouge">0</code>).</p>
+
+<p>4. Для отслеживания количества непросмотренных узлов графа после обхода DFS объявляем переменную <code class="language-plaintext highlighter-rouge">remainingNodes</code>. Инициализируем <code class="language-plaintext highlighter-rouge">n</code>.</p>
+
+<p>5. Для отслеживания просмотренных узлов объявляем массив <code class="language-plaintext highlighter-rouge">visit</code> размером <code class="language-plaintext highlighter-rouge">n</code> элементов.</p>
+
+<p>6. Выполняем итерацию по всем узлам, и для каждого узла проверяем, посещен он или нет. Если узел <code class="language-plaintext highlighter-rouge">i</code> не посещен, начинаем обход DFS:</p>
+
+<ul>
+  <li>
+    <p>Для обхода дерева используется функция <code class="language-plaintext highlighter-rouge">dfs</code>. Для каждого вызова передаются параметрами <code class="language-plaintext highlighter-rouge">node</code>, <code class="language-plaintext highlighter-rouge">adj</code> и <code class="language-plaintext highlighter-rouge">visit</code>. Обход начинается с узла <code class="language-plaintext highlighter-rouge">i</code>.</p>
+  </li>
+  <li>
+    <p>Узел помечается, как посещенный. Объявляется переменная <code class="language-plaintext highlighter-rouge">count</code> для отслеживания количества узлов в этом компоненте. <code class="language-plaintext highlighter-rouge">Сount</code> инициализируется единицей (<code class="language-plaintext highlighter-rouge">1</code>), чтобы подсчитать сам узел.</p>
+  </li>
+  <li>
+    <p>Выполняется итерация по всем соседям узла. Если соседний узел был ещё не посещён, выполняется рекурсивный вызов <code class="language-plaintext highlighter-rouge">dfs</code>, а соседний узел передаётся в качестве параметра <code class="language-plaintext highlighter-rouge">node</code>. Для данного вызова <code class="language-plaintext highlighter-rouge">dfs</code> производится подсчет количества посещённых узлов и добавляется к общему значению переменной <code class="language-plaintext highlighter-rouge">count</code>.</p>
+  </li>
+  <li>
+    <p>После выполнения итераций для соседних узлов <code class="language-plaintext highlighter-rouge">count</code> возвращается, и его значение запоминается в <code class="language-plaintext highlighter-rouge">sizeOfComponent</code>.</p>
+  </li>
+  <li>
+    <p>Количество недостижимых пар узлов с одним узлом в текущем компоненте и другим узлом в любом другом компоненте, кроме текущего компонента и ранее посещенных компонентов, равно <code class="language-plaintext highlighter-rouge">sizeOfComponent * (remainingNodes - sizeOfComponent)</code>. Оно добавляется к <code class="language-plaintext highlighter-rouge">numberOfPairs</code>.</p>
+  </li>
+  <li>
+    <p>Переменная <code class="language-plaintext highlighter-rouge">remainingNodes</code> уменьшается на <code class="language-plaintext highlighter-rouge">sizeOfComponent</code>, потому что мы добавили все необходимые пары узлов, причем один из узлов находится в текущем компоненте, и мы не хотим добавлять их снова. В результате мы предполагаем, что их больше нет.</p>
+  </li>
+</ul>
+
+<p>7. Возвращаем <code class="language-plaintext highlighter-rouge">numberOfPairs</code></p>
+
+<h4 id="реализация"><strong>Реализация</strong>.</h4>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">class</span> <span class="n">Solution</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="kt">int</span> <span class="n">dfs</span><span class="p">(</span><span class="kt">int</span> <span class="n">node</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">adj</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">bool</span><span class="o">&gt;&amp;</span> <span class="n">visit</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="n">visit</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">neighbor</span> <span class="o">:</span> <span class="n">adj</span><span class="p">[</span><span class="n">node</span><span class="p">])</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">visit</span><span class="p">[</span><span class="n">neighbor</span><span class="p">])</span> <span class="p">{</span>
+                <span class="n">count</span> <span class="o">+=</span> <span class="n">dfs</span><span class="p">(</span><span class="n">neighbor</span><span class="p">,</span> <span class="n">adj</span><span class="p">,</span> <span class="n">visit</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">count</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">long</span> <span class="kt">long</span> <span class="n">countPairs</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">edges</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">adj</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+        <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">edge</span> <span class="o">:</span> <span class="n">edges</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">adj</span><span class="p">[</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]].</span><span class="n">push_back</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+            <span class="n">adj</span><span class="p">[</span><span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]].</span><span class="n">push_back</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+        <span class="p">}</span>
+
+        <span class="kt">long</span> <span class="kt">long</span> <span class="n">numberOfPairs</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">long</span> <span class="kt">long</span> <span class="n">sizeOfComponent</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">long</span> <span class="kt">long</span> <span class="n">remainingNodes</span> <span class="o">=</span> <span class="n">n</span><span class="p">;</span>
+        <span class="n">vector</span><span class="o">&lt;</span><span class="n">bool</span><span class="o">&gt;</span> <span class="n">visit</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">visit</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">{</span>
+                <span class="n">sizeOfComponent</span> <span class="o">=</span> <span class="n">dfs</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">adj</span><span class="p">,</span> <span class="n">visit</span><span class="p">);</span>
+                <span class="n">numberOfPairs</span> <span class="o">+=</span> <span class="n">sizeOfComponent</span> <span class="o">*</span> <span class="p">(</span><span class="n">remainingNodes</span> <span class="o">-</span> <span class="n">sizeOfComponent</span><span class="p">);</span>
+                <span class="n">remainingNodes</span> <span class="o">-=</span> <span class="n">sizeOfComponent</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">numberOfPairs</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h4 id="анализ-сложности"><strong>Анализ сложности</strong>.</h4>
+
+<p>У нас <code class="language-plaintext highlighter-rouge">n</code> – количество узлов, а <code class="language-plaintext highlighter-rouge">e</code> – количество рёбер.</p>
+
+<ul>
+  <li>
+    <p>Сложность по времени: <code class="language-plaintext highlighter-rouge">O(n+e)</code></p>
+
+    <ul>
+      <li>
+        <p>Необходимо <code class="language-plaintext highlighter-rouge">O(e)</code> времени для инициализации списка соседей и <code class="language-plaintext highlighter-rouge">O(n)</code> времени для инициализации массива <code class="language-plaintext highlighter-rouge">visit</code>.</p>
+      </li>
+      <li>
+        <p>Функция <code class="language-plaintext highlighter-rouge">dfs</code> посещает каждый узел один раз, что занимает в общей сложности <code class="language-plaintext highlighter-rouge">O(n)</code> времени. Поскольку у нас есть неориентированные ребра, каждое ребро может быть повторено только дважды (по узлам в конце), что приводит к общему количеству операций <code class="language-plaintext highlighter-rouge">O(e)</code> при посещении всех узлов.</p>
+      </li>
+      <li>
+        <p>В результате общее требуемое время составляет <code class="language-plaintext highlighter-rouge">O(n+e)</code></p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>Сложность по памяти: <code class="language-plaintext highlighter-rouge">O(n+e)</code></p>
+
+    <ul>
+      <li>
+        <p>Построение списка смежности занимает <code class="language-plaintext highlighter-rouge">O(e)</code> памяти.</p>
+      </li>
+      <li>
+        <p>Массив <code class="language-plaintext highlighter-rouge">visit</code> занимает <code class="language-plaintext highlighter-rouge">O(n)</code> памяти.</p>
+      </li>
+      <li>
+        <p>При рекурсивных вызовах функции <code class="language-plaintext highlighter-rouge">dfs</code> используется стек, который в наихудшем сценарии необходим для <code class="language-plaintext highlighter-rouge">n</code> элементов. В этом случае это заняло бы <code class="language-plaintext highlighter-rouge">O(n)</code> памяти.</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="способ-решения-2-bfs-обход-графа-в-ширину">Способ решения 2. Bfs. Обход графа в ширину.</h3>
+
+<h4 id="интуиция-1"><strong>Интуиция.</strong></h4>
+
+<p>Поскольку нам просто нужно найти количество узлов в каждом компоненте и, используя его, вычислить необходимое количество пар, другой метод заключается в использовании поиска по ширине (BFS).</p>
+
+<p>BFS – это алгоритм обхода или поиска по графу. Он проходит по уровням, т.е. исследуются все узлы на текущем уровне (скажем, <code class="language-plaintext highlighter-rouge">l</code>), прежде чем переходить к узлам на следующем уровне (<code class="language-plaintext highlighter-rouge">l + 1</code>), где номер уровня – это расстояние от начального узла. BFS реализуется с помощью очереди.</p>
+
+<h4 id="алгоритм-1"><strong>Алгоритм</strong>.</h4>
+
+<p>1. Создаём список соседей, где <code class="language-plaintext highlighter-rouge">adj[X]</code> содержит всех соседей узла <code class="language-plaintext highlighter-rouge">X</code>.</p>
+
+<p>2. Для подсчёта количества недоступных пар узлов объявляем переменную <code class="language-plaintext highlighter-rouge">numberOfPairs</code>. Инициализируем нулём (<code class="language-plaintext highlighter-rouge">0</code>).</p>
+
+<p>3. Для хранения количества узлов в текущем компоненте объявляем переменную <code class="language-plaintext highlighter-rouge">sizeOfComponent</code>. Инициализируем нулём (<code class="language-plaintext highlighter-rouge">0</code>).</p>
+
+<p>4. Для отслеживания количества непросмотренных узлов графа после обхода BFS объявляем переменную <code class="language-plaintext highlighter-rouge">remainingNodes</code>. Инициализируем <code class="language-plaintext highlighter-rouge">n</code>.</p>
+
+<p>5. Для отслеживания просмотренных узлов объявляем массив <code class="language-plaintext highlighter-rouge">visit</code> размером <code class="language-plaintext highlighter-rouge">n</code> элементов.</p>
+
+<p>6. Выполняем итерацию по всем узлам, и для каждого узла проверяем, посещен он или нет. Если узел <code class="language-plaintext highlighter-rouge">i</code> не посещен, начинаем обход BFS:</p>
+
+<ul>
+  <li>
+    <p>Для обхода дерева используется функция <code class="language-plaintext highlighter-rouge">bfs</code>. Для каждого вызова передаются параметрами <code class="language-plaintext highlighter-rouge">node</code>, <code class="language-plaintext highlighter-rouge">adj</code> и <code class="language-plaintext highlighter-rouge">visit</code>. Обход начинается с узла <code class="language-plaintext highlighter-rouge">i</code>.</p>
+  </li>
+  <li>
+    <p>Мы инициализируем очередь <code class="language-plaintext highlighter-rouge">q</code> из целых чисел и помещаем в нее <code class="language-plaintext highlighter-rouge">node</code>. Мы также помечаем узел как посещенный и создаем переменную <code class="language-plaintext highlighter-rouge">count</code>, чтобы отслеживать количество узлов в этом компоненте. Мы инициализируем <code class="language-plaintext highlighter-rouge">count</code> равным <code class="language-plaintext highlighter-rouge">1</code>, чтобы подсчитать узел <code class="language-plaintext highlighter-rouge">node</code>.</p>
+  </li>
+  <li>
+    <p>Пока очередь не пуста, из очереди извлекается <code class="language-plaintext highlighter-rouge">node</code> и выполняются итерации по всем его соседям. Если какой-либо сосед не посещен, мы отмечаем его посещенным, увеличиваем количество посещений на <code class="language-plaintext highlighter-rouge">1</code> и помещаем его в очередь.</p>
+  </li>
+  <li>
+    <p>После того, как очередь становится пустой, мы возвращаем <code class="language-plaintext highlighter-rouge">count</code> и сохраняем ешо в <code class="language-plaintext highlighter-rouge">sizeOfComponent</code>.</p>
+  </li>
+  <li>
+    <p>Количество недостижимых пар узлов с одним узлом в текущем компоненте и другим узлом в любом другом компоненте, кроме текущего компонента и ранее посещенных компонентов, равно <code class="language-plaintext highlighter-rouge">sizeOfComponent * (remainingNodes - sizeOfComponent)</code>. Это значение добавляется к переменной <code class="language-plaintext highlighter-rouge">numberOfPairs</code>.</p>
+  </li>
+  <li>
+    <p>Переменная <code class="language-plaintext highlighter-rouge">remainingNodes</code> уменьшается на <code class="language-plaintext highlighter-rouge">sizeOfComponent</code>, потому что мы добавили все необходимые пары узлов, причем один из узлов находится в текущем компоненте, и мы не хотим добавлять их снова. В результате мы предполагаем, что их больше нет.</p>
+  </li>
+</ul>
+
+<p>7. Возвращаем <code class="language-plaintext highlighter-rouge">numberOfPairs</code></p>
+
+<h4 id="реализация-1"><strong>Реализация</strong>.</h4>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">class</span> <span class="n">Solution</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="kt">int</span> <span class="n">bfs</span><span class="p">(</span><span class="kt">int</span> <span class="n">node</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">adj</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">bool</span><span class="o">&gt;&amp;</span> <span class="n">visit</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">queue</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">q</span><span class="p">;</span>
+        <span class="n">q</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">node</span><span class="p">);</span>
+        <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="n">visit</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+
+        <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="n">q</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="p">{</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">q</span><span class="p">.</span><span class="n">front</span><span class="p">();</span>
+            <span class="n">q</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">neighbor</span> <span class="o">:</span> <span class="n">adj</span><span class="p">[</span><span class="n">node</span><span class="p">])</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">visit</span><span class="p">[</span><span class="n">neighbor</span><span class="p">])</span> <span class="p">{</span>
+                    <span class="n">visit</span><span class="p">[</span><span class="n">neighbor</span><span class="p">]</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+                    <span class="n">count</span><span class="o">++</span><span class="p">;</span>
+                    <span class="n">q</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">neighbor</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">count</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">long</span> <span class="kt">long</span> <span class="n">countPairs</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">edges</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">adj</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+        <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">edge</span> <span class="o">:</span> <span class="n">edges</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">adj</span><span class="p">[</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]].</span><span class="n">push_back</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+            <span class="n">adj</span><span class="p">[</span><span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]].</span><span class="n">push_back</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+        <span class="p">}</span>
+
+        <span class="kt">long</span> <span class="kt">long</span> <span class="n">numberOfPairs</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">long</span> <span class="kt">long</span> <span class="n">sizeOfComponent</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">long</span> <span class="kt">long</span> <span class="n">remainingNodes</span> <span class="o">=</span> <span class="n">n</span><span class="p">;</span>
+        <span class="n">vector</span><span class="o">&lt;</span><span class="n">bool</span><span class="o">&gt;</span> <span class="n">visit</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">visit</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">{</span>
+                <span class="n">sizeOfComponent</span> <span class="o">=</span> <span class="n">bfs</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">adj</span><span class="p">,</span> <span class="n">visit</span><span class="p">);</span>
+                <span class="n">numberOfPairs</span> <span class="o">+=</span> <span class="n">sizeOfComponent</span> <span class="o">*</span> <span class="p">(</span><span class="n">remainingNodes</span> <span class="o">-</span> <span class="n">sizeOfComponent</span><span class="p">);</span>
+                <span class="n">remainingNodes</span> <span class="o">-=</span> <span class="n">sizeOfComponent</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">numberOfPairs</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h4 id="анализ-сложности-1"><strong>Анализ сложности</strong>.</h4>
+
+<p>У нас <code class="language-plaintext highlighter-rouge">n</code> – количество узлов, а <code class="language-plaintext highlighter-rouge">e</code> – количество рёбер.</p>
+
+<ul>
+  <li>
+    <p>Сложность по времени: <code class="language-plaintext highlighter-rouge">O(n+e)</code></p>
+
+    <ul>
+      <li>
+        <p>Необходимо <code class="language-plaintext highlighter-rouge">O(e)</code> времени для инициализации списка соседей и <code class="language-plaintext highlighter-rouge">O(n)</code> времени для инициализации массива <code class="language-plaintext highlighter-rouge">visit</code>.</p>
+      </li>
+      <li>
+        <p>Каждая операция с очередью в алгоритме BFS занимает <code class="language-plaintext highlighter-rouge">O(1)</code> времени, и один узел может быть перемещен только один раз, что приводит к <code class="language-plaintext highlighter-rouge">O(n)</code> операций для <code class="language-plaintext highlighter-rouge">n</code> узлов. Мы выполняем итерацию по всем соседям каждого узла, который извлекается из очереди, поэтому для неориентированного ребра данное ребро может быть повторено не более двух раз (узлами на обоих концах), что приводит к общему количеству операций <code class="language-plaintext highlighter-rouge">O(e)</code> для всех узлов.</p>
+      </li>
+      <li>
+        <p>В результате общее требуемое время составляет <code class="language-plaintext highlighter-rouge">O(n+e)</code></p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>Сложность по памяти: <code class="language-plaintext highlighter-rouge">O(n+e)</code></p>
+
+    <ul>
+      <li>
+        <p>Построение списка смежности занимает <code class="language-plaintext highlighter-rouge">O(e)</code> памяти.</p>
+      </li>
+      <li>
+        <p>Массив <code class="language-plaintext highlighter-rouge">visit</code> занимает <code class="language-plaintext highlighter-rouge">O(n)</code> памяти.</p>
+      </li>
+      <li>
+        <p>При рекурсивных вызовах функции <code class="language-plaintext highlighter-rouge">bfs</code> используется стек, который в наихудшем сценарии необходим для <code class="language-plaintext highlighter-rouge">n</code> элементов. В этом случае это заняло бы <code class="language-plaintext highlighter-rouge">O(n)</code> памяти.</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="способ-решения-3-непересекающееся-множество-union-find">Способ решения 3. Непересекающееся множество (Union-find).</h3>
+
+<h4 id="интуиция-2"><strong>Интуиция.</strong></h4>
+
+<p>Структура данных <strong>union-find</strong> – это еще один подход к ответам на вопросы, основанный на связности графов. Он может эффективно определять, к какому подключенному компоненту принадлежит узел или ребро, а также размер каждого компонента. Поскольку наша задача состоит в том, чтобы найти размер каждого компонента, который мы затем можем использовать для определения требуемого количества пар узлов, мы также можем использовать структуру данных union-find для решения проблемы.</p>
+
+<p>Структура данных с непересекающимися наборами, также называемая структурой данных поиска объединения или набором поиска слияния, представляет собой структуру данных, в которой хранится коллекция непересекающихся (неперекрывающихся) наборов. Эквивалентно, он хранит разбиение множества на непересекающиеся подмножества. Он предоставляет операции для добавления новых наборов, объединения наборов (замены их объединением) и поиска репрезентативного члена набора. Он реализует две полезные операции:</p>
+
+<p>1. <code class="language-plaintext highlighter-rouge">Find</code> – Определение, в какое подмножество входит конкретный элемент. Это может быть использовано для определения того, находятся ли два элемента в одном и том же подмножестве.</p>
+
+<p>2. <code class="language-plaintext highlighter-rouge">Union</code> – Объединение двух подмножеств в одно.</p>
+
+<p>Мы перебираем все ребра, производя <code class="language-plaintext highlighter-rouge">union</code> двух узлов, соединенных ребром. Это генерирует граф путем вставки всех узлов в компоненты, к которым они принадлежат.</p>
+
+<p>Затем мы перебираем все узлы, чтобы определить, к какому компоненту принадлежит каждый узел, используя операцию <code class="language-plaintext highlighter-rouge">find</code>. Мы создаем хэш-карту под названием <code class="language-plaintext highlighter-rouge">componentSize</code>, которая сопоставляет узел, который однозначно идентифицирует компонент (операция <code class="language-plaintext highlighter-rouge">find</code> возвращает этот узел для всех узлов в компоненте), с размером компонента. Мы увеличиваем размер компонента <code class="language-plaintext highlighter-rouge">find(node)</code> на <code class="language-plaintext highlighter-rouge">1</code> для узла <code class="language-plaintext highlighter-rouge">node</code>, поскольку узел принадлежит компоненту <code class="language-plaintext highlighter-rouge">find(node)</code>. Аналогично, мы покрываем все узлы и получаем размеры всех компонентов в <code class="language-plaintext highlighter-rouge">componentSize</code>.</p>
+
+<p>После определения размеров всех компонентов мы выполняем те же вычисления, что и в предыдущих подходах, чтобы определить количество требуемых путей. Мы перебираем все компоненты, добавляя количество пар с одним узлом в текущем компоненте путем умножения размера текущего компонента на количество узлов, исключая узлы в текущем компоненте и ранее посещенные компоненты.</p>
+
+<h4 id="алгоритм-2"><strong>Алгоритм</strong>.</h4>
+
+<p>1. Создается экземпляр класса <code class="language-plaintext highlighter-rouge">UnionFind</code> с именем <code class="language-plaintext highlighter-rouge">dsu(n)</code>.</p>
+
+<p>2. Выполняется итерацию по всем ребрам графа <code class="language-plaintext highlighter-rouge">edges</code> и производится операция <code class="language-plaintext highlighter-rouge">union</code> для обоих узлов, соединенных ребром.</p>
+
+<p>3. Создается хэш-карта <code class="language-plaintext highlighter-rouge">componentSize</code> для сопоставления узла, который уникально идентифицирует компонент, с размером компонента. <code class="language-plaintext highlighter-rouge">componentSize[x]</code> возвращает количество узлов в компоненте, к которому относится узел <code class="language-plaintext highlighter-rouge">x</code>.</p>
+
+<ul>
+  <li>Выполняем итерацию над всеми узлами, и для каждого узла на единицу увеличиваем <code class="language-plaintext highlighter-rouge">componentSize[find(node)]</code>.</li>
+</ul>
+
+<p>4. Для подсчёта количества недоступных пар узлов объявляем переменную <code class="language-plaintext highlighter-rouge">numberOfPairs</code>. Инициализируем нулём (<code class="language-plaintext highlighter-rouge">0</code>).</p>
+
+<p>5. Для отслеживания количества узлов, которые остались после посещения каждого компонента, объявляем переменную <code class="language-plaintext highlighter-rouge">remainingNodes</code>. Инициализируем <code class="language-plaintext highlighter-rouge">n</code>.</p>
+
+<p>6. Мы проходим по карте <code class="language-plaintext highlighter-rouge">componentSize</code> и для каждого элемента в карте выполняем следующее:</p>
+
+<ul>
+  <li>
+    <p>Добавляем к переменной <code class="language-plaintext highlighter-rouge">numberOfPairs</code> все узлы, где один узел находится в текущем компоненте, а другие узлы в другом компоненте, за исключением текущего компонента и компонентов, ранее посещённых. Это выполняется так: <code class="language-plaintext highlighter-rouge">numberOfPaths += componentSize * (remainingNodes - componentSize)</code>.</p>
+  </li>
+  <li>
+    <p>Уменьшаем значение <code class="language-plaintext highlighter-rouge">remainingNodes</code> на <code class="language-plaintext highlighter-rouge">sizeOfComponent</code>, потому что мы добавлили все необходимые пары узлов текущего компонента и не хотим их добавлять снова. Считаем, что их будто бы уже нет.</p>
+  </li>
+</ul>
+
+<p>7. Возвращаем <code class="language-plaintext highlighter-rouge">numberOfPairs</code></p>
+
+<h4 id="реализация-2"><strong>Реализация</strong>.</h4>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">class</span> <span class="n">UnionFind</span> <span class="p">{</span>
+<span class="nl">private:</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">parent</span><span class="p">,</span> <span class="n">rank</span><span class="p">;</span>
+
+<span class="nl">public:</span>
+    <span class="n">UnionFind</span><span class="p">(</span><span class="kt">int</span> <span class="n">size</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">parent</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">size</span><span class="p">);</span>
+        <span class="n">rank</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">parent</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="kt">int</span> <span class="n">find</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">parent</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">!=</span> <span class="n">x</span><span class="p">)</span> <span class="n">parent</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">find</span><span class="p">(</span><span class="n">parent</span><span class="p">[</span><span class="n">x</span><span class="p">]);</span>
+        <span class="k">return</span> <span class="n">parent</span><span class="p">[</span><span class="n">x</span><span class="p">];</span>
+    <span class="p">}</span>
+    <span class="kt">void</span> <span class="n">union_set</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">xset</span> <span class="o">=</span> <span class="n">find</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">yset</span> <span class="o">=</span> <span class="n">find</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">xset</span> <span class="o">==</span> <span class="n">yset</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">rank</span><span class="p">[</span><span class="n">xset</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">rank</span><span class="p">[</span><span class="n">yset</span><span class="p">])</span> <span class="p">{</span>
+            <span class="n">parent</span><span class="p">[</span><span class="n">xset</span><span class="p">]</span> <span class="o">=</span> <span class="n">yset</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">rank</span><span class="p">[</span><span class="n">xset</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">rank</span><span class="p">[</span><span class="n">yset</span><span class="p">])</span> <span class="p">{</span>
+            <span class="n">parent</span><span class="p">[</span><span class="n">yset</span><span class="p">]</span> <span class="o">=</span> <span class="n">xset</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">parent</span><span class="p">[</span><span class="n">yset</span><span class="p">]</span> <span class="o">=</span> <span class="n">xset</span><span class="p">;</span>
+            <span class="n">rank</span><span class="p">[</span><span class="n">xset</span><span class="p">]</span><span class="o">++</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="n">class</span> <span class="n">Solution</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="kt">long</span> <span class="kt">long</span> <span class="n">countPairs</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">edges</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">UnionFind</span> <span class="n">dsu</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+        <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">edge</span> <span class="o">:</span> <span class="n">edges</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">dsu</span><span class="p">.</span><span class="n">union_set</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+        <span class="p">}</span>
+        <span class="n">unordered_map</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">componentSize</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">componentSize</span><span class="p">[</span><span class="n">dsu</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span><span class="o">++</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="kt">long</span> <span class="kt">long</span> <span class="n">numberOfPaths</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">long</span> <span class="kt">long</span> <span class="n">remainingNodes</span> <span class="o">=</span> <span class="n">n</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">component</span> <span class="o">:</span> <span class="n">componentSize</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kt">int</span> <span class="n">componentSize</span> <span class="o">=</span> <span class="n">component</span><span class="p">.</span><span class="n">second</span><span class="p">;</span>
+            <span class="n">numberOfPaths</span> <span class="o">+=</span> <span class="n">componentSize</span> <span class="o">*</span> <span class="p">(</span><span class="n">remainingNodes</span> <span class="o">-</span> <span class="n">componentSize</span><span class="p">);</span>
+            <span class="n">remainingNodes</span> <span class="o">-=</span> <span class="n">componentSize</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">numberOfPaths</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h4 id="анализ-сложности-2"><strong>Анализ сложности</strong>.</h4>
+
+<p>У нас <code class="language-plaintext highlighter-rouge">n</code> – количество узлов, а <code class="language-plaintext highlighter-rouge">e</code> – количество рёбер.</p>
+
+<ul>
+  <li>
+    <p>Сложность по времени: <code class="language-plaintext highlighter-rouge">O(n+e)</code></p>
+
+    <ul>
+      <li>
+        <p>Для операций <code class="language-plaintext highlighter-rouge">T</code> амортизированная временная сложность алгоритма <code class="language-plaintext highlighter-rouge">UnionFind</code> (использующего сжатие пути и объединение по рангу) равна <code class="language-plaintext highlighter-rouge">O(alpha(T)</code>. Здесь <code class="language-plaintext highlighter-rouge">α(T)</code> – обратная функция Аккермана, которая растет настолько медленно, что не превышает <code class="language-plaintext highlighter-rouge">4</code> для всех разумных <code class="language-plaintext highlighter-rouge">T</code> (приблизительно T &lt; 10^600). Поскольку функция растет так медленно, мы считаем, что она равна <code class="language-plaintext highlighter-rouge">O(1)</code>.</p>
+      </li>
+      <li>
+        <p>Инициализация <code class="language-plaintext highlighter-rouge">UnionFind</code> занимает <code class="language-plaintext highlighter-rouge">O(n)</code> времени, потому что инициализируются массивы <code class="language-plaintext highlighter-rouge">parent</code> и <code class="language-plaintext highlighter-rouge">rank</code>, каждый размером <code class="language-plaintext highlighter-rouge">n</code>.</p>
+      </li>
+      <li>
+        <p>Выполняются итерации для каждого ребра и операции <code class="language-plaintext highlighter-rouge">union</code> для узлов, соединенных ребром, что занимает <code class="language-plaintext highlighter-rouge">O(1)</code> времени для операции. Всего, <code class="language-plaintext highlighter-rouge">O(e)</code> времени для <code class="language-plaintext highlighter-rouge">e</code> рёбер.</p>
+      </li>
+      <li>
+        <p>Затем выполняются итерации для всех узлов и операция <code class="language-plaintext highlighter-rouge">find</code> для поиска компонентов. Операция <code class="language-plaintext highlighter-rouge">find</code> занимает <code class="language-plaintext highlighter-rouge">O(1)</code> амортизационного времени для каждой операции.</p>
+      </li>
+      <li>
+        <p>Выполняются итерации по элементам карты <code class="language-plaintext highlighter-rouge">componentSize</code>. У нас не больше <code class="language-plaintext highlighter-rouge">n</code> компонентов, потому что всего <code class="language-plaintext highlighter-rouge">n</code> узлов. В наихудшем сценарии, определение размера всех компонентов потребует <code class="language-plaintext highlighter-rouge">O(n)</code> времени.</p>
+      </li>
+      <li>
+        <p>В результате общее требуемое время составляет <code class="language-plaintext highlighter-rouge">O(n+e)</code></p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>Сложность по памяти: <code class="language-plaintext highlighter-rouge">O(n)</code></p>
+
+    <ul>
+      <li>
+        <p>Используются массивы <code class="language-plaintext highlighter-rouge">parent</code> и <code class="language-plaintext highlighter-rouge">rank</code>, которым нужно <code class="language-plaintext highlighter-rouge">O(n)</code> памяти каждому.</p>
+      </li>
+      <li>
+        <p>Карте <code class="language-plaintext highlighter-rouge">componentSize</code> требуется <code class="language-plaintext highlighter-rouge">O(n)</code> памяти в наихудшем случае.</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+
+   	</div>
+</div></section>
+
+    <footer class="footer hexlet-footer py-5 mt-5 text-muted">
+  <div class="container">
+    <div class="row mt-1">
+      <div class="col-12 text-center">
+        <a href="https://aveligzhanin.github.io/">Велигжанин Андрей</a> — Программист-разработчик C++ и Oracle.
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>
