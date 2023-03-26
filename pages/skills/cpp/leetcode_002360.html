@@ -1,0 +1,154 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Longest Cycle in a Graph (LeetCode)</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Our style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/avel.css">
+</head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+  <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse menu">
+			<ul class="nav navbar-nav navbar-right">
+                 
+                    <li>
+                       <a href="/index.html#about">Обо мне</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#education">Образование</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#work">Работа</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#skills">Навыки</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#portfolio">Портфолио</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#hobby">Увлечения</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#contact">Контакты</a>
+                    </li>
+                 
+        	</ul>
+        </div>
+      </div>
+  </div>
+</nav>
+
+    <section class="pfblock"><div class="container">  		<!-- Translations -->
+	<div class="col-xs-6" align=left>
+		<a href="/index.html">home</a> \ <a href="/pages/skills/cpp.html">Cpp. Задачки для практики</a>
+	</div>
+
+	<div class="col-xs-6" align=right>
+		Написано: 26.03.2023
+	</div>
+
+   	<div class="col-sm-12 my">
+		<h1 id="2360-самый-длинный-цикл-в-графе-longest-cycle-in-a-graph">2360. <a href="https://leetcode.com/problems/longest-cycle-in-a-graph/">Самый длинный цикл в графе (Longest Cycle in a Graph)</a></h1>
+
+<p><img src="/assets/images/hard.jpg" alt="hard" /></p>
+
+<h2 id="задание">Задание.</h2>
+
+<p>Вам дается ориентированный граф из <code class="language-plaintext highlighter-rouge">n</code> узлов, пронумерованных от <code class="language-plaintext highlighter-rouge">0</code> до <code class="language-plaintext highlighter-rouge">n - 1</code>, где каждый узел имеет не более одного исходящего ребра.</p>
+
+<p>Граф представлен заданным <code class="language-plaintext highlighter-rouge">0-индексированным</code> массивом ребер размера <code class="language-plaintext highlighter-rouge">n</code>, указывающим на то, что существует направленное ребро от узла <code class="language-plaintext highlighter-rouge">i</code> к узлу <code class="language-plaintext highlighter-rouge">edges[i]</code>. Если нет исходящего ребра из узла <code class="language-plaintext highlighter-rouge">i</code>, то <code class="language-plaintext highlighter-rouge">edges[i] == -1</code>.</p>
+
+<p>Верните длину самого длинного цикла на графе. Если цикл не существует, верните значение <code class="language-plaintext highlighter-rouge">-1</code>.</p>
+
+<p><strong>Цикл</strong> – это путь, который начинается и заканчивается в одном и том же узле.</p>
+
+<h2 id="пример-1">Пример 1.</h2>
+
+<p><img src="/assets/images/LeetCode_002360a.jpg" alt="LeetCode-002360a" /></p>
+
+<p><strong>Входные данные:</strong>  edges = [3,3,4,2,3]</p>
+
+<p><strong>Результат:</strong>  3</p>
+
+<p><strong>Пояснение:</strong> Самый длинный цикл графа – это цикл: 2 -&gt; 4 -&gt; 3 -&gt; 2, поэтому возвращается число 3.</p>
+
+<h2 id="пример-2">Пример 2.</h2>
+
+<p><img src="/assets/images/LeetCode_002360b.jpg" alt="LeetCode-002360b" /></p>
+
+<p><strong>Входные данные:</strong> edges = [2,-1,3,1]</p>
+
+<p><strong>Результат:</strong> -1</p>
+
+<p><strong>Пояснение:</strong> Граф не содержит циклов.</p>
+
+<h2 id="решение">Решение.</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">class</span> <span class="n">Solution</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="kt">int</span> <span class="n">longestCycle</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">edges</span><span class="p">)</span> <span class="p">{</span>
+        
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="способ-решения">Способ решения.</h2>
+
+<h3 id="обзор">Обзор</h3>
+
+<p>Нам дан ориентированный граф с <code class="language-plaintext highlighter-rouge">n</code> узлами, пронумерованными от <code class="language-plaintext highlighter-rouge">0</code> до <code class="language-plaintext highlighter-rouge">n - 1</code>. Каждый узел имеет не более одного исходящего ребра, заданного <code class="language-plaintext highlighter-rouge">edges</code>.</p>
+
+<p>Наша задача состоит в том, чтобы вернуть длину самого длинного цикла на графике. Если цикла не существует, нам нужно вернуть значение <code class="language-plaintext highlighter-rouge">-1</code>.</p>
+
+<h3 id="способ-1-dfs-обход-графа-в-глубину">Способ 1. Dfs. Обход графа в глубину.</h3>
+
+<h4 id="интуиция"><strong>Интуиция</strong></h4>
+
+<p>Проблема указывает на то, что каждый узел имеет не более одного исходящего ребра. Давайте посмотрим, какие типы графов мы можем создать с помощью этого.</p>
+
+<p>Рассмотрим узел <code class="language-plaintext highlighter-rouge">node</code>, у которого есть цикл. Это означало бы, что единственное исходящее ребро узла также будет находиться в этом цикле. В результате узел не может быть частью какого-либо другого цикла, поскольку у него есть только одно исходящее ребро, которое используется в этом цикле. Это демонстрирует, что в графе только с одним исходящим ребром узел не может быть частью более чем одного цикла.</p>
+
+
+   	</div>
+</div></section>
+
+    <footer class="footer hexlet-footer py-5 mt-5 text-muted">
+  <div class="container">
+    <div class="row mt-1">
+      <div class="col-12 text-center">
+        <a href="https://aveligzhanin.github.io/">Велигжанин Андрей</a> — Программист-разработчик C++ и Oracle.
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>
