@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Oracle.</title>
+    <title>Rising Temperature (LeetCode)</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -68,61 +68,78 @@
 
     <section class="pfblock"><div class="container">  		<!-- Translations -->
 	<div class="col-xs-6" align=left>
-		<a href="/index.html">home</a> \ <a href="/index.html#skills">Навыки</a>
+		<a href="/index.html">home</a> \ <a href="/pages/skills/Oracle.html">Oracle. Задачки для практики</a>
 	</div>
 
 	<div class="col-xs-6" align=right>
-		Написано: 07.10.2018
+		Написано: 27.03.2023
 	</div>
 
    	<div class="col-sm-12 my">
-		<h1 id="oracle">Oracle.</h1>
+		<h1 id="197-повышение-температуры-rising-temperature">197. <a href="https://leetcode.com/problems/rising-temperature/">Повышение температуры (Rising Temperature)</a></h1>
 
-<h2 id="документация-oracle-database-21c">Документация. Oracle Database 21c</h2>
+<p><img src="/assets/images/easy.jpg" alt="easy" /></p>
 
-<h3 id="концепции">Концепции</h3>
+<h2 id="sql-schema">SQL schema</h2>
 
-<h4 id="database-concepts"><a href="/pages/skills/oracle/concepts.html">Database Concepts</a></h4>
+<p>Table: weather</p>
 
-<h3 id="для-старта">Для старта</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>+---------------+---------+
+| Column Name   | Type    |
++---------------+---------+
+| id            | int     |
+| recordDate    | date    |
+| temperature   | int     |
++---------------+---------+
+id is the primary key for this table.
+This table contains information about the temperature on a certain day.
+</code></pre></div></div>
 
-<h4 id="2-day--performance-tuning-guide"><a href="/pages/skills/oracle/2day/Performance_Tuning_Guide/toc.html">2 Day + Performance Tuning Guide.</a></h4>
+<h2 id="задание">Задание.</h2>
 
-<h4 id="2-day-developers-guide"><a href="/pages/skills/oracle/2day/Developers_Guide/toc.html">2 Day Developer’s Guide</a></h4>
+<p>Напишите SQL-запрос, чтобы найти идентификатор всех дат с более высокими температурами по сравнению с предыдущими датами (вчера).</p>
 
-<h4 id="2-day-java-developers-guide"><a href="/pages/skills/oracle/2day/Java_Developers_Guide/toc.html">2 Day Java Developer’s Guide</a></h4>
+<p>Верните таблицу результатов в любом порядке.</p>
 
-<h3 id="руководства">Руководства</h3>
+<p>Формат результата запроса приведен в следующем примере.</p>
 
-<h4 id="руководство-администратора-database-administrators-guide"><a href="/pages/skills/oracle/Administrators_Guide/toc.html">Руководство Администратора (Database Administrator’s Guide)</a></h4>
+<h2 id="пример-1">Пример 1.</h2>
 
-<h4 id="руководство-по-настройке-sql-sql-tuning-guide"><a href="/pages/skills/oracle/sql_tuning_guide/toc.html">Руководство по настройке SQL (SQL Tuning Guide)</a></h4>
+<p><strong>Входные данные:</strong></p>
 
-<h3 id="другое">Другое</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Weather table:
++----+------------+-------------+
+| id | recordDate | temperature |
++----+------------+-------------+
+| 1  | 2015-01-01 | 10          |
+| 2  | 2015-01-02 | 25          |
+| 3  | 2015-01-03 | 20          |
+| 4  | 2015-01-04 | 30          |
++----+------------+-------------+
+</code></pre></div></div>
 
-<h4 id="plsql"><a href="/pages/skills/oracle/plsql.html">PL/SQL</a></h4>
+<p><strong>Результат:</strong></p>
 
-<h4 id="полезные-задачи"><a href="/pages/skills/oracle/test.html">Полезные задачи.</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>+----+
+| id |
++----+
+| 2  |
+| 4  |
++----+
+</code></pre></div></div>
 
-<h4 id="sample-schemas"><a href="/pages/skills/oracle/sample/toc.html">Sample Schemas</a></h4>
+<p><strong>Пояснение:</strong></p>
 
-<h3 id="задачи-с-leetcode-easy">Задачи с LeetCode. Easy</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>02-01-2015 температура была выше, чем в предыдущий день (10 -&gt; 25).
+04-01-2015 температура была выше, чем в предыдущий день (20 -&gt; 30).
+</code></pre></div></div>
 
-<p><a href="/pages/skills/leetcode/000175.html">175. Объединить две таблицы (Combine Two Tables)</a></p>
+<h2 id="решение">Решение.</h2>
 
-<p><a href="/pages/skills/leetcode/000181.html">181. Работники, зарабатывающие больше менеджеров (Employees Earning More Than Their Managers)</a></p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* Write your PL/SQL query statement below */</span>
+<span class="k">SELECT</span> <span class="n">a</span><span class="p">.</span><span class="n">id</span> <span class="k">FROM</span> <span class="n">weather</span> <span class="n">a</span><span class="p">,</span> <span class="n">weather</span> <span class="n">b</span> <span class="k">WHERE</span> <span class="n">a</span><span class="p">.</span><span class="n">recordDate</span><span class="o">-</span><span class="mi">1</span> <span class="o">=</span> <span class="n">b</span><span class="p">.</span><span class="n">recordDate</span> <span class="k">AND</span> <span class="n">a</span><span class="p">.</span><span class="n">temperature</span> <span class="o">&gt;</span> <span class="n">b</span><span class="p">.</span><span class="n">temperature</span>
+</code></pre></div></div>
 
-<p><a href="/pages/skills/leetcode/000182.html">182. Дубли email (Duplicate Emails)</a></p>
-
-<p><a href="/pages/skills/leetcode/000183.html">183. Клиенты без заказов (Customers Who Never Order)</a></p>
-
-<p><a href="/pages/skills/leetcode/000196.html">196. Удаление дублей email (Delete Duplicate Emails)</a></p>
-
-<p><a href="/pages/skills/leetcode/000197.html">197. Повышение температуры (Rising Temperature)</a></p>
-
-<h3 id="задачи-с-leetcode-medium">Задачи с LeetCode. Medium</h3>
-
-<p><a href="/pages/skills/leetcode/000184.html">184. Самая высокая зарплата в департаменте (Department Highest Salary)</a></p>
 
    	</div>
 </div></section>
