@@ -1,0 +1,343 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>I10n</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Our style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/avel.css">
+</head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+  <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse menu">
+			<ul class="nav navbar-nav navbar-right">
+                 
+                    <li>
+                       <a href="/index.html#about">Обо мне</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#education">Образование</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#work">Работа</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#skills">Навыки</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#portfolio">Портфолио</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#hobby">Увлечения</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#contact">Контакты</a>
+                    </li>
+                 
+        	</ul>
+        </div>
+      </div>
+  </div>
+</nav>
+
+    <section class="pfblock"><div class="container">  		<!-- Translations -->
+	<div class="col-xs-6" align=left>
+		<a href="/index.html">home</a> \ <a href="/pages/skills/cpp.html">Cpp. Задачки для практики</a>
+	</div>
+
+	<div class="col-xs-6" align=right>
+		Написано: 28.02.2023
+	</div>
+
+   	<div class="col-sm-12 my">
+		<h1 id="2-i10n">2. I10n</h1>
+
+<p>Задание было предложено на тесте в комании Яндекс.</p>
+
+<p><img src="/assets/images/Yandex_001.jpg" alt="Yandex_001" /></p>
+
+<h2 id="задание">Задание.</h2>
+
+<p>Дана последовательность строк.</p>
+
+<p>Нужно для каждой строки сформировать сокращение.</p>
+
+<p>Сокращение представляет собой строку, в которой</p>
+
+<ul>
+  <li>
+    <p>есть префикс и суффикс одинаковой длины (которые берутся из строки)</p>
+  </li>
+  <li>
+    <p>остальная часть строки заменяется на число (количество заменённых символов)</p>
+  </li>
+</ul>
+
+<p>Например, для строки <code class="language-plaintext highlighter-rouge">aaaaaaa</code> возможны сокращения <code class="language-plaintext highlighter-rouge">a5a</code> или <code class="language-plaintext highlighter-rouge">aa3aa</code> или <code class="language-plaintext highlighter-rouge">aaa1aaa</code>.</p>
+
+<p>Необходимо для всех полученных строк сформировать сокращения, причём каждое сокращение должно быть уникальным. Если сформировать скоращение невозможно, необходимо вернуть исходную строку.</p>
+
+<h2 id="пример-1">Пример 1.</h2>
+
+<p><strong>Входные данные:</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2
+localization
+internationalization
+</code></pre></div></div>
+
+<p><strong>Результат:</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>l10n
+i18n
+</code></pre></div></div>
+
+<h2 id="пример-2">Пример 2</h2>
+
+<p><strong>Входные данные:</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>10
+aaaa
+abaa
+abab
+bbbb
+baba
+aaaaaaaaaaaaaaaaaaaa
+abaaaaaaaaaaaaaaaaaa
+bbbbbbbbbbbbbbbbbbbb
+sjfdhlsakdjfhsald
+sdfasdfsadfafdsfdd
+</code></pre></div></div>
+
+<p><strong>Результат:</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aaaa
+abaa
+a2b
+b2b
+b2a
+aa16aa
+ab16aa
+b18b
+s15d
+s16d
+</code></pre></div></div>
+
+<h2 id="решение">Решение.</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;map&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;unordered_map&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;stack&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;set&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="c1">    // std::sort</span><span class="cp">
+#include</span> <span class="cpf">&lt;queue&gt;</span><span class="cp">
+</span>
+<span class="n">using</span> <span class="n">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="k">struct</span> <span class="n">abbrItem</span> <span class="p">{</span>
+    <span class="n">string</span> <span class="n">origin</span><span class="p">;</span>              <span class="c1">// исходная строчка</span>
+    <span class="n">string</span> <span class="n">abbr</span><span class="p">;</span>                <span class="c1">// сокращенная</span>
+    <span class="kt">int</span> <span class="n">index</span><span class="p">;</span>                  <span class="c1">// индекс элемента</span>
+    <span class="kt">int</span> <span class="n">possible_len</span><span class="p">;</span>           <span class="c1">// макс.возможная длину префикса для сокращения</span>
+    <span class="n">bool</span> <span class="n">completed</span><span class="p">;</span>             <span class="c1">// отмечает, завершена ли обработка строки</span>
+    <span class="n">bool</span> <span class="n">marked</span><span class="p">;</span>                <span class="c1">// если true, запись отмечена, как конфликтная, и направлена в stack conflicts</span>
+<span class="p">};</span>
+
+<span class="n">class</span> <span class="n">Solution</span> <span class="p">{</span>
+<span class="nl">private:</span>
+    <span class="n">queue</span> <span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">conflicts</span><span class="p">;</span>                      <span class="c1">// очередь для урегулирования конфликтов</span>
+    <span class="n">vector</span> <span class="o">&lt;</span><span class="n">abbrItem</span><span class="o">&gt;</span> <span class="n">out</span><span class="p">;</span>
+    <span class="n">map</span> <span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">abbrmap</span><span class="p">;</span>                  <span class="c1">// карта сокращений, второй параметр -- индекс в out</span>
+    <span class="kt">int</span> <span class="n">iteration</span><span class="p">;</span>                              <span class="c1">// текущая итерация по формированию сокращений</span>
+    <span class="kt">void</span> <span class="n">inputStrings</span><span class="p">(</span><span class="n">vector</span> <span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">);</span>
+    <span class="n">string</span> <span class="n">getAbbr</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">,</span> <span class="kt">int</span> <span class="n">l</span><span class="p">);</span>
+    <span class="kt">void</span> <span class="n">resolveConflicts</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="n">genAbbr</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">);</span>                        <span class="c1">// генерация сокращения</span>
+<span class="nl">public:</span>
+    <span class="kt">void</span> <span class="n">Input</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="n">Run</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="n">Print</span><span class="p">();</span>
+<span class="p">};</span>
+
+<span class="kt">void</span> <span class="n">Solution</span><span class="o">::</span><span class="n">Input</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">string</span> <span class="n">one</span><span class="p">;</span>
+    <span class="n">vector</span> <span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">s</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">n</span><span class="p">;</span>
+
+    <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">n</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">one</span><span class="p">;</span>
+        <span class="n">s</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="n">one</span> <span class="p">);</span> <span class="c1">// запоминаем исходную строчку в векторе</span>
+    <span class="p">}</span>
+    <span class="n">inputStrings</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Solution</span><span class="o">::</span><span class="n">Print</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">for</span><span class="p">(</span><span class="k">auto</span> <span class="n">x</span> <span class="o">:</span> <span class="n">out</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">x</span><span class="p">.</span><span class="n">abbr</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">string</span> <span class="n">Solution</span><span class="o">::</span><span class="n">getAbbr</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">,</span> <span class="kt">int</span> <span class="n">l</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">string</span> <span class="n">x</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">len</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">length</span><span class="p">(),</span> <span class="n">n</span><span class="p">;</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="n">l</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">l</span><span class="o">*</span><span class="mi">2</span> <span class="o">&gt;=</span> <span class="n">len</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">s</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">len</span> <span class="o">-</span> <span class="n">l</span><span class="o">*</span><span class="mi">2</span><span class="p">;</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">l</span><span class="p">)</span> <span class="o">+</span> <span class="n">to_string</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">s</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span><span class="n">l</span><span class="o">+</span><span class="n">n</span><span class="p">,</span><span class="n">l</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Solution</span><span class="o">::</span><span class="n">resolveConflicts</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">index</span><span class="p">;</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v</span><span class="p">;</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="n">conflicts</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span> <span class="o">==</span> <span class="nb">false</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">iteration</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="n">abbrmap</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
+        <span class="c1">// переписываем conflicts в v</span>
+        <span class="c1">// одновременно снимаем метку marked</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">conflicts</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span> <span class="o">==</span> <span class="nb">false</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="n">conflicts</span><span class="p">.</span><span class="n">front</span><span class="p">();</span>
+            <span class="n">v</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">index</span><span class="p">);</span>
+            <span class="n">conflicts</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+            <span class="n">out</span><span class="p">[</span><span class="n">index</span><span class="p">].</span><span class="n">marked</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="c1">// теперь conflicts -- пустой</span>
+        <span class="c1">// проходим по вектору, для каждого индекса генерим новое сокращение</span>
+        <span class="k">for</span><span class="p">(</span><span class="k">auto</span> <span class="n">i</span> <span class="o">:</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">genAbbr</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Solution</span><span class="o">::</span><span class="n">genAbbr</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">string</span> <span class="n">s</span><span class="p">;</span>
+    <span class="n">map</span> <span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;::</span><span class="n">iterator</span> <span class="n">it</span><span class="p">;</span>
+    <span class="n">abbrItem</span> <span class="n">item</span><span class="p">;</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="n">iteration</span> <span class="o">&gt;</span> <span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">possible_len</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// сокращение невозможно</span>
+        <span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">abbr</span> <span class="o">=</span> <span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">origin</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="c1">// сокращение возможно</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">getAbbr</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">origin</span><span class="p">,</span> <span class="n">iteration</span><span class="p">);</span>
+        <span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">abbr</span> <span class="o">=</span> <span class="n">s</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">((</span><span class="n">it</span> <span class="o">=</span> <span class="n">abbrmap</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">s</span><span class="p">))</span> <span class="o">==</span> <span class="n">abbrmap</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="p">{</span>
+            <span class="c1">// сокращения нет в карте, добавляем</span>
+            <span class="n">abbrmap</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="c1">// конфликт, помечаем, позже будем регулировать</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="n">out</span><span class="p">[</span> <span class="n">it</span><span class="o">-&gt;</span><span class="n">second</span> <span class="p">];</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">item</span><span class="p">.</span><span class="n">marked</span> <span class="o">==</span> <span class="nb">false</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">item</span><span class="p">.</span><span class="n">marked</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+                <span class="n">conflicts</span><span class="p">.</span><span class="n">push</span><span class="p">(</span> <span class="n">item</span><span class="p">.</span><span class="n">index</span> <span class="p">);</span>
+            <span class="p">}</span>
+            <span class="n">out</span><span class="p">[</span> <span class="n">it</span><span class="o">-&gt;</span><span class="n">second</span> <span class="p">]</span> <span class="o">=</span> <span class="n">item</span><span class="p">;</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">marked</span> <span class="o">==</span> <span class="nb">false</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">marked</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+                <span class="n">conflicts</span><span class="p">.</span><span class="n">push</span><span class="p">(</span> <span class="n">i</span> <span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Solution</span><span class="o">::</span><span class="n">Run</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// проход по массиву, осуществляем сокращения</span>
+    <span class="c1">// запоминаем сокращения в карте abbrmap</span>
+    <span class="c1">// если есть конфликты, они отправляются в очередь</span>
+    <span class="c1">// позже будем регулировать конфликты</span>
+    <span class="n">iteration</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">out</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">marked</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+        <span class="n">genAbbr</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">// если есть конфликты, они будут в стеке conflicts</span>
+    <span class="n">resolveConflicts</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Solution</span><span class="o">::</span><span class="n">inputStrings</span><span class="p">(</span><span class="n">vector</span> <span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">abbrItem</span> <span class="n">item</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">len</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="k">for</span><span class="p">(</span><span class="k">auto</span> <span class="n">x</span> <span class="o">:</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">item</span><span class="p">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+        <span class="n">item</span><span class="p">.</span><span class="n">origin</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+        <span class="n">item</span><span class="p">.</span><span class="n">abbr</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+        <span class="n">len</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">length</span><span class="p">();</span>
+        <span class="n">item</span><span class="p">.</span><span class="n">possible_len</span> <span class="o">=</span> <span class="n">len</span> <span class="o">&lt;</span> <span class="mi">3</span> <span class="o">?</span> <span class="mi">0</span><span class="o">:</span> <span class="n">len</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="n">out</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">item</span><span class="p">);</span>
+        <span class="n">i</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Solution</span> <span class="n">s</span><span class="p">;</span>
+
+    <span class="n">s</span><span class="p">.</span><span class="n">Input</span><span class="p">();</span>
+    <span class="n">s</span><span class="p">.</span><span class="n">Run</span><span class="p">();</span>
+    <span class="n">s</span><span class="p">.</span><span class="n">Print</span><span class="p">();</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+
+   	</div>
+</div></section>
+
+    <footer class="footer hexlet-footer py-5 mt-5 text-muted">
+  <div class="container">
+    <div class="row mt-1">
+      <div class="col-12 text-center">
+        <a href="https://aveligzhanin.github.io/">Велигжанин Андрей</a> — Программист-разработчик C++ и Oracle.
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>
