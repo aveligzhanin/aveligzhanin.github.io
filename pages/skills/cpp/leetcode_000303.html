@@ -115,13 +115,18 @@ numArray.sumRange(0, 5); // return (-2) + 0 + 3 + (-5) + 2 + (-1) = -3
 <h2 id="решение">Решение.</h2>
 
 <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">class</span> <span class="n">NumArray</span> <span class="p">{</span>
+<span class="nl">private:</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">preSum</span><span class="p">;</span>
 <span class="nl">public:</span>
     <span class="n">NumArray</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">nums</span><span class="p">)</span> <span class="p">{</span>
-        
+        <span class="n">preSum</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">preSum</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="n">preSum</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]);</span>
     <span class="p">}</span>
     
     <span class="kt">int</span> <span class="n">sumRange</span><span class="p">(</span><span class="kt">int</span> <span class="n">left</span><span class="p">,</span> <span class="kt">int</span> <span class="n">right</span><span class="p">)</span> <span class="p">{</span>
-        
+        <span class="k">if</span> <span class="p">(</span><span class="n">left</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="n">preSum</span><span class="p">[</span><span class="n">right</span><span class="p">];</span>
+        <span class="k">return</span> <span class="n">preSum</span><span class="p">[</span><span class="n">right</span><span class="p">]</span> <span class="o">-</span> <span class="n">preSum</span><span class="p">[</span><span class="n">left</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
     <span class="p">}</span>
 <span class="p">};</span>
 
@@ -130,9 +135,13 @@ numArray.sumRange(0, 5); // return (-2) + 0 + 3 + (-5) + 2 + (-1) = -3
  * NumArray* obj = new NumArray(nums);
  * int param_1 = obj-&gt;sumRange(left,right);
  */</span>
-
 </code></pre></div></div>
 
+<h2 id="другие-задачи">Другие задачи</h2>
+
+<p><a href="/pages/skills/cpp/leetcode_000304.html">304. Запрос суммы диапазона (Range Sum Query 2D - Immutable)</a></p>
+
+<p><a href="/pages/skills/cpp/leetcode_000307.html">307. Запрос суммы диапазона, неизменяемый (Range Sum Query - Mutable)</a></p>
 
    	</div>
 </div></section>
