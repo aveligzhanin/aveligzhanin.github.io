@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Управление транзакциями</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Our style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/avel.css">
+</head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+  <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse menu">
+			<ul class="nav navbar-nav navbar-right">
+                 
+                    <li>
+                       <a href="/index.html#about">Обо мне</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#education">Образование</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#work">Работа</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#skills">Навыки</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#portfolio">Портфолио</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#hobby">Увлечения</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#contact">Контакты</a>
+                    </li>
+                 
+        	</ul>
+        </div>
+      </div>
+  </div>
+</nav>
+
+    <section class="pfblock"><div class="container">  		<!-- Translations -->
+	<div class="col-xs-6" align=left>
+		<a href="/index.html">home</a> \ <a href="/pages/skills/oracle/concepts.html">Oracle. Database Concepts</a>
+	</div>
+
+	<div class="col-xs-6" align=right>
+		Написано: 22.12.2022
+	</div>
+
+   	<div class="col-sm-12 my">
+		<h1 id="управление-транзакциями"><a href="https://docs.oracle.com/en/database/oracle/oracle-database/21/cncpt/introduction-to-oracle-database.html#GUID-ACACFFBC-BCB9-4BA9-A2A3-1B9B2003B3B4">Управление транзакциями</a></h1>
+
+<p>БД Oracle разработана как многопользовательская БД. БД должна гарантировать, что несколько пользователей могут работать одновременно, не повреждая данные друг друга.</p>
+
+<h2 id="транзакции"><strong>Транзакции</strong></h2>
+
+<p><strong>Транзакция</strong> – это логическая атомарная единица работы, содержащая один или несколько операторов SQL.</p>
+
+<p>РСУБД должна иметь возможность группировать инструкции SQL таким образом, чтобы они были либо все зафиксированы, что означает, что они применяются к базе данных, либо все откатаны, что означает, что они отменены.</p>
+
+<p>Иллюстрацией необходимости транзакций является перевод средств со сберегательного счета на расчетный счет. Передача состоит из следующих отдельных операций:</p>
+
+<ol>
+  <li>Уменьшение сберегательного счета.</li>
+  <li>Увеличение расчётного счета.</li>
+  <li>Запись о транзакции в журнале.</li>
+</ol>
+
+<p>БД Oracle гарантирует, что все три операции будут успешными или завершатся неудачей как единое целое. Например, если аппаратный сбой препятствует выполнению инструкции в транзакции, то другие инструкции должны быть откатаны.</p>
+
+<p>Транзакции – это одна из функций, которая отличает БД Oracle от файловой системы. Если вы выполняете атомарную операцию, которая обновляет несколько файлов, и если система выходит из строя на полпути, то файлы не будут согласованы. Напротив, транзакция переводит БД Oracle из одного согласованного состояния в другое. Основной принцип транзакции – “всё или ничего”: атомарная операция завершается успешно или терпит неудачу в целом.</p>
+
+<h2 id="параллелизм-данных-data-concurrency"><strong>Параллелизм данных (Data Concurrency)</strong></h2>
+
+<p>Требованием многопользовательской РСУБД является контроль параллелизма данных, который заключается в одновременном доступе к одним и тем же данным несколькими пользователями.</p>
+
+<p>Без контроля параллелизма пользователи могут изменять данные ненадлежащим образом, ставя под угрозу целостность данных. Например, один пользователь может обновить строку, в то время как другой пользователь одновременно обновляет её.</p>
+
+<p>Если несколько пользователей получают доступ к одним и тем же данным, то один из способов управления параллелизмом – заставить пользователей ждать. Однако цель СУБД – сократить время ожидания, чтобы оно либо отсутствовало, либо было незначительным. Все инструкции SQL, изменяющие данные, должны выполняться с минимальным вмешательством, насколько это возможно. Необходимо избегать деструктивных взаимодействий, которые представляют собой взаимодействия, которые неправильно обновляют данные или изменяют базовые структуры данных.</p>
+
+<p>БД Oracle использует блокировки для управления одновременным доступом к данным. Блокировка – это механизм, который предотвращает деструктивное взаимодействие между транзакциями, обращающимися к общему ресурсу. Блокировки помогают обеспечить целостность данных, обеспечивая при этом максимальный одновременный доступ к данным.</p>
+
+<h2 id="согласованность-data-consistency"><strong>Согласованность (Data Consistency)</strong></h2>
+
+<p>В БД Oracle каждый пользователь должен видеть согласованное представление данных, включая видимые изменения, внесенные собственными транзакциями пользователя и зафиксированными транзакциями других пользователей.</p>
+
+<p>Например, БД должна предотвращать проблему <strong>грязного чтения</strong>, которая возникает, когда одна транзакция видит незафиксированные изменения, внесенные другой параллельной транзакцией.</p>
+
+<p>БД Oracle всегда обеспечивает согласованность чтения на уровне инструкций, что гарантирует, что данные, возвращаемые одним запросом, зафиксированы и непротиворечивы в течение одного момента времени. В зависимости от уровня изоляции транзакции, этот момент является временем, в которое была открыта инструкция, или временем начала транзакции. Функция запроса Oracle Flashback Query позволяет явно указывать этот момент времени.</p>
+
+<p>БД также может обеспечивать согласованность чтения для всех запросов в транзакции, известную как согласованность чтения на уровне транзакции. В этом случае каждый оператор в транзакции видит данные из одного и того же момента времени, который является временем начала транзакции.</p>
+
+<p><br /><br /><br /><br /><br /><br /><br /></p>
+<div class="row">
+  <div class="col"><div align="left"><a href="/pages/skills/oracle/concept/dataaccess.html">&#8592; Доступ к данным</a></div>
+  </div>
+  <div class="col"><div align="right"><a href="/pages/skills/oracle/concept/architecture.html">Архитектура БД Oracle &#8594;</a></div>
+ </div>
+</div>
+
+
+   	</div>
+</div></section>
+
+    <footer class="footer hexlet-footer py-5 mt-5 text-muted">
+  <div class="container">
+    <div class="row mt-1">
+      <div class="col-12 text-center">
+        <a href="https://aveligzhanin.github.io/">Велигжанин Андрей</a> — Программист-разработчик C++ и Oracle.
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>

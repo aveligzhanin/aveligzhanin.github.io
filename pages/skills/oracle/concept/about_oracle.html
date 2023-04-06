@@ -1,0 +1,177 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>О реляционных базах данных</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Our style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/avel.css">
+</head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+  <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse menu">
+			<ul class="nav navbar-nav navbar-right">
+                 
+                    <li>
+                       <a href="/index.html#about">Обо мне</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#education">Образование</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#work">Работа</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#skills">Навыки</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#portfolio">Портфолио</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#hobby">Увлечения</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#contact">Контакты</a>
+                    </li>
+                 
+        	</ul>
+        </div>
+      </div>
+  </div>
+</nav>
+
+    <section class="pfblock"><div class="container">  		<!-- Translations -->
+	<div class="col-xs-6" align=left>
+		<a href="/index.html">home</a> \ <a href="/pages/skills/oracle/concepts.html">Oracle. Database Concepts</a>
+	</div>
+
+	<div class="col-xs-6" align=right>
+		Написано: 22.12.2022
+	</div>
+
+   	<div class="col-sm-12 my">
+		<h1 id="о-реляционных-базах-данных"><a href="https://docs.oracle.com/en/database/oracle/oracle-database/21/cncpt/introduction-to-oracle-database.html#GUID-166C1E31-CDBC-47D9-867A-3D4C9AAC837D">О реляционных базах данных</a></h1>
+
+<p>У каждой организации есть информация, которую она должна хранить и управлять ею, чтобы соответствовать своим требованиям. Например, корпорация должна собирать и вести кадровую документацию для своих сотрудников. Эта информация должна быть доступна тем, кто в ней нуждается.</p>
+
+<p><strong>Информационная система</strong> – это формальная система для хранения и обработки информации. 
+Информационная система может представлять собой набор картонных коробок, содержащих папки из манильской бумаги вместе с правилами хранения и извлечения папок. 
+Однако большинство компаний сегодня используют базу данных для автоматизации своих информационных систем. 
+<code>&nbsp;&nbsp;База данных &#8212; это организованный набор информации, рассматриваемый как единое целое.&nbsp;&nbsp;</code>
+Целью базы данных является сбор, хранение и извлечение связанной информации для использования приложениями баз данных.</p>
+
+<h2 id="система-управления-базами-данных-субд"><strong>Система управления базами данных (СУБД)</strong></h2>
+
+<p><strong>Система управления базами данных (СУБД)</strong> – это ПО, которое управляет хранением, организацией и извлечением данных.</p>
+
+<p>Как правило, СУБД содержит следующие элементы:</p>
+
+<ul>
+  <li><strong>Код ядра</strong> 
+Этот код управляет памятью и хранилищем для СУБД.</li>
+  <li><strong>Хранилище метаданных</strong><br />
+Это хранилище обычно называется <strong>словарем данных</strong>.</li>
+  <li><strong>Язык запросов</strong> 
+Этот язык позволяет приложениям получать доступ к данным.</li>
+</ul>
+
+<p><strong>Приложение базы данных</strong> – это ПО, которое взаимодействует с базой данных для доступа к данным и управления ими.</p>
+
+<p>Первое поколение систем управления базами данных включало следующие типы:</p>
+
+<ul>
+  <li><strong>Иерархическую</strong>
+Иерархическая база данных организует данные в виде древовидной структуры. Каждая родительская запись имеет одну или несколько дочерних записей, аналогично структуре файловой системы.</li>
+  <li><strong>Сетевую</strong>
+Сетевая база данных похожа на иерархическую, за исключением того, что записи имеют отношение “многие ко многим”, а не “один ко многим”.</li>
+</ul>
+
+<p>Ранние СУБД хранили данные в жестких, заранее определенных взаимосвязях. Поскольку не существовало языка определения данных, изменение структуры данных было затруднено. Кроме того, в этих системах отсутствовал простой язык запросов, что затрудняло разработку приложений.</p>
+
+<h2 id="реляционная-модель"><strong>Реляционная модель</strong></h2>
+
+<p>В своей основополагающей статье 1970 года “Реляционная модель данных для больших совместно используемых банков данных” Э. Ф. Кодд определил реляционную модель, основанную на математической теории множеств. Сегодня наиболее широко принятой моделью базы данных является реляционная модель.</p>
+
+<p><strong>Реляционная база данных</strong> – это база данных, которая соответствует реляционной модели. Реляционная модель имеет следующие основные аспекты:</p>
+
+<ul>
+  <li><strong>Структуры</strong>
+Четко определенные объекты хранят данные базы данных или получают к ним доступ.</li>
+  <li><strong>Операции</strong>
+Четко определенные действия позволяют приложениям манипулировать данными и структурами базы данных.</li>
+  <li><strong>Правила целостности</strong>
+Правила целостности управляют операциями с данными и структурами базы данных.</li>
+</ul>
+
+<p>Реляционная база данных хранит данные в виде набора простых отношений. <strong>Отношение</strong> – это набор кортежей. <strong>Кортеж</strong> – это неупорядоченный набор значений атрибутов.</p>
+
+<p><strong>Таблица</strong> – это двумерное представление отношения в виде строк (кортежей) и столбцов (атрибутов). Каждая строка в таблице имеет один и тот же набор столбцов. Реляционная база данных - это база данных, которая хранит данные в виде связей (таблиц). Например, реляционная база данных может хранить информацию о сотрудниках компании в таблице работников, таблице отделений и таблице зарплат.</p>
+
+<h2 id="реляционная-субд"><strong>Реляционная СУБД</strong></h2>
+
+<p>Реляционная модель является основой для <strong>системы управления реляционными базами данных (РСУБД)</strong>. РСУБД перемещает данные в базу данных, сохраняет их и извлекает, чтобы приложения могли ими манипулировать.</p>
+
+<p>РСУБД различает следующие типы операций:</p>
+
+<ul>
+  <li>
+    <p><strong>Логические</strong> В этом случае приложение указывает, <strong>что</strong> нужно сделать. Например, приложение запрашивает имя сотрудника или добавляет запись о сотруднике в таблицу.</p>
+  </li>
+  <li>
+    <p><strong>Физические</strong> В этом случае РСУБД определяет, <strong>как</strong> все должно быть сделано, и выполняет операцию. Например, после того, как приложение запрашивает таблицу, база данных может использовать индекс для поиска запрошенных строк, считывания данных в память и выполнения многих других шагов, прежде чем возвращать результат пользователю. СУБД хранит и извлекает данные таким образом, чтобы физические операции были прозрачны для приложений баз данных.</p>
+  </li>
+</ul>
+
+<p>База данных Oracle – это РСУБД. РСУБД, которая реализует объектно-ориентированные функции, такие как определяемые пользователем типы, наследование и полиморфизм, называется <strong>объектно-реляционной системой управления базами данных (ORDBMS)</strong>. БД Oracle расширила реляционную модель до объектно-реляционной модели, что позволяет хранить сложные бизнес-модели в реляционной базе данных.</p>
+
+<h2 id="краткая-история-бд-oracle"><a href="/pages/skills/oracle/concept/history.html">Краткая история БД Oracle</a></h2>
+
+<p><br /><br /><br /><br /><br /><br /><br /></p>
+<div class="row">
+  <div class="col-md-8"></div>
+  <div class="col-md-4">
+    <div align="right"><a href="/pages/skills/oracle/concept/schemaobjects.html">Объекты схемы &#8594;</a></div>
+  </div>
+</div>
+
+   	</div>
+</div></section>
+
+    <footer class="footer hexlet-footer py-5 mt-5 text-muted">
+  <div class="container">
+    <div class="row mt-1">
+      <div class="col-12 text-center">
+        <a href="https://aveligzhanin.github.io/">Велигжанин Андрей</a> — Программист-разработчик C++ и Oracle.
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>

@@ -1,0 +1,252 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Дорожная карта документации по БД Oracle</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Our style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/avel.css">
+</head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+  <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse menu">
+			<ul class="nav navbar-nav navbar-right">
+                 
+                    <li>
+                       <a href="/index.html#about">Обо мне</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#education">Образование</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#work">Работа</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#skills">Навыки</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#portfolio">Портфолио</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#hobby">Увлечения</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#contact">Контакты</a>
+                    </li>
+                 
+        	</ul>
+        </div>
+      </div>
+  </div>
+</nav>
+
+    <section class="pfblock"><div class="container">  		<!-- Translations -->
+	<div class="col-xs-6" align=left>
+		<a href="/index.html">home</a> \ <a href="/pages/skills/oracle/concepts.html">Oracle. Database Concepts</a>
+	</div>
+
+	<div class="col-xs-6" align=right>
+		Написано: 22.12.2022
+	</div>
+
+   	<div class="col-sm-12 my">
+		<h1 id="дорожная-карта-документации-по-бд-oracle"><a href="https://docs.oracle.com/en/database/oracle/oracle-database/21/cncpt/introduction-to-oracle-database.html#GUID-C756D70F-75D4-4234-BEB5-CB05A4742128">Дорожная карта документации по БД Oracle</a></h1>
+
+<p>Набор документации разработан с учетом конкретных путей доступа, чтобы пользователи могли максимально эффективно находить необходимую им информацию.</p>
+
+<p>Набор документации разделен на три уровня или группы: базовый, промежуточный и продвинутый. Пользователи начинают с руководств в базовой группе, переходят к руководствам в промежуточной группе (серия 2 дня +) и, наконец, к расширенным руководствам, которые включают остальную документацию.</p>
+
+<p>Документацию по поддерживаемым выпускам БД Oracle можно найти <a href="https://docs.oracle.com/en/database/oracle/oracle-database/.">по следующему адресу</a></p>
+
+<h2 id="документация-по-бд-oracle-базовая-группа">Документация по БД Oracle: Базовая группа</h2>
+
+<p>Технические пользователи, новички в Oracle Database, начинают с прочтения одного или нескольких руководств в базовой группе от корки до корки. Каждое руководство в этой группе рассчитано на прочтение в течение двух дней.</p>
+
+<p>В дополнение к этому руководству в базовую группу входят руководства, приведенные в следующей таблице.</p>
+
+<p><strong>Таблица 1-1 Базовая группа</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Руководство</th>
+      <th>Описание</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://docs.oracle.com/en/database/oracle/oracle-database/21/tdddg/two-day-developer-intro.html#GUID-AE8B7A74-AD1F-4474-B0CF-B3E95D075DDA">Oracle Database 2 Day Developer’s Guide</a></td>
+      <td>В этом кратком руководстве по выполнению задач объясняется, как использовать основные функции Oracle Database с помощью SQL и PL/SQL.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Руководства, входящие в базовую группу, тесно связаны между собой, что отражается в количестве перекрестных ссылок. Например, Oracle Database Concepts часто отправляет пользователей на 2-дневное руководство, чтобы узнать, как выполнить задачу на основе концепции. В 2-дневных руководствах часто упоминаются концепции баз данных Oracle для получения концептуальной информации о задаче.</p>
+
+<h2 id="документация-по-бд-oracle-промежуточная-группа">Документация по БД Oracle: Промежуточная группа</h2>
+
+<p>Следующим шагом по сравнению с базовой группой является промежуточная группа.</p>
+
+<p>Руководства в промежуточной группе имеют префикс со словом 2 дня +, потому что они расширяют и предполагают информацию, содержащуюся в 2-дневных руководствах. Руководства на 2 дня + охватывают темы более глубоко, чем это возможно в базовых руководствах, или охватывают темы, представляющие особый интерес. Руководства предназначены для разных аудиторий:</p>
+
+<p><strong>Администраторы БД</strong></p>
+
+<p><a href="https://docs.oracle.com/en/database/oracle/oracle-database/21/tdppt/introduction.html">Oracle Database 2 Day + Performance Tuning Guide</a> – это краткое руководство, в котором описывается, как выполнять повседневные задачи по настройке производительности базы данных с использованием функций, предоставляемых Oracle Diagnostics Pack, Oracle Tuning Pack и Oracle Enterprise Manager Cloud Control (облачное управление).</p>
+
+<p><strong>Разработчики БД</strong></p>
+
+<p><a href="https://docs.oracle.com/en/database/oracle/oracle-database/21/tdpjd/using-java-with-oracle-database.html#GUID-8C73108B-E0F3-4CD5-A813-909B339339BB">Oracle Database 2 Day + Java Developer’s Guide</a> поможет вам разобраться во всех продуктах Java, используемых для создания Java-приложения. В руководстве объясняется, как использовать Oracle JDBC Thin driver, Универсальный пул подключений (UCP) и Java в базе данных (JVM) в примере веб-приложения.</p>
+
+<h2 id="документация-по-бд-oracle-продвинутая-группа">Документация по БД Oracle: Продвинутая группа</h2>
+
+<p>Руководства для продвинутых групп предназначены для опытных пользователей, которым требуется более подробная информация по конкретной теме, чем может быть предоставлена в руководствах 2 дня +.</p>
+
+<p>В следующей таблице перечислены основные справочные руководства в группе advanced.</p>
+
+<p><strong>Таблица 1-2 Основные справочные руководства</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Руководство</th>
+      <th>Описание</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://docs.oracle.com/en/database/oracle/oracle-database/21/sqlrf/Introduction-to-Oracle-SQL.html#GUID-049B7AE8-11E1-4110-B3E4-D117907D77AC">Oracle Database SQL Language Reference</a></td>
+      <td>Содержит полное описание языка структурированных запросов (SQL), используемого для управления информацией в базе данных Oracle.</td>
+    </tr>
+    <tr>
+      <td><a href="https://docs.oracle.com/en/database/oracle/oracle-database/21/refrn/initialization-parameters.html">Oracle Database Reference</a></td>
+      <td>Описывает параметры инициализации базы данных, представления словаря данных, представления динамической производительности, события ожидания и фоновые процессы.</td>
+    </tr>
+    <tr>
+      <td><a href="https://docs.oracle.com/en/database/oracle/oracle-database/21/arpls/introduction-to-oracle-supplied-plsql-packages-and-types.html">Oracle Database PL/SQL Packages and Types Reference</a></td>
+      <td>Описывает пакеты PL/SQL, поставляемые с сервером баз данных Oracle. Вы можете использовать поставляемые пакеты при создании своих приложений или для поиска идей при создании собственных хранимых процедур.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Расширенных руководств слишком много, чтобы перечислять их в этом разделе. В следующей таблице перечислены руководства, которые использует большинство опытных администраторов баз данных Oracle.</p>
+
+<p><strong>Таблица 1-3 Продвинутая группа для Администраторов БД</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Руководство</th>
+      <th>Описание</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://docs.oracle.com/en/database/oracle/oracle-database/21/admin/getting-started-with-database-administration.html#GUID-EA8CC987-EF18-4434-B962-01312CD3A8AC">Oracle Database Administrator’s Guide</a></td>
+      <td>Объясняет, как выполнять такие задачи, как создание и настройка баз данных, обслуживание и мониторинг баз данных, создание объектов схемы, планирование заданий и диагностика проблем.</td>
+    </tr>
+    <tr>
+      <td><a href="https://docs.oracle.com/en/database/oracle/oracle-database/21/dbseg/introduction-to-oracle-database-security.html">Oracle Database Security Guide</a></td>
+      <td>Описывает, как настроить безопасность для базы данных Oracle с помощью функций базы данных по умолчанию.</td>
+    </tr>
+    <tr>
+      <td><a href="https://docs.oracle.com/en/database/oracle/oracle-database/21/tgdba/performance-tuning-overview.html#GUID-5C5C081B-A2C1-442D-9F11-A760234C8815">Oracle Database Performance Tuning Guide</a></td>
+      <td>Описывает, как использовать инструменты Oracle Database tools для оптимизации производительности базы данных. В этом руководстве также описываются рекомендации по повышению производительности при создании базы данных и содержится справочная информация, связанная с производительностью.</td>
+    </tr>
+    <tr>
+      <td><a href="https://docs.oracle.com/en/database/oracle/oracle-database/21/tgsql/introduction-to-sql-tuning.html">Oracle Database SQL Tuning Guide</a></td>
+      <td>Describes SQL processing, the optimizer, execution plans, SQL operators, optimizer statistics, application tracing, and SQL advisors.</td>
+    </tr>
+    <tr>
+      <td><a href="https://docs.oracle.com/en/database/oracle/oracle-database/21/bradv/introduction-backup-recovery.html">Oracle Database Backup and Recovery User’s Guide</a></td>
+      <td>Объясняет, как создавать резервные копии, восстанавливать базы данных Oracle, выполнять обслуживание резервных копий файлов базы данных и передавать данные между системами хранения.</td>
+    </tr>
+    <tr>
+      <td><a href="https://docs.oracle.com/en/database/oracle/oracle-database/21/racad/introduction-to-oracle-rac.html#GUID-5A1B02A2-A327-42DD-A1AD-20610B2A9D92">Oracle Real Application Clusters Administration and Deployment Guide</a></td>
+      <td>Объясняет, как установить, настроить, управлять и устранять неполадки в базе данных Oracle RAC.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>В следующей таблице перечислены руководства, которые использует большинство опытных разработчиков Oracle.</p>
+
+<p><strong>Таблица 1-4 Продвинутая группа для Разработчиков</strong></p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Руководство</th>
+      <th>Описание</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://docs.oracle.com/en/database/oracle/oracle-database/21/adfns/fundamentals.html#GUID-EBCEA9FE-4F25-40DF-B5FD-682C3692E92F">Oracle Database Development Guide</a></td>
+      <td>Объясняет, как разрабатывать приложения или преобразовывать существующие приложения для запуска в среде базы данных Oracle. В руководстве объясняются основы проектирования приложений и описываются основные концепции разработки на SQL и PL/SQL.</td>
+    </tr>
+    <tr>
+      <td><a href="https://docs.oracle.com/en/database/oracle/oracle-database/21/lnpls/overview.html#GUID-2FBCFBBE-6B42-4DB8-83F3-55B63B75B1EB">Oracle Database PL/SQL Language Reference</a></td>
+      <td>Описывает все аспекты языка PL/SQL, включая типы данных, управляющие инструкции, коллекции, триггеры, пакеты и обработку ошибок.</td>
+    </tr>
+    <tr>
+      <td><a href="https://docs.oracle.com/en/database/oracle/oracle-database/21/jjdev/Java-introduction.html#GUID-912A14D4-2621-4955-85BD-A04E17EE6D21">Oracle Database Java Developer’s Guide</a></td>
+      <td>Описывает, как разрабатывать, загружать и запускать Java-приложения в базе данных Oracle.</td>
+    </tr>
+    <tr>
+      <td><a href="https://docs.oracle.com/en/database/oracle/oracle-database/21/adlob/introduction-to-large-objects.html#GUID-1A2B0023-9EE8-48AF-AA76-171D1FC5C241">Oracle Database SecureFiles and Large Objects Developer’s Guide</a></td>
+      <td>Объясняет, как разрабатывать новые приложения с использованием больших объектов (LOBs), LOBs SecureFiles и файловой системы базы данных (DBFS).</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Другие расширенные руководства, требуемые конкретным пользователем, зависят от сферы ответственности этого пользователя.</p>
+
+<p><br /><br /><br /><br /><br /><br /><br /></p>
+<div class="row">
+  <div class="col"><div align="left"><a href="/pages/skills/oracle/concept/architecture.html">&#8592; Архитектура БД Oracle</a></div>
+  </div>
+  <div class="col"><div align="right"><a href="/pages/skills/oracle/concept/2cdbs.html">CDBs и PDBs &#8594;</a></div> 
+ </div> 
+</div>
+
+
+   	</div>
+</div></section>
+
+    <footer class="footer hexlet-footer py-5 mt-5 text-muted">
+  <div class="container">
+    <div class="row mt-1">
+      <div class="col-12 text-center">
+        <a href="https://aveligzhanin.github.io/">Велигжанин Андрей</a> — Программист-разработчик C++ и Oracle.
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>

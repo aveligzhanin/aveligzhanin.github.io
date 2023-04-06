@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Объекты схемы</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Our style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/avel.css">
+</head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+  <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Сайт Велигжанина Андрея</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse menu">
+			<ul class="nav navbar-nav navbar-right">
+                 
+                    <li>
+                       <a href="/index.html#about">Обо мне</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#education">Образование</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#work">Работа</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#skills">Навыки</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#portfolio">Портфолио</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#hobby">Увлечения</a>
+                    </li>
+                 
+                    <li>
+                       <a href="/index.html#contact">Контакты</a>
+                    </li>
+                 
+        	</ul>
+        </div>
+      </div>
+  </div>
+</nav>
+
+    <section class="pfblock"><div class="container">  		<!-- Translations -->
+	<div class="col-xs-6" align=left>
+		<a href="/index.html">home</a> \ <a href="/pages/skills/oracle/concepts.html">Oracle. Database Concepts</a>
+	</div>
+
+	<div class="col-xs-6" align=right>
+		Написано: 22.12.2022
+	</div>
+
+   	<div class="col-sm-12 my">
+		<h1 id="объекты-схемы"><a href="https://docs.oracle.com/en/database/oracle/oracle-database/21/cncpt/introduction-to-oracle-database.html#GUID-35C20601-E266-486E-987B-7F355DB10DD4">Объекты схемы</a></h1>
+
+<p>Одной из характеристик РСУБД является <strong>независимость</strong> физического хранилища данных от логических структур данных.</p>
+
+<p>В БД Oracle <strong>схема</strong> базы данных представляет собой набор логических структур данных или объектов схемы. Пользователь базы данных владеет схемой базы данных, имя которой совпадает с <strong>именем пользователя</strong>.</p>
+
+<p>Объекты схемы – это созданные пользователем структуры, которые непосредственно ссылаются на данные в базе данных. База данных поддерживает множество типов объектов схемы, наиболее важными из которых являются таблицы и индексы.</p>
+
+<p>Объект схемы – это один из типов объектов базы данных. Некоторые объекты базы данных, такие как профили и роли, не находятся в схемах.</p>
+
+<h2 id="таблицы">Таблицы</h2>
+
+<p>Таблица описывает сущность, такую как сотрудники.</p>
+
+<p>Вы определяете таблицу с именем таблицы, например “employees”, и набором столбцов. Как правило, при создании таблицы вы присваиваете каждому столбцу имя, тип данных и ширину.</p>
+
+<p>Таблица – это набор строк. Столбец идентифицирует атрибут сущности, описанной в таблице, в то время как строка идентифицирует экземпляр сущности. Например, атрибуты сущности employees соответствуют столбцам для идентификатора сотрудника и фамилии. Строка идентифицирует конкретного сотрудника.</p>
+
+<p>Вы можете дополнительно указать правило, называемое <strong>ограничением целостности</strong>, для столбца. Одним из примеров является ограничение целостности NOT NULL. Это ограничение заставляет столбец содержать значение в каждой строке.</p>
+
+<h2 id="индексы">Индексы</h2>
+
+<p><strong>Индекс</strong> – это необязательная структура данных, которую можно создать в одном или нескольких столбцах таблицы. Индексы могут повысить производительность поиска данных.</p>
+
+<p>При обработке запроса, база данных может использовать доступные индексы для эффективного поиска запрошенных строк. Индексы полезны, когда приложения часто запрашивают определенную строку или диапазон строк.</p>
+
+<p>Индексы логически и физически независимы от данных. Таким образом, можно удалять и создавать индексы без какого-либо влияния на таблицы или другие индексы. Все приложения продолжают функционировать после удаления индекса.</p>
+
+<p><br /><br /><br /><br /><br /><br /><br /></p>
+<div class="row">
+  <div class="col"><div align="left"><a href="/pages/skills/oracle/concept/about_oracle.html">&#8592; О реляционных базах данных</a></div>
+  </div>
+  <div class="col"><div align="right"><a href="/pages/skills/oracle/concept/dataaccess.html">Доступ к данным &#8594;</a></div>
+ </div>
+</div>
+
+   	</div>
+</div></section>
+
+    <footer class="footer hexlet-footer py-5 mt-5 text-muted">
+  <div class="container">
+    <div class="row mt-1">
+      <div class="col-12 text-center">
+        <a href="https://aveligzhanin.github.io/">Велигжанин Андрей</a> — Программист-разработчик C++ и Oracle.
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>
