@@ -78,6 +78,101 @@
    	<div class="col-sm-12 my">
 		<h1 id="2-обзор-plsql"><a href="https://docs.oracle.com/en/database/oracle/oracle-database/21/lnpls/overview.html#GUID-2FBCFBBE-6B42-4DB8-83F3-55B63B75B1EB">2. Обзор PL/SQL</a></h1>
 
+<p>PL/SQL, процедурное расширение Oracle для SQL, представляет собой переносимый высокопроизводительный язык обработки транзакций. В этом обзоре объясняются его преимущества и кратко описываются его основные функции и архитектура.</p>
+
+<h2 id="21-преимущества-plsql">2.1. Преимущества PL/SQL</h2>
+
+<h2 id="22-основные-свойства-plsql">2.2. Основные свойства PL/SQL</h2>
+
+<h2 id="23-архитектура-plsql">2.3. Архитектура PL/SQL</h2>
+
+<p>Базовое понимание архитектуры PL/SQL полезно для программистов на PL/SQL.</p>
+
+<h3 id="231-движок-plsql-engine">2.3.1 Движок PL/SQL (Engine)</h3>
+
+<p>Система компиляции и выполнения PL/SQL – это движок, который компилирует и запускает модули PL/SQL.</p>
+
+<p>Движок может быть установлен в базе данных или в средстве разработки приложений, таком как Oracle Forms.</p>
+
+<p>В любой среде движок PL/SQL принимает в качестве входных данных любой допустимый модуль PL/SQL. Ядро выполняет процедурные инструкции, но отправляет инструкции SQL в ядро SQL в базе данных, как показано на рисунке 2-1.</p>
+
+<p><img src="/assets/images/plsql_2_1.jpg" alt="plsql_2_1" /></p>
+
+<p>Как правило, база данных обрабатывает блоки PL/SQL.</p>
+
+<p>Когда средство разработки приложений обрабатывает модули PL/SQL, оно передает их своему локальному движку PL/SQL. Если модуль PL/SQL не содержит инструкций SQL, локальный модуль обрабатывает весь модуль PL/SQL. Это полезно, если инструмент разработки приложений может извлечь выгоду из условного и итеративного управления.</p>
+
+<p>Например, приложения Oracle Forms часто используют инструкции SQL для проверки значений записей полей и выполнения простых вычислений. Используя PL/SQL вместо SQL, эти приложения могут избежать обращений к БД.</p>
+
+<h3 id="232-модули-plsql-units-и-параметры-компиляции">2.3.2 Модули PL/SQL (units) и параметры компиляции</h3>
+
+<p>На модули PL/SQL влияют параметры компиляции PL/SQL (категория параметров инициализации БД). Различные модули PL/SQL – например, спецификация пакета и его тело – могут иметь разные настройки параметров компиляции.</p>
+
+<p>Модуль PL/SQL является одним из:</p>
+
+<ul>
+  <li>
+    <p>анонимный блок PL/SQL</p>
+  </li>
+  <li>
+    <p>FUNCTION</p>
+  </li>
+  <li>
+    <p>LIBRARY</p>
+  </li>
+  <li>
+    <p>PACKAGE</p>
+  </li>
+  <li>
+    <p>PACKAGE BODY</p>
+  </li>
+  <li>
+    <p>PROCEDURE</p>
+  </li>
+  <li>
+    <p>TRIGGER</p>
+  </li>
+  <li>
+    <p>TYPE</p>
+  </li>
+  <li>
+    <p>TYPE BODY</p>
+  </li>
+</ul>
+
+<p>В <strong>таблице 2-2</strong> приведены параметры компиляции PL/SQL. Чтобы отобразить значения этих параметров для указанных или всех единиц PL/SQL, запросите статический словарь данных для просмотра <code class="language-plaintext highlighter-rouge">ALL_PLSQL_OBJECT_SETTINGS</code>. Дополнительные сведения об этом представлении см. в разделе <a href="https://docs.oracle.com/en/database/oracle/oracle-database/21/refrn/ALL_PLSQL_OBJECT_SETTINGS.html#GUID-7EF7B6E3-50B1-43C3-A56E-40955B47C65D">Oracle Database Reference</a>.</p>
+
+<table class="mbtablestyle1">
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://docs.oracle.com/en/database/oracle/oracle-database/21/refrn/PLSCOPE_SETTINGS.html#GUID-E420D72D-4199-4444-9D9A-080CBEA09DD4">PLSCOPE_SETTINGS</a></td>
+      <td>Controls the compile-time collection, cross-reference, and storage of PL/SQL source text identifier data. Used by the PL/Scope tool (see Oracle Database Development Guide).<br />For more information about PLSCOPE_SETTINGS, see Oracle Database Reference.</td>
+    </tr>
+    <tr>
+      <td><a href="https://docs.oracle.com/en/database/oracle/oracle-database/21/refrn/PLSQL_CCFLAGS.html#GUID-E27CC5B2-7D1C-4EE1-81B1-1F2D51EA99CE">PLSQL_CCFLAGS</a></td>
+      <td>Lets you control conditional compilation of each PL/SQL unit independently.<br />For more information about PLSQL_CCFLAGS, see “How Conditional Compilation Works” and Oracle Database Reference.</td>
+    </tr>
+    <tr>
+      <td><a href="https://docs.oracle.com/en/database/oracle/oracle-database/21/refrn/PLSQL_CODE_TYPE.html#GUID-19CE54C7-6B2A-4F3E-92C5-D30AFCD01E3F">PLSQL_CODE_TYPE</a></td>
+      <td>Specifies the compilation mode for PL/SQL units—INTERPRETED (the default) or NATIVE. For information about which mode to use, see “Determining Whether to Use PL/SQL Native Compilation”.<br />If the optimization level (set by PLSQL_OPTIMIZE_LEVEL) is less than 2:<br />The compiler generates interpreted code, regardless of PLSQL_CODE_TYPE.<br />If you specify NATIVE, the compiler warns you that NATIVE was ignored.<br />For more information about PLSQL_CODE_TYPE, see Oracle Database Reference.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="24-защита-конфиденциальной-информации-в-plsql">2.4. Защита конфиденциальной информации в PL/SQL</h2>
+
+<p>Безопасность данных должна быть главным приоритетом при разработке любого приложения. Существует несколько способов снизить риск уязвимостей при использовании PL/SQL.</p>
+
+<p>Имейте в виду, что содержимое блока PL/SQL может быть записано полностью в таких местах, как журналы аудита и файлы трассировки. Аналогично, доступ к коду хранимой процедуры можно получить через представления словаря, такие как <code class="language-plaintext highlighter-rouge">USER_SOURCE</code>. По этой причине настоятельно рекомендуется никогда не включать какую-либо конфиденциальную информацию в литерал, который используется в коде PL/SQL.</p>
+
+<p>Переменные привязки могут использоваться для защиты от атак SQL-инъекций, однако значения привязки могут быть видны в таких местах, как файлы трассировки, аудит и <code class="language-plaintext highlighter-rouge">V$SQL</code> и связанные с ними представления. Доступ должен строго регулироваться, чтобы гарантировать, что только те, кому он необходим, имеют привилегии для просмотра этой особо конфиденциальной информации. Для получения дополнительной информации об использовании переменных привязки см. раздел “Переменные привязки”.</p>
+
 <p><br /><br /><br /><br /><br /><br /><br /></p>
 <div class="row">
   <div class="col"><div align="left"><a href="/pages/skills/oracle/PLSQL_language_reference/1release.html">&#8592; 1. Изменения в этом релизе для справочника PL/SQL</a></div>
